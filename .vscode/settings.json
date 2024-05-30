@@ -1,0 +1,4 @@
+{
+    "verilog.linting.verilator.arguments": "--Wall",
+    "verilog.linting.linter": "verilator"
+}

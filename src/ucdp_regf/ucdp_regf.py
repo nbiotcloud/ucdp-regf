@@ -29,7 +29,7 @@ Accesses
 """
 
 from functools import cached_property
-from typing import ClassVar
+from typing import ClassVar, TypeAlias
 
 import ucdp as u
 from icdutil.num import calc_unsigned_width
@@ -37,10 +37,10 @@ from tabulate import tabulate
 from ucdp_glbl import addrspace as _addrspace
 from ucdp_glbl.mem import MemIoType
 
-ACCESSES = _addrspace.ACCESSES
-Access = _addrspace.Access
-ReadOp = _addrspace.ReadOp
-WriteOp = _addrspace.WriteOp
+ACCESSES: TypeAlias = _addrspace.ACCESSES
+Access: TypeAlias = _addrspace.Access
+ReadOp: TypeAlias = _addrspace.ReadOp
+WriteOp: TypeAlias = _addrspace.WriteOp
 
 _IN_REGF_DEFAULTS = {
     _addrspace.RO: False,
@@ -69,7 +69,7 @@ class Word(_addrspace.Word):
     in_regf: bool | None = None
     """Default Implementation within Regf."""
 
-    def _create_field(self, name, bus, portgroups=None, signame=None, in_regf=None, **kwargs) -> Field:
+    def _create_field(self, name, bus, core, portgroups=None, signame=None, in_regf=None, **kwargs) -> Field:
         if portgroups is None:
             portgroups = self.portgroups
         if signame is None:
@@ -77,8 +77,35 @@ class Word(_addrspace.Word):
         if in_regf is None:
             in_regf = self.in_regf
         if in_regf is None:
-            in_regf = _IN_REGF_DEFAULTS.get(bus, True)
-        return Field(name=name, bus=bus, portgroups=portgroups, signame=signame, in_regf=in_regf, **kwargs)
+            in_regf = get_in_regf(bus, core)
+        field = Field(name=name, bus=bus, core=core, portgroups=portgroups, signame=signame, in_regf=in_regf, **kwargs)
+        check_field(field)
+        return field
+
+
+def get_in_regf(bus: Access, core: Access) -> bool:
+    """Calculate whether field is in regf."""
+    if bus == _addrspace.RO and core == _addrspace.RO:
+        return True
+    return _IN_REGF_DEFAULTS.get(bus, True)
+
+
+def check_field(field: Field) -> None:
+    """Check for Corner Cases On Field."""
+    # Multiple Portgroups are not allowed for driven fields
+    multigrp = field.portgroups and (len(field.portgroups) > 1)
+    provide_coreval = False
+    if field.in_regf:
+        if field.core and field.core.write and field.core.write.write is not None:
+            provide_coreval = True
+    elif field.bus and field.bus.read:
+        provide_coreval = True
+    if multigrp and provide_coreval:
+        raise ValueError(f"Field {field.name!r} cannot be part of multiple portgroups when core provides a value!")
+
+    # constant value with two locations
+    if field.bus == _addrspace.RO and field.core == _addrspace.RO and not field.in_regf:
+        raise ValueError(f"Field {field.name!r} with constant value must be in_regf.")
 
 
 class Addrspace(_addrspace.Addrspace):
@@ -133,22 +160,22 @@ class UcdpRegfMod(u.ATailoredMod):
     def get_overview(self) -> str:
         """Overview."""
         data = []
+        rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
-            data.append((f"+{word.slice}", word.name, "", "", "", "", ""))
+            data.append((f"+{word.slice}", word.name, "", "", "", ""))
             for field in word.fields:
                 impl = "regf" if field.in_regf else "core"
                 data.append(
                     (
                         "",
-                        "",
+                        rslvr._resolve_slice(field.slice),
                         f".{field.name}",
-                        str(field.slice),
                         str(field.access),
                         f"{field.is_const}",
                         impl,
                     )
                 )
-        headers = ("Offset", "Word", "Field", "Bits", "Bus/Core", "Const", "Impl")
+        headers = ("Offset", "Word", "Field", "Bus/Core", "Const", "Impl")
         return tabulate(data, headers=headers)
 
 
@@ -164,7 +191,10 @@ def _get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
                     portgroupmap[portgroup] = iotype = u.DynamicStructType()
                     regfiotype.add(portgroup, iotype)
                 comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
-                iotype.add(field.signame, FieldIoType(field=field), comment=comment)
+                fieldiotype = FieldIoType(field=field)
+                if word.depth:
+                    fieldiotype = u.ArrayType(fieldiotype, word.depth)
+                iotype.add(field.signame, fieldiotype, comment=comment)
     return regfiotype
 
 
