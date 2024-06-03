@@ -1,22 +1,46 @@
 // =============================================================================
 //
+// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================
+//
+//  MIT License
+//
+//  Copyright (c) 2024 nbiotcloud
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+// =============================================================================
+//
 // Module:     tests.portgroup_regf
 // Data Model: tests.test_svmako.RegfMod
 //
-//  Overview
-//
-//  Offset    Word                       Field    Bus/Core    Const    Impl
-//  --------  -------------------------  -------  ----------  -------  ------
-//  +0        ctrl
-//            [0]                        .ena     RW/RO       False    regf
-//            [1]                        .busy    RO/RW       False    core
-//  +1        rx
-//            [width_p - 1]              .data0   RO/RW       False    core
-//            [(width_p - 1) + width_p]  .data1   RO/RW       False    core
-//  +2        tx
-//            [width_p - 1]              .data0   RW/RO       False    regf
-//
-//
+// Offset    Word                         Field    Bus/Core    Reset    Const    Impl
+// --------  ---------------------------  -------  ----------  -------  -------  ------
+// +0        ctrl
+//           [0]                          .ena     RW/RO       0        False    regf
+//           [1]                          .busy    RO/RW       0        False    core
+// +1        rx
+//           [width_p - 0x1]              .data0   RO/RW       0x0      False    core
+//           [(width_p - 0x1) + width_p]  .data1   RO/RW       0x0      False    core
+// +2        tx
+//           [width_p - 0x1]              .data0   RW/RO       0x0      False    regf//
 // =============================================================================
 
 

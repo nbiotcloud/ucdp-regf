@@ -29,7 +29,7 @@ Accesses
 """
 
 from functools import cached_property
-from typing import ClassVar, TypeAlias
+from typing import ClassVar, Literal, TypeAlias
 
 import ucdp as u
 from icdutil.num import calc_unsigned_width
@@ -41,6 +41,8 @@ ACCESSES: TypeAlias = _addrspace.ACCESSES
 Access: TypeAlias = _addrspace.Access
 ReadOp: TypeAlias = _addrspace.ReadOp
 WriteOp: TypeAlias = _addrspace.WriteOp
+
+Prio = Literal["bus", "core"]
 
 _IN_REGF_DEFAULTS = {
     _addrspace.RO: False,
@@ -60,6 +62,20 @@ class Field(_addrspace.Field):
     """Signal Basename to Core."""
     route: u.Routeables | None = None
 
+    prio: Prio | None = None
+    """Update Priority: None, 'bus' or 'core'."""
+
+    @property
+    def bus_prio(self) -> bool:
+        """Update prioriy for bus."""
+        if self.prio == "bus":
+            return True
+        if self.prio == "core":
+            return False
+        if self.bus and (self.bus.write or (self.bus.read and self.bus.read.data is not None)):
+            return True
+        return False
+
 
 class Word(_addrspace.Word):
     """Word."""
@@ -69,16 +85,25 @@ class Word(_addrspace.Word):
     in_regf: bool | None = None
     """Default Implementation within Regf."""
 
-    def _create_field(self, name, bus, core, portgroups=None, signame=None, in_regf=None, **kwargs) -> Field:
+    prio: Prio | None = None
+    """Update Priority: None, 'bus' or 'core'."""
+
+    def _create_field(self, name, bus, core, portgroups=None, signame=None, in_regf=None, prio=None, **kwargs) -> Field:
         if portgroups is None:
             portgroups = self.portgroups
         if signame is None:
             signame = f"{self.name}_{name}"
         if in_regf is None:
             in_regf = self.in_regf
+        if core is None:
+            core = _addrspace.get_counteraccess(bus)
         if in_regf is None:
             in_regf = get_in_regf(bus, core)
-        field = Field(name=name, bus=bus, core=core, portgroups=portgroups, signame=signame, in_regf=in_regf, **kwargs)
+        if prio is None:
+            prio = self.prio
+        field = Field(
+            name=name, bus=bus, core=core, portgroups=portgroups, signame=signame, in_regf=in_regf, prio=prio, **kwargs
+        )
         check_field(field)
         return field
 
@@ -114,10 +139,15 @@ class Addrspace(_addrspace.Addrspace):
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
 
-    def _create_word(self, portgroups=None, **kwargs) -> Word:
+    prio: Prio | None = None
+    """Update Priority: None, 'bus' or 'core'."""
+
+    def _create_word(self, portgroups=None, prio=None, **kwargs) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
-        return Word(portgroups=portgroups, **kwargs)
+        if prio is None:
+            prio = self.prio
+        return Word(portgroups=portgroups, prio=prio, **kwargs)
 
 
 class UcdpRegfMod(u.ATailoredMod):
@@ -162,7 +192,7 @@ class UcdpRegfMod(u.ATailoredMod):
         data = []
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
-            data.append((f"+{word.slice}", word.name, "", "", "", ""))
+            data.append((f"+{word.slice}", word.name, "", "", "", "", ""))
             for field in word.fields:
                 impl = "regf" if field.in_regf else "core"
                 data.append(
@@ -171,11 +201,12 @@ class UcdpRegfMod(u.ATailoredMod):
                         rslvr._resolve_slice(field.slice),
                         f".{field.name}",
                         str(field.access),
+                        rslvr.resolve_value(field.type_),
                         f"{field.is_const}",
                         impl,
                     )
                 )
-        headers = ("Offset", "Word", "Field", "Bus/Core", "Const", "Impl")
+        headers = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         return tabulate(data, headers=headers)
 
 

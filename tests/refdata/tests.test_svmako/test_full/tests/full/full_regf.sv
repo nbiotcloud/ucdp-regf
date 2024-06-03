@@ -1,205 +1,229 @@
 // =============================================================================
 //
+// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================
+//
+//  MIT License
+//
+//  Copyright (c) 2024 nbiotcloud
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+// =============================================================================
+//
 // Module:     tests.full_regf
 // Data Model: tests.test_svmako.RegfMod
 //
-//  Overview
-//
-//  Offset    Word     Field    Bus/Core    Const    Impl
-//  --------  -------  -------  ----------  -------  ------
-//  +0        w0
-//            [1:0]    .f0      -/RO        True     core
-//            [3:2]    .f2      -/RO        True     regf
-//            [5:4]    .f4      -/RC        False    core
-//            [7:6]    .f6      -/RC        False    regf
-//            [9:8]    .f8      -/RS        False    core
-//            [11:10]  .f10     -/RS        False    regf
-//            [13:12]  .f12     -/WO        False    core
-//            [15:14]  .f14     -/WO        False    regf
-//            [17:16]  .f16     -/W1C       False    core
-//            [19:18]  .f18     -/W1C       False    regf
-//            [21:20]  .f20     -/W1S       False    core
-//            [23:22]  .f22     -/W1S       False    regf
-//            [25:24]  .f24     -/RW        False    core
-//            [27:26]  .f26     -/RW        False    regf
-//            [29:28]  .f28     -/RW1C      False    core
-//            [31:30]  .f30     -/RW1C      False    regf
-//  +1        w1
-//            [1:0]    .f0      -/RW1S      False    core
-//            [3:2]    .f2      -/RW1S      False    regf
-//            [5:4]    .f4      RO/RO       True     regf
-//            [7:6]    .f6      RO/RC       False    core
-//            [9:8]    .f8      RO/RC       False    regf
-//            [11:10]  .f10     RO/RS       False    core
-//            [13:12]  .f12     RO/RS       False    regf
-//            [15:14]  .f14     RO/WO       False    core
-//            [17:16]  .f16     RO/WO       False    regf
-//            [19:18]  .f18     RO/W1C      False    core
-//            [21:20]  .f20     RO/W1C      False    regf
-//            [23:22]  .f22     RO/W1S      False    core
-//            [25:24]  .f24     RO/W1S      False    regf
-//            [27:26]  .f26     RO/RW       False    core
-//            [29:28]  .f28     RO/RW       False    regf
-//            [31:30]  .f30     RO/RW1C     False    core
-//  +2        w2
-//            [1:0]    .f0      RO/RW1C     False    regf
-//            [3:2]    .f2      RO/RW1S     False    core
-//            [5:4]    .f4      RO/RW1S     False    regf
-//            [7:6]    .f6      RC/RO       False    core
-//            [9:8]    .f8      RC/RO       False    regf
-//            [11:10]  .f10     RC/RC       False    core
-//            [13:12]  .f12     RC/RC       False    regf
-//            [15:14]  .f14     RC/RS       False    core
-//            [17:16]  .f16     RC/RS       False    regf
-//            [19:18]  .f18     RC/WO       False    core
-//            [21:20]  .f20     RC/WO       False    regf
-//            [23:22]  .f22     RC/W1C      False    core
-//            [25:24]  .f24     RC/W1C      False    regf
-//            [27:26]  .f26     RC/W1S      False    core
-//            [29:28]  .f28     RC/W1S      False    regf
-//            [31:30]  .f30     RC/RW       False    core
-//  +3        w3
-//            [1:0]    .f0      RC/RW       False    regf
-//            [3:2]    .f2      RC/RW1C     False    core
-//            [5:4]    .f4      RC/RW1C     False    regf
-//            [7:6]    .f6      RC/RW1S     False    core
-//            [9:8]    .f8      RC/RW1S     False    regf
-//            [11:10]  .f10     RS/RO       False    core
-//            [13:12]  .f12     RS/RO       False    regf
-//            [15:14]  .f14     RS/RC       False    core
-//            [17:16]  .f16     RS/RC       False    regf
-//            [19:18]  .f18     RS/RS       False    core
-//            [21:20]  .f20     RS/RS       False    regf
-//            [23:22]  .f22     RS/WO       False    core
-//            [25:24]  .f24     RS/WO       False    regf
-//            [27:26]  .f26     RS/W1C      False    core
-//            [29:28]  .f28     RS/W1C      False    regf
-//            [31:30]  .f30     RS/W1S      False    core
-//  +4        w4
-//            [1:0]    .f0      RS/W1S      False    regf
-//            [3:2]    .f2      RS/RW       False    core
-//            [5:4]    .f4      RS/RW       False    regf
-//            [7:6]    .f6      RS/RW1C     False    core
-//            [9:8]    .f8      RS/RW1C     False    regf
-//            [11:10]  .f10     RS/RW1S     False    core
-//            [13:12]  .f12     RS/RW1S     False    regf
-//            [15:14]  .f14     WO/RO       False    core
-//            [17:16]  .f16     WO/RO       False    regf
-//            [19:18]  .f18     WO/RC       False    core
-//            [21:20]  .f20     WO/RC       False    regf
-//            [23:22]  .f22     WO/RS       False    core
-//            [25:24]  .f24     WO/RS       False    regf
-//            [27:26]  .f26     WO/WO       False    core
-//            [29:28]  .f28     WO/WO       False    regf
-//            [31:30]  .f30     WO/W1C      False    core
-//  +5        w5
-//            [1:0]    .f0      WO/W1C      False    regf
-//            [3:2]    .f2      WO/W1S      False    core
-//            [5:4]    .f4      WO/W1S      False    regf
-//            [7:6]    .f6      WO/RW       False    core
-//            [9:8]    .f8      WO/RW       False    regf
-//            [11:10]  .f10     WO/RW1C     False    core
-//            [13:12]  .f12     WO/RW1C     False    regf
-//            [15:14]  .f14     WO/RW1S     False    core
-//            [17:16]  .f16     WO/RW1S     False    regf
-//            [19:18]  .f18     W1C/RO      False    core
-//            [21:20]  .f20     W1C/RO      False    regf
-//            [23:22]  .f22     W1C/RC      False    core
-//            [25:24]  .f24     W1C/RC      False    regf
-//            [27:26]  .f26     W1C/RS      False    core
-//            [29:28]  .f28     W1C/RS      False    regf
-//            [31:30]  .f30     W1C/WO      False    core
-//  +6        w6
-//            [1:0]    .f0      W1C/WO      False    regf
-//            [3:2]    .f2      W1C/W1C     False    core
-//            [5:4]    .f4      W1C/W1C     False    regf
-//            [7:6]    .f6      W1C/W1S     False    core
-//            [9:8]    .f8      W1C/W1S     False    regf
-//            [11:10]  .f10     W1C/RW      False    core
-//            [13:12]  .f12     W1C/RW      False    regf
-//            [15:14]  .f14     W1C/RW1C    False    core
-//            [17:16]  .f16     W1C/RW1C    False    regf
-//            [19:18]  .f18     W1C/RW1S    False    core
-//            [21:20]  .f20     W1C/RW1S    False    regf
-//            [23:22]  .f22     W1S/RO      False    core
-//            [25:24]  .f24     W1S/RO      False    regf
-//            [27:26]  .f26     W1S/RC      False    core
-//            [29:28]  .f28     W1S/RC      False    regf
-//            [31:30]  .f30     W1S/RS      False    core
-//  +7        w7
-//            [1:0]    .f0      W1S/RS      False    regf
-//            [3:2]    .f2      W1S/WO      False    core
-//            [5:4]    .f4      W1S/WO      False    regf
-//            [7:6]    .f6      W1S/W1C     False    core
-//            [9:8]    .f8      W1S/W1C     False    regf
-//            [11:10]  .f10     W1S/W1S     False    core
-//            [13:12]  .f12     W1S/W1S     False    regf
-//            [15:14]  .f14     W1S/RW      False    core
-//            [17:16]  .f16     W1S/RW      False    regf
-//            [19:18]  .f18     W1S/RW1C    False    core
-//            [21:20]  .f20     W1S/RW1C    False    regf
-//            [23:22]  .f22     W1S/RW1S    False    core
-//            [25:24]  .f24     W1S/RW1S    False    regf
-//            [27:26]  .f26     RW/RO       False    core
-//            [29:28]  .f28     RW/RO       False    regf
-//            [31:30]  .f30     RW/RC       False    core
-//  +8        w8
-//            [1:0]    .f0      RW/RC       False    regf
-//            [3:2]    .f2      RW/RS       False    core
-//            [5:4]    .f4      RW/RS       False    regf
-//            [7:6]    .f6      RW/WO       False    core
-//            [9:8]    .f8      RW/WO       False    regf
-//            [11:10]  .f10     RW/W1C      False    core
-//            [13:12]  .f12     RW/W1C      False    regf
-//            [15:14]  .f14     RW/W1S      False    core
-//            [17:16]  .f16     RW/W1S      False    regf
-//            [19:18]  .f18     RW/RW       False    core
-//            [21:20]  .f20     RW/RW       False    regf
-//            [23:22]  .f22     RW/RW1C     False    core
-//            [25:24]  .f24     RW/RW1C     False    regf
-//            [27:26]  .f26     RW/RW1S     False    core
-//            [29:28]  .f28     RW/RW1S     False    regf
-//            [31:30]  .f30     RW1C/RO     False    core
-//  +9        w9
-//            [1:0]    .f0      RW1C/RO     False    regf
-//            [3:2]    .f2      RW1C/RC     False    core
-//            [5:4]    .f4      RW1C/RC     False    regf
-//            [7:6]    .f6      RW1C/RS     False    core
-//            [9:8]    .f8      RW1C/RS     False    regf
-//            [11:10]  .f10     RW1C/WO     False    core
-//            [13:12]  .f12     RW1C/WO     False    regf
-//            [15:14]  .f14     RW1C/W1C    False    core
-//            [17:16]  .f16     RW1C/W1C    False    regf
-//            [19:18]  .f18     RW1C/W1S    False    core
-//            [21:20]  .f20     RW1C/W1S    False    regf
-//            [23:22]  .f22     RW1C/RW     False    core
-//            [25:24]  .f24     RW1C/RW     False    regf
-//            [27:26]  .f26     RW1C/RW1C   False    core
-//            [29:28]  .f28     RW1C/RW1C   False    regf
-//            [31:30]  .f30     RW1C/RW1S   False    core
-//  +10       w10
-//            [1:0]    .f0      RW1C/RW1S   False    regf
-//            [3:2]    .f2      RW1S/RO     False    core
-//            [5:4]    .f4      RW1S/RO     False    regf
-//            [7:6]    .f6      RW1S/RC     False    core
-//            [9:8]    .f8      RW1S/RC     False    regf
-//            [11:10]  .f10     RW1S/RS     False    core
-//            [13:12]  .f12     RW1S/RS     False    regf
-//            [15:14]  .f14     RW1S/WO     False    core
-//            [17:16]  .f16     RW1S/WO     False    regf
-//            [19:18]  .f18     RW1S/W1C    False    core
-//            [21:20]  .f20     RW1S/W1C    False    regf
-//            [23:22]  .f22     RW1S/W1S    False    core
-//            [25:24]  .f24     RW1S/W1S    False    regf
-//            [27:26]  .f26     RW1S/RW     False    core
-//            [29:28]  .f28     RW1S/RW     False    regf
-//            [31:30]  .f30     RW1S/RW1C   False    core
-//  +11       w11
-//            [1:0]    .f0      RW1S/RW1C   False    regf
-//            [3:2]    .f2      RW1S/RW1S   False    core
-//            [5:4]    .f4      RW1S/RW1S   False    regf
-//
-//
+// Offset    Word     Field    Bus/Core    Reset    Const    Impl
+// --------  -------  -------  ----------  -------  -------  ------
+// +0        w0
+//           [1:0]    .f0      -/RO        0x0      True     core
+//           [3:2]    .f2      -/RO        0x0      True     regf
+//           [5:4]    .f4      -/RC        0x0      False    core
+//           [7:6]    .f6      -/RC        0x0      False    regf
+//           [9:8]    .f8      -/RS        0x0      False    core
+//           [11:10]  .f10     -/RS        0x0      False    regf
+//           [13:12]  .f12     -/WO        0x0      False    core
+//           [15:14]  .f14     -/WO        0x0      False    regf
+//           [17:16]  .f16     -/W1C       0x0      False    core
+//           [19:18]  .f18     -/W1C       0x0      False    regf
+//           [21:20]  .f20     -/W1S       0x0      False    core
+//           [23:22]  .f22     -/W1S       0x0      False    regf
+//           [25:24]  .f24     -/RW        0x0      False    core
+//           [27:26]  .f26     -/RW        0x0      False    regf
+//           [29:28]  .f28     -/RW1C      0x0      False    core
+//           [31:30]  .f30     -/RW1C      0x0      False    regf
+// +1        w1
+//           [1:0]    .f0      -/RW1S      0x0      False    core
+//           [3:2]    .f2      -/RW1S      0x0      False    regf
+//           [5:4]    .f4      RO/RO       0x0      True     regf
+//           [7:6]    .f6      RO/RC       0x0      False    core
+//           [9:8]    .f8      RO/RC       0x0      False    regf
+//           [11:10]  .f10     RO/RS       0x0      False    core
+//           [13:12]  .f12     RO/RS       0x0      False    regf
+//           [15:14]  .f14     RO/WO       0x0      False    core
+//           [17:16]  .f16     RO/WO       0x0      False    regf
+//           [19:18]  .f18     RO/W1C      0x0      False    core
+//           [21:20]  .f20     RO/W1C      0x0      False    regf
+//           [23:22]  .f22     RO/W1S      0x0      False    core
+//           [25:24]  .f24     RO/W1S      0x0      False    regf
+//           [27:26]  .f26     RO/RW       0x0      False    core
+//           [29:28]  .f28     RO/RW       0x0      False    regf
+//           [31:30]  .f30     RO/RW1C     0x0      False    core
+// +2        w2
+//           [1:0]    .f0      RO/RW1C     0x0      False    regf
+//           [3:2]    .f2      RO/RW1S     0x0      False    core
+//           [5:4]    .f4      RO/RW1S     0x0      False    regf
+//           [7:6]    .f6      RC/RO       0x0      False    core
+//           [9:8]    .f8      RC/RO       0x0      False    regf
+//           [11:10]  .f10     RC/RC       0x0      False    core
+//           [13:12]  .f12     RC/RC       0x0      False    regf
+//           [15:14]  .f14     RC/RS       0x0      False    core
+//           [17:16]  .f16     RC/RS       0x0      False    regf
+//           [19:18]  .f18     RC/WO       0x0      False    core
+//           [21:20]  .f20     RC/WO       0x0      False    regf
+//           [23:22]  .f22     RC/W1C      0x0      False    core
+//           [25:24]  .f24     RC/W1C      0x0      False    regf
+//           [27:26]  .f26     RC/W1S      0x0      False    core
+//           [29:28]  .f28     RC/W1S      0x0      False    regf
+//           [31:30]  .f30     RC/RW       0x0      False    core
+// +3        w3
+//           [1:0]    .f0      RC/RW       0x0      False    regf
+//           [3:2]    .f2      RC/RW1C     0x0      False    core
+//           [5:4]    .f4      RC/RW1C     0x0      False    regf
+//           [7:6]    .f6      RC/RW1S     0x0      False    core
+//           [9:8]    .f8      RC/RW1S     0x0      False    regf
+//           [11:10]  .f10     RS/RO       0x0      False    core
+//           [13:12]  .f12     RS/RO       0x0      False    regf
+//           [15:14]  .f14     RS/RC       0x0      False    core
+//           [17:16]  .f16     RS/RC       0x0      False    regf
+//           [19:18]  .f18     RS/RS       0x0      False    core
+//           [21:20]  .f20     RS/RS       0x0      False    regf
+//           [23:22]  .f22     RS/WO       0x0      False    core
+//           [25:24]  .f24     RS/WO       0x0      False    regf
+//           [27:26]  .f26     RS/W1C      0x0      False    core
+//           [29:28]  .f28     RS/W1C      0x0      False    regf
+//           [31:30]  .f30     RS/W1S      0x0      False    core
+// +4        w4
+//           [1:0]    .f0      RS/W1S      0x0      False    regf
+//           [3:2]    .f2      RS/RW       0x0      False    core
+//           [5:4]    .f4      RS/RW       0x0      False    regf
+//           [7:6]    .f6      RS/RW1C     0x0      False    core
+//           [9:8]    .f8      RS/RW1C     0x0      False    regf
+//           [11:10]  .f10     RS/RW1S     0x0      False    core
+//           [13:12]  .f12     RS/RW1S     0x0      False    regf
+//           [15:14]  .f14     WO/RO       0x0      False    core
+//           [17:16]  .f16     WO/RO       0x0      False    regf
+//           [19:18]  .f18     WO/RC       0x0      False    core
+//           [21:20]  .f20     WO/RC       0x0      False    regf
+//           [23:22]  .f22     WO/RS       0x0      False    core
+//           [25:24]  .f24     WO/RS       0x0      False    regf
+//           [27:26]  .f26     WO/WO       0x0      False    core
+//           [29:28]  .f28     WO/WO       0x0      False    regf
+//           [31:30]  .f30     WO/W1C      0x0      False    core
+// +5        w5
+//           [1:0]    .f0      WO/W1C      0x0      False    regf
+//           [3:2]    .f2      WO/W1S      0x0      False    core
+//           [5:4]    .f4      WO/W1S      0x0      False    regf
+//           [7:6]    .f6      WO/RW       0x0      False    core
+//           [9:8]    .f8      WO/RW       0x0      False    regf
+//           [11:10]  .f10     WO/RW1C     0x0      False    core
+//           [13:12]  .f12     WO/RW1C     0x0      False    regf
+//           [15:14]  .f14     WO/RW1S     0x0      False    core
+//           [17:16]  .f16     WO/RW1S     0x0      False    regf
+//           [19:18]  .f18     W1C/RO      0x0      False    core
+//           [21:20]  .f20     W1C/RO      0x0      False    regf
+//           [23:22]  .f22     W1C/RC      0x0      False    core
+//           [25:24]  .f24     W1C/RC      0x0      False    regf
+//           [27:26]  .f26     W1C/RS      0x0      False    core
+//           [29:28]  .f28     W1C/RS      0x0      False    regf
+//           [31:30]  .f30     W1C/WO      0x0      False    core
+// +6        w6
+//           [1:0]    .f0      W1C/WO      0x0      False    regf
+//           [3:2]    .f2      W1C/W1C     0x0      False    core
+//           [5:4]    .f4      W1C/W1C     0x0      False    regf
+//           [7:6]    .f6      W1C/W1S     0x0      False    core
+//           [9:8]    .f8      W1C/W1S     0x0      False    regf
+//           [11:10]  .f10     W1C/RW      0x0      False    core
+//           [13:12]  .f12     W1C/RW      0x0      False    regf
+//           [15:14]  .f14     W1C/RW1C    0x0      False    core
+//           [17:16]  .f16     W1C/RW1C    0x0      False    regf
+//           [19:18]  .f18     W1C/RW1S    0x0      False    core
+//           [21:20]  .f20     W1C/RW1S    0x0      False    regf
+//           [23:22]  .f22     W1S/RO      0x0      False    core
+//           [25:24]  .f24     W1S/RO      0x0      False    regf
+//           [27:26]  .f26     W1S/RC      0x0      False    core
+//           [29:28]  .f28     W1S/RC      0x0      False    regf
+//           [31:30]  .f30     W1S/RS      0x0      False    core
+// +7        w7
+//           [1:0]    .f0      W1S/RS      0x0      False    regf
+//           [3:2]    .f2      W1S/WO      0x0      False    core
+//           [5:4]    .f4      W1S/WO      0x0      False    regf
+//           [7:6]    .f6      W1S/W1C     0x0      False    core
+//           [9:8]    .f8      W1S/W1C     0x0      False    regf
+//           [11:10]  .f10     W1S/W1S     0x0      False    core
+//           [13:12]  .f12     W1S/W1S     0x0      False    regf
+//           [15:14]  .f14     W1S/RW      0x0      False    core
+//           [17:16]  .f16     W1S/RW      0x0      False    regf
+//           [19:18]  .f18     W1S/RW1C    0x0      False    core
+//           [21:20]  .f20     W1S/RW1C    0x0      False    regf
+//           [23:22]  .f22     W1S/RW1S    0x0      False    core
+//           [25:24]  .f24     W1S/RW1S    0x0      False    regf
+//           [27:26]  .f26     RW/RO       0x0      False    core
+//           [29:28]  .f28     RW/RO       0x0      False    regf
+//           [31:30]  .f30     RW/RC       0x0      False    core
+// +8        w8
+//           [1:0]    .f0      RW/RC       0x0      False    regf
+//           [3:2]    .f2      RW/RS       0x0      False    core
+//           [5:4]    .f4      RW/RS       0x0      False    regf
+//           [7:6]    .f6      RW/WO       0x0      False    core
+//           [9:8]    .f8      RW/WO       0x0      False    regf
+//           [11:10]  .f10     RW/W1C      0x0      False    core
+//           [13:12]  .f12     RW/W1C      0x0      False    regf
+//           [15:14]  .f14     RW/W1S      0x0      False    core
+//           [17:16]  .f16     RW/W1S      0x0      False    regf
+//           [19:18]  .f18     RW/RW       0x0      False    core
+//           [21:20]  .f20     RW/RW       0x0      False    regf
+//           [23:22]  .f22     RW/RW1C     0x0      False    core
+//           [25:24]  .f24     RW/RW1C     0x0      False    regf
+//           [27:26]  .f26     RW/RW1S     0x0      False    core
+//           [29:28]  .f28     RW/RW1S     0x0      False    regf
+//           [31:30]  .f30     RW1C/RO     0x0      False    core
+// +9        w9
+//           [1:0]    .f0      RW1C/RO     0x0      False    regf
+//           [3:2]    .f2      RW1C/RC     0x0      False    core
+//           [5:4]    .f4      RW1C/RC     0x0      False    regf
+//           [7:6]    .f6      RW1C/RS     0x0      False    core
+//           [9:8]    .f8      RW1C/RS     0x0      False    regf
+//           [11:10]  .f10     RW1C/WO     0x0      False    core
+//           [13:12]  .f12     RW1C/WO     0x0      False    regf
+//           [15:14]  .f14     RW1C/W1C    0x0      False    core
+//           [17:16]  .f16     RW1C/W1C    0x0      False    regf
+//           [19:18]  .f18     RW1C/W1S    0x0      False    core
+//           [21:20]  .f20     RW1C/W1S    0x0      False    regf
+//           [23:22]  .f22     RW1C/RW     0x0      False    core
+//           [25:24]  .f24     RW1C/RW     0x0      False    regf
+//           [27:26]  .f26     RW1C/RW1C   0x0      False    core
+//           [29:28]  .f28     RW1C/RW1C   0x0      False    regf
+//           [31:30]  .f30     RW1C/RW1S   0x0      False    core
+// +10       w10
+//           [1:0]    .f0      RW1C/RW1S   0x0      False    regf
+//           [3:2]    .f2      RW1S/RO     0x0      False    core
+//           [5:4]    .f4      RW1S/RO     0x0      False    regf
+//           [7:6]    .f6      RW1S/RC     0x0      False    core
+//           [9:8]    .f8      RW1S/RC     0x0      False    regf
+//           [11:10]  .f10     RW1S/RS     0x0      False    core
+//           [13:12]  .f12     RW1S/RS     0x0      False    regf
+//           [15:14]  .f14     RW1S/WO     0x0      False    core
+//           [17:16]  .f16     RW1S/WO     0x0      False    regf
+//           [19:18]  .f18     RW1S/W1C    0x0      False    core
+//           [21:20]  .f20     RW1S/W1C    0x0      False    regf
+//           [23:22]  .f22     RW1S/W1S    0x0      False    core
+//           [25:24]  .f24     RW1S/W1S    0x0      False    regf
+//           [27:26]  .f26     RW1S/RW     0x0      False    core
+//           [29:28]  .f28     RW1S/RW     0x0      False    regf
+//           [31:30]  .f30     RW1S/RW1C   0x0      False    core
+// +11       w11
+//           [1:0]    .f0      RW1S/RW1C   0x0      False    regf
+//           [3:2]    .f2      RW1S/RW1S   0x0      False    core
+//           [5:4]    .f4      RW1S/RW1S   0x0      False    regf//
 // =============================================================================
 
 
