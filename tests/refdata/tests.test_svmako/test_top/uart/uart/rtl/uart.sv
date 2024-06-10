@@ -5,6 +5,7 @@
 //
 // =============================================================================
 
+`begin_keywords 1800-2009
 
 module uart ( // uart.uart.UartMod
   // main_i
@@ -76,3 +77,5 @@ module uart ( // uart.uart.UartMod
   );
 
 endmodule // uart
+
+`end_keywords

@@ -1,7 +1,7 @@
 // =============================================================================
 //
-// Module:     uart.uart_regf
-// Data Model: glbl.regf.RegfMod
+// Module:     tests.reset2_regf
+// Data Model: tests.test_svmako.RegfMod
 //
 //  Overview
 //
@@ -16,10 +16,10 @@
 
 `begin_keywords 1800-2009
 
-module uart_regf ( // glbl.regf.RegfMod
+module reset2_regf ( // tests.test_svmako.RegfMod
   // main_i
   input  wire         main_clk_i,
-  input  wire         main_rst_an_i,        // Async Reset (Low-Active)
+  input  wire         main_rst_an_i,         // Async Reset (Low-Active)
   // mem_i
   input  wire         mem_ena_i,
   input  wire  [12:0] mem_addr_i,
@@ -29,9 +29,10 @@ module uart_regf ( // glbl.regf.RegfMod
   output logic        mem_err_o,
   // regf_o
   // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
-  output logic        regf_ctrl_ena_rval_o, // Core Read Value
+  output logic        regf_ctrl_ena_rval_o,  // Core Read Value
   // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
-  input  wire         regf_ctrl_busy_rbus_i // Bus Read Value
+  input  wire         regf_ctrl_busy_rbus_i, // Bus Read Value
+  input  wire         soft_rst_i
 );
 
 
@@ -82,6 +83,9 @@ module uart_regf ( // glbl.regf.RegfMod
     if (main_rst_an_i == 1'b1) begin
       // Word: ctrl
       data_ctrl_ena_r <= 1'b0;
+    end else if (soft_rst_i == 1'b1) begin
+      // Word: ctrl
+      data_ctrl_ena_r <= 1'b0;
     end else begin
       if (bus_ctrl_wren_s == 1'b1) begin
         data_ctrl_ena_r <= mem_wdata_i[0];
@@ -112,6 +116,6 @@ module uart_regf ( // glbl.regf.RegfMod
   // ------------------------------------------------------
   assign regf_ctrl_ena_rval_o = data_ctrl_ena_r;
 
-endmodule // uart_regf
+endmodule // reset2_regf
 
 `end_keywords

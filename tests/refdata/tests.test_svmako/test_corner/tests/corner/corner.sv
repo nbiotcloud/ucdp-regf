@@ -5,6 +5,7 @@
 //
 // =============================================================================
 
+`begin_keywords 1800-2009
 
 module corner ( // tests.test_svmako.CornerMod
   // main_i
@@ -45,16 +46,19 @@ module corner ( // tests.test_svmako.CornerMod
     .regf_grpa_ctrl_start_rval_o (                 ), // TODO - Core Read Value
     // regf_grpa_ctrl_status_o: bus=RO core=RW in_regf=False
     .regf_grpa_ctrl_status_rbus_i(1'b0             ), // TODO - Bus Read Value
+    // regf_grpa_grddim_int_o: bus=RW core=RO in_regf=False
+    .regf_grpa_grddim_int_wr_o   (                 ), // TODO - Bus Write Strobe
+    .regf_grpa_grddim_int_wbus_o (                 ), // TODO - Bus Write Value
+    .regf_grpa_grddim_int_rbus_i ('{2{12'h000}}    ), // TODO - Bus Read Value
     // regf_grpb_o
     // regf_grpb_ctrl_start_o: bus=RW core=RO in_regf=True
     .regf_grpb_ctrl_start_rval_o (                 ), // TODO - Core Read Value
     // regf_ctrl_ver_o: bus=RO core=RO in_regf=True
     .regf_ctrl_ver_rval_o        (                 ), // TODO - Core Read Value
     // regf_grpc_o
-    // regf_grpc_ctrl_spec1_o: bus=RC core=RW in_regf=True
-    .regf_grpc_ctrl_spec1_rval_o (                 ), // TODO - Core Read Value
-    .regf_grpc_ctrl_spec1_wval_i (1'b0             ), // TODO - Core Write Value
-    .regf_grpc_ctrl_spec1_wr_i   (1'b0             ), // TODO - Core Write Strobe
+    // regf_grpc_ctrl_spec1_o: bus=RC core=RW in_regf=False
+    .regf_grpc_ctrl_spec1_rbus_i (1'b0             ), // TODO - Bus Read Value
+    .regf_grpc_ctrl_spec1_rd_o   (                 ), // TODO - Bus Read Strobe
     // regf_grpc_dims_spec2_o: bus=RW core=RC in_regf=False
     .regf_grpc_dims_spec2_wr_o   (                 ), // TODO - Bus Write Strobe
     .regf_grpc_dims_spec2_wbus_o (                 ), // TODO - Bus Write Value
@@ -68,7 +72,44 @@ module corner ( // tests.test_svmako.CornerMod
     // regf_dims_roval_o: bus=RO core=RW in_regf=False
     .regf_dims_roval_rbus_i      ('{3{1'b0}}       ), // TODO - Bus Read Value
     // regf_dims_wrval_o: bus=RW core=RO in_regf=True
-    .regf_dims_wrval_rval_o      (                 )  // TODO - Core Read Value
+    .regf_dims_wrval_upd_o       (                 ), // TODO - Update Strobe
+    .regf_dims_wrval_rval_o      (                 ), // TODO - Core Read Value
+    // regf_guards_once_o: bus=WP core=RO in_regf=True
+    .regf_guards_once_rval_o     (                 ), // TODO - Core Read Value
+    // regf_guards_coreonce_o: bus=WP core=RO in_regf=False
+    .regf_guards_coreonce_rbus_i (1'b0             ), // TODO - Bus Read Value
+    .regf_guards_coreonce_wbus_o (                 ), // TODO - Bus Write Value
+    .regf_guards_coreonce_wr_o   (                 ), // TODO - Bus Write Strobe
+    // regf_guards_busonce_o: bus=WP core=RO in_regf=False
+    .regf_guards_busonce_rbus_i  (1'b0             ), // TODO - Bus Read Value
+    .regf_guards_busonce_wbus_o  (                 ), // TODO - Bus Write Value
+    .regf_guards_busonce_wr_o    (                 ), // TODO - Bus Write Strobe
+    // regf_guards_single_o: bus=WP core=RO in_regf=True
+    .regf_guards_single_rval_o   (                 ), // TODO - Core Read Value
+    // regf_guards_onetime_o: bus=WP core=RO in_regf=True
+    .regf_guards_onetime_rval_o  (                 ), // TODO - Core Read Value
+    // regf_guards_guard_a_o: bus=RW core=RO in_regf=True
+    .regf_guards_guard_a_rval_o  (                 ), // TODO - Core Read Value
+    // regf_guards_guard_b_o: bus=RW core=RO in_regf=True
+    .regf_guards_guard_b_rval_o  (                 ), // TODO - Core Read Value
+    // regf_guards_guard_c_o: bus=RW core=RO in_regf=True
+    .regf_guards_guard_c_rval_o  (                 ), // TODO - Core Read Value
+    // regf_guards_cprio_o: bus=RW core=RW in_regf=True
+    .regf_guards_cprio_rval_o    (                 ), // TODO - Core Read Value
+    .regf_guards_cprio_wval_i    (1'b0             ), // TODO - Core Write Value
+    .regf_guards_cprio_wr_i      (1'b0             ), // TODO - Core Write Strobe
+    // regf_guards_bprio_o: bus=RW core=RW in_regf=True
+    .regf_guards_bprio_rval_o    (                 ), // TODO - Core Read Value
+    .regf_guards_bprio_wval_i    (1'b0             ), // TODO - Core Write Value
+    .regf_guards_bprio_wr_i      (1'b0             ), // TODO - Core Write Strobe
+    // regf_grddim_num_o: bus=RW core=RO in_regf=False
+    .regf_grddim_num_wr_o        (                 ), // TODO - Bus Write Strobe
+    .regf_grddim_num_wbus_o      (                 ), // TODO - Bus Write Value
+    .regf_grddim_num_rbus_i      ('{2{12'h000}}    ), // TODO - Bus Read Value
+    // regf_grddim_const_o: bus=RO core=RO in_regf=True
+    .regf_grddim_const_rval_o    (                 )  // TODO - Core Read Value
   );
 
 endmodule // corner
+
+`end_keywords

@@ -145,7 +145,6 @@ def check_field(wordname: str, field: Field) -> None:
         raise ValueError(
             f"Field '{wordname}.{field.name}' cannot be part of multiple portgroups when core provides a value!"
         )
-
     # constant value with two locations
     if field.is_const and not field.in_regf:
         raise ValueError(f"Field '{wordname}.{field.name}' with constant value must be in_regf.")
@@ -183,6 +182,9 @@ def filter_busread(field: Field):
     return field.bus and field.bus.read
 
 
+wf_ident = re.compile(r"(?P<word>\w+)\.(?P<field>\w+)")
+
+
 class UcdpRegfMod(u.ATailoredMod):
     """Register File."""
 
@@ -200,6 +202,7 @@ class UcdpRegfMod(u.ATailoredMod):
     )
 
     _guards: dict[str, tuple[str, str]] = u.PrivateField(default_factory=dict)
+    _soft_rst: str = u.PrivateField(default=None)
 
     @cached_property
     def addrspace(self) -> Addrspace:
@@ -222,6 +225,34 @@ class UcdpRegfMod(u.ATailoredMod):
         self._add_bus_word_en_decls()
         self._prep_guards()
         self._add_wrguard_decls()
+        self._handle_soft_reset()
+
+    def _handle_soft_reset(self):
+        if self._soft_rst is None:
+            return
+        if wf := wf_ident.match(self._soft_rst):
+            wname = wf.group("word")
+            fname = wf.group("field")
+            try:
+                thefield = self.addrspace.words[wname].fields[fname]
+            except KeyError:
+                raise ValueError(f"There is no register/field of name {wname}/{fname}") from None
+            if not isinstance(thefield.type_, u.RstType):
+                raise ValueError(f"Soft reset from {wname}/{fname} is not of type 'RstType' but {thefield.type_}")
+            if self.addrspace.words[wname].depth:
+                raise ValueError(f"Soft reset from {wname}/{fname} must not have 'depth'>0 in word.")
+            if thefield.in_regf:
+                raise ValueError(f"Soft reset from {wname}/{fname} should not have 'in_regf=True'.")
+            self._soft_rst = f"bus_{wname}_{fname}_rst_s"
+            self.add_signal(u.RstType(), self._soft_rst)
+        else:
+            if self._soft_rst.endswith("_rst_i"):
+                pass
+            elif self._soft_rst.endswith("_i"):
+                self._soft_rst = f"{self._soft_rst[:-2]}_rst_i"
+            else:
+                self._soft_rst = f"{self._soft_rst}_rst_i"
+            self.add_port(u.RstType(), self._soft_rst)
 
     def _add_const_decls(self):
         def filter_regf_consts(field: Field):
@@ -248,21 +279,27 @@ class UcdpRegfMod(u.ATailoredMod):
                 self.add_signal(type_, signame, comment=cmt)
                 cmt = None
             # special purpose flops
-            wordonce = False
-            grdonce = {}
-            signame = f"bus_{word.name}_{{os}}once_r"
-            type_ = u.BitType(default=1)
-            if word.depth:
-                type_ = u.ArrayType(type_, word.depth)
-            for field in fields:
-                if not filter_buswriteonce(field):
+            self._add_special_ff_decls(word)
+
+    def _add_special_ff_decls(self, word: Word):
+        wordonce = False
+        grdonce = []
+        signame = f"bus_{word.name}_{{os}}once_r"
+        type_ = u.BitType(default=1)
+        if word.depth:
+            type_ = u.ArrayType(type_, word.depth)
+        for field in word.fields:
+            if not filter_buswriteonce(field):
+                continue
+            if field.wr_guard:
+                if field.wr_guard in grdonce:
                     continue
-                if field.bus.write.once and field.wr_guard:
-                    grdidx = grdonce.setdefault(field.wr_guard, len(grdonce))
-                    self.add_signal(type_, signame.format(os=f"grd{grdidx}"))
-                elif field.bus.write.once and not wordonce:
-                    wordonce = True
-                    self.add_signal(type_, signame.format(os="wr"))
+                grdidx = len(grdonce)
+                grdonce.append(field.wr_guard)
+                self.add_signal(type_, signame.format(os=f"grd{grdidx}"))
+            elif not wordonce:
+                wordonce = True
+                self.add_signal(type_, signame.format(os="wr"))
 
     def _add_bus_word_en_decls(self):
         cmt = "bus word write enables"
@@ -283,7 +320,6 @@ class UcdpRegfMod(u.ATailoredMod):
             cmt = None
 
     def _prep_guards(self):
-        wf_ident = re.compile(r"(?P<word>\w+)\.(?P<field>\w+)")
         idx = 0
         for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
             for field in fields:
@@ -312,21 +348,21 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(u.BitType(), signame, comment=cmt)
             cmt = None
 
-        # idx = 0
-        # for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
-        #     for field in fields:
-        #         if field.wr_guard:
-        #             if self._guards.get(field.wr_guard, None) is not None:  # already known
-        #                 continue
-        #             signame = f"bus_wrguard_{idx}_s"
-        #             self._guards[field.wr_guard] = signame
-        #             self.add_signal(u.BitType(), signame, comment=cmt)
-        #             cmt = None
-        #             idx += 1
-
     def add_word(self, *args, **kwargs):
         """Add Word."""
         return self.addrspace.add_word(*args, **kwargs)
+
+    def add_soft_rst(self, soft_reset: str = "soft_rst_i"):
+        """
+        Add Soft Reset.
+
+        Calling w/o argument results in adding input 'soft_rst_i.
+        Calling with a string '<name>' will add input port 'name_rst_i'.
+        calling with a string '<word>.<field>' will use this field as soft reset.
+        """
+        if self._soft_rst is not None:
+            raise ValueError("Soft reset has been already defined.")
+        self._soft_rst = soft_reset
 
     def get_overview(self) -> str:
         """Overview."""

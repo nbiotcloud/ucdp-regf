@@ -19,6 +19,7 @@
 //
 // =============================================================================
 
+`begin_keywords 1800-2009
 
 module portgroup_regf #( // tests.test_svmako.RegfMod
   parameter integer width_p = width_p
@@ -54,22 +55,18 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
 );
 
 
-  // ===================================
-  // local signals
-  // ===================================
-  // Word: ctrl
-  logic              data_ctrl_ena_r;
-  // Word: tx
-  logic  [width_p-1] data_tx_data0_r;
-  // bus word write enables
-  logic              bus_ctrl_wren_s;
-  logic              bus_tx_wren_s;
-  // bus word read enables
-  logic              bus_ctrl_rden_s;
-  logic              bus_rx_rden_s;
-  logic              bus_tx_rden_s;
 
 
+  // ------------------------------------------------------
+  //  Signals
+  // ------------------------------------------------------
+  logic             data_ctrl_ena_r; // Word ctrl
+  logic [width_p-1] data_tx_data0_r; // Word tx
+  logic             bus_ctrl_wren_s; // bus word write enables
+  logic             bus_tx_wren_s;
+  logic             bus_ctrl_rden_s; // bus word read enables
+  logic             bus_rx_rden_s;
+  logic             bus_tx_rden_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -114,13 +111,14 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
     end
   end
 
-  // ===================================
+  // ------------------------------------------------------
   // in-regf storage
-  // ===================================
+  // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
     if (main_rst_an_i == 1'b1) begin
       // Word: ctrl
       data_ctrl_ena_r <= 1'b0;
+      // Word: rx
       // Word: tx
       data_tx_data0_r <= {width_p {1'b0}};
     end else begin
@@ -133,9 +131,9 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
     end
   end
 
-  // ===================================
+  // ------------------------------------------------------
   //  Bus Read-Mux
-  // ===================================
+  // ------------------------------------------------------
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
@@ -157,12 +155,14 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
     end
   end
 
-  // ===================================
+  // ------------------------------------------------------
   //  Output Assignments
-  // ===================================
+  // ------------------------------------------------------
   assign regf_top_ctrl_ena_rval_o = data_ctrl_ena_r;
   assign regf_rx_ctrl_ena_rval_o  = data_ctrl_ena_r;
   assign regf_tx_ctrl_ena_rval_o  = data_ctrl_ena_r;
   assign regf_tx_tx_data0_rval_o  = data_tx_data0_r;
 
 endmodule // portgroup_regf
+
+`end_keywords

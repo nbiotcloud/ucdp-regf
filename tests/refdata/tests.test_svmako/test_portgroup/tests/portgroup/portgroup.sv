@@ -5,6 +5,7 @@
 //
 // =============================================================================
 
+`begin_keywords 1800-2009
 
 module portgroup #( // tests.test_svmako.PortgroupMod
   parameter integer width_p = 1
@@ -106,3 +107,5 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   );
 
 endmodule // portgroup
+
+`end_keywords

@@ -5,6 +5,7 @@
 //
 // =============================================================================
 
+`begin_keywords 1800-2009
 
 module portgroup_rx #( // tests.test_svmako.CoreMod
   parameter integer width_p = width_p
@@ -23,3 +24,5 @@ module portgroup_rx #( // tests.test_svmako.CoreMod
 
 
 endmodule // portgroup_rx
+
+`end_keywords

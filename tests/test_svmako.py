@@ -81,7 +81,7 @@ class FullMod(u.AMod):
         for bus in (None, *ACCESSES):
             for core in ACCESSES:
                 for in_regf in (False, True):
-                    if bus == _addrspace.RO and core == _addrspace.RO and not in_regf:
+                    if (bus is None or bus == _addrspace.RO) and core == _addrspace.RO and not in_regf:
                         continue
                     word.add_field(f"f{fidx}", u.UintType(2), bus, core=core, in_regf=in_regf)
                     fidx += 2
@@ -127,14 +127,14 @@ class CornerMod(u.AMod):
         )
         word.add_field("status", u.BitType(), "RO", portgroups=("grpa",))
         word.add_field("ver", u.UintType(4, default=12), bus="RO", core="RO")
-        word.add_field("spec1", u.BitType(), bus="RC", core="RW", portgroups=("grpc",))
+        word.add_field("spec1", u.BitType(), bus="RC", core="RW", portgroups=("grpc",), in_regf=False)
 
         word = regf.add_word("txdata", depth=5)
         word.add_field("bytes", u.UintType(8), "RW")
 
         word = regf.add_word("dims", depth=3)
         word.add_field("roval", u.BusyType(), "RO")
-        word.add_field("wrval", u.EnaType(), "RW")
+        word.add_field("wrval", u.EnaType(), "RW", upd_strb=True)
         word.add_field("spec2", u.BitType(), bus="RW", core="RC", portgroups=("grpc",), in_regf=False)
         word.add_field(
             "spec3",
@@ -145,6 +145,35 @@ class CornerMod(u.AMod):
             in_regf=True,
             upd_prio="core",
         )
+
+        word = regf.add_word("guards", in_regf=True, depth=0)
+        wronce = _addrspace.WriteOp(name="W", write="", once=True, title="WrOnce", descr="Write Once")
+        busacc = _addrspace.Access(name="WP", read=_addrspace._R, write=wronce)
+        word.add_field("once", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.ena & ctrl.busy")
+        word.add_field("coreonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)
+        word.add_field("busonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)
+        word.add_field(
+            "single",
+            u.BitType(),
+            bus=busacc,
+            core=_addrspace.RO,
+        )
+        word.add_field(
+            "onetime",
+            u.BitType(),
+            bus=busacc,
+            core=_addrspace.RO,
+        )
+        word.add_field("guard_a", u.UintType(4), "RW", wr_guard="ctrl.ena & ctrl.busy")
+        word.add_field("guard_b", u.UintType(4), "RW", wr_guard="ctrl.busy")
+        word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy")
+        word.add_field("cprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="core")
+        word.add_field("bprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="bus")
+
+        word = regf.add_word("grddim", in_regf=False, depth=2)
+        word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy")
+        word.add_field("const", u.UintType(3, default=5), bus=_addrspace.RO, core=_addrspace.RO, in_regf=True)
+        word.add_field("int", u.UintType(12), "RW", wr_guard="ctrl.spec1", portgroups=("grpa",))
 
 
 def test_corner(tmp_path):
@@ -196,3 +225,112 @@ def test_portgroup(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_portgroup, tmp_path)
+
+
+class Reset1Mod(u.AMod):
+    """Regf with Soft Reset."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        # Register File
+        regf = RegfMod(self, "u_regf")
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("ctrl")
+        word.add_field("ena", u.EnaType(), "RW")
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+        regf.add_soft_rst("soft")
+
+
+def test_reset1(tmp_path):
+    """Sift Reset 1."""
+    mod = Reset1Mod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_reset1, tmp_path)
+
+
+class Reset2Mod(u.AMod):
+    """Regf with Soft Reset."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        # Register File
+        regf = RegfMod(self, "u_regf")
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("ctrl")
+        word.add_field("ena", u.EnaType(), "RW")
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+        regf.add_soft_rst("soft_i")
+
+
+def test_reset2(tmp_path):
+    """Soft Reset 2."""
+    mod = Reset2Mod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_reset2, tmp_path)
+
+
+class Reset3Mod(u.AMod):
+    """Regf with Soft Reset."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        # Register File
+        regf = RegfMod(self, "u_regf")
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("ctrl")
+        word.add_field("ena", u.EnaType(), "RW")
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+        regf.add_soft_rst("soft_rst_i")
+
+
+def test_reset3(tmp_path):
+    """Soft Reset 3."""
+    mod = Reset3Mod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_reset3, tmp_path)
+
+
+class Reset4Mod(u.AMod):
+    """Regf with Soft Reset."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        # Register File
+        regf = RegfMod(self, "u_regf")
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("ctrl")
+        word.add_field("clrall", u.RstType(), "WO")
+        word.add_field("ena", u.EnaType(), "RW")
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+        regf.add_soft_rst("ctrl.clrall")
+
+
+def test_reset4(tmp_path):
+    """Soft Reset 4."""
+    mod = Reset4Mod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_reset4, tmp_path)
