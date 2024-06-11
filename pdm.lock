@@ -5,7 +5,7 @@
 groups = ["default", "checktypes", "doc", "format", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:dfb01c8421b6c0d3a4955d7666b2005d4ee3a9abb8d5aab2cdef3c462804b5a0"
+content_hash = "sha256:382e3ae767c00bdf4783f9fe0ac48559140a301f2cd7b6284136d42c806d4684"
 
 [[package]]
 name = "aligntext"
@@ -1484,30 +1484,24 @@ files = [
 [[package]]
 name = "ucdp-glbl"
 version = "0.2.0"
-requires_python = "<4.0,>=3.10.0"
+requires_python = ">=3.10.0,<4.0"
+path = "../ucdp-glbl"
 summary = "Unified Chip Design Platform - Global"
 groups = ["default"]
 dependencies = [
     "ucdp>=0.4.0",
-]
-files = [
-    {file = "ucdp_glbl-0.2.0-py3-none-any.whl", hash = "sha256:16b3a3ee52f50c9723d26334f256f562167c7269a37186eafd48ccab9cab9330"},
-    {file = "ucdp_glbl-0.2.0.tar.gz", hash = "sha256:1c5a5ecfc9206523c77dd7bb71dca8c295eb60420daf71c0b7c7f6839771a499"},
 ]
 
 [[package]]
 name = "ucdp-sv"
 version = "0.2.0"
 requires_python = ">=3.10.0,<4.0"
+path = "../ucdp-sv"
 summary = "Unified Chip Design Platform"
-groups = ["test"]
+groups = ["default", "test"]
 dependencies = [
     "aligntext>=1.0.0",
     "ucdp>=0.4.0",
-]
-files = [
-    {file = "ucdp_sv-0.2.0-py3-none-any.whl", hash = "sha256:9342db3d15924d40d915ce5db4c4d9558a61cbf127e9f1302d64d25223be620b"},
-    {file = "ucdp_sv-0.2.0.tar.gz", hash = "sha256:16d2a98bb1ecc6880e77e9c81e30f87e5b52808f3796d9cf7a69540d3f38920d"},
 ]
 
 [[package]]
