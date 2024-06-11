@@ -1,26 +1,52 @@
 // =============================================================================
 //
+// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================
+//
+//  MIT License
+//
+//  Copyright (c) 2024 nbiotcloud
+//
+//  Permission is hereby granted, free of charge, to any person obtaining a copy
+//  of this software and associated documentation files (the "Software"), to deal
+//  in the Software without restriction, including without limitation the rights
+//  to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+//  copies of the Software, and to permit persons to whom the Software is
+//  furnished to do so, subject to the following conditions:
+//
+//  The above copyright notice and this permission notice shall be included in all
+//  copies or substantial portions of the Software.
+//
+//  THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+//  IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+//  FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+//  AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+//  LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+//  OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+//  SOFTWARE.
+//
+// =============================================================================
+//
 // Module:     tests.corner_regf
 // Data Model: tests.test_svmako.RegfMod
 //
-//  Overview
-//
-//  Offset    Word     Field      Bus/Core    Const    Impl
-//  --------  -------  ---------  ----------  -------  ------
-//  +0        ctrl
-//            [0]      .ena       RW/RO       False    regf
-//            [4]      .busy      RO/RW       False    core
-//            [5]      .start     RW/RO       False    regf
-//            [6]      .status    RO/RW       False    core
-//            [10:7]   .ver       RO/RO       True     regf
-//            [11]     .spec1     RC/RW       False    core
-//  +5:1      txdata
-//            [7:0]    .bytes     RW/RO       False    regf
-//  +8:6      dims
-//            [0]      .roval     RO/RW       False    core
-//            [1]      .wrval     RW/RO       False    regf
-//            [2]      .spec2     RW/RC       False    core
-//            [3]      .spec3     RC/RW       False    regf
+// Offset    Word    Field    Bus/Core    Reset    Const    Impl
+// --------  ------  -------  ----------  -------  -------  ------
+// +0        ctrl
+//           [0]     .ena     RW/RO       0        False    regf
+//           [4]     .busy    RO/RW       0        False    core
+//           [5]     .start   RW/RO       0        False    regf
+//           [6]     .status  RO/RW       0        False    core
+//           [10:7]  .ver     RO/RO       0xC      True     regf
+//           [11]    .spec1   RC/RW       0        False    regf
+// +5:1      txdata
+//           [7:0]   .bytes   RW/RO       0x0      False    regf
+// +8:6      dims
+//           [0]     .roval   RO/RW       0        False    core
+//           [1]     .wrval   RW/RO       0        False    regf
+//           [2]     .spec2   RW/RC       0        False    core
+//           [3]     .spec3   RC/RW       0        False    regf//
 //  +8        guards
 //            [0]      .once      WP/RO       False    regf
 //            [1]      .coreonce  WP/RO       False    core
@@ -36,8 +62,6 @@
 //            [11:0]   .num       RW/RO       False    core
 //            [14:12]  .const     RO/RO       True     regf
 //            [26:15]  .int       RW/RO       False    core
-//
-//
 // =============================================================================
 
 `begin_keywords 1800-2009

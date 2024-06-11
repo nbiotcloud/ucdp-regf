@@ -3,6 +3,7 @@
 // Module:     uart.uart_core
 // Data Model: uart.uart.UartCoreMod
 //
+//
 // GENERATE INPLACE END fileheader =============================================
 
 // GENERATE INPLACE BEGIN beginmod() ===========================================

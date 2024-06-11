@@ -43,6 +43,8 @@ Access: TypeAlias = _addrspace.Access
 ReadOp: TypeAlias = _addrspace.ReadOp
 WriteOp: TypeAlias = _addrspace.WriteOp
 
+Prio = Literal["bus", "core"]
+
 _IN_REGF_DEFAULTS = {
     _addrspace.RO: False,
     _addrspace.WO: False,
@@ -57,7 +59,7 @@ class Field(_addrspace.Field):
     """Portgroups."""
     in_regf: bool
     """Implementation within Regf."""
-    upd_prio: Literal["bus", "core"] | None
+    upd_prio: Prio | None
     """Update Priority: None, 'b'us or 'c'core."""
     upd_strb: bool = False
     """Update strobe towards core."""
@@ -106,8 +108,12 @@ class Word(_addrspace.Word):
             signame = f"{self.name}_{name}"
         if in_regf is None:
             in_regf = self.in_regf
+        if core is None:
+            core = _addrspace.get_counteraccess(bus)
         if in_regf is None:
             in_regf = get_in_regf(bus, core)
+        if upd_prio is None:
+            upd_prio = self.upd_prio
         field = Field(
             name=name,
             bus=bus,
@@ -156,10 +162,15 @@ class Addrspace(_addrspace.Addrspace):
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
 
-    def _create_word(self, portgroups=None, **kwargs) -> Word:
+    upd_prio: Prio | None = None
+    """Update Priority: None, 'bus' or 'core'."""
+
+    def _create_word(self, portgroups=None, prio=None, **kwargs) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
-        return Word(portgroups=portgroups, **kwargs)
+        if prio is None:
+            prio = self.prio
+        return Word(portgroups=portgroups, upd_prio=upd_prio, **kwargs)
 
 
 def filter_regf_flipflops(field: Field):
@@ -369,7 +380,7 @@ class UcdpRegfMod(u.ATailoredMod):
         data = []
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
-            data.append((f"+{word.slice}", word.name, "", "", "", ""))
+            data.append((f"+{word.slice}", word.name, "", "", "", "", ""))
             for field in word.fields:
                 impl = "regf" if field.in_regf else "core"
                 data.append(
@@ -378,11 +389,12 @@ class UcdpRegfMod(u.ATailoredMod):
                         rslvr._resolve_slice(field.slice),
                         f".{field.name}",
                         str(field.access),
+                        rslvr.resolve_value(field.type_),
                         f"{field.is_const}",
                         impl,
                     )
                 )
-        headers = ("Offset", "Word", "Field", "Bus/Core", "Const", "Impl")
+        headers = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         return tabulate(data, headers=headers)
 
 

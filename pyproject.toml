@@ -24,7 +24,7 @@
 
 [project]
 name = "ucdp-regf"
-version = "0.2.0"
+version = "0.3.0"
 description = "Unified Chip Design Platform - Register File"
 readme = "README.md"
 authors = [
@@ -35,7 +35,7 @@ classifiers = [
 ]
 requires-python = ">=3.10.0,<4.0"
 dependencies = [
-    "ucdp>=0.4.1",
+    "ucdp>=0.5.0",
     "ucdp-glbl @ file:///${PROJECT_ROOT}/../ucdp-glbl",
     "ucdp-sv @ file:///${PROJECT_ROOT}/../ucdp-sv",
 ]
@@ -59,7 +59,7 @@ test = [
     "coveralls>=3.3.1",
     "pytest-cov>=5.0.0",
     "test2ref>=0.4.2",
-    "ucdp-sv>=0.2.0",
+    "ucdp-sv>=0.3.0",
 ]
 checktypes = [
     "mypy>=1.9.0",

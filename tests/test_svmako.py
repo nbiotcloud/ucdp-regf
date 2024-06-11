@@ -143,7 +143,7 @@ class CornerMod(u.AMod):
             core="RW",
             portgroups=("grpc",),
             in_regf=True,
-            upd_prio="core",
+            prio="core",
         )
 
         word = regf.add_word("guards", in_regf=True, depth=0)
