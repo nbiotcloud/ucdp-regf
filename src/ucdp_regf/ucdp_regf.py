@@ -88,6 +88,8 @@ class Word(_addrspace.Word):
     """Default Portgroups for Fields."""
     in_regf: bool | None = None
     """Default Implementation within Regf."""
+    upd_prio: Prio | None = None
+    """Update Priority: None, 'b'us or 'c'core."""
 
     def _create_field(
         self,
@@ -165,11 +167,11 @@ class Addrspace(_addrspace.Addrspace):
     upd_prio: Prio | None = None
     """Update Priority: None, 'bus' or 'core'."""
 
-    def _create_word(self, portgroups=None, prio=None, **kwargs) -> Word:
+    def _create_word(self, portgroups=None, upd_prio=None, **kwargs) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
-        if prio is None:
-            prio = self.prio
+        if upd_prio is None:
+            upd_prio = self.upd_prio
         return Word(portgroups=portgroups, upd_prio=upd_prio, **kwargs)
 
 

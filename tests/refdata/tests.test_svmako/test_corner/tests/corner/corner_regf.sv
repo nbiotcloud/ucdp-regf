@@ -31,37 +31,37 @@
 // Module:     tests.corner_regf
 // Data Model: tests.test_svmako.RegfMod
 //
-// Offset    Word    Field    Bus/Core    Reset    Const    Impl
-// --------  ------  -------  ----------  -------  -------  ------
+// Offset    Word     Field      Bus/Core    Reset    Const    Impl
+// --------  -------  ---------  ----------  -------  -------  ------
 // +0        ctrl
-//           [0]     .ena     RW/RO       0        False    regf
-//           [4]     .busy    RO/RW       0        False    core
-//           [5]     .start   RW/RO       0        False    regf
-//           [6]     .status  RO/RW       0        False    core
-//           [10:7]  .ver     RO/RO       0xC      True     regf
-//           [11]    .spec1   RC/RW       0        False    regf
+//           [0]      .ena       RW/RO       0        False    regf
+//           [4]      .busy      RO/RW       0        False    core
+//           [5]      .start     RW/RO       0        False    regf
+//           [6]      .status    RO/RW       0        False    core
+//           [10:7]   .ver       RO/RO       0xC      True     regf
+//           [11]     .spec1     RC/RW       0        False    core
 // +5:1      txdata
-//           [7:0]   .bytes   RW/RO       0x0      False    regf
+//           [7:0]    .bytes     RW/RO       0x0      False    regf
 // +8:6      dims
-//           [0]     .roval   RO/RW       0        False    core
-//           [1]     .wrval   RW/RO       0        False    regf
-//           [2]     .spec2   RW/RC       0        False    core
-//           [3]     .spec3   RC/RW       0        False    regf//
-//  +8        guards
-//            [0]      .once      WP/RO       False    regf
-//            [1]      .coreonce  WP/RO       False    core
-//            [2]      .busonce   WP/RO       False    core
-//            [3]      .single    WP/RO       False    regf
-//            [4]      .onetime   WP/RO       False    regf
-//            [8:5]    .guard_a   RW/RO       False    regf
-//            [12:9]   .guard_b   RW/RO       False    regf
-//            [16:13]  .guard_c   RW/RO       False    regf
-//            [17]     .cprio     RW/RW       False    regf
-//            [18]     .bprio     RW/RW       False    regf
-//  +10:9     grddim
-//            [11:0]   .num       RW/RO       False    core
-//            [14:12]  .const     RO/RO       True     regf
-//            [26:15]  .int       RW/RO       False    core
+//           [0]      .roval     RO/RW       0        False    core
+//           [1]      .wrval     RW/RO       0        False    regf
+//           [2]      .spec2     RW/RC       0        False    core
+//           [3]      .spec3     RC/RW       0        False    regf
+// +8        guards
+//           [0]      .once      WP/RO       0        False    regf
+//           [1]      .coreonce  WP/RO       0        False    core
+//           [2]      .busonce   WP/RO       0        False    core
+//           [3]      .single    WP/RO       0        False    regf
+//           [4]      .onetime   WP/RO       0        False    regf
+//           [8:5]    .guard_a   RW/RO       0x0      False    regf
+//           [12:9]   .guard_b   RW/RO       0x0      False    regf
+//           [16:13]  .guard_c   RW/RO       0x0      False    regf
+//           [17]     .cprio     RW/RW       0        False    regf
+//           [18]     .bprio     RW/RW       0        False    regf
+// +10:9     grddim
+//           [11:0]   .num       RW/RO       0x0      False    core
+//           [14:12]  .const     RO/RO       0x5      True     regf
+//           [26:15]  .int       RW/RO       0x0      False    core//
 // =============================================================================
 
 `begin_keywords 1800-2009

@@ -38,9 +38,9 @@ def test_field_bus_prio_rw(word):
     """Field Bus Prio."""
     field0 = word.add_field("field0", u.UintType(4), "RW")
     assert field0.bus_prio is True
-    field1 = word.add_field("field1", u.UintType(4), "RW", prio="core")
+    field1 = word.add_field("field1", u.UintType(4), "RW", upd_prio="core")
     assert field1.bus_prio is False
-    field2 = word.add_field("field2", u.UintType(4), "RW", prio="bus")
+    field2 = word.add_field("field2", u.UintType(4), "RW", upd_prio="bus")
     assert field2.bus_prio is True
 
 
@@ -48,9 +48,9 @@ def test_field_bus_prio_ro(word):
     """Field Bus Prio."""
     field0 = word.add_field("field0", u.UintType(4), "RO")
     assert field0.bus_prio is False
-    field1 = word.add_field("field1", u.UintType(4), "RO", prio="core")
+    field1 = word.add_field("field1", u.UintType(4), "RO", upd_prio="core")
     assert field1.bus_prio is False
-    field2 = word.add_field("field2", u.UintType(4), "RO", prio="bus")
+    field2 = word.add_field("field2", u.UintType(4), "RO", upd_prio="bus")
     assert field2.bus_prio is True
 
 
@@ -58,7 +58,7 @@ def test_field_bus_prio_na(word):
     """Field Bus Prio."""
     field0 = word.add_field("field0", u.UintType(4), None)
     assert field0.bus_prio is False
-    field1 = word.add_field("field1", u.UintType(4), None, prio="core")
+    field1 = word.add_field("field1", u.UintType(4), None, upd_prio="core")
     assert field1.bus_prio is False
-    field2 = word.add_field("field2", u.UintType(4), None, prio="bus")
+    field2 = word.add_field("field2", u.UintType(4), None, upd_prio="bus")
     assert field2.bus_prio is True

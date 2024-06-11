@@ -31,7 +31,7 @@ from unittest import mock
 import ucdp as u
 from test2ref import assert_refdata
 from ucdp_glbl import addrspace as _addrspace
-from ucdp_regf.ucdp_regf import ACCESSES, UcdpRegfMod
+from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
 
 
 def test_top(example_simple, tmp_path):
@@ -68,6 +68,21 @@ class CoreMod(u.ACoreMod):
     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
 
+def get_is_const(bus: Access | None, core: Access | None) -> bool:
+    """Calc Is Constant Flag based on Accesses."""
+    if bus is not None:
+        if bus.write is not None:
+            return False
+        if bus.read and bus.read.data is not None:
+            return False
+    if core is not None:
+        if core.read and core.read.data is not None:
+            return False
+        if core.write is not None:
+            return False
+    return True
+
+
 class FullMod(u.AMod):
     """A Simple UART."""
 
@@ -81,7 +96,8 @@ class FullMod(u.AMod):
         for bus in (None, *ACCESSES):
             for core in ACCESSES:
                 for in_regf in (False, True):
-                    if (bus is None or bus == _addrspace.RO) and core == _addrspace.RO and not in_regf:
+                    if get_is_const(bus, core) and not in_regf:
+                        # if (bus is None or bus == _addrspace.RO) and core == _addrspace.RO and not in_regf:
                         continue
                     word.add_field(f"f{fidx}", u.UintType(2), bus, core=core, in_regf=in_regf)
                     fidx += 2
@@ -143,7 +159,7 @@ class CornerMod(u.AMod):
             core="RW",
             portgroups=("grpc",),
             in_regf=True,
-            prio="core",
+            upd_prio="core",
         )
 
         word = regf.add_word("guards", in_regf=True, depth=0)
