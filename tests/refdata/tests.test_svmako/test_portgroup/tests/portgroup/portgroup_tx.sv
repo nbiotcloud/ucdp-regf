@@ -31,9 +31,10 @@
 // Module:     tests.portgroup_tx
 // Data Model: tests.test_svmako.CoreMod
 //
-//
 // =============================================================================
 
+`begin_keywords 1800-2009
+`default_nettype none
 
 module portgroup_tx #( // tests.test_svmako.CoreMod
   parameter integer width_p = width_p
@@ -50,3 +51,6 @@ module portgroup_tx #( // tests.test_svmako.CoreMod
 
 
 endmodule // portgroup_tx
+
+`default_nettype wire
+`end_keywords

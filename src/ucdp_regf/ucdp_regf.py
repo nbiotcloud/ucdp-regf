@@ -28,6 +28,7 @@ Address Space.
 Accesses
 """
 
+import re
 from functools import cached_property
 from typing import ClassVar, Literal, TypeAlias
 
@@ -58,19 +59,22 @@ class Field(_addrspace.Field):
     """Portgroups."""
     in_regf: bool
     """Implementation within Regf."""
+    upd_prio: Prio | None
+    """Update Priority: None, 'b'us or 'c'core."""
+    upd_strb: bool = False
+    """Update strobe towards core."""
+    wr_guard: str | None = None
+    """Write guard name (must be unique)."""
     signame: str
     """Signal Basename to Core."""
     route: u.Routeables | None = None
 
-    prio: Prio | None = None
-    """Update Priority: None, 'bus' or 'core'."""
-
     @property
     def bus_prio(self) -> bool:
         """Update prioriy for bus."""
-        if self.prio == "bus":
+        if self.upd_prio == "bus":
             return True
-        if self.prio == "core":
+        if self.upd_prio == "core":
             return False
         if self.bus and (self.bus.write or (self.bus.read and self.bus.read.data is not None)):
             return True
@@ -84,11 +88,22 @@ class Word(_addrspace.Word):
     """Default Portgroups for Fields."""
     in_regf: bool | None = None
     """Default Implementation within Regf."""
+    upd_prio: Prio | None = None
+    """Update Priority: None, 'b'us or 'c'core."""
 
-    prio: Prio | None = None
-    """Update Priority: None, 'bus' or 'core'."""
-
-    def _create_field(self, name, bus, core, portgroups=None, signame=None, in_regf=None, prio=None, **kwargs) -> Field:
+    def _create_field(
+        self,
+        name,
+        bus,
+        core,
+        portgroups=None,
+        signame=None,
+        in_regf=None,
+        upd_prio=None,
+        upd_strb=False,
+        wr_guard=None,
+        **kwargs,
+    ) -> Field:
         if portgroups is None:
             portgroups = self.portgroups
         if signame is None:
@@ -99,12 +114,21 @@ class Word(_addrspace.Word):
             core = _addrspace.get_counteraccess(bus)
         if in_regf is None:
             in_regf = get_in_regf(bus, core)
-        if prio is None:
-            prio = self.prio
+        if upd_prio is None:
+            upd_prio = self.upd_prio
         field = Field(
-            name=name, bus=bus, core=core, portgroups=portgroups, signame=signame, in_regf=in_regf, prio=prio, **kwargs
+            name=name,
+            bus=bus,
+            core=core,
+            portgroups=portgroups,
+            signame=signame,
+            in_regf=in_regf,
+            upd_prio=upd_prio,
+            upd_strb=upd_strb,
+            wr_guard=wr_guard,
+            **kwargs,
         )
-        check_field(field)
+        check_field(self.name, field)
         return field
 
 
@@ -115,7 +139,7 @@ def get_in_regf(bus: Access, core: Access) -> bool:
     return _IN_REGF_DEFAULTS.get(bus, True)
 
 
-def check_field(field: Field) -> None:
+def check_field(wordname: str, field: Field) -> None:
     """Check for Corner Cases On Field."""
     # Multiple Portgroups are not allowed for driven fields
     multigrp = field.portgroups and (len(field.portgroups) > 1)
@@ -126,11 +150,12 @@ def check_field(field: Field) -> None:
     elif field.bus and field.bus.read:
         provide_coreval = True
     if multigrp and provide_coreval:
-        raise ValueError(f"Field {field.name!r} cannot be part of multiple portgroups when core provides a value!")
-
+        raise ValueError(
+            f"Field '{wordname}.{field.name}' cannot be part of multiple portgroups when core provides a value!"
+        )
     # constant value with two locations
-    if field.bus == _addrspace.RO and field.core == _addrspace.RO and not field.in_regf:
-        raise ValueError(f"Field {field.name!r} with constant value must be in_regf.")
+    if field.is_const and not field.in_regf:
+        raise ValueError(f"Field '{wordname}.{field.name}' with constant value must be in_regf.")
 
 
 class Addrspace(_addrspace.Addrspace):
@@ -139,15 +164,38 @@ class Addrspace(_addrspace.Addrspace):
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
 
-    prio: Prio | None = None
+    upd_prio: Prio | None = None
     """Update Priority: None, 'bus' or 'core'."""
 
-    def _create_word(self, portgroups=None, prio=None, **kwargs) -> Word:
+    def _create_word(self, portgroups=None, upd_prio=None, **kwargs) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
-        if prio is None:
-            prio = self.prio
-        return Word(portgroups=portgroups, prio=prio, **kwargs)
+        if upd_prio is None:
+            upd_prio = self.upd_prio
+        return Word(portgroups=portgroups, upd_prio=upd_prio, **kwargs)
+
+
+def filter_regf_flipflops(field: Field):
+    """In-Regf Flop Fields."""
+    return field.in_regf and not field.is_const
+
+
+def filter_buswrite(field: Field):
+    """Writable Bus Fields."""
+    return field.bus and field.bus.write
+
+
+def filter_buswriteonce(field: Field):
+    """Write-Once Bus Fields."""
+    return field.bus and field.bus.write and field.bus.write.once
+
+
+def filter_busread(field: Field):
+    """Readable Bus Fields."""
+    return field.bus and field.bus.read
+
+
+wf_ident = re.compile(r"(?P<word>\w+)\.(?P<field>\w+)")
 
 
 class UcdpRegfMod(u.ATailoredMod):
@@ -166,6 +214,9 @@ class UcdpRegfMod(u.ATailoredMod):
         ),
     )
 
+    _guards: dict[str, tuple[str, str]] = u.PrivateField(default_factory=dict)
+    _soft_rst: str = u.PrivateField(default=None)
+
     @cached_property
     def addrspace(self) -> Addrspace:
         """Address Space."""
@@ -182,10 +233,149 @@ class UcdpRegfMod(u.ATailoredMod):
         self.add_port(regfiotype, "regf_o")
         if self.parent:
             _create_route(self, self.addrspace)
+        self._add_const_decls()
+        self._add_ff_decls()
+        self._add_bus_word_en_decls()
+        self._prep_guards()
+        self._add_wrguard_decls()
+        self._handle_soft_reset()
+
+    def _handle_soft_reset(self):
+        if self._soft_rst is None:
+            return
+        if wf := wf_ident.match(self._soft_rst):
+            wname = wf.group("word")
+            fname = wf.group("field")
+            try:
+                thefield = self.addrspace.words[wname].fields[fname]
+            except KeyError:
+                raise ValueError(f"There is no register/field of name {wname}/{fname}") from None
+            if not isinstance(thefield.type_, u.RstType):
+                raise ValueError(f"Soft reset from {wname}/{fname} is not of type 'RstType' but {thefield.type_}")
+            if self.addrspace.words[wname].depth:
+                raise ValueError(f"Soft reset from {wname}/{fname} must not have 'depth'>0 in word.")
+            if thefield.in_regf:
+                raise ValueError(f"Soft reset from {wname}/{fname} should not have 'in_regf=True'.")
+            self._soft_rst = f"bus_{wname}_{fname}_rst_s"
+            self.add_signal(u.RstType(), self._soft_rst)
+        else:
+            if self._soft_rst.endswith("_rst_i"):
+                pass
+            elif self._soft_rst.endswith("_i"):
+                self._soft_rst = f"{self._soft_rst[:-2]}_rst_i"
+            else:
+                self._soft_rst = f"{self._soft_rst}_rst_i"
+            self.add_port(u.RstType(), self._soft_rst)
+
+    def _add_const_decls(self):
+        def filter_regf_consts(field: Field):
+            return field.in_regf and field.is_const
+
+        for word, fields in self.addrspace.iter(fieldfilter=filter_regf_consts):
+            for field in fields:
+                type_ = field.type_
+                if word.depth:
+                    type_ = u.ArrayType(type_, word.depth)
+                signame = f"data_{field.signame}_c"
+                self.add_const(type_, signame, comment=f"{word.name} / {field.name}")
+
+    def _add_ff_decls(self):
+        for word, fields in self.addrspace.iter():
+            cmt = f"Word {word.name}"
+            for field in fields:  # regular in-regf filed flops
+                if not filter_regf_flipflops(field):
+                    continue
+                type_ = field.type_
+                if word.depth:
+                    type_ = u.ArrayType(type_, word.depth)
+                signame = f"data_{field.signame}_r"
+                self.add_signal(type_, signame, comment=cmt)
+                cmt = None
+            # special purpose flops
+            self._add_special_ff_decls(word)
+
+    def _add_special_ff_decls(self, word: Word):
+        wordonce = False
+        grdonce: list[str] = []
+        signame = f"bus_{word.name}_{{os}}once_r"
+        type_ = u.BitType(default=1)
+        if word.depth:
+            type_ = u.ArrayType(type_, word.depth)
+        for field in word.fields:
+            if not filter_buswriteonce(field):
+                continue
+            if field.wr_guard:
+                if field.wr_guard in grdonce:
+                    continue
+                grdidx = len(grdonce)
+                grdonce.append(field.wr_guard)
+                self.add_signal(type_, signame.format(os=f"grd{grdidx}"))
+            elif not wordonce:
+                wordonce = True
+                self.add_signal(type_, signame.format(os="wr"))
+
+    def _add_bus_word_en_decls(self):
+        cmt = "bus word write enables"
+        for word, _ in self.addrspace.iter(fieldfilter=filter_buswrite):
+            signame = f"bus_{word.name}_wren_s"
+            type_ = u.BitType()
+            if word.depth:
+                type_ = u.ArrayType(type_, word.depth)
+            self.add_signal(type_, signame, comment=cmt)
+            cmt = None
+        cmt = "bus word read enables"
+        for word, _ in self.addrspace.iter(fieldfilter=filter_busread):
+            signame = f"bus_{word.name}_rden_s"
+            type_ = u.BitType()
+            if word.depth:
+                type_ = u.ArrayType(type_, word.depth)
+            self.add_signal(type_, signame, comment=cmt)
+            cmt = None
+
+    def _prep_guards(self):
+        idx = 0
+        for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
+            for field in fields:
+                if field.wr_guard:
+                    if self._guards.get(field.wr_guard, None) is not None:  # already known
+                        continue
+                    signame = f"bus_wrguard_{idx}_s"
+                    sigexpr = field.wr_guard
+                    while wf := wf_ident.search(sigexpr):  # replace word/field symnames by their respective signals
+                        wname = wf.group("word")
+                        fname = wf.group("field")
+                        thefield = self.addrspace.words[wname].fields[fname]
+                        if thefield.in_regf:
+                            rplc = f"data_{thefield.signame}_r"
+                        elif thefield.portgroups:
+                            rplc = f"regf_{thefield.portgroups[0]}_{thefield.signame}_rbus_i"
+                        else:
+                            rplc = f"regf_{thefield.signame}_rbus_i"
+                        sigexpr = sigexpr.replace(wf.group(), rplc)
+                    self._guards[field.wr_guard] = (signame, sigexpr)
+                    idx += 1
+
+    def _add_wrguard_decls(self):
+        cmt = "write guards"
+        for signame, _ in self._guards.values():
+            self.add_signal(u.BitType(), signame, comment=cmt)
+            cmt = None
 
     def add_word(self, *args, **kwargs):
         """Add Word."""
         return self.addrspace.add_word(*args, **kwargs)
+
+    def add_soft_rst(self, soft_reset: str = "soft_rst_i"):
+        """
+        Add Soft Reset.
+
+        Calling w/o argument results in adding input 'soft_rst_i.
+        Calling with a string '<name>' will add input port 'name_rst_i'.
+        calling with a string '<word>.<field>' will use this field as soft reset.
+        """
+        if self._soft_rst is not None:
+            raise ValueError("Soft reset has been already defined.")
+        self._soft_rst = soft_reset
 
     def get_overview(self) -> str:
         """Overview."""
@@ -271,6 +461,8 @@ class FieldIoType(u.AStructType):
                         self._add("wval", field.type_, u.BWD, comment="Core Write Value")
                     if corewr.write is not None or corewr.op is not None:
                         self._add("wr", u.BitType(), u.BWD, comment="Core Write Strobe")
+                if field.upd_strb:
+                    self._add("upd", u.BitType(), comment="Update Strobe")
         elif field.bus:
             busrd = field.bus.read
             buswr = field.bus.write

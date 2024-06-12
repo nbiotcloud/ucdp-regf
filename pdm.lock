@@ -5,7 +5,7 @@
 groups = ["default", "checktypes", "doc", "format", "test"]
 strategy = ["cross_platform", "inherit_metadata"]
 lock_version = "4.4.1"
-content_hash = "sha256:d9018c4a95b6dca5a1ecd78fd012e5a981c961c05bef8429c42a570c6da331c2"
+content_hash = "sha256:2a5a60101b3fb06662fc4dc874a91d9c71bdaa73a6e3eb34acd78cee445ce2ec"
 
 [[package]]
 name = "aligntext"
@@ -1458,7 +1458,7 @@ files = [
 
 [[package]]
 name = "ucdp"
-version = "0.5.0"
+version = "0.6.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform"
 groups = ["default", "test"]
@@ -1477,37 +1477,37 @@ dependencies = [
     "uniquer>=1.0.2",
 ]
 files = [
-    {file = "ucdp-0.5.0-py3-none-any.whl", hash = "sha256:2d114955ad6c398798e6d0a6e405e70810004fb648f0e5ed3305bb496204c570"},
-    {file = "ucdp-0.5.0.tar.gz", hash = "sha256:9f29e08c06fa6ae5ab47f3f6059f5b7e4030cc92bd519c814a4d7ba82cbf89c9"},
+    {file = "ucdp-0.6.0-py3-none-any.whl", hash = "sha256:d8b185524235c4cea0d55bc31112d4948d48d35d25e86e707819926a79c41fee"},
+    {file = "ucdp-0.6.0.tar.gz", hash = "sha256:3c657b93bbb8d357a7d84eac4909bb1c51e3787e5c98c9cf9dffd89cd23c88c9"},
 ]
 
 [[package]]
 name = "ucdp-glbl"
-version = "0.2.0"
+version = "0.4.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Global"
 groups = ["default"]
 dependencies = [
-    "ucdp>=0.4.0",
+    "ucdp>=0.6.0",
 ]
 files = [
-    {file = "ucdp_glbl-0.2.0-py3-none-any.whl", hash = "sha256:16b3a3ee52f50c9723d26334f256f562167c7269a37186eafd48ccab9cab9330"},
-    {file = "ucdp_glbl-0.2.0.tar.gz", hash = "sha256:1c5a5ecfc9206523c77dd7bb71dca8c295eb60420daf71c0b7c7f6839771a499"},
+    {file = "ucdp_glbl-0.4.0-py3-none-any.whl", hash = "sha256:60115f97877fdc993053c0c8a8227f664f0ef408c3e0fbabb4e3ee7ff9160954"},
+    {file = "ucdp_glbl-0.4.0.tar.gz", hash = "sha256:47ece4d476e83257ec6815df0875087df5ed5ce08479e9ddf472ce2c5231a43a"},
 ]
 
 [[package]]
 name = "ucdp-sv"
-version = "0.3.0"
+version = "0.4.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform"
 groups = ["test"]
 dependencies = [
     "aligntext>=1.0.0",
-    "ucdp>=0.5.0",
+    "ucdp>=0.6.0",
 ]
 files = [
-    {file = "ucdp_sv-0.3.0-py3-none-any.whl", hash = "sha256:d59ae99b9766e13d89021af9fbf1c052db76bb8e258619def834ace22ae48695"},
-    {file = "ucdp_sv-0.3.0.tar.gz", hash = "sha256:d0c37fd3f584f8f91e6e239f85c29d893440f9e63b872d78fe546fc8cc8784be"},
+    {file = "ucdp_sv-0.4.0-py3-none-any.whl", hash = "sha256:9d8a1e70dc1e7063c7ae70ee0a5c4e4beb68cf928de86b2d1ca1a6d4019556b0"},
+    {file = "ucdp_sv-0.4.0.tar.gz", hash = "sha256:8204c26615bdbf1aa627ce21eeb56a682dd20770dfde718e58886f4a5f52514b"},
 ]
 
 [[package]]
