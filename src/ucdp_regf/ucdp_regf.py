@@ -309,7 +309,8 @@ class UcdpRegfMod(u.ATailoredMod):
                     continue
                 grdidx = len(grdonce)
                 grdonce.append(field.wr_guard)
-                self.add_signal(type_, signame.format(os=f"grd{grdidx}"))
+                oncespec = f"grd{grdidx}"
+                self.add_signal(type_, signame.format(os=oncespec))
             elif not wordonce:
                 wordonce = True
                 self.add_signal(type_, signame.format(os="wr"))
