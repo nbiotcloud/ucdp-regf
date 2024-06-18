@@ -31,14 +31,17 @@
 // Module:     uart.uart_regf
 // Data Model: glbl.regf.RegfMod
 //
+//
 // Offset    Word    Field    Bus/Core    Reset    Const    Impl
 // --------  ------  -------  ----------  -------  -------  ------
 // +0        ctrl
 //           [0]     .ena     RW/RO       0        False    regf
-//           [4]     .busy    RO/RW       0        False    core//
+//           [4]     .busy    RO/RW       0        False    core
+//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module uart_regf ( // glbl.regf.RegfMod
   // main_i
@@ -138,4 +141,5 @@ module uart_regf ( // glbl.regf.RegfMod
 
 endmodule // uart_regf
 
+`default_nettype wire
 `end_keywords

@@ -6,7 +6,7 @@ import ucdp as u
 import ucdp_regf
 from pytest import fixture
 
-EXAMPLES_PATH = Path(ucdp_regf.__file__).parent / "example"
+EXAMPLES_PATH = Path(ucdp_regf.__file__).parent / "examples"
 
 
 @fixture

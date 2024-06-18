@@ -31,10 +31,10 @@
 // Module:     tests.reset2
 // Data Model: tests.test_svmako.Reset2Mod
 //
-//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module reset2 ( // tests.test_svmako.Reset2Mod
   // main_i
@@ -74,4 +74,5 @@ module reset2 ( // tests.test_svmako.Reset2Mod
 
 endmodule // reset2
 
+`default_nettype wire
 `end_keywords

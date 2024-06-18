@@ -296,7 +296,7 @@ class UcdpRegfMod(u.ATailoredMod):
 
     def _add_special_ff_decls(self, word: Word):
         wordonce = False
-        grdonce = []
+        grdonce: list[str] = []
         signame = f"bus_{word.name}_{{os}}once_r"
         type_ = u.BitType(default=1)
         if word.depth:

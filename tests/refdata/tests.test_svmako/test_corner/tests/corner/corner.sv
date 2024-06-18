@@ -31,10 +31,10 @@
 // Module:     tests.corner
 // Data Model: tests.test_svmako.CornerMod
 //
-//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module corner ( // tests.test_svmako.CornerMod
   // main_i
@@ -141,4 +141,5 @@ module corner ( // tests.test_svmako.CornerMod
 
 endmodule // corner
 
+`default_nettype wire
 `end_keywords

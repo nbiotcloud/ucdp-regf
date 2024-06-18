@@ -31,10 +31,10 @@
 // Module:     uart.uart
 // Data Model: uart.uart.UartMod
 //
-//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module uart ( // uart.uart.UartMod
   // main_i
@@ -107,4 +107,5 @@ module uart ( // uart.uart.UartMod
 
 endmodule // uart
 
+`default_nettype wire
 `end_keywords

@@ -31,10 +31,10 @@
 // Module:     tests.portgroup
 // Data Model: tests.test_svmako.PortgroupMod
 //
-//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module portgroup #( // tests.test_svmako.PortgroupMod
   parameter integer width_p = 1
@@ -137,4 +137,5 @@ module portgroup #( // tests.test_svmako.PortgroupMod
 
 endmodule // portgroup
 
+`default_nettype wire
 `end_keywords

@@ -24,7 +24,6 @@
 """Test sv.mako."""
 
 import os
-from shutil import copytree
 from typing import ClassVar
 from unittest import mock
 
@@ -36,8 +35,21 @@ from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
 
 def test_top(example_simple, tmp_path):
     """Top Module."""
-    copytree(example_simple / "src", tmp_path, dirs_exist_ok=True)
     top = u.load("uart.uart")
+
+    corefile = tmp_path / "uart/uart/rtl/uart_core.sv"
+    corefile.parent.mkdir(parents=True)
+    corefile.write_text("""\
+// GENERATE INPLACE BEGIN fileheader()
+//
+// GENERATE INPLACE END fileheader
+
+// GENERATE INPLACE BEGIN beginmod()
+// GENERATE INPLACE END beginmod
+
+// GENERATE INPLACE BEGIN endmod()
+// GENERATE INPLACE END endmod
+""")
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(top.mod, "hdl")
     assert_refdata(test_top, tmp_path)
@@ -97,7 +109,6 @@ class FullMod(u.AMod):
             for core in ACCESSES:
                 for in_regf in (False, True):
                     if get_is_const(bus, core) and not in_regf:
-                        # if (bus is None or bus == _addrspace.RO) and core == _addrspace.RO and not in_regf:
                         continue
                     word.add_field(f"f{fidx}", u.UintType(2), bus, core=core, in_regf=in_regf)
                     fidx += 2

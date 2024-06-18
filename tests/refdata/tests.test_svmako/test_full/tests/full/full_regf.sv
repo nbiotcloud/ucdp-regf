@@ -31,6 +31,7 @@
 // Module:     tests.full_regf
 // Data Model: tests.test_svmako.RegfMod
 //
+//
 // Offset    Word     Field    Bus/Core    Reset    Const    Impl
 // --------  -------  -------  ----------  -------  -------  ------
 // +0        w0
@@ -676,10 +677,12 @@
 //           [21:20]  .f20     RWL/RW1S    0x0      False    core
 //           [23:22]  .f22     RWL/RW1S    0x0      False    regf
 //           [25:24]  .f24     RWL/RWL     0x0      False    core
-//           [27:26]  .f26     RWL/RWL     0x0      False    regf//
+//           [27:26]  .f26     RWL/RWL     0x0      False    regf
+//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module full_regf ( // tests.test_svmako.RegfMod
   // main_i
@@ -5500,4 +5503,5 @@ module full_regf ( // tests.test_svmako.RegfMod
 
 endmodule // full_regf
 
+`default_nettype wire
 `end_keywords

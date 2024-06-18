@@ -31,15 +31,18 @@
 // Module:     tests.reset4_regf
 // Data Model: tests.test_svmako.RegfMod
 //
+//
 // Offset    Word    Field    Bus/Core    Reset    Const    Impl
 // --------  ------  -------  ----------  -------  -------  ------
 // +0        ctrl
 //           [0]     .clrall  WO/RO       0        False    core
 //           [1]     .ena     RW/RO       0        False    regf
-//           [4]     .busy    RO/RW       0        False    core//
+//           [4]     .busy    RO/RW       0        False    core
+//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module reset4_regf ( // tests.test_svmako.RegfMod
   // main_i
@@ -153,4 +156,5 @@ module reset4_regf ( // tests.test_svmako.RegfMod
 
 endmodule // reset4_regf
 
+`default_nettype wire
 `end_keywords

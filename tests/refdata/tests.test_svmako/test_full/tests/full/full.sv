@@ -31,10 +31,10 @@
 // Module:     tests.full
 // Data Model: tests.test_svmako.FullMod
 //
-//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module full();
 
@@ -1991,4 +1991,5 @@ module full();
 
 endmodule // full
 
+`default_nettype wire
 `end_keywords

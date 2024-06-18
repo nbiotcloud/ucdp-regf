@@ -31,6 +31,7 @@
 // Module:     tests.corner_regf
 // Data Model: tests.test_svmako.RegfMod
 //
+//
 // Offset    Word     Field      Bus/Core    Reset    Const    Impl
 // --------  -------  ---------  ----------  -------  -------  ------
 // +0        ctrl
@@ -61,10 +62,12 @@
 // +10:9     grddim
 //           [11:0]   .num       RW/RO       0x0      False    core
 //           [14:12]  .const     RO/RO       0x5      True     regf
-//           [26:15]  .int       RW/RO       0x0      False    core//
+//           [26:15]  .int       RW/RO       0x0      False    core
+//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module corner_regf ( // tests.test_svmako.RegfMod
   // main_i
@@ -519,4 +522,5 @@ module corner_regf ( // tests.test_svmako.RegfMod
 
 endmodule // corner_regf
 
+`default_nettype wire
 `end_keywords

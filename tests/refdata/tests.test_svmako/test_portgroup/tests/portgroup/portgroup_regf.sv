@@ -31,6 +31,7 @@
 // Module:     tests.portgroup_regf
 // Data Model: tests.test_svmako.RegfMod
 //
+//
 // Offset    Word                         Field    Bus/Core    Reset    Const    Impl
 // --------  ---------------------------  -------  ----------  -------  -------  ------
 // +0        ctrl
@@ -40,10 +41,12 @@
 //           [width_p - 0x1]              .data0   RO/RW       0x0      False    core
 //           [(width_p - 0x1) + width_p]  .data1   RO/RW       0x0      False    core
 // +2        tx
-//           [width_p - 0x1]              .data0   RW/RO       0x0      False    regf//
+//           [width_p - 0x1]              .data0   RW/RO       0x0      False    regf
+//
 // =============================================================================
 
 `begin_keywords 1800-2009
+`default_nettype none
 
 module portgroup_regf #( // tests.test_svmako.RegfMod
   parameter integer width_p = width_p
@@ -189,4 +192,5 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
 
 endmodule // portgroup_regf
 
+`default_nettype wire
 `end_keywords
