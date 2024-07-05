@@ -55,5 +55,3 @@ Next to that, there are some temporary files ignored by version control system.
 | `.*_cache/` | Cache Directory. |
 | `.nox/` | [NOX](https://nox.thea.codes/en/stable/) directory. |
 | `.venv*` | Virtual Environments |
-
-
