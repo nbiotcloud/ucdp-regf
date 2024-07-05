@@ -33,7 +33,7 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
+`begin_keywords "1800-2009"
 `default_nettype none
 
 module portgroup #( // tests.test_svmako.PortgroupMod

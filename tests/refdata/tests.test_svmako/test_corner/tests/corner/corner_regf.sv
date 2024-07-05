@@ -66,7 +66,7 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
+`begin_keywords "1800-2009"
 `default_nettype none
 
 module corner_regf ( // tests.test_svmako.RegfMod
@@ -490,18 +490,18 @@ module corner_regf ( // tests.test_svmako.RegfMod
   assign regf_ctrl_ver_rval_o           = data_ctrl_ver_c;
   assign regf_txdata_bytes_rval_o       = data_txdata_bytes_r;
   assign regf_dims_wrval_rval_o         = data_dims_wrval_r;
-  assign regf_dims_wrval_upd_o          = upd_strb_dims_wrval_r
-  assign regf_grpc_dims_spec2_wbus_o[0] = ((bus_dims_wren_s[0] == 1'b1)) ? mem_wdata_i[2] : 1'h0;
+  assign regf_dims_wrval_upd_o          = upd_strb_dims_wrval_r;
+  assign regf_grpc_dims_spec2_wbus_o[0] = (bus_dims_wren_s[0] == 1'b1) ? mem_wdata_i[2] : 1'h0;
   assign regf_grpc_dims_spec2_wr_o[0]   = (bus_dims_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
-  assign regf_grpc_dims_spec2_wbus_o[1] = ((bus_dims_wren_s[1] == 1'b1)) ? mem_wdata_i[2] : 1'h0;
+  assign regf_grpc_dims_spec2_wbus_o[1] = (bus_dims_wren_s[1] == 1'b1) ? mem_wdata_i[2] : 1'h0;
   assign regf_grpc_dims_spec2_wr_o[1]   = (bus_dims_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
-  assign regf_grpc_dims_spec2_wbus_o[2] = ((bus_dims_wren_s[2] == 1'b1)) ? mem_wdata_i[2] : 1'h0;
+  assign regf_grpc_dims_spec2_wbus_o[2] = (bus_dims_wren_s[2] == 1'b1) ? mem_wdata_i[2] : 1'h0;
   assign regf_grpc_dims_spec2_wr_o[2]   = (bus_dims_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
   assign regf_grpc_dims_spec3_rval_o    = data_dims_spec3_r;
   assign regf_guards_once_rval_o        = data_guards_once_r;
-  assign regf_guards_coreonce_wbus_o    = (((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1))) ? mem_wdata_i[1] : 1'h0;
+  assign regf_guards_coreonce_wbus_o    = ((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1)) ? mem_wdata_i[1] : 1'h0;
   assign regf_guards_coreonce_wr_o      = ((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_guards_busonce_wbus_o     = (((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1))) ? mem_wdata_i[2] : 1'h0;
+  assign regf_guards_busonce_wbus_o     = ((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1)) ? mem_wdata_i[2] : 1'h0;
   assign regf_guards_busonce_wr_o       = ((bus_guards_wren_s == 1'b1) && (bus_guards_grd1once_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_guards_single_rval_o      = data_guards_single_r;
   assign regf_guards_onetime_rval_o     = data_guards_onetime_r;
@@ -515,9 +515,9 @@ module corner_regf ( // tests.test_svmako.RegfMod
   assign regf_grddim_num_wbus_o[1]      = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? mem_wdata_i[11:0] : 12'h000;
   assign regf_grddim_num_wr_o[1]        = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_grddim_const_rval_o       = data_grddim_const_c;
-  assign regf_grpa_grddim_int_wbus_o[0] = (((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_2_s == 1'b1))) ? mem_wdata_i[26:15] : 12'h000;
+  assign regf_grpa_grddim_int_wbus_o[0] = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_2_s == 1'b1)) ? mem_wdata_i[26:15] : 12'h000;
   assign regf_grpa_grddim_int_wr_o[0]   = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_2_s == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_grpa_grddim_int_wbus_o[1] = (((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_2_s == 1'b1))) ? mem_wdata_i[26:15] : 12'h000;
+  assign regf_grpa_grddim_int_wbus_o[1] = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_2_s == 1'b1)) ? mem_wdata_i[26:15] : 12'h000;
   assign regf_grpa_grddim_int_wr_o[1]   = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_2_s == 1'b1)) ? 1'b1 : 1'b0;
 
 endmodule // corner_regf

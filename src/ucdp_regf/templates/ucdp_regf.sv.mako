@@ -282,9 +282,9 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
         if field.upd_strb:
           if field.portgroups:
             for grp in field.portgroups:
-              aligntext.add_row("assign", f"regf_{grp}_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r")
+              aligntext.add_row("assign", f"regf_{grp}_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
           else:
-            aligntext.add_row("assign", f"regf_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r")
+            aligntext.add_row("assign", f"regf_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
       else:  # in core
         if field.bus and field.bus.write:
           buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
@@ -308,7 +308,7 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
               if word.depth:
                 for idx in range(word.depth):
                   slc = f"[{idx}]"
-                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o[{idx}]", f"= ({buswren.format(slc=slc)}) ? {wrexpr} : {zval};")
+                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o[{idx}]", f"= {buswren.format(slc=slc)} ? {wrexpr} : {zval};")
                   aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o[{idx}]", f"= {buswren.format(slc=slc)} ? 1'b1 : 1'b0;")
               else:
                 aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o", f"= {buswren.format(slc="")} ? {wrexpr} : {zval};")
@@ -321,7 +321,7 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
                 aligntext.add_row("assign", f"regf_{field.signame}_wbus_o[{idx}]", f"= {buswren.format(slc=slc)} ? {wrexpr} : {zval};")
                 aligntext.add_row("assign", f"regf_{field.signame}_wr_o[{idx}]", f"= {buswren.format(slc=slc)} ? 1'b1 : 1'b0;")
             else:
-              aligntext.add_row("assign", f"regf_{field.signame}_wbus_o", f"= ({buswren.format(slc="")}) ? {wrexpr} : {zval};")
+              aligntext.add_row("assign", f"regf_{field.signame}_wbus_o", f"= {buswren.format(slc="")} ? {wrexpr} : {zval};")
               aligntext.add_row("assign", f"regf_{field.signame}_wr_o", f"= {buswren.format(slc="")} ? 1'b1 : 1'b0;")
   return aligntext
 

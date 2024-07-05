@@ -254,7 +254,7 @@ def test_portgroup(tmp_path):
     assert_refdata(test_portgroup, tmp_path)
 
 
-class Reset1Mod(u.AMod):
+class ResetMod(u.AMod):
     """Regf with Soft Reset."""
 
     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
@@ -262,102 +262,109 @@ class Reset1Mod(u.AMod):
     def _build(self) -> None:
         self.add_port(u.ClkRstAnType(), "main_i")
 
-        # Register File
-        regf = RegfMod(self, "u_regf")
+        # Register File 1
+        regf = RegfMod(self, "u_softrst")
         regf.con("main_i", "main_i")
-
         word = regf.add_word("ctrl")
         word.add_field("ena", u.EnaType(), "RW")
-        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy1_s)")
+        regf.add_soft_rst()
 
-        regf.add_soft_rst("soft")
-
-
-def test_reset1(tmp_path):
-    """Sift Reset 1."""
-    mod = Reset1Mod()
-    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
-        u.generate(mod, "hdl")
-    assert_refdata(test_reset1, tmp_path)
-
-
-class Reset2Mod(u.AMod):
-    """Regf with Soft Reset."""
-
-    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
-
-    def _build(self) -> None:
-        self.add_port(u.ClkRstAnType(), "main_i")
-
-        # Register File
-        regf = RegfMod(self, "u_regf")
+        # Register File 2
+        regf = RegfMod(self, "u_regrst")
         regf.con("main_i", "main_i")
-
-        word = regf.add_word("ctrl")
-        word.add_field("ena", u.EnaType(), "RW")
-        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
-
-        regf.add_soft_rst("soft_i")
-
-
-def test_reset2(tmp_path):
-    """Soft Reset 2."""
-    mod = Reset2Mod()
-    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
-        u.generate(mod, "hdl")
-    assert_refdata(test_reset2, tmp_path)
-
-
-class Reset3Mod(u.AMod):
-    """Regf with Soft Reset."""
-
-    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
-
-    def _build(self) -> None:
-        self.add_port(u.ClkRstAnType(), "main_i")
-
-        # Register File
-        regf = RegfMod(self, "u_regf")
-        regf.con("main_i", "main_i")
-
-        word = regf.add_word("ctrl")
-        word.add_field("ena", u.EnaType(), "RW")
-        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
-
-        regf.add_soft_rst("soft_rst_i")
-
-
-def test_reset3(tmp_path):
-    """Soft Reset 3."""
-    mod = Reset3Mod()
-    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
-        u.generate(mod, "hdl")
-    assert_refdata(test_reset3, tmp_path)
-
-
-class Reset4Mod(u.AMod):
-    """Regf with Soft Reset."""
-
-    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
-
-    def _build(self) -> None:
-        self.add_port(u.ClkRstAnType(), "main_i")
-
-        # Register File
-        regf = RegfMod(self, "u_regf")
-        regf.con("main_i", "main_i")
-
         word = regf.add_word("ctrl")
         word.add_field("clrall", u.RstType(), "WO")
         word.add_field("ena", u.EnaType(), "RW")
-        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
-
+        word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy2_s)")
         regf.add_soft_rst("ctrl.clrall")
 
 
-def test_reset4(tmp_path):
-    """Soft Reset 4."""
-    mod = Reset4Mod()
+def test_reset(tmp_path):
+    """Soft Reset."""
+    mod = ResetMod()
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
-    assert_refdata(test_reset4, tmp_path)
+    assert_refdata(test_reset, tmp_path)
+
+
+# class Reset2Mod(u.AMod):
+#     """Regf with Soft Reset."""
+
+#     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+#     def _build(self) -> None:
+#         self.add_port(u.ClkRstAnType(), "main_i")
+
+#         # Register File
+#         regf = RegfMod(self, "u_regf")
+#         regf.con("main_i", "main_i")
+
+#         word = regf.add_word("ctrl")
+#         word.add_field("ena", u.EnaType(), "RW")
+#         word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+#         regf.add_soft_rst("soft_i")
+
+
+# def test_reset2(tmp_path):
+#     """Soft Reset 2."""
+#     mod = Reset2Mod()
+#     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+#         u.generate(mod, "hdl")
+#     assert_refdata(test_reset2, tmp_path)
+
+
+# class Reset3Mod(u.AMod):
+#     """Regf with Soft Reset."""
+
+#     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+#     def _build(self) -> None:
+#         self.add_port(u.ClkRstAnType(), "main_i")
+
+#         # Register File
+#         regf = RegfMod(self, "u_regf")
+#         regf.con("main_i", "main_i")
+
+#         word = regf.add_word("ctrl")
+#         word.add_field("ena", u.EnaType(), "RW")
+#         word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+#         regf.add_soft_rst("soft_rst_i")
+
+
+# def test_reset3(tmp_path):
+#     """Soft Reset 3."""
+#     mod = Reset3Mod()
+#     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+#         u.generate(mod, "hdl")
+#     assert_refdata(test_reset3, tmp_path)
+
+
+# class Reset4Mod(u.AMod):
+#     """Regf with Soft Reset."""
+
+#     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+#     def _build(self) -> None:
+#         self.add_port(u.ClkRstAnType(), "main_i")
+
+#         # Register File
+#         regf = RegfMod(self, "u_regf")
+#         regf.con("main_i", "main_i")
+
+#         word = regf.add_word("ctrl")
+#         word.add_field("clrall", u.RstType(), "WO")
+#         word.add_field("ena", u.EnaType(), "RW")
+#         word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
+
+#         regf.add_soft_rst("ctrl.clrall")
+
+
+# def test_reset4(tmp_path):
+#     """Soft Reset 4."""
+#     mod = Reset4Mod()
+#     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+#         u.generate(mod, "hdl")
+#     assert_refdata(test_reset4, tmp_path)

@@ -255,16 +255,12 @@ class UcdpRegfMod(u.ATailoredMod):
             if self.addrspace.words[wname].depth:
                 raise ValueError(f"Soft reset from {wname}/{fname} must not have 'depth'>0 in word.")
             if thefield.in_regf:
-                raise ValueError(f"Soft reset from {wname}/{fname} should not have 'in_regf=True'.")
+                raise ValueError(f"Soft reset from {wname}/{fname} must not have 'in_regf=True'.")
             self._soft_rst = f"bus_{wname}_{fname}_rst_s"
             self.add_signal(u.RstType(), self._soft_rst)
         else:
-            if self._soft_rst.endswith("_rst_i"):
-                pass
-            elif self._soft_rst.endswith("_i"):
-                self._soft_rst = f"{self._soft_rst[:-2]}_rst_i"
-            else:
-                self._soft_rst = f"{self._soft_rst}_rst_i"
+            if self._soft_rst != "soft_rst_i":
+                raise ValueError(f"Illegal name {self._soft_rst!r} for soft reset.")
             self.add_port(u.RstType(), self._soft_rst)
 
     def _add_const_decls(self):
@@ -371,8 +367,8 @@ class UcdpRegfMod(u.ATailoredMod):
         Add Soft Reset.
 
         Calling w/o argument results in adding input 'soft_rst_i.
-        Calling with a string '<name>' will add input port 'name_rst_i'.
         calling with a string '<word>.<field>' will use this field as soft reset.
+        Calling with any other string will be an error.
         """
         if self._soft_rst is not None:
             raise ValueError("Soft reset has been already defined.")

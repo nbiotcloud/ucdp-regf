@@ -28,7 +28,7 @@
 //
 // =============================================================================
 //
-// Module:     tests.reset3_regf
+// Module:     tests.reset_softrst
 // Data Model: tests.test_svmako.RegfMod
 //
 //
@@ -40,10 +40,10 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
+`begin_keywords "1800-2009"
 `default_nettype none
 
-module reset3_regf ( // tests.test_svmako.RegfMod
+module reset_softrst ( // tests.test_svmako.RegfMod
   // main_i
   input  wire         main_clk_i,
   input  wire         main_rst_an_i,         // Async Reset (Low-Active)
@@ -143,7 +143,7 @@ module reset3_regf ( // tests.test_svmako.RegfMod
   // ------------------------------------------------------
   assign regf_ctrl_ena_rval_o = data_ctrl_ena_r;
 
-endmodule // reset3_regf
+endmodule // reset_softrst
 
 `default_nettype wire
 `end_keywords
