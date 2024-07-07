@@ -216,12 +216,14 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
           slc = f"[{idx}]"
           lines.extend((" else ".join(upd)).format(slc=slc).splitlines())
           if field.upd_strb:
-            lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{(" | ".join(upd_strb)).format(slc=slc)};")
+            strbs = " | ".join(upd_strb)
+            lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
       else:
         slc = ""
         lines = (" else ".join(upd)).format(slc=slc).splitlines()
         if field.upd_strb:
-          lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{(" | ".join(upd_strb)).format(slc=slc)};")
+          strbs = " | ".join(upd_strb)
+          lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
       for ln in lines:
         yield f"{pre}{ln}"
 
