@@ -81,10 +81,11 @@ def get_ff_rst_values(rslvr: usv.SvExprResolver, addrspace: Addrspace) -> Align:
           continue
         if field.bus.write.once and field.wr_guard:
           grdidx = grdonce.setdefault(field.wr_guard, len(grdonce))
-          aligntext.add_row(signame.format(os=f"grd{grdidx}"), defval)
+          oncespec = f"grd{grdidx}"
+          aligntext.add_row(signame.format(os=oncespec), defval)
         elif field.bus.write.once and not wordonce:
           wordonce = True
-          aligntext.add_row(signame.format(os=f"wr"), defval)
+          aligntext.add_row(signame.format(os="wr"), defval)
     return aligntext
 
 
@@ -172,9 +173,11 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
         buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
         if field.bus.write.once and field.wr_guard:
           grdidx = grdonce.setdefault(field.wr_guard, len(grdonce))
-          buswren.append(f"({cndname.format(os=f"grd{grdidx}")}{{slc}} == 1'b1)")
+          oncespec = f"grd{grdidx}"
+          buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
         elif field.bus.write.once:
-          buswren.append(f"({cndname.format(os=f"wr")}{{slc}} == 1'b1)")
+          oncespec = "wr"
+          buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
         elif field.wr_guard:
           buswren.append(f"({guards[field.wr_guard][0]} == 1'b1)")
         if len(buswren) > 1:
@@ -210,13 +213,17 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
       if word.depth:
         lines = []
         for idx in range(word.depth):
-          lines.extend((" else ".join(upd)).format(slc=f"[{idx}]").splitlines())
+          slc = f"[{idx}]"
+          lines.extend((" else ".join(upd)).format(slc=slc).splitlines())
           if field.upd_strb:
-            lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{(" | ".join(upd_strb)).format(slc=f"[{idx}]")};")
+            strbs = " | ".join(upd_strb)
+            lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
       else:
-        lines = (" else ".join(upd)).format(slc="").splitlines()
+        slc = ""
+        lines = (" else ".join(upd)).format(slc=slc).splitlines()
         if field.upd_strb:
-          lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{(" | ".join(upd_strb)).format(slc="")};")
+          strbs = " | ".join(upd_strb)
+          lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
       for ln in lines:
         yield f"{pre}{ln}"
 
@@ -233,10 +240,12 @@ def iter_wronce_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards:
       if field.wr_guard:
         buswren.append(f"({guards[field.wr_guard][0]} == 1'b1)")
         grdidx = grdonce.setdefault(field.wr_guard, len(grdonce))
-        target = cndname.format(os=f"grd{grdidx}")
+        oncespec = f"grd{grdidx}"
+        target = cndname.format(os=oncespec)
       elif not wordonce:
         wordonce = True
-        target = cndname.format(os=f"wr")
+        oncespec = "wr"
+        target = cndname.format(os=oncespec)
       else:  # another simple wr-once field
         continue
       if len(buswren) > 1:
@@ -247,7 +256,8 @@ def iter_wronce_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards:
       if word.depth:
         lines = []
         for idx in range(word.depth):
-          lines.extend((upd.format(slc=f"[{idx}]")).splitlines())
+          slc = f"[{idx}]"
+          lines.extend((upd.format(slc=slc)).splitlines())
       else:
         lines = (upd.format(slc="")).splitlines()
       for ln in lines:
@@ -277,16 +287,18 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
         if field.upd_strb:
           if field.portgroups:
             for grp in field.portgroups:
-              aligntext.add_row("assign", f"regf_{grp}_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r")
+              aligntext.add_row("assign", f"regf_{grp}_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
           else:
-            aligntext.add_row("assign", f"regf_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r")
+            aligntext.add_row("assign", f"regf_{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
       else:  # in core
         if field.bus and field.bus.write:
           buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
           if field.bus.write.once and field.wr_guard:
-            buswren.append(f"({cndname.format(os=f"grd{wronce_guards[field.signame]}")}{{slc}} == 1'b1)")
+            oncespec = f"grd{wronce_guards[field.signame]}"
+            buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
           elif field.bus.write.once:
-            buswren.append(f"({cndname.format(os=f"wr")}{{slc}} == 1'b1)")
+            oncespec = "wr"
+            buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
           elif field.wr_guard:
             buswren.append(f"({guards[field.wr_guard][0]} == 1'b1)")
           if len(buswren) > 1:
@@ -301,20 +313,24 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
               wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{grp}_{field.signame}_rbus_i", f"mem_wdata_i[{field.slice}]")
               if word.depth:
                 for idx in range(word.depth):
-                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o[{idx}]", f"= ({buswren.format(slc=f"[{idx}]")}) ? {wrexpr} : {zval};")
-                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o[{idx}]", f"= {buswren.format(slc=f"[{idx}]")} ? 1'b1 : 1'b0;")
+                  wrencond = buswren.format(slc=f"[{idx}]")
+                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o[{idx}]", f"= {wrencond} ? {wrexpr} : {zval};")
+                  aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o[{idx}]", f"= {wrencond} ? 1'b1 : 1'b0;")
               else:
-                aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o", f"= {buswren.format(slc="")} ? {wrexpr} : {zval};")
-                aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o", f"= {buswren.format(slc="")} ? 1'b1 : 1'b0;")
+                wrencond = buswren.format(slc="")
+                aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o", f"= {wrencond} ? {wrexpr} : {zval};")
+                aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o", f"= {wrencond} ? 1'b1 : 1'b0;")
           else:
             wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{field.signame}_rbus_i", f"mem_wdata_i[{field.slice}]")
             if word.depth:
               for idx in range(word.depth):
-                aligntext.add_row("assign", f"regf_{field.signame}_wbus_o[{idx}]", f"= {buswren.format(slc=f"[{idx}]")} ? {wrexpr} : {zval};")
-                aligntext.add_row("assign", f"regf_{field.signame}_wr_o[{idx}]", f"= {buswren.format(slc=f"[{idx}]")} ? 1'b1 : 1'b0;")
+                wrencond = buswren.format(slc=f"[{idx}]")
+                aligntext.add_row("assign", f"regf_{field.signame}_wbus_o[{idx}]", f"= {wrencond} ? {wrexpr} : {zval};")
+                aligntext.add_row("assign", f"regf_{field.signame}_wr_o[{idx}]", f"= {wrencond} ? 1'b1 : 1'b0;")
             else:
-              aligntext.add_row("assign", f"regf_{field.signame}_wbus_o", f"= ({buswren.format(slc="")}) ? {wrexpr} : {zval};")
-              aligntext.add_row("assign", f"regf_{field.signame}_wr_o", f"= {buswren.format(slc="")} ? 1'b1 : 1'b0;")
+              wrencond = buswren.format(slc="")
+              aligntext.add_row("assign", f"regf_{field.signame}_wbus_o", f"= {wrencond} ? {wrexpr} : {zval};")
+              aligntext.add_row("assign", f"regf_{field.signame}_wr_o", f"= {wrencond} ? 1'b1 : 1'b0;")
   return aligntext
 
 def get_soft_rst_assign(soft_rst: str, addrspace: Addrspace, guards: dict[str, tuple[str, str]], wronce_guards: dict[str, int]) -> str:
@@ -328,9 +344,11 @@ def get_soft_rst_assign(soft_rst: str, addrspace: Addrspace, guards: dict[str, t
       buswren = [f"mem_wdata_i[{field.slice}]"]
       buswren.append(f"bus_{word.name}_wren_s")
       if field.bus.write.once and field.wr_guard:
-        buswren.append(f"{cndname.format(os=f"grd{wronce_guards[field.signame]}")}{{slc}}")
+        oncespec = f"grd{wronce_guards[field.signame]}"
+        buswren.append(f"{cndname.format(os=oncespec)}{{slc}}")
       elif field.bus.write.once:
-        buswren.append(f"{cndname.format(os=f"wr")}")
+        oncespec = "wr"
+        buswren.append(f"{cndname.format(os=oncespec)}")
       elif field.wr_guard:
         buswren.append(f"{guards[field.wr_guard][0]}")
       buswren = f"{' & '.join(buswren)}"

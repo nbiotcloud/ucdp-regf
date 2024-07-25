@@ -33,15 +33,15 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
-`default_nettype none
+`begin_keywords "1800-2009"
+`default_nettype none  // implicit wires are forbidden
 
 module portgroup #( // tests.test_svmako.PortgroupMod
   parameter integer width_p = 1
 ) (
   // main_i
-  input wire main_clk_i,
-  input wire main_rst_an_i // Async Reset (Low-Active)
+  input logic main_clk_i,
+  input logic main_rst_an_i // Async Reset (Low-Active)
 );
 
 
@@ -51,16 +51,16 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   // ------------------------------------------------------
   // regf_regf_rx_o_s
   // regf_regf_rx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic             regf_regf_rx_o_ctrl_ena_rval_o; // Core Read Value
+  logic       regf_regf_rx_o_ctrl_ena_rval_o; // Core Read Value
   // regf_regf_rx_o_rx_data0_o: bus=RO core=RW in_regf=False
-  wire  [width_p-1] regf_regf_rx_o_rx_data0_rbus_i; // Bus Read Value
+  logic [1:0] regf_regf_rx_o_rx_data0_rbus_i; // Bus Read Value
   // regf_regf_rx_o_rx_data1_o: bus=RO core=RW in_regf=False
-  wire  [width_p-1] regf_regf_rx_o_rx_data1_rbus_i; // Bus Read Value
+  logic [1:0] regf_regf_rx_o_rx_data1_rbus_i; // Bus Read Value
   // regf_regf_tx_o_s
   // regf_regf_tx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic             regf_regf_tx_o_ctrl_ena_rval_o; // Core Read Value
+  logic       regf_regf_tx_o_ctrl_ena_rval_o; // Core Read Value
   // regf_regf_tx_o_tx_data0_o: bus=RW core=RO in_regf=True
-  logic [width_p-1] regf_regf_tx_o_tx_data0_rval_o; // Core Read Value
+  logic [1:0] regf_regf_tx_o_tx_data0_rval_o; // Core Read Value
 
 
   // ------------------------------------------------------

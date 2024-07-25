@@ -33,8 +33,8 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
-`default_nettype none
+`begin_keywords "1800-2009"
+`default_nettype none  // implicit wires are forbidden
 
 module full();
 

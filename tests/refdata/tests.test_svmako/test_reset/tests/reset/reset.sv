@@ -28,18 +28,18 @@
 //
 // =============================================================================
 //
-// Module:     tests.reset1
-// Data Model: tests.test_svmako.Reset1Mod
+// Module:     tests.reset
+// Data Model: tests.test_svmako.ResetMod
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
-`default_nettype none
+`begin_keywords "1800-2009"
+`default_nettype none  // implicit wires are forbidden
 
-module reset1 ( // tests.test_svmako.Reset1Mod
+module reset ( // tests.test_svmako.ResetMod
   // main_i
-  input wire main_clk_i,
-  input wire main_rst_an_i // Async Reset (Low-Active)
+  input logic main_clk_i,
+  input logic main_rst_an_i // Async Reset (Low-Active)
 );
 
 
@@ -47,13 +47,14 @@ module reset1 ( // tests.test_svmako.Reset1Mod
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic busy_s;
+  logic busy1_s;
+  logic busy2_s;
 
 
   // ------------------------------------------------------
-  //  tests.reset1_regf: u_regf
+  //  tests.reset_softrst: u_softrst
   // ------------------------------------------------------
-  reset1_regf u_regf (
+  reset_softrst u_softrst (
     // main_i
     .main_clk_i           (main_clk_i   ),
     .main_rst_an_i        (main_rst_an_i), // Async Reset (Low-Active)
@@ -68,11 +69,36 @@ module reset1 ( // tests.test_svmako.Reset1Mod
     // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
     .regf_ctrl_ena_rval_o (             ), // TODO - Core Read Value
     // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
-    .regf_ctrl_busy_rbus_i(busy_s       ), // Bus Read Value
+    .regf_ctrl_busy_rbus_i(busy1_s      ), // Bus Read Value
     .soft_rst_i           (1'b0         )  // TODO
   );
 
-endmodule // reset1
+
+  // ------------------------------------------------------
+  //  tests.reset_regrst: u_regrst
+  // ------------------------------------------------------
+  reset_regrst u_regrst (
+    // main_i
+    .main_clk_i             (main_clk_i   ),
+    .main_rst_an_i          (main_rst_an_i), // Async Reset (Low-Active)
+    // mem_i
+    .mem_ena_i              (1'b0         ), // TODO
+    .mem_addr_i             (13'h0000     ), // TODO
+    .mem_wena_i             (1'b0         ), // TODO
+    .mem_wdata_i            (32'h00000000 ), // TODO
+    .mem_rdata_o            (             ), // TODO
+    .mem_err_o              (             ), // TODO
+    // regf_o
+    // regf_ctrl_clrall_o: bus=WO core=RO in_regf=False
+    .regf_ctrl_clrall_wbus_o(             ), // TODO - Bus Write Value
+    .regf_ctrl_clrall_wr_o  (             ), // TODO - Bus Write Strobe
+    // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
+    .regf_ctrl_ena_rval_o   (             ), // TODO - Core Read Value
+    // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
+    .regf_ctrl_busy_rbus_i  (busy2_s      )  // Bus Read Value
+  );
+
+endmodule // reset
 
 `default_nettype wire
 `end_keywords

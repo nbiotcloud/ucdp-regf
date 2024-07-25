@@ -681,18 +681,18 @@
 //
 // =============================================================================
 
-`begin_keywords 1800-2009
-`default_nettype none
+`begin_keywords "1800-2009"
+`default_nettype none  // implicit wires are forbidden
 
 module full_regf ( // tests.test_svmako.RegfMod
   // main_i
-  input  wire         main_clk_i,
-  input  wire         main_rst_an_i,       // Async Reset (Low-Active)
+  input  logic        main_clk_i,
+  input  logic        main_rst_an_i,       // Async Reset (Low-Active)
   // mem_i
-  input  wire         mem_ena_i,
-  input  wire  [12:0] mem_addr_i,
-  input  wire         mem_wena_i,
-  input  wire  [31:0] mem_wdata_i,
+  input  logic        mem_ena_i,
+  input  logic [12:0] mem_addr_i,
+  input  logic        mem_wena_i,
+  input  logic [31:0] mem_wdata_i,
   output logic [31:0] mem_rdata_o,
   output logic        mem_err_o,
   // regf_o
@@ -701,559 +701,559 @@ module full_regf ( // tests.test_svmako.RegfMod
   // regf_w0_f2_o: bus=None core=RC in_regf=False
   // regf_w0_f4_o: bus=None core=RC in_regf=True
   output logic [1:0]  regf_w0_f4_rval_o,   // Core Read Value
-  input  wire         regf_w0_f4_rd_i,     // Core Read Strobe
+  input  logic        regf_w0_f4_rd_i,     // Core Read Strobe
   // regf_w0_f6_o: bus=None core=RS in_regf=False
   // regf_w0_f8_o: bus=None core=RS in_regf=True
   output logic [1:0]  regf_w0_f8_rval_o,   // Core Read Value
-  input  wire         regf_w0_f8_rd_i,     // Core Read Strobe
+  input  logic        regf_w0_f8_rd_i,     // Core Read Strobe
   // regf_w0_f10_o: bus=None core=RT in_regf=False
   // regf_w0_f12_o: bus=None core=RT in_regf=True
   output logic [1:0]  regf_w0_f12_rval_o,  // Core Read Value
-  input  wire         regf_w0_f12_rd_i,    // Core Read Strobe
+  input  logic        regf_w0_f12_rd_i,    // Core Read Strobe
   // regf_w0_f14_o: bus=None core=RP in_regf=True
   output logic [1:0]  regf_w0_f14_rval_o,  // Core Read Value
   // regf_w0_f16_o: bus=None core=WO in_regf=False
   // regf_w0_f18_o: bus=None core=WO in_regf=True
-  input  wire  [1:0]  regf_w0_f18_wval_i,  // Core Write Value
-  input  wire         regf_w0_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w0_f18_wval_i,  // Core Write Value
+  input  logic        regf_w0_f18_wr_i,    // Core Write Strobe
   // regf_w0_f20_o: bus=None core=W0C in_regf=False
   // regf_w0_f22_o: bus=None core=W0C in_regf=True
-  input  wire  [1:0]  regf_w0_f22_wval_i,  // Core Write Value
-  input  wire         regf_w0_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w0_f22_wval_i,  // Core Write Value
+  input  logic        regf_w0_f22_wr_i,    // Core Write Strobe
   // regf_w0_f24_o: bus=None core=W0S in_regf=False
   // regf_w0_f26_o: bus=None core=W0S in_regf=True
-  input  wire  [1:0]  regf_w0_f26_wval_i,  // Core Write Value
-  input  wire         regf_w0_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w0_f26_wval_i,  // Core Write Value
+  input  logic        regf_w0_f26_wr_i,    // Core Write Strobe
   // regf_w0_f28_o: bus=None core=W1C in_regf=False
   // regf_w0_f30_o: bus=None core=W1C in_regf=True
-  input  wire  [1:0]  regf_w0_f30_wval_i,  // Core Write Value
-  input  wire         regf_w0_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w0_f30_wval_i,  // Core Write Value
+  input  logic        regf_w0_f30_wr_i,    // Core Write Strobe
   // regf_w1_f0_o: bus=None core=W1S in_regf=False
   // regf_w1_f2_o: bus=None core=W1S in_regf=True
-  input  wire  [1:0]  regf_w1_f2_wval_i,   // Core Write Value
-  input  wire         regf_w1_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w1_f2_wval_i,   // Core Write Value
+  input  logic        regf_w1_f2_wr_i,     // Core Write Strobe
   // regf_w1_f4_o: bus=None core=WL in_regf=False
   // regf_w1_f6_o: bus=None core=WL in_regf=True
-  input  wire  [1:0]  regf_w1_f6_wval_i,   // Core Write Value
-  input  wire         regf_w1_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w1_f6_wval_i,   // Core Write Value
+  input  logic        regf_w1_f6_wr_i,     // Core Write Strobe
   // regf_w1_f8_o: bus=None core=RW in_regf=False
   // regf_w1_f10_o: bus=None core=RW in_regf=True
   output logic [1:0]  regf_w1_f10_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f10_wval_i,  // Core Write Value
-  input  wire         regf_w1_f10_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f10_wval_i,  // Core Write Value
+  input  logic        regf_w1_f10_wr_i,    // Core Write Strobe
   // regf_w1_f12_o: bus=None core=RW0C in_regf=False
   // regf_w1_f14_o: bus=None core=RW0C in_regf=True
   output logic [1:0]  regf_w1_f14_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f14_wval_i,  // Core Write Value
-  input  wire         regf_w1_f14_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f14_wval_i,  // Core Write Value
+  input  logic        regf_w1_f14_wr_i,    // Core Write Strobe
   // regf_w1_f16_o: bus=None core=RW0S in_regf=False
   // regf_w1_f18_o: bus=None core=RW0S in_regf=True
   output logic [1:0]  regf_w1_f18_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f18_wval_i,  // Core Write Value
-  input  wire         regf_w1_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f18_wval_i,  // Core Write Value
+  input  logic        regf_w1_f18_wr_i,    // Core Write Strobe
   // regf_w1_f20_o: bus=None core=RW1C in_regf=False
   // regf_w1_f22_o: bus=None core=RW1C in_regf=True
   output logic [1:0]  regf_w1_f22_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f22_wval_i,  // Core Write Value
-  input  wire         regf_w1_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f22_wval_i,  // Core Write Value
+  input  logic        regf_w1_f22_wr_i,    // Core Write Strobe
   // regf_w1_f24_o: bus=None core=RW1S in_regf=False
   // regf_w1_f26_o: bus=None core=RW1S in_regf=True
   output logic [1:0]  regf_w1_f26_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f26_wval_i,  // Core Write Value
-  input  wire         regf_w1_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f26_wval_i,  // Core Write Value
+  input  logic        regf_w1_f26_wr_i,    // Core Write Strobe
   // regf_w1_f28_o: bus=None core=RWL in_regf=False
   // regf_w1_f30_o: bus=None core=RWL in_regf=True
   output logic [1:0]  regf_w1_f30_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w1_f30_wval_i,  // Core Write Value
-  input  wire         regf_w1_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w1_f30_wval_i,  // Core Write Value
+  input  logic        regf_w1_f30_wr_i,    // Core Write Strobe
   // regf_w2_f0_o: bus=RO core=RO in_regf=True
   output logic [1:0]  regf_w2_f0_rval_o,   // Core Read Value
   // regf_w2_f2_o: bus=RO core=RC in_regf=False
-  input  wire  [1:0]  regf_w2_f2_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w2_f2_rbus_i,   // Bus Read Value
   // regf_w2_f4_o: bus=RO core=RC in_regf=True
   output logic [1:0]  regf_w2_f4_rval_o,   // Core Read Value
-  input  wire         regf_w2_f4_rd_i,     // Core Read Strobe
+  input  logic        regf_w2_f4_rd_i,     // Core Read Strobe
   // regf_w2_f6_o: bus=RO core=RS in_regf=False
-  input  wire  [1:0]  regf_w2_f6_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w2_f6_rbus_i,   // Bus Read Value
   // regf_w2_f8_o: bus=RO core=RS in_regf=True
   output logic [1:0]  regf_w2_f8_rval_o,   // Core Read Value
-  input  wire         regf_w2_f8_rd_i,     // Core Read Strobe
+  input  logic        regf_w2_f8_rd_i,     // Core Read Strobe
   // regf_w2_f10_o: bus=RO core=RT in_regf=False
-  input  wire  [1:0]  regf_w2_f10_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w2_f10_rbus_i,  // Bus Read Value
   // regf_w2_f12_o: bus=RO core=RT in_regf=True
   output logic [1:0]  regf_w2_f12_rval_o,  // Core Read Value
-  input  wire         regf_w2_f12_rd_i,    // Core Read Strobe
+  input  logic        regf_w2_f12_rd_i,    // Core Read Strobe
   // regf_w2_f14_o: bus=RO core=RP in_regf=True
   output logic [1:0]  regf_w2_f14_rval_o,  // Core Read Value
   // regf_w2_f16_o: bus=RO core=WO in_regf=False
-  input  wire  [1:0]  regf_w2_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w2_f16_rbus_i,  // Bus Read Value
   // regf_w2_f18_o: bus=RO core=WO in_regf=True
-  input  wire  [1:0]  regf_w2_f18_wval_i,  // Core Write Value
-  input  wire         regf_w2_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w2_f18_wval_i,  // Core Write Value
+  input  logic        regf_w2_f18_wr_i,    // Core Write Strobe
   // regf_w2_f20_o: bus=RO core=W0C in_regf=False
-  input  wire  [1:0]  regf_w2_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w2_f20_rbus_i,  // Bus Read Value
   // regf_w2_f22_o: bus=RO core=W0C in_regf=True
-  input  wire  [1:0]  regf_w2_f22_wval_i,  // Core Write Value
-  input  wire         regf_w2_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w2_f22_wval_i,  // Core Write Value
+  input  logic        regf_w2_f22_wr_i,    // Core Write Strobe
   // regf_w2_f24_o: bus=RO core=W0S in_regf=False
-  input  wire  [1:0]  regf_w2_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w2_f24_rbus_i,  // Bus Read Value
   // regf_w2_f26_o: bus=RO core=W0S in_regf=True
-  input  wire  [1:0]  regf_w2_f26_wval_i,  // Core Write Value
-  input  wire         regf_w2_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w2_f26_wval_i,  // Core Write Value
+  input  logic        regf_w2_f26_wr_i,    // Core Write Strobe
   // regf_w2_f28_o: bus=RO core=W1C in_regf=False
-  input  wire  [1:0]  regf_w2_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w2_f28_rbus_i,  // Bus Read Value
   // regf_w2_f30_o: bus=RO core=W1C in_regf=True
-  input  wire  [1:0]  regf_w2_f30_wval_i,  // Core Write Value
-  input  wire         regf_w2_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w2_f30_wval_i,  // Core Write Value
+  input  logic        regf_w2_f30_wr_i,    // Core Write Strobe
   // regf_w3_f0_o: bus=RO core=W1S in_regf=False
-  input  wire  [1:0]  regf_w3_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w3_f0_rbus_i,   // Bus Read Value
   // regf_w3_f2_o: bus=RO core=W1S in_regf=True
-  input  wire  [1:0]  regf_w3_f2_wval_i,   // Core Write Value
-  input  wire         regf_w3_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w3_f2_wval_i,   // Core Write Value
+  input  logic        regf_w3_f2_wr_i,     // Core Write Strobe
   // regf_w3_f4_o: bus=RO core=WL in_regf=False
-  input  wire  [1:0]  regf_w3_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w3_f4_rbus_i,   // Bus Read Value
   // regf_w3_f6_o: bus=RO core=WL in_regf=True
-  input  wire  [1:0]  regf_w3_f6_wval_i,   // Core Write Value
-  input  wire         regf_w3_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w3_f6_wval_i,   // Core Write Value
+  input  logic        regf_w3_f6_wr_i,     // Core Write Strobe
   // regf_w3_f8_o: bus=RO core=RW in_regf=False
-  input  wire  [1:0]  regf_w3_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w3_f8_rbus_i,   // Bus Read Value
   // regf_w3_f10_o: bus=RO core=RW in_regf=True
   output logic [1:0]  regf_w3_f10_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f10_wval_i,  // Core Write Value
-  input  wire         regf_w3_f10_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f10_wval_i,  // Core Write Value
+  input  logic        regf_w3_f10_wr_i,    // Core Write Strobe
   // regf_w3_f12_o: bus=RO core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w3_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w3_f12_rbus_i,  // Bus Read Value
   // regf_w3_f14_o: bus=RO core=RW0C in_regf=True
   output logic [1:0]  regf_w3_f14_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f14_wval_i,  // Core Write Value
-  input  wire         regf_w3_f14_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f14_wval_i,  // Core Write Value
+  input  logic        regf_w3_f14_wr_i,    // Core Write Strobe
   // regf_w3_f16_o: bus=RO core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w3_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w3_f16_rbus_i,  // Bus Read Value
   // regf_w3_f18_o: bus=RO core=RW0S in_regf=True
   output logic [1:0]  regf_w3_f18_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f18_wval_i,  // Core Write Value
-  input  wire         regf_w3_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f18_wval_i,  // Core Write Value
+  input  logic        regf_w3_f18_wr_i,    // Core Write Strobe
   // regf_w3_f20_o: bus=RO core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w3_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w3_f20_rbus_i,  // Bus Read Value
   // regf_w3_f22_o: bus=RO core=RW1C in_regf=True
   output logic [1:0]  regf_w3_f22_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f22_wval_i,  // Core Write Value
-  input  wire         regf_w3_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f22_wval_i,  // Core Write Value
+  input  logic        regf_w3_f22_wr_i,    // Core Write Strobe
   // regf_w3_f24_o: bus=RO core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w3_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w3_f24_rbus_i,  // Bus Read Value
   // regf_w3_f26_o: bus=RO core=RW1S in_regf=True
   output logic [1:0]  regf_w3_f26_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f26_wval_i,  // Core Write Value
-  input  wire         regf_w3_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f26_wval_i,  // Core Write Value
+  input  logic        regf_w3_f26_wr_i,    // Core Write Strobe
   // regf_w3_f28_o: bus=RO core=RWL in_regf=False
-  input  wire  [1:0]  regf_w3_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w3_f28_rbus_i,  // Bus Read Value
   // regf_w3_f30_o: bus=RO core=RWL in_regf=True
   output logic [1:0]  regf_w3_f30_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w3_f30_wval_i,  // Core Write Value
-  input  wire         regf_w3_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w3_f30_wval_i,  // Core Write Value
+  input  logic        regf_w3_f30_wr_i,    // Core Write Strobe
   // regf_w4_f0_o: bus=RC core=RO in_regf=False
-  input  wire  [1:0]  regf_w4_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w4_f0_rbus_i,   // Bus Read Value
   output logic        regf_w4_f0_rd_o,     // Bus Read Strobe
   // regf_w4_f2_o: bus=RC core=RO in_regf=True
   output logic [1:0]  regf_w4_f2_rval_o,   // Core Read Value
   // regf_w4_f4_o: bus=RC core=RC in_regf=False
-  input  wire  [1:0]  regf_w4_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w4_f4_rbus_i,   // Bus Read Value
   output logic        regf_w4_f4_rd_o,     // Bus Read Strobe
   // regf_w4_f6_o: bus=RC core=RC in_regf=True
   output logic [1:0]  regf_w4_f6_rval_o,   // Core Read Value
-  input  wire         regf_w4_f6_rd_i,     // Core Read Strobe
+  input  logic        regf_w4_f6_rd_i,     // Core Read Strobe
   // regf_w4_f8_o: bus=RC core=RS in_regf=False
-  input  wire  [1:0]  regf_w4_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w4_f8_rbus_i,   // Bus Read Value
   output logic        regf_w4_f8_rd_o,     // Bus Read Strobe
   // regf_w4_f10_o: bus=RC core=RS in_regf=True
   output logic [1:0]  regf_w4_f10_rval_o,  // Core Read Value
-  input  wire         regf_w4_f10_rd_i,    // Core Read Strobe
+  input  logic        regf_w4_f10_rd_i,    // Core Read Strobe
   // regf_w4_f12_o: bus=RC core=RT in_regf=False
-  input  wire  [1:0]  regf_w4_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w4_f12_rbus_i,  // Bus Read Value
   output logic        regf_w4_f12_rd_o,    // Bus Read Strobe
   // regf_w4_f14_o: bus=RC core=RT in_regf=True
   output logic [1:0]  regf_w4_f14_rval_o,  // Core Read Value
-  input  wire         regf_w4_f14_rd_i,    // Core Read Strobe
+  input  logic        regf_w4_f14_rd_i,    // Core Read Strobe
   // regf_w4_f16_o: bus=RC core=RP in_regf=False
-  input  wire  [1:0]  regf_w4_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w4_f16_rbus_i,  // Bus Read Value
   output logic        regf_w4_f16_rd_o,    // Bus Read Strobe
   // regf_w4_f18_o: bus=RC core=RP in_regf=True
   output logic [1:0]  regf_w4_f18_rval_o,  // Core Read Value
   // regf_w4_f20_o: bus=RC core=WO in_regf=False
-  input  wire  [1:0]  regf_w4_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w4_f20_rbus_i,  // Bus Read Value
   output logic        regf_w4_f20_rd_o,    // Bus Read Strobe
   // regf_w4_f22_o: bus=RC core=WO in_regf=True
-  input  wire  [1:0]  regf_w4_f22_wval_i,  // Core Write Value
-  input  wire         regf_w4_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w4_f22_wval_i,  // Core Write Value
+  input  logic        regf_w4_f22_wr_i,    // Core Write Strobe
   // regf_w4_f24_o: bus=RC core=W0C in_regf=False
-  input  wire  [1:0]  regf_w4_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w4_f24_rbus_i,  // Bus Read Value
   output logic        regf_w4_f24_rd_o,    // Bus Read Strobe
   // regf_w4_f26_o: bus=RC core=W0C in_regf=True
-  input  wire  [1:0]  regf_w4_f26_wval_i,  // Core Write Value
-  input  wire         regf_w4_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w4_f26_wval_i,  // Core Write Value
+  input  logic        regf_w4_f26_wr_i,    // Core Write Strobe
   // regf_w4_f28_o: bus=RC core=W0S in_regf=False
-  input  wire  [1:0]  regf_w4_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w4_f28_rbus_i,  // Bus Read Value
   output logic        regf_w4_f28_rd_o,    // Bus Read Strobe
   // regf_w4_f30_o: bus=RC core=W0S in_regf=True
-  input  wire  [1:0]  regf_w4_f30_wval_i,  // Core Write Value
-  input  wire         regf_w4_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w4_f30_wval_i,  // Core Write Value
+  input  logic        regf_w4_f30_wr_i,    // Core Write Strobe
   // regf_w5_f0_o: bus=RC core=W1C in_regf=False
-  input  wire  [1:0]  regf_w5_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w5_f0_rbus_i,   // Bus Read Value
   output logic        regf_w5_f0_rd_o,     // Bus Read Strobe
   // regf_w5_f2_o: bus=RC core=W1C in_regf=True
-  input  wire  [1:0]  regf_w5_f2_wval_i,   // Core Write Value
-  input  wire         regf_w5_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w5_f2_wval_i,   // Core Write Value
+  input  logic        regf_w5_f2_wr_i,     // Core Write Strobe
   // regf_w5_f4_o: bus=RC core=W1S in_regf=False
-  input  wire  [1:0]  regf_w5_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w5_f4_rbus_i,   // Bus Read Value
   output logic        regf_w5_f4_rd_o,     // Bus Read Strobe
   // regf_w5_f6_o: bus=RC core=W1S in_regf=True
-  input  wire  [1:0]  regf_w5_f6_wval_i,   // Core Write Value
-  input  wire         regf_w5_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w5_f6_wval_i,   // Core Write Value
+  input  logic        regf_w5_f6_wr_i,     // Core Write Strobe
   // regf_w5_f8_o: bus=RC core=WL in_regf=False
-  input  wire  [1:0]  regf_w5_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w5_f8_rbus_i,   // Bus Read Value
   output logic        regf_w5_f8_rd_o,     // Bus Read Strobe
   // regf_w5_f10_o: bus=RC core=WL in_regf=True
-  input  wire  [1:0]  regf_w5_f10_wval_i,  // Core Write Value
-  input  wire         regf_w5_f10_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f10_wval_i,  // Core Write Value
+  input  logic        regf_w5_f10_wr_i,    // Core Write Strobe
   // regf_w5_f12_o: bus=RC core=RW in_regf=False
-  input  wire  [1:0]  regf_w5_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w5_f12_rbus_i,  // Bus Read Value
   output logic        regf_w5_f12_rd_o,    // Bus Read Strobe
   // regf_w5_f14_o: bus=RC core=RW in_regf=True
   output logic [1:0]  regf_w5_f14_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w5_f14_wval_i,  // Core Write Value
-  input  wire         regf_w5_f14_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f14_wval_i,  // Core Write Value
+  input  logic        regf_w5_f14_wr_i,    // Core Write Strobe
   // regf_w5_f16_o: bus=RC core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w5_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w5_f16_rbus_i,  // Bus Read Value
   output logic        regf_w5_f16_rd_o,    // Bus Read Strobe
   // regf_w5_f18_o: bus=RC core=RW0C in_regf=True
   output logic [1:0]  regf_w5_f18_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w5_f18_wval_i,  // Core Write Value
-  input  wire         regf_w5_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f18_wval_i,  // Core Write Value
+  input  logic        regf_w5_f18_wr_i,    // Core Write Strobe
   // regf_w5_f20_o: bus=RC core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w5_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w5_f20_rbus_i,  // Bus Read Value
   output logic        regf_w5_f20_rd_o,    // Bus Read Strobe
   // regf_w5_f22_o: bus=RC core=RW0S in_regf=True
   output logic [1:0]  regf_w5_f22_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w5_f22_wval_i,  // Core Write Value
-  input  wire         regf_w5_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f22_wval_i,  // Core Write Value
+  input  logic        regf_w5_f22_wr_i,    // Core Write Strobe
   // regf_w5_f24_o: bus=RC core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w5_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w5_f24_rbus_i,  // Bus Read Value
   output logic        regf_w5_f24_rd_o,    // Bus Read Strobe
   // regf_w5_f26_o: bus=RC core=RW1C in_regf=True
   output logic [1:0]  regf_w5_f26_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w5_f26_wval_i,  // Core Write Value
-  input  wire         regf_w5_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f26_wval_i,  // Core Write Value
+  input  logic        regf_w5_f26_wr_i,    // Core Write Strobe
   // regf_w5_f28_o: bus=RC core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w5_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w5_f28_rbus_i,  // Bus Read Value
   output logic        regf_w5_f28_rd_o,    // Bus Read Strobe
   // regf_w5_f30_o: bus=RC core=RW1S in_regf=True
   output logic [1:0]  regf_w5_f30_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w5_f30_wval_i,  // Core Write Value
-  input  wire         regf_w5_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w5_f30_wval_i,  // Core Write Value
+  input  logic        regf_w5_f30_wr_i,    // Core Write Strobe
   // regf_w6_f0_o: bus=RC core=RWL in_regf=False
-  input  wire  [1:0]  regf_w6_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w6_f0_rbus_i,   // Bus Read Value
   output logic        regf_w6_f0_rd_o,     // Bus Read Strobe
   // regf_w6_f2_o: bus=RC core=RWL in_regf=True
   output logic [1:0]  regf_w6_f2_rval_o,   // Core Read Value
-  input  wire  [1:0]  regf_w6_f2_wval_i,   // Core Write Value
-  input  wire         regf_w6_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w6_f2_wval_i,   // Core Write Value
+  input  logic        regf_w6_f2_wr_i,     // Core Write Strobe
   // regf_w6_f4_o: bus=RS core=RO in_regf=False
-  input  wire  [1:0]  regf_w6_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w6_f4_rbus_i,   // Bus Read Value
   output logic        regf_w6_f4_rd_o,     // Bus Read Strobe
   // regf_w6_f6_o: bus=RS core=RO in_regf=True
   output logic [1:0]  regf_w6_f6_rval_o,   // Core Read Value
   // regf_w6_f8_o: bus=RS core=RC in_regf=False
-  input  wire  [1:0]  regf_w6_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w6_f8_rbus_i,   // Bus Read Value
   output logic        regf_w6_f8_rd_o,     // Bus Read Strobe
   // regf_w6_f10_o: bus=RS core=RC in_regf=True
   output logic [1:0]  regf_w6_f10_rval_o,  // Core Read Value
-  input  wire         regf_w6_f10_rd_i,    // Core Read Strobe
+  input  logic        regf_w6_f10_rd_i,    // Core Read Strobe
   // regf_w6_f12_o: bus=RS core=RS in_regf=False
-  input  wire  [1:0]  regf_w6_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w6_f12_rbus_i,  // Bus Read Value
   output logic        regf_w6_f12_rd_o,    // Bus Read Strobe
   // regf_w6_f14_o: bus=RS core=RS in_regf=True
   output logic [1:0]  regf_w6_f14_rval_o,  // Core Read Value
-  input  wire         regf_w6_f14_rd_i,    // Core Read Strobe
+  input  logic        regf_w6_f14_rd_i,    // Core Read Strobe
   // regf_w6_f16_o: bus=RS core=RT in_regf=False
-  input  wire  [1:0]  regf_w6_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w6_f16_rbus_i,  // Bus Read Value
   output logic        regf_w6_f16_rd_o,    // Bus Read Strobe
   // regf_w6_f18_o: bus=RS core=RT in_regf=True
   output logic [1:0]  regf_w6_f18_rval_o,  // Core Read Value
-  input  wire         regf_w6_f18_rd_i,    // Core Read Strobe
+  input  logic        regf_w6_f18_rd_i,    // Core Read Strobe
   // regf_w6_f20_o: bus=RS core=RP in_regf=False
-  input  wire  [1:0]  regf_w6_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w6_f20_rbus_i,  // Bus Read Value
   output logic        regf_w6_f20_rd_o,    // Bus Read Strobe
   // regf_w6_f22_o: bus=RS core=RP in_regf=True
   output logic [1:0]  regf_w6_f22_rval_o,  // Core Read Value
   // regf_w6_f24_o: bus=RS core=WO in_regf=False
-  input  wire  [1:0]  regf_w6_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w6_f24_rbus_i,  // Bus Read Value
   output logic        regf_w6_f24_rd_o,    // Bus Read Strobe
   // regf_w6_f26_o: bus=RS core=WO in_regf=True
-  input  wire  [1:0]  regf_w6_f26_wval_i,  // Core Write Value
-  input  wire         regf_w6_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w6_f26_wval_i,  // Core Write Value
+  input  logic        regf_w6_f26_wr_i,    // Core Write Strobe
   // regf_w6_f28_o: bus=RS core=W0C in_regf=False
-  input  wire  [1:0]  regf_w6_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w6_f28_rbus_i,  // Bus Read Value
   output logic        regf_w6_f28_rd_o,    // Bus Read Strobe
   // regf_w6_f30_o: bus=RS core=W0C in_regf=True
-  input  wire  [1:0]  regf_w6_f30_wval_i,  // Core Write Value
-  input  wire         regf_w6_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w6_f30_wval_i,  // Core Write Value
+  input  logic        regf_w6_f30_wr_i,    // Core Write Strobe
   // regf_w7_f0_o: bus=RS core=W0S in_regf=False
-  input  wire  [1:0]  regf_w7_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w7_f0_rbus_i,   // Bus Read Value
   output logic        regf_w7_f0_rd_o,     // Bus Read Strobe
   // regf_w7_f2_o: bus=RS core=W0S in_regf=True
-  input  wire  [1:0]  regf_w7_f2_wval_i,   // Core Write Value
-  input  wire         regf_w7_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w7_f2_wval_i,   // Core Write Value
+  input  logic        regf_w7_f2_wr_i,     // Core Write Strobe
   // regf_w7_f4_o: bus=RS core=W1C in_regf=False
-  input  wire  [1:0]  regf_w7_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w7_f4_rbus_i,   // Bus Read Value
   output logic        regf_w7_f4_rd_o,     // Bus Read Strobe
   // regf_w7_f6_o: bus=RS core=W1C in_regf=True
-  input  wire  [1:0]  regf_w7_f6_wval_i,   // Core Write Value
-  input  wire         regf_w7_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w7_f6_wval_i,   // Core Write Value
+  input  logic        regf_w7_f6_wr_i,     // Core Write Strobe
   // regf_w7_f8_o: bus=RS core=W1S in_regf=False
-  input  wire  [1:0]  regf_w7_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w7_f8_rbus_i,   // Bus Read Value
   output logic        regf_w7_f8_rd_o,     // Bus Read Strobe
   // regf_w7_f10_o: bus=RS core=W1S in_regf=True
-  input  wire  [1:0]  regf_w7_f10_wval_i,  // Core Write Value
-  input  wire         regf_w7_f10_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f10_wval_i,  // Core Write Value
+  input  logic        regf_w7_f10_wr_i,    // Core Write Strobe
   // regf_w7_f12_o: bus=RS core=WL in_regf=False
-  input  wire  [1:0]  regf_w7_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w7_f12_rbus_i,  // Bus Read Value
   output logic        regf_w7_f12_rd_o,    // Bus Read Strobe
   // regf_w7_f14_o: bus=RS core=WL in_regf=True
-  input  wire  [1:0]  regf_w7_f14_wval_i,  // Core Write Value
-  input  wire         regf_w7_f14_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f14_wval_i,  // Core Write Value
+  input  logic        regf_w7_f14_wr_i,    // Core Write Strobe
   // regf_w7_f16_o: bus=RS core=RW in_regf=False
-  input  wire  [1:0]  regf_w7_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w7_f16_rbus_i,  // Bus Read Value
   output logic        regf_w7_f16_rd_o,    // Bus Read Strobe
   // regf_w7_f18_o: bus=RS core=RW in_regf=True
   output logic [1:0]  regf_w7_f18_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w7_f18_wval_i,  // Core Write Value
-  input  wire         regf_w7_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f18_wval_i,  // Core Write Value
+  input  logic        regf_w7_f18_wr_i,    // Core Write Strobe
   // regf_w7_f20_o: bus=RS core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w7_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w7_f20_rbus_i,  // Bus Read Value
   output logic        regf_w7_f20_rd_o,    // Bus Read Strobe
   // regf_w7_f22_o: bus=RS core=RW0C in_regf=True
   output logic [1:0]  regf_w7_f22_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w7_f22_wval_i,  // Core Write Value
-  input  wire         regf_w7_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f22_wval_i,  // Core Write Value
+  input  logic        regf_w7_f22_wr_i,    // Core Write Strobe
   // regf_w7_f24_o: bus=RS core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w7_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w7_f24_rbus_i,  // Bus Read Value
   output logic        regf_w7_f24_rd_o,    // Bus Read Strobe
   // regf_w7_f26_o: bus=RS core=RW0S in_regf=True
   output logic [1:0]  regf_w7_f26_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w7_f26_wval_i,  // Core Write Value
-  input  wire         regf_w7_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f26_wval_i,  // Core Write Value
+  input  logic        regf_w7_f26_wr_i,    // Core Write Strobe
   // regf_w7_f28_o: bus=RS core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w7_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w7_f28_rbus_i,  // Bus Read Value
   output logic        regf_w7_f28_rd_o,    // Bus Read Strobe
   // regf_w7_f30_o: bus=RS core=RW1C in_regf=True
   output logic [1:0]  regf_w7_f30_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w7_f30_wval_i,  // Core Write Value
-  input  wire         regf_w7_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w7_f30_wval_i,  // Core Write Value
+  input  logic        regf_w7_f30_wr_i,    // Core Write Strobe
   // regf_w8_f0_o: bus=RS core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w8_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w8_f0_rbus_i,   // Bus Read Value
   output logic        regf_w8_f0_rd_o,     // Bus Read Strobe
   // regf_w8_f2_o: bus=RS core=RW1S in_regf=True
   output logic [1:0]  regf_w8_f2_rval_o,   // Core Read Value
-  input  wire  [1:0]  regf_w8_f2_wval_i,   // Core Write Value
-  input  wire         regf_w8_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w8_f2_wval_i,   // Core Write Value
+  input  logic        regf_w8_f2_wr_i,     // Core Write Strobe
   // regf_w8_f4_o: bus=RS core=RWL in_regf=False
-  input  wire  [1:0]  regf_w8_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w8_f4_rbus_i,   // Bus Read Value
   output logic        regf_w8_f4_rd_o,     // Bus Read Strobe
   // regf_w8_f6_o: bus=RS core=RWL in_regf=True
   output logic [1:0]  regf_w8_f6_rval_o,   // Core Read Value
-  input  wire  [1:0]  regf_w8_f6_wval_i,   // Core Write Value
-  input  wire         regf_w8_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w8_f6_wval_i,   // Core Write Value
+  input  logic        regf_w8_f6_wr_i,     // Core Write Strobe
   // regf_w8_f8_o: bus=RT core=RO in_regf=False
-  input  wire  [1:0]  regf_w8_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w8_f8_rbus_i,   // Bus Read Value
   output logic        regf_w8_f8_rd_o,     // Bus Read Strobe
   // regf_w8_f10_o: bus=RT core=RO in_regf=True
   output logic [1:0]  regf_w8_f10_rval_o,  // Core Read Value
   // regf_w8_f12_o: bus=RT core=RC in_regf=False
-  input  wire  [1:0]  regf_w8_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w8_f12_rbus_i,  // Bus Read Value
   output logic        regf_w8_f12_rd_o,    // Bus Read Strobe
   // regf_w8_f14_o: bus=RT core=RC in_regf=True
   output logic [1:0]  regf_w8_f14_rval_o,  // Core Read Value
-  input  wire         regf_w8_f14_rd_i,    // Core Read Strobe
+  input  logic        regf_w8_f14_rd_i,    // Core Read Strobe
   // regf_w8_f16_o: bus=RT core=RS in_regf=False
-  input  wire  [1:0]  regf_w8_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w8_f16_rbus_i,  // Bus Read Value
   output logic        regf_w8_f16_rd_o,    // Bus Read Strobe
   // regf_w8_f18_o: bus=RT core=RS in_regf=True
   output logic [1:0]  regf_w8_f18_rval_o,  // Core Read Value
-  input  wire         regf_w8_f18_rd_i,    // Core Read Strobe
+  input  logic        regf_w8_f18_rd_i,    // Core Read Strobe
   // regf_w8_f20_o: bus=RT core=RT in_regf=False
-  input  wire  [1:0]  regf_w8_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w8_f20_rbus_i,  // Bus Read Value
   output logic        regf_w8_f20_rd_o,    // Bus Read Strobe
   // regf_w8_f22_o: bus=RT core=RT in_regf=True
   output logic [1:0]  regf_w8_f22_rval_o,  // Core Read Value
-  input  wire         regf_w8_f22_rd_i,    // Core Read Strobe
+  input  logic        regf_w8_f22_rd_i,    // Core Read Strobe
   // regf_w8_f24_o: bus=RT core=RP in_regf=False
-  input  wire  [1:0]  regf_w8_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w8_f24_rbus_i,  // Bus Read Value
   output logic        regf_w8_f24_rd_o,    // Bus Read Strobe
   // regf_w8_f26_o: bus=RT core=RP in_regf=True
   output logic [1:0]  regf_w8_f26_rval_o,  // Core Read Value
   // regf_w8_f28_o: bus=RT core=WO in_regf=False
-  input  wire  [1:0]  regf_w8_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w8_f28_rbus_i,  // Bus Read Value
   output logic        regf_w8_f28_rd_o,    // Bus Read Strobe
   // regf_w8_f30_o: bus=RT core=WO in_regf=True
-  input  wire  [1:0]  regf_w8_f30_wval_i,  // Core Write Value
-  input  wire         regf_w8_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w8_f30_wval_i,  // Core Write Value
+  input  logic        regf_w8_f30_wr_i,    // Core Write Strobe
   // regf_w9_f0_o: bus=RT core=W0C in_regf=False
-  input  wire  [1:0]  regf_w9_f0_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w9_f0_rbus_i,   // Bus Read Value
   output logic        regf_w9_f0_rd_o,     // Bus Read Strobe
   // regf_w9_f2_o: bus=RT core=W0C in_regf=True
-  input  wire  [1:0]  regf_w9_f2_wval_i,   // Core Write Value
-  input  wire         regf_w9_f2_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w9_f2_wval_i,   // Core Write Value
+  input  logic        regf_w9_f2_wr_i,     // Core Write Strobe
   // regf_w9_f4_o: bus=RT core=W0S in_regf=False
-  input  wire  [1:0]  regf_w9_f4_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w9_f4_rbus_i,   // Bus Read Value
   output logic        regf_w9_f4_rd_o,     // Bus Read Strobe
   // regf_w9_f6_o: bus=RT core=W0S in_regf=True
-  input  wire  [1:0]  regf_w9_f6_wval_i,   // Core Write Value
-  input  wire         regf_w9_f6_wr_i,     // Core Write Strobe
+  input  logic [1:0]  regf_w9_f6_wval_i,   // Core Write Value
+  input  logic        regf_w9_f6_wr_i,     // Core Write Strobe
   // regf_w9_f8_o: bus=RT core=W1C in_regf=False
-  input  wire  [1:0]  regf_w9_f8_rbus_i,   // Bus Read Value
+  input  logic [1:0]  regf_w9_f8_rbus_i,   // Bus Read Value
   output logic        regf_w9_f8_rd_o,     // Bus Read Strobe
   // regf_w9_f10_o: bus=RT core=W1C in_regf=True
-  input  wire  [1:0]  regf_w9_f10_wval_i,  // Core Write Value
-  input  wire         regf_w9_f10_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f10_wval_i,  // Core Write Value
+  input  logic        regf_w9_f10_wr_i,    // Core Write Strobe
   // regf_w9_f12_o: bus=RT core=W1S in_regf=False
-  input  wire  [1:0]  regf_w9_f12_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w9_f12_rbus_i,  // Bus Read Value
   output logic        regf_w9_f12_rd_o,    // Bus Read Strobe
   // regf_w9_f14_o: bus=RT core=W1S in_regf=True
-  input  wire  [1:0]  regf_w9_f14_wval_i,  // Core Write Value
-  input  wire         regf_w9_f14_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f14_wval_i,  // Core Write Value
+  input  logic        regf_w9_f14_wr_i,    // Core Write Strobe
   // regf_w9_f16_o: bus=RT core=WL in_regf=False
-  input  wire  [1:0]  regf_w9_f16_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w9_f16_rbus_i,  // Bus Read Value
   output logic        regf_w9_f16_rd_o,    // Bus Read Strobe
   // regf_w9_f18_o: bus=RT core=WL in_regf=True
-  input  wire  [1:0]  regf_w9_f18_wval_i,  // Core Write Value
-  input  wire         regf_w9_f18_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f18_wval_i,  // Core Write Value
+  input  logic        regf_w9_f18_wr_i,    // Core Write Strobe
   // regf_w9_f20_o: bus=RT core=RW in_regf=False
-  input  wire  [1:0]  regf_w9_f20_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w9_f20_rbus_i,  // Bus Read Value
   output logic        regf_w9_f20_rd_o,    // Bus Read Strobe
   // regf_w9_f22_o: bus=RT core=RW in_regf=True
   output logic [1:0]  regf_w9_f22_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w9_f22_wval_i,  // Core Write Value
-  input  wire         regf_w9_f22_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f22_wval_i,  // Core Write Value
+  input  logic        regf_w9_f22_wr_i,    // Core Write Strobe
   // regf_w9_f24_o: bus=RT core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w9_f24_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w9_f24_rbus_i,  // Bus Read Value
   output logic        regf_w9_f24_rd_o,    // Bus Read Strobe
   // regf_w9_f26_o: bus=RT core=RW0C in_regf=True
   output logic [1:0]  regf_w9_f26_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w9_f26_wval_i,  // Core Write Value
-  input  wire         regf_w9_f26_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f26_wval_i,  // Core Write Value
+  input  logic        regf_w9_f26_wr_i,    // Core Write Strobe
   // regf_w9_f28_o: bus=RT core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w9_f28_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w9_f28_rbus_i,  // Bus Read Value
   output logic        regf_w9_f28_rd_o,    // Bus Read Strobe
   // regf_w9_f30_o: bus=RT core=RW0S in_regf=True
   output logic [1:0]  regf_w9_f30_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w9_f30_wval_i,  // Core Write Value
-  input  wire         regf_w9_f30_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w9_f30_wval_i,  // Core Write Value
+  input  logic        regf_w9_f30_wr_i,    // Core Write Strobe
   // regf_w10_f0_o: bus=RT core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w10_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w10_f0_rbus_i,  // Bus Read Value
   output logic        regf_w10_f0_rd_o,    // Bus Read Strobe
   // regf_w10_f2_o: bus=RT core=RW1C in_regf=True
   output logic [1:0]  regf_w10_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w10_f2_wval_i,  // Core Write Value
-  input  wire         regf_w10_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w10_f2_wval_i,  // Core Write Value
+  input  logic        regf_w10_f2_wr_i,    // Core Write Strobe
   // regf_w10_f4_o: bus=RT core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w10_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w10_f4_rbus_i,  // Bus Read Value
   output logic        regf_w10_f4_rd_o,    // Bus Read Strobe
   // regf_w10_f6_o: bus=RT core=RW1S in_regf=True
   output logic [1:0]  regf_w10_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w10_f6_wval_i,  // Core Write Value
-  input  wire         regf_w10_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w10_f6_wval_i,  // Core Write Value
+  input  logic        regf_w10_f6_wr_i,    // Core Write Strobe
   // regf_w10_f8_o: bus=RT core=RWL in_regf=False
-  input  wire  [1:0]  regf_w10_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w10_f8_rbus_i,  // Bus Read Value
   output logic        regf_w10_f8_rd_o,    // Bus Read Strobe
   // regf_w10_f10_o: bus=RT core=RWL in_regf=True
   output logic [1:0]  regf_w10_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w10_f10_wval_i, // Core Write Value
-  input  wire         regf_w10_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w10_f10_wval_i, // Core Write Value
+  input  logic        regf_w10_f10_wr_i,   // Core Write Strobe
   // regf_w10_f12_o: bus=RP core=RO in_regf=True
   output logic [1:0]  regf_w10_f12_rval_o, // Core Read Value
   // regf_w10_f14_o: bus=RP core=RC in_regf=False
-  input  wire  [1:0]  regf_w10_f14_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w10_f14_rbus_i, // Bus Read Value
   // regf_w10_f16_o: bus=RP core=RC in_regf=True
   output logic [1:0]  regf_w10_f16_rval_o, // Core Read Value
-  input  wire         regf_w10_f16_rd_i,   // Core Read Strobe
+  input  logic        regf_w10_f16_rd_i,   // Core Read Strobe
   // regf_w10_f18_o: bus=RP core=RS in_regf=False
-  input  wire  [1:0]  regf_w10_f18_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w10_f18_rbus_i, // Bus Read Value
   // regf_w10_f20_o: bus=RP core=RS in_regf=True
   output logic [1:0]  regf_w10_f20_rval_o, // Core Read Value
-  input  wire         regf_w10_f20_rd_i,   // Core Read Strobe
+  input  logic        regf_w10_f20_rd_i,   // Core Read Strobe
   // regf_w10_f22_o: bus=RP core=RT in_regf=False
-  input  wire  [1:0]  regf_w10_f22_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w10_f22_rbus_i, // Bus Read Value
   // regf_w10_f24_o: bus=RP core=RT in_regf=True
   output logic [1:0]  regf_w10_f24_rval_o, // Core Read Value
-  input  wire         regf_w10_f24_rd_i,   // Core Read Strobe
+  input  logic        regf_w10_f24_rd_i,   // Core Read Strobe
   // regf_w10_f26_o: bus=RP core=RP in_regf=True
   output logic [1:0]  regf_w10_f26_rval_o, // Core Read Value
   // regf_w10_f28_o: bus=RP core=WO in_regf=False
-  input  wire  [1:0]  regf_w10_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w10_f28_rbus_i, // Bus Read Value
   // regf_w10_f30_o: bus=RP core=WO in_regf=True
-  input  wire  [1:0]  regf_w10_f30_wval_i, // Core Write Value
-  input  wire         regf_w10_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w10_f30_wval_i, // Core Write Value
+  input  logic        regf_w10_f30_wr_i,   // Core Write Strobe
   // regf_w11_f0_o: bus=RP core=W0C in_regf=False
-  input  wire  [1:0]  regf_w11_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w11_f0_rbus_i,  // Bus Read Value
   // regf_w11_f2_o: bus=RP core=W0C in_regf=True
-  input  wire  [1:0]  regf_w11_f2_wval_i,  // Core Write Value
-  input  wire         regf_w11_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w11_f2_wval_i,  // Core Write Value
+  input  logic        regf_w11_f2_wr_i,    // Core Write Strobe
   // regf_w11_f4_o: bus=RP core=W0S in_regf=False
-  input  wire  [1:0]  regf_w11_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w11_f4_rbus_i,  // Bus Read Value
   // regf_w11_f6_o: bus=RP core=W0S in_regf=True
-  input  wire  [1:0]  regf_w11_f6_wval_i,  // Core Write Value
-  input  wire         regf_w11_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w11_f6_wval_i,  // Core Write Value
+  input  logic        regf_w11_f6_wr_i,    // Core Write Strobe
   // regf_w11_f8_o: bus=RP core=W1C in_regf=False
-  input  wire  [1:0]  regf_w11_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w11_f8_rbus_i,  // Bus Read Value
   // regf_w11_f10_o: bus=RP core=W1C in_regf=True
-  input  wire  [1:0]  regf_w11_f10_wval_i, // Core Write Value
-  input  wire         regf_w11_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f10_wval_i, // Core Write Value
+  input  logic        regf_w11_f10_wr_i,   // Core Write Strobe
   // regf_w11_f12_o: bus=RP core=W1S in_regf=False
-  input  wire  [1:0]  regf_w11_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w11_f12_rbus_i, // Bus Read Value
   // regf_w11_f14_o: bus=RP core=W1S in_regf=True
-  input  wire  [1:0]  regf_w11_f14_wval_i, // Core Write Value
-  input  wire         regf_w11_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f14_wval_i, // Core Write Value
+  input  logic        regf_w11_f14_wr_i,   // Core Write Strobe
   // regf_w11_f16_o: bus=RP core=WL in_regf=False
-  input  wire  [1:0]  regf_w11_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w11_f16_rbus_i, // Bus Read Value
   // regf_w11_f18_o: bus=RP core=WL in_regf=True
-  input  wire  [1:0]  regf_w11_f18_wval_i, // Core Write Value
-  input  wire         regf_w11_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f18_wval_i, // Core Write Value
+  input  logic        regf_w11_f18_wr_i,   // Core Write Strobe
   // regf_w11_f20_o: bus=RP core=RW in_regf=False
-  input  wire  [1:0]  regf_w11_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w11_f20_rbus_i, // Bus Read Value
   // regf_w11_f22_o: bus=RP core=RW in_regf=True
   output logic [1:0]  regf_w11_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w11_f22_wval_i, // Core Write Value
-  input  wire         regf_w11_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f22_wval_i, // Core Write Value
+  input  logic        regf_w11_f22_wr_i,   // Core Write Strobe
   // regf_w11_f24_o: bus=RP core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w11_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w11_f24_rbus_i, // Bus Read Value
   // regf_w11_f26_o: bus=RP core=RW0C in_regf=True
   output logic [1:0]  regf_w11_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w11_f26_wval_i, // Core Write Value
-  input  wire         regf_w11_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f26_wval_i, // Core Write Value
+  input  logic        regf_w11_f26_wr_i,   // Core Write Strobe
   // regf_w11_f28_o: bus=RP core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w11_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w11_f28_rbus_i, // Bus Read Value
   // regf_w11_f30_o: bus=RP core=RW0S in_regf=True
   output logic [1:0]  regf_w11_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w11_f30_wval_i, // Core Write Value
-  input  wire         regf_w11_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w11_f30_wval_i, // Core Write Value
+  input  logic        regf_w11_f30_wr_i,   // Core Write Strobe
   // regf_w12_f0_o: bus=RP core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w12_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w12_f0_rbus_i,  // Bus Read Value
   // regf_w12_f2_o: bus=RP core=RW1C in_regf=True
   output logic [1:0]  regf_w12_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w12_f2_wval_i,  // Core Write Value
-  input  wire         regf_w12_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w12_f2_wval_i,  // Core Write Value
+  input  logic        regf_w12_f2_wr_i,    // Core Write Strobe
   // regf_w12_f4_o: bus=RP core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w12_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w12_f4_rbus_i,  // Bus Read Value
   // regf_w12_f6_o: bus=RP core=RW1S in_regf=True
   output logic [1:0]  regf_w12_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w12_f6_wval_i,  // Core Write Value
-  input  wire         regf_w12_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w12_f6_wval_i,  // Core Write Value
+  input  logic        regf_w12_f6_wr_i,    // Core Write Strobe
   // regf_w12_f8_o: bus=RP core=RWL in_regf=False
-  input  wire  [1:0]  regf_w12_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w12_f8_rbus_i,  // Bus Read Value
   // regf_w12_f10_o: bus=RP core=RWL in_regf=True
   output logic [1:0]  regf_w12_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w12_f10_wval_i, // Core Write Value
-  input  wire         regf_w12_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w12_f10_wval_i, // Core Write Value
+  input  logic        regf_w12_f10_wr_i,   // Core Write Strobe
   // regf_w12_f12_o: bus=WO core=RO in_regf=False
   output logic [1:0]  regf_w12_f12_wbus_o, // Bus Write Value
   output logic        regf_w12_f12_wr_o,   // Bus Write Strobe
@@ -1264,19 +1264,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w12_f16_wr_o,   // Bus Write Strobe
   // regf_w12_f18_o: bus=WO core=RC in_regf=True
   output logic [1:0]  regf_w12_f18_rval_o, // Core Read Value
-  input  wire         regf_w12_f18_rd_i,   // Core Read Strobe
+  input  logic        regf_w12_f18_rd_i,   // Core Read Strobe
   // regf_w12_f20_o: bus=WO core=RS in_regf=False
   output logic [1:0]  regf_w12_f20_wbus_o, // Bus Write Value
   output logic        regf_w12_f20_wr_o,   // Bus Write Strobe
   // regf_w12_f22_o: bus=WO core=RS in_regf=True
   output logic [1:0]  regf_w12_f22_rval_o, // Core Read Value
-  input  wire         regf_w12_f22_rd_i,   // Core Read Strobe
+  input  logic        regf_w12_f22_rd_i,   // Core Read Strobe
   // regf_w12_f24_o: bus=WO core=RT in_regf=False
   output logic [1:0]  regf_w12_f24_wbus_o, // Bus Write Value
   output logic        regf_w12_f24_wr_o,   // Bus Write Strobe
   // regf_w12_f26_o: bus=WO core=RT in_regf=True
   output logic [1:0]  regf_w12_f26_rval_o, // Core Read Value
-  input  wire         regf_w12_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w12_f26_rd_i,   // Core Read Strobe
   // regf_w12_f28_o: bus=WO core=RP in_regf=False
   output logic [1:0]  regf_w12_f28_wbus_o, // Bus Write Value
   output logic        regf_w12_f28_wr_o,   // Bus Write Strobe
@@ -1286,80 +1286,80 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w13_f0_wbus_o,  // Bus Write Value
   output logic        regf_w13_f0_wr_o,    // Bus Write Strobe
   // regf_w13_f2_o: bus=WO core=WO in_regf=True
-  input  wire  [1:0]  regf_w13_f2_wval_i,  // Core Write Value
-  input  wire         regf_w13_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w13_f2_wval_i,  // Core Write Value
+  input  logic        regf_w13_f2_wr_i,    // Core Write Strobe
   // regf_w13_f4_o: bus=WO core=W0C in_regf=False
   output logic [1:0]  regf_w13_f4_wbus_o,  // Bus Write Value
   output logic        regf_w13_f4_wr_o,    // Bus Write Strobe
   // regf_w13_f6_o: bus=WO core=W0C in_regf=True
-  input  wire  [1:0]  regf_w13_f6_wval_i,  // Core Write Value
-  input  wire         regf_w13_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w13_f6_wval_i,  // Core Write Value
+  input  logic        regf_w13_f6_wr_i,    // Core Write Strobe
   // regf_w13_f8_o: bus=WO core=W0S in_regf=False
   output logic [1:0]  regf_w13_f8_wbus_o,  // Bus Write Value
   output logic        regf_w13_f8_wr_o,    // Bus Write Strobe
   // regf_w13_f10_o: bus=WO core=W0S in_regf=True
-  input  wire  [1:0]  regf_w13_f10_wval_i, // Core Write Value
-  input  wire         regf_w13_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f10_wval_i, // Core Write Value
+  input  logic        regf_w13_f10_wr_i,   // Core Write Strobe
   // regf_w13_f12_o: bus=WO core=W1C in_regf=False
   output logic [1:0]  regf_w13_f12_wbus_o, // Bus Write Value
   output logic        regf_w13_f12_wr_o,   // Bus Write Strobe
   // regf_w13_f14_o: bus=WO core=W1C in_regf=True
-  input  wire  [1:0]  regf_w13_f14_wval_i, // Core Write Value
-  input  wire         regf_w13_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f14_wval_i, // Core Write Value
+  input  logic        regf_w13_f14_wr_i,   // Core Write Strobe
   // regf_w13_f16_o: bus=WO core=W1S in_regf=False
   output logic [1:0]  regf_w13_f16_wbus_o, // Bus Write Value
   output logic        regf_w13_f16_wr_o,   // Bus Write Strobe
   // regf_w13_f18_o: bus=WO core=W1S in_regf=True
-  input  wire  [1:0]  regf_w13_f18_wval_i, // Core Write Value
-  input  wire         regf_w13_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f18_wval_i, // Core Write Value
+  input  logic        regf_w13_f18_wr_i,   // Core Write Strobe
   // regf_w13_f20_o: bus=WO core=WL in_regf=False
   output logic [1:0]  regf_w13_f20_wbus_o, // Bus Write Value
   output logic        regf_w13_f20_wr_o,   // Bus Write Strobe
   // regf_w13_f22_o: bus=WO core=WL in_regf=True
-  input  wire  [1:0]  regf_w13_f22_wval_i, // Core Write Value
-  input  wire         regf_w13_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f22_wval_i, // Core Write Value
+  input  logic        regf_w13_f22_wr_i,   // Core Write Strobe
   // regf_w13_f24_o: bus=WO core=RW in_regf=False
   output logic [1:0]  regf_w13_f24_wbus_o, // Bus Write Value
   output logic        regf_w13_f24_wr_o,   // Bus Write Strobe
   // regf_w13_f26_o: bus=WO core=RW in_regf=True
   output logic [1:0]  regf_w13_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w13_f26_wval_i, // Core Write Value
-  input  wire         regf_w13_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f26_wval_i, // Core Write Value
+  input  logic        regf_w13_f26_wr_i,   // Core Write Strobe
   // regf_w13_f28_o: bus=WO core=RW0C in_regf=False
   output logic [1:0]  regf_w13_f28_wbus_o, // Bus Write Value
   output logic        regf_w13_f28_wr_o,   // Bus Write Strobe
   // regf_w13_f30_o: bus=WO core=RW0C in_regf=True
   output logic [1:0]  regf_w13_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w13_f30_wval_i, // Core Write Value
-  input  wire         regf_w13_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w13_f30_wval_i, // Core Write Value
+  input  logic        regf_w13_f30_wr_i,   // Core Write Strobe
   // regf_w14_f0_o: bus=WO core=RW0S in_regf=False
   output logic [1:0]  regf_w14_f0_wbus_o,  // Bus Write Value
   output logic        regf_w14_f0_wr_o,    // Bus Write Strobe
   // regf_w14_f2_o: bus=WO core=RW0S in_regf=True
   output logic [1:0]  regf_w14_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w14_f2_wval_i,  // Core Write Value
-  input  wire         regf_w14_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w14_f2_wval_i,  // Core Write Value
+  input  logic        regf_w14_f2_wr_i,    // Core Write Strobe
   // regf_w14_f4_o: bus=WO core=RW1C in_regf=False
   output logic [1:0]  regf_w14_f4_wbus_o,  // Bus Write Value
   output logic        regf_w14_f4_wr_o,    // Bus Write Strobe
   // regf_w14_f6_o: bus=WO core=RW1C in_regf=True
   output logic [1:0]  regf_w14_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w14_f6_wval_i,  // Core Write Value
-  input  wire         regf_w14_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w14_f6_wval_i,  // Core Write Value
+  input  logic        regf_w14_f6_wr_i,    // Core Write Strobe
   // regf_w14_f8_o: bus=WO core=RW1S in_regf=False
   output logic [1:0]  regf_w14_f8_wbus_o,  // Bus Write Value
   output logic        regf_w14_f8_wr_o,    // Bus Write Strobe
   // regf_w14_f10_o: bus=WO core=RW1S in_regf=True
   output logic [1:0]  regf_w14_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w14_f10_wval_i, // Core Write Value
-  input  wire         regf_w14_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w14_f10_wval_i, // Core Write Value
+  input  logic        regf_w14_f10_wr_i,   // Core Write Strobe
   // regf_w14_f12_o: bus=WO core=RWL in_regf=False
   output logic [1:0]  regf_w14_f12_wbus_o, // Bus Write Value
   output logic        regf_w14_f12_wr_o,   // Bus Write Strobe
   // regf_w14_f14_o: bus=WO core=RWL in_regf=True
   output logic [1:0]  regf_w14_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w14_f14_wval_i, // Core Write Value
-  input  wire         regf_w14_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w14_f14_wval_i, // Core Write Value
+  input  logic        regf_w14_f14_wr_i,   // Core Write Strobe
   // regf_w14_f16_o: bus=W0C core=RO in_regf=False
   output logic [1:0]  regf_w14_f16_wbus_o, // Bus Write Value
   output logic        regf_w14_f16_wr_o,   // Bus Write Strobe
@@ -1370,19 +1370,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w14_f20_wr_o,   // Bus Write Strobe
   // regf_w14_f22_o: bus=W0C core=RC in_regf=True
   output logic [1:0]  regf_w14_f22_rval_o, // Core Read Value
-  input  wire         regf_w14_f22_rd_i,   // Core Read Strobe
+  input  logic        regf_w14_f22_rd_i,   // Core Read Strobe
   // regf_w14_f24_o: bus=W0C core=RS in_regf=False
   output logic [1:0]  regf_w14_f24_wbus_o, // Bus Write Value
   output logic        regf_w14_f24_wr_o,   // Bus Write Strobe
   // regf_w14_f26_o: bus=W0C core=RS in_regf=True
   output logic [1:0]  regf_w14_f26_rval_o, // Core Read Value
-  input  wire         regf_w14_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w14_f26_rd_i,   // Core Read Strobe
   // regf_w14_f28_o: bus=W0C core=RT in_regf=False
   output logic [1:0]  regf_w14_f28_wbus_o, // Bus Write Value
   output logic        regf_w14_f28_wr_o,   // Bus Write Strobe
   // regf_w14_f30_o: bus=W0C core=RT in_regf=True
   output logic [1:0]  regf_w14_f30_rval_o, // Core Read Value
-  input  wire         regf_w14_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w14_f30_rd_i,   // Core Read Strobe
   // regf_w15_f0_o: bus=W0C core=RP in_regf=False
   output logic [1:0]  regf_w15_f0_wbus_o,  // Bus Write Value
   output logic        regf_w15_f0_wr_o,    // Bus Write Strobe
@@ -1392,80 +1392,80 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w15_f4_wbus_o,  // Bus Write Value
   output logic        regf_w15_f4_wr_o,    // Bus Write Strobe
   // regf_w15_f6_o: bus=W0C core=WO in_regf=True
-  input  wire  [1:0]  regf_w15_f6_wval_i,  // Core Write Value
-  input  wire         regf_w15_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w15_f6_wval_i,  // Core Write Value
+  input  logic        regf_w15_f6_wr_i,    // Core Write Strobe
   // regf_w15_f8_o: bus=W0C core=W0C in_regf=False
   output logic [1:0]  regf_w15_f8_wbus_o,  // Bus Write Value
   output logic        regf_w15_f8_wr_o,    // Bus Write Strobe
   // regf_w15_f10_o: bus=W0C core=W0C in_regf=True
-  input  wire  [1:0]  regf_w15_f10_wval_i, // Core Write Value
-  input  wire         regf_w15_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f10_wval_i, // Core Write Value
+  input  logic        regf_w15_f10_wr_i,   // Core Write Strobe
   // regf_w15_f12_o: bus=W0C core=W0S in_regf=False
   output logic [1:0]  regf_w15_f12_wbus_o, // Bus Write Value
   output logic        regf_w15_f12_wr_o,   // Bus Write Strobe
   // regf_w15_f14_o: bus=W0C core=W0S in_regf=True
-  input  wire  [1:0]  regf_w15_f14_wval_i, // Core Write Value
-  input  wire         regf_w15_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f14_wval_i, // Core Write Value
+  input  logic        regf_w15_f14_wr_i,   // Core Write Strobe
   // regf_w15_f16_o: bus=W0C core=W1C in_regf=False
   output logic [1:0]  regf_w15_f16_wbus_o, // Bus Write Value
   output logic        regf_w15_f16_wr_o,   // Bus Write Strobe
   // regf_w15_f18_o: bus=W0C core=W1C in_regf=True
-  input  wire  [1:0]  regf_w15_f18_wval_i, // Core Write Value
-  input  wire         regf_w15_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f18_wval_i, // Core Write Value
+  input  logic        regf_w15_f18_wr_i,   // Core Write Strobe
   // regf_w15_f20_o: bus=W0C core=W1S in_regf=False
   output logic [1:0]  regf_w15_f20_wbus_o, // Bus Write Value
   output logic        regf_w15_f20_wr_o,   // Bus Write Strobe
   // regf_w15_f22_o: bus=W0C core=W1S in_regf=True
-  input  wire  [1:0]  regf_w15_f22_wval_i, // Core Write Value
-  input  wire         regf_w15_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f22_wval_i, // Core Write Value
+  input  logic        regf_w15_f22_wr_i,   // Core Write Strobe
   // regf_w15_f24_o: bus=W0C core=WL in_regf=False
   output logic [1:0]  regf_w15_f24_wbus_o, // Bus Write Value
   output logic        regf_w15_f24_wr_o,   // Bus Write Strobe
   // regf_w15_f26_o: bus=W0C core=WL in_regf=True
-  input  wire  [1:0]  regf_w15_f26_wval_i, // Core Write Value
-  input  wire         regf_w15_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f26_wval_i, // Core Write Value
+  input  logic        regf_w15_f26_wr_i,   // Core Write Strobe
   // regf_w15_f28_o: bus=W0C core=RW in_regf=False
   output logic [1:0]  regf_w15_f28_wbus_o, // Bus Write Value
   output logic        regf_w15_f28_wr_o,   // Bus Write Strobe
   // regf_w15_f30_o: bus=W0C core=RW in_regf=True
   output logic [1:0]  regf_w15_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w15_f30_wval_i, // Core Write Value
-  input  wire         regf_w15_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w15_f30_wval_i, // Core Write Value
+  input  logic        regf_w15_f30_wr_i,   // Core Write Strobe
   // regf_w16_f0_o: bus=W0C core=RW0C in_regf=False
   output logic [1:0]  regf_w16_f0_wbus_o,  // Bus Write Value
   output logic        regf_w16_f0_wr_o,    // Bus Write Strobe
   // regf_w16_f2_o: bus=W0C core=RW0C in_regf=True
   output logic [1:0]  regf_w16_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w16_f2_wval_i,  // Core Write Value
-  input  wire         regf_w16_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w16_f2_wval_i,  // Core Write Value
+  input  logic        regf_w16_f2_wr_i,    // Core Write Strobe
   // regf_w16_f4_o: bus=W0C core=RW0S in_regf=False
   output logic [1:0]  regf_w16_f4_wbus_o,  // Bus Write Value
   output logic        regf_w16_f4_wr_o,    // Bus Write Strobe
   // regf_w16_f6_o: bus=W0C core=RW0S in_regf=True
   output logic [1:0]  regf_w16_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w16_f6_wval_i,  // Core Write Value
-  input  wire         regf_w16_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w16_f6_wval_i,  // Core Write Value
+  input  logic        regf_w16_f6_wr_i,    // Core Write Strobe
   // regf_w16_f8_o: bus=W0C core=RW1C in_regf=False
   output logic [1:0]  regf_w16_f8_wbus_o,  // Bus Write Value
   output logic        regf_w16_f8_wr_o,    // Bus Write Strobe
   // regf_w16_f10_o: bus=W0C core=RW1C in_regf=True
   output logic [1:0]  regf_w16_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w16_f10_wval_i, // Core Write Value
-  input  wire         regf_w16_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w16_f10_wval_i, // Core Write Value
+  input  logic        regf_w16_f10_wr_i,   // Core Write Strobe
   // regf_w16_f12_o: bus=W0C core=RW1S in_regf=False
   output logic [1:0]  regf_w16_f12_wbus_o, // Bus Write Value
   output logic        regf_w16_f12_wr_o,   // Bus Write Strobe
   // regf_w16_f14_o: bus=W0C core=RW1S in_regf=True
   output logic [1:0]  regf_w16_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w16_f14_wval_i, // Core Write Value
-  input  wire         regf_w16_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w16_f14_wval_i, // Core Write Value
+  input  logic        regf_w16_f14_wr_i,   // Core Write Strobe
   // regf_w16_f16_o: bus=W0C core=RWL in_regf=False
   output logic [1:0]  regf_w16_f16_wbus_o, // Bus Write Value
   output logic        regf_w16_f16_wr_o,   // Bus Write Strobe
   // regf_w16_f18_o: bus=W0C core=RWL in_regf=True
   output logic [1:0]  regf_w16_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w16_f18_wval_i, // Core Write Value
-  input  wire         regf_w16_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w16_f18_wval_i, // Core Write Value
+  input  logic        regf_w16_f18_wr_i,   // Core Write Strobe
   // regf_w16_f20_o: bus=W0S core=RO in_regf=False
   output logic [1:0]  regf_w16_f20_wbus_o, // Bus Write Value
   output logic        regf_w16_f20_wr_o,   // Bus Write Strobe
@@ -1476,19 +1476,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w16_f24_wr_o,   // Bus Write Strobe
   // regf_w16_f26_o: bus=W0S core=RC in_regf=True
   output logic [1:0]  regf_w16_f26_rval_o, // Core Read Value
-  input  wire         regf_w16_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w16_f26_rd_i,   // Core Read Strobe
   // regf_w16_f28_o: bus=W0S core=RS in_regf=False
   output logic [1:0]  regf_w16_f28_wbus_o, // Bus Write Value
   output logic        regf_w16_f28_wr_o,   // Bus Write Strobe
   // regf_w16_f30_o: bus=W0S core=RS in_regf=True
   output logic [1:0]  regf_w16_f30_rval_o, // Core Read Value
-  input  wire         regf_w16_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w16_f30_rd_i,   // Core Read Strobe
   // regf_w17_f0_o: bus=W0S core=RT in_regf=False
   output logic [1:0]  regf_w17_f0_wbus_o,  // Bus Write Value
   output logic        regf_w17_f0_wr_o,    // Bus Write Strobe
   // regf_w17_f2_o: bus=W0S core=RT in_regf=True
   output logic [1:0]  regf_w17_f2_rval_o,  // Core Read Value
-  input  wire         regf_w17_f2_rd_i,    // Core Read Strobe
+  input  logic        regf_w17_f2_rd_i,    // Core Read Strobe
   // regf_w17_f4_o: bus=W0S core=RP in_regf=False
   output logic [1:0]  regf_w17_f4_wbus_o,  // Bus Write Value
   output logic        regf_w17_f4_wr_o,    // Bus Write Strobe
@@ -1498,80 +1498,80 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w17_f8_wbus_o,  // Bus Write Value
   output logic        regf_w17_f8_wr_o,    // Bus Write Strobe
   // regf_w17_f10_o: bus=W0S core=WO in_regf=True
-  input  wire  [1:0]  regf_w17_f10_wval_i, // Core Write Value
-  input  wire         regf_w17_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f10_wval_i, // Core Write Value
+  input  logic        regf_w17_f10_wr_i,   // Core Write Strobe
   // regf_w17_f12_o: bus=W0S core=W0C in_regf=False
   output logic [1:0]  regf_w17_f12_wbus_o, // Bus Write Value
   output logic        regf_w17_f12_wr_o,   // Bus Write Strobe
   // regf_w17_f14_o: bus=W0S core=W0C in_regf=True
-  input  wire  [1:0]  regf_w17_f14_wval_i, // Core Write Value
-  input  wire         regf_w17_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f14_wval_i, // Core Write Value
+  input  logic        regf_w17_f14_wr_i,   // Core Write Strobe
   // regf_w17_f16_o: bus=W0S core=W0S in_regf=False
   output logic [1:0]  regf_w17_f16_wbus_o, // Bus Write Value
   output logic        regf_w17_f16_wr_o,   // Bus Write Strobe
   // regf_w17_f18_o: bus=W0S core=W0S in_regf=True
-  input  wire  [1:0]  regf_w17_f18_wval_i, // Core Write Value
-  input  wire         regf_w17_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f18_wval_i, // Core Write Value
+  input  logic        regf_w17_f18_wr_i,   // Core Write Strobe
   // regf_w17_f20_o: bus=W0S core=W1C in_regf=False
   output logic [1:0]  regf_w17_f20_wbus_o, // Bus Write Value
   output logic        regf_w17_f20_wr_o,   // Bus Write Strobe
   // regf_w17_f22_o: bus=W0S core=W1C in_regf=True
-  input  wire  [1:0]  regf_w17_f22_wval_i, // Core Write Value
-  input  wire         regf_w17_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f22_wval_i, // Core Write Value
+  input  logic        regf_w17_f22_wr_i,   // Core Write Strobe
   // regf_w17_f24_o: bus=W0S core=W1S in_regf=False
   output logic [1:0]  regf_w17_f24_wbus_o, // Bus Write Value
   output logic        regf_w17_f24_wr_o,   // Bus Write Strobe
   // regf_w17_f26_o: bus=W0S core=W1S in_regf=True
-  input  wire  [1:0]  regf_w17_f26_wval_i, // Core Write Value
-  input  wire         regf_w17_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f26_wval_i, // Core Write Value
+  input  logic        regf_w17_f26_wr_i,   // Core Write Strobe
   // regf_w17_f28_o: bus=W0S core=WL in_regf=False
   output logic [1:0]  regf_w17_f28_wbus_o, // Bus Write Value
   output logic        regf_w17_f28_wr_o,   // Bus Write Strobe
   // regf_w17_f30_o: bus=W0S core=WL in_regf=True
-  input  wire  [1:0]  regf_w17_f30_wval_i, // Core Write Value
-  input  wire         regf_w17_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w17_f30_wval_i, // Core Write Value
+  input  logic        regf_w17_f30_wr_i,   // Core Write Strobe
   // regf_w18_f0_o: bus=W0S core=RW in_regf=False
   output logic [1:0]  regf_w18_f0_wbus_o,  // Bus Write Value
   output logic        regf_w18_f0_wr_o,    // Bus Write Strobe
   // regf_w18_f2_o: bus=W0S core=RW in_regf=True
   output logic [1:0]  regf_w18_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w18_f2_wval_i,  // Core Write Value
-  input  wire         regf_w18_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w18_f2_wval_i,  // Core Write Value
+  input  logic        regf_w18_f2_wr_i,    // Core Write Strobe
   // regf_w18_f4_o: bus=W0S core=RW0C in_regf=False
   output logic [1:0]  regf_w18_f4_wbus_o,  // Bus Write Value
   output logic        regf_w18_f4_wr_o,    // Bus Write Strobe
   // regf_w18_f6_o: bus=W0S core=RW0C in_regf=True
   output logic [1:0]  regf_w18_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w18_f6_wval_i,  // Core Write Value
-  input  wire         regf_w18_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w18_f6_wval_i,  // Core Write Value
+  input  logic        regf_w18_f6_wr_i,    // Core Write Strobe
   // regf_w18_f8_o: bus=W0S core=RW0S in_regf=False
   output logic [1:0]  regf_w18_f8_wbus_o,  // Bus Write Value
   output logic        regf_w18_f8_wr_o,    // Bus Write Strobe
   // regf_w18_f10_o: bus=W0S core=RW0S in_regf=True
   output logic [1:0]  regf_w18_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w18_f10_wval_i, // Core Write Value
-  input  wire         regf_w18_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w18_f10_wval_i, // Core Write Value
+  input  logic        regf_w18_f10_wr_i,   // Core Write Strobe
   // regf_w18_f12_o: bus=W0S core=RW1C in_regf=False
   output logic [1:0]  regf_w18_f12_wbus_o, // Bus Write Value
   output logic        regf_w18_f12_wr_o,   // Bus Write Strobe
   // regf_w18_f14_o: bus=W0S core=RW1C in_regf=True
   output logic [1:0]  regf_w18_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w18_f14_wval_i, // Core Write Value
-  input  wire         regf_w18_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w18_f14_wval_i, // Core Write Value
+  input  logic        regf_w18_f14_wr_i,   // Core Write Strobe
   // regf_w18_f16_o: bus=W0S core=RW1S in_regf=False
   output logic [1:0]  regf_w18_f16_wbus_o, // Bus Write Value
   output logic        regf_w18_f16_wr_o,   // Bus Write Strobe
   // regf_w18_f18_o: bus=W0S core=RW1S in_regf=True
   output logic [1:0]  regf_w18_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w18_f18_wval_i, // Core Write Value
-  input  wire         regf_w18_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w18_f18_wval_i, // Core Write Value
+  input  logic        regf_w18_f18_wr_i,   // Core Write Strobe
   // regf_w18_f20_o: bus=W0S core=RWL in_regf=False
   output logic [1:0]  regf_w18_f20_wbus_o, // Bus Write Value
   output logic        regf_w18_f20_wr_o,   // Bus Write Strobe
   // regf_w18_f22_o: bus=W0S core=RWL in_regf=True
   output logic [1:0]  regf_w18_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w18_f22_wval_i, // Core Write Value
-  input  wire         regf_w18_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w18_f22_wval_i, // Core Write Value
+  input  logic        regf_w18_f22_wr_i,   // Core Write Strobe
   // regf_w18_f24_o: bus=W1C core=RO in_regf=False
   output logic [1:0]  regf_w18_f24_wbus_o, // Bus Write Value
   output logic        regf_w18_f24_wr_o,   // Bus Write Strobe
@@ -1582,19 +1582,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w18_f28_wr_o,   // Bus Write Strobe
   // regf_w18_f30_o: bus=W1C core=RC in_regf=True
   output logic [1:0]  regf_w18_f30_rval_o, // Core Read Value
-  input  wire         regf_w18_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w18_f30_rd_i,   // Core Read Strobe
   // regf_w19_f0_o: bus=W1C core=RS in_regf=False
   output logic [1:0]  regf_w19_f0_wbus_o,  // Bus Write Value
   output logic        regf_w19_f0_wr_o,    // Bus Write Strobe
   // regf_w19_f2_o: bus=W1C core=RS in_regf=True
   output logic [1:0]  regf_w19_f2_rval_o,  // Core Read Value
-  input  wire         regf_w19_f2_rd_i,    // Core Read Strobe
+  input  logic        regf_w19_f2_rd_i,    // Core Read Strobe
   // regf_w19_f4_o: bus=W1C core=RT in_regf=False
   output logic [1:0]  regf_w19_f4_wbus_o,  // Bus Write Value
   output logic        regf_w19_f4_wr_o,    // Bus Write Strobe
   // regf_w19_f6_o: bus=W1C core=RT in_regf=True
   output logic [1:0]  regf_w19_f6_rval_o,  // Core Read Value
-  input  wire         regf_w19_f6_rd_i,    // Core Read Strobe
+  input  logic        regf_w19_f6_rd_i,    // Core Read Strobe
   // regf_w19_f8_o: bus=W1C core=RP in_regf=False
   output logic [1:0]  regf_w19_f8_wbus_o,  // Bus Write Value
   output logic        regf_w19_f8_wr_o,    // Bus Write Strobe
@@ -1604,80 +1604,80 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w19_f12_wbus_o, // Bus Write Value
   output logic        regf_w19_f12_wr_o,   // Bus Write Strobe
   // regf_w19_f14_o: bus=W1C core=WO in_regf=True
-  input  wire  [1:0]  regf_w19_f14_wval_i, // Core Write Value
-  input  wire         regf_w19_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w19_f14_wval_i, // Core Write Value
+  input  logic        regf_w19_f14_wr_i,   // Core Write Strobe
   // regf_w19_f16_o: bus=W1C core=W0C in_regf=False
   output logic [1:0]  regf_w19_f16_wbus_o, // Bus Write Value
   output logic        regf_w19_f16_wr_o,   // Bus Write Strobe
   // regf_w19_f18_o: bus=W1C core=W0C in_regf=True
-  input  wire  [1:0]  regf_w19_f18_wval_i, // Core Write Value
-  input  wire         regf_w19_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w19_f18_wval_i, // Core Write Value
+  input  logic        regf_w19_f18_wr_i,   // Core Write Strobe
   // regf_w19_f20_o: bus=W1C core=W0S in_regf=False
   output logic [1:0]  regf_w19_f20_wbus_o, // Bus Write Value
   output logic        regf_w19_f20_wr_o,   // Bus Write Strobe
   // regf_w19_f22_o: bus=W1C core=W0S in_regf=True
-  input  wire  [1:0]  regf_w19_f22_wval_i, // Core Write Value
-  input  wire         regf_w19_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w19_f22_wval_i, // Core Write Value
+  input  logic        regf_w19_f22_wr_i,   // Core Write Strobe
   // regf_w19_f24_o: bus=W1C core=W1C in_regf=False
   output logic [1:0]  regf_w19_f24_wbus_o, // Bus Write Value
   output logic        regf_w19_f24_wr_o,   // Bus Write Strobe
   // regf_w19_f26_o: bus=W1C core=W1C in_regf=True
-  input  wire  [1:0]  regf_w19_f26_wval_i, // Core Write Value
-  input  wire         regf_w19_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w19_f26_wval_i, // Core Write Value
+  input  logic        regf_w19_f26_wr_i,   // Core Write Strobe
   // regf_w19_f28_o: bus=W1C core=W1S in_regf=False
   output logic [1:0]  regf_w19_f28_wbus_o, // Bus Write Value
   output logic        regf_w19_f28_wr_o,   // Bus Write Strobe
   // regf_w19_f30_o: bus=W1C core=W1S in_regf=True
-  input  wire  [1:0]  regf_w19_f30_wval_i, // Core Write Value
-  input  wire         regf_w19_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w19_f30_wval_i, // Core Write Value
+  input  logic        regf_w19_f30_wr_i,   // Core Write Strobe
   // regf_w20_f0_o: bus=W1C core=WL in_regf=False
   output logic [1:0]  regf_w20_f0_wbus_o,  // Bus Write Value
   output logic        regf_w20_f0_wr_o,    // Bus Write Strobe
   // regf_w20_f2_o: bus=W1C core=WL in_regf=True
-  input  wire  [1:0]  regf_w20_f2_wval_i,  // Core Write Value
-  input  wire         regf_w20_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w20_f2_wval_i,  // Core Write Value
+  input  logic        regf_w20_f2_wr_i,    // Core Write Strobe
   // regf_w20_f4_o: bus=W1C core=RW in_regf=False
   output logic [1:0]  regf_w20_f4_wbus_o,  // Bus Write Value
   output logic        regf_w20_f4_wr_o,    // Bus Write Strobe
   // regf_w20_f6_o: bus=W1C core=RW in_regf=True
   output logic [1:0]  regf_w20_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w20_f6_wval_i,  // Core Write Value
-  input  wire         regf_w20_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w20_f6_wval_i,  // Core Write Value
+  input  logic        regf_w20_f6_wr_i,    // Core Write Strobe
   // regf_w20_f8_o: bus=W1C core=RW0C in_regf=False
   output logic [1:0]  regf_w20_f8_wbus_o,  // Bus Write Value
   output logic        regf_w20_f8_wr_o,    // Bus Write Strobe
   // regf_w20_f10_o: bus=W1C core=RW0C in_regf=True
   output logic [1:0]  regf_w20_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w20_f10_wval_i, // Core Write Value
-  input  wire         regf_w20_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w20_f10_wval_i, // Core Write Value
+  input  logic        regf_w20_f10_wr_i,   // Core Write Strobe
   // regf_w20_f12_o: bus=W1C core=RW0S in_regf=False
   output logic [1:0]  regf_w20_f12_wbus_o, // Bus Write Value
   output logic        regf_w20_f12_wr_o,   // Bus Write Strobe
   // regf_w20_f14_o: bus=W1C core=RW0S in_regf=True
   output logic [1:0]  regf_w20_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w20_f14_wval_i, // Core Write Value
-  input  wire         regf_w20_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w20_f14_wval_i, // Core Write Value
+  input  logic        regf_w20_f14_wr_i,   // Core Write Strobe
   // regf_w20_f16_o: bus=W1C core=RW1C in_regf=False
   output logic [1:0]  regf_w20_f16_wbus_o, // Bus Write Value
   output logic        regf_w20_f16_wr_o,   // Bus Write Strobe
   // regf_w20_f18_o: bus=W1C core=RW1C in_regf=True
   output logic [1:0]  regf_w20_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w20_f18_wval_i, // Core Write Value
-  input  wire         regf_w20_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w20_f18_wval_i, // Core Write Value
+  input  logic        regf_w20_f18_wr_i,   // Core Write Strobe
   // regf_w20_f20_o: bus=W1C core=RW1S in_regf=False
   output logic [1:0]  regf_w20_f20_wbus_o, // Bus Write Value
   output logic        regf_w20_f20_wr_o,   // Bus Write Strobe
   // regf_w20_f22_o: bus=W1C core=RW1S in_regf=True
   output logic [1:0]  regf_w20_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w20_f22_wval_i, // Core Write Value
-  input  wire         regf_w20_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w20_f22_wval_i, // Core Write Value
+  input  logic        regf_w20_f22_wr_i,   // Core Write Strobe
   // regf_w20_f24_o: bus=W1C core=RWL in_regf=False
   output logic [1:0]  regf_w20_f24_wbus_o, // Bus Write Value
   output logic        regf_w20_f24_wr_o,   // Bus Write Strobe
   // regf_w20_f26_o: bus=W1C core=RWL in_regf=True
   output logic [1:0]  regf_w20_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w20_f26_wval_i, // Core Write Value
-  input  wire         regf_w20_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w20_f26_wval_i, // Core Write Value
+  input  logic        regf_w20_f26_wr_i,   // Core Write Strobe
   // regf_w20_f28_o: bus=W1S core=RO in_regf=False
   output logic [1:0]  regf_w20_f28_wbus_o, // Bus Write Value
   output logic        regf_w20_f28_wr_o,   // Bus Write Strobe
@@ -1688,19 +1688,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w21_f0_wr_o,    // Bus Write Strobe
   // regf_w21_f2_o: bus=W1S core=RC in_regf=True
   output logic [1:0]  regf_w21_f2_rval_o,  // Core Read Value
-  input  wire         regf_w21_f2_rd_i,    // Core Read Strobe
+  input  logic        regf_w21_f2_rd_i,    // Core Read Strobe
   // regf_w21_f4_o: bus=W1S core=RS in_regf=False
   output logic [1:0]  regf_w21_f4_wbus_o,  // Bus Write Value
   output logic        regf_w21_f4_wr_o,    // Bus Write Strobe
   // regf_w21_f6_o: bus=W1S core=RS in_regf=True
   output logic [1:0]  regf_w21_f6_rval_o,  // Core Read Value
-  input  wire         regf_w21_f6_rd_i,    // Core Read Strobe
+  input  logic        regf_w21_f6_rd_i,    // Core Read Strobe
   // regf_w21_f8_o: bus=W1S core=RT in_regf=False
   output logic [1:0]  regf_w21_f8_wbus_o,  // Bus Write Value
   output logic        regf_w21_f8_wr_o,    // Bus Write Strobe
   // regf_w21_f10_o: bus=W1S core=RT in_regf=True
   output logic [1:0]  regf_w21_f10_rval_o, // Core Read Value
-  input  wire         regf_w21_f10_rd_i,   // Core Read Strobe
+  input  logic        regf_w21_f10_rd_i,   // Core Read Strobe
   // regf_w21_f12_o: bus=W1S core=RP in_regf=False
   output logic [1:0]  regf_w21_f12_wbus_o, // Bus Write Value
   output logic        regf_w21_f12_wr_o,   // Bus Write Strobe
@@ -1710,80 +1710,80 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w21_f16_wbus_o, // Bus Write Value
   output logic        regf_w21_f16_wr_o,   // Bus Write Strobe
   // regf_w21_f18_o: bus=W1S core=WO in_regf=True
-  input  wire  [1:0]  regf_w21_f18_wval_i, // Core Write Value
-  input  wire         regf_w21_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w21_f18_wval_i, // Core Write Value
+  input  logic        regf_w21_f18_wr_i,   // Core Write Strobe
   // regf_w21_f20_o: bus=W1S core=W0C in_regf=False
   output logic [1:0]  regf_w21_f20_wbus_o, // Bus Write Value
   output logic        regf_w21_f20_wr_o,   // Bus Write Strobe
   // regf_w21_f22_o: bus=W1S core=W0C in_regf=True
-  input  wire  [1:0]  regf_w21_f22_wval_i, // Core Write Value
-  input  wire         regf_w21_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w21_f22_wval_i, // Core Write Value
+  input  logic        regf_w21_f22_wr_i,   // Core Write Strobe
   // regf_w21_f24_o: bus=W1S core=W0S in_regf=False
   output logic [1:0]  regf_w21_f24_wbus_o, // Bus Write Value
   output logic        regf_w21_f24_wr_o,   // Bus Write Strobe
   // regf_w21_f26_o: bus=W1S core=W0S in_regf=True
-  input  wire  [1:0]  regf_w21_f26_wval_i, // Core Write Value
-  input  wire         regf_w21_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w21_f26_wval_i, // Core Write Value
+  input  logic        regf_w21_f26_wr_i,   // Core Write Strobe
   // regf_w21_f28_o: bus=W1S core=W1C in_regf=False
   output logic [1:0]  regf_w21_f28_wbus_o, // Bus Write Value
   output logic        regf_w21_f28_wr_o,   // Bus Write Strobe
   // regf_w21_f30_o: bus=W1S core=W1C in_regf=True
-  input  wire  [1:0]  regf_w21_f30_wval_i, // Core Write Value
-  input  wire         regf_w21_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w21_f30_wval_i, // Core Write Value
+  input  logic        regf_w21_f30_wr_i,   // Core Write Strobe
   // regf_w22_f0_o: bus=W1S core=W1S in_regf=False
   output logic [1:0]  regf_w22_f0_wbus_o,  // Bus Write Value
   output logic        regf_w22_f0_wr_o,    // Bus Write Strobe
   // regf_w22_f2_o: bus=W1S core=W1S in_regf=True
-  input  wire  [1:0]  regf_w22_f2_wval_i,  // Core Write Value
-  input  wire         regf_w22_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w22_f2_wval_i,  // Core Write Value
+  input  logic        regf_w22_f2_wr_i,    // Core Write Strobe
   // regf_w22_f4_o: bus=W1S core=WL in_regf=False
   output logic [1:0]  regf_w22_f4_wbus_o,  // Bus Write Value
   output logic        regf_w22_f4_wr_o,    // Bus Write Strobe
   // regf_w22_f6_o: bus=W1S core=WL in_regf=True
-  input  wire  [1:0]  regf_w22_f6_wval_i,  // Core Write Value
-  input  wire         regf_w22_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w22_f6_wval_i,  // Core Write Value
+  input  logic        regf_w22_f6_wr_i,    // Core Write Strobe
   // regf_w22_f8_o: bus=W1S core=RW in_regf=False
   output logic [1:0]  regf_w22_f8_wbus_o,  // Bus Write Value
   output logic        regf_w22_f8_wr_o,    // Bus Write Strobe
   // regf_w22_f10_o: bus=W1S core=RW in_regf=True
   output logic [1:0]  regf_w22_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f10_wval_i, // Core Write Value
-  input  wire         regf_w22_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f10_wval_i, // Core Write Value
+  input  logic        regf_w22_f10_wr_i,   // Core Write Strobe
   // regf_w22_f12_o: bus=W1S core=RW0C in_regf=False
   output logic [1:0]  regf_w22_f12_wbus_o, // Bus Write Value
   output logic        regf_w22_f12_wr_o,   // Bus Write Strobe
   // regf_w22_f14_o: bus=W1S core=RW0C in_regf=True
   output logic [1:0]  regf_w22_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f14_wval_i, // Core Write Value
-  input  wire         regf_w22_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f14_wval_i, // Core Write Value
+  input  logic        regf_w22_f14_wr_i,   // Core Write Strobe
   // regf_w22_f16_o: bus=W1S core=RW0S in_regf=False
   output logic [1:0]  regf_w22_f16_wbus_o, // Bus Write Value
   output logic        regf_w22_f16_wr_o,   // Bus Write Strobe
   // regf_w22_f18_o: bus=W1S core=RW0S in_regf=True
   output logic [1:0]  regf_w22_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f18_wval_i, // Core Write Value
-  input  wire         regf_w22_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f18_wval_i, // Core Write Value
+  input  logic        regf_w22_f18_wr_i,   // Core Write Strobe
   // regf_w22_f20_o: bus=W1S core=RW1C in_regf=False
   output logic [1:0]  regf_w22_f20_wbus_o, // Bus Write Value
   output logic        regf_w22_f20_wr_o,   // Bus Write Strobe
   // regf_w22_f22_o: bus=W1S core=RW1C in_regf=True
   output logic [1:0]  regf_w22_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f22_wval_i, // Core Write Value
-  input  wire         regf_w22_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f22_wval_i, // Core Write Value
+  input  logic        regf_w22_f22_wr_i,   // Core Write Strobe
   // regf_w22_f24_o: bus=W1S core=RW1S in_regf=False
   output logic [1:0]  regf_w22_f24_wbus_o, // Bus Write Value
   output logic        regf_w22_f24_wr_o,   // Bus Write Strobe
   // regf_w22_f26_o: bus=W1S core=RW1S in_regf=True
   output logic [1:0]  regf_w22_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f26_wval_i, // Core Write Value
-  input  wire         regf_w22_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f26_wval_i, // Core Write Value
+  input  logic        regf_w22_f26_wr_i,   // Core Write Strobe
   // regf_w22_f28_o: bus=W1S core=RWL in_regf=False
   output logic [1:0]  regf_w22_f28_wbus_o, // Bus Write Value
   output logic        regf_w22_f28_wr_o,   // Bus Write Strobe
   // regf_w22_f30_o: bus=W1S core=RWL in_regf=True
   output logic [1:0]  regf_w22_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w22_f30_wval_i, // Core Write Value
-  input  wire         regf_w22_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w22_f30_wval_i, // Core Write Value
+  input  logic        regf_w22_f30_wr_i,   // Core Write Strobe
   // regf_w23_f0_o: bus=WL core=RO in_regf=False
   output logic [1:0]  regf_w23_f0_wbus_o,  // Bus Write Value
   output logic        regf_w23_f0_wr_o,    // Bus Write Strobe
@@ -1794,19 +1794,19 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic        regf_w23_f4_wr_o,    // Bus Write Strobe
   // regf_w23_f6_o: bus=WL core=RC in_regf=True
   output logic [1:0]  regf_w23_f6_rval_o,  // Core Read Value
-  input  wire         regf_w23_f6_rd_i,    // Core Read Strobe
+  input  logic        regf_w23_f6_rd_i,    // Core Read Strobe
   // regf_w23_f8_o: bus=WL core=RS in_regf=False
   output logic [1:0]  regf_w23_f8_wbus_o,  // Bus Write Value
   output logic        regf_w23_f8_wr_o,    // Bus Write Strobe
   // regf_w23_f10_o: bus=WL core=RS in_regf=True
   output logic [1:0]  regf_w23_f10_rval_o, // Core Read Value
-  input  wire         regf_w23_f10_rd_i,   // Core Read Strobe
+  input  logic        regf_w23_f10_rd_i,   // Core Read Strobe
   // regf_w23_f12_o: bus=WL core=RT in_regf=False
   output logic [1:0]  regf_w23_f12_wbus_o, // Bus Write Value
   output logic        regf_w23_f12_wr_o,   // Bus Write Strobe
   // regf_w23_f14_o: bus=WL core=RT in_regf=True
   output logic [1:0]  regf_w23_f14_rval_o, // Core Read Value
-  input  wire         regf_w23_f14_rd_i,   // Core Read Strobe
+  input  logic        regf_w23_f14_rd_i,   // Core Read Strobe
   // regf_w23_f16_o: bus=WL core=RP in_regf=False
   output logic [1:0]  regf_w23_f16_wbus_o, // Bus Write Value
   output logic        regf_w23_f16_wr_o,   // Bus Write Strobe
@@ -1816,818 +1816,818 @@ module full_regf ( // tests.test_svmako.RegfMod
   output logic [1:0]  regf_w23_f20_wbus_o, // Bus Write Value
   output logic        regf_w23_f20_wr_o,   // Bus Write Strobe
   // regf_w23_f22_o: bus=WL core=WO in_regf=True
-  input  wire  [1:0]  regf_w23_f22_wval_i, // Core Write Value
-  input  wire         regf_w23_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w23_f22_wval_i, // Core Write Value
+  input  logic        regf_w23_f22_wr_i,   // Core Write Strobe
   // regf_w23_f24_o: bus=WL core=W0C in_regf=False
   output logic [1:0]  regf_w23_f24_wbus_o, // Bus Write Value
   output logic        regf_w23_f24_wr_o,   // Bus Write Strobe
   // regf_w23_f26_o: bus=WL core=W0C in_regf=True
-  input  wire  [1:0]  regf_w23_f26_wval_i, // Core Write Value
-  input  wire         regf_w23_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w23_f26_wval_i, // Core Write Value
+  input  logic        regf_w23_f26_wr_i,   // Core Write Strobe
   // regf_w23_f28_o: bus=WL core=W0S in_regf=False
   output logic [1:0]  regf_w23_f28_wbus_o, // Bus Write Value
   output logic        regf_w23_f28_wr_o,   // Bus Write Strobe
   // regf_w23_f30_o: bus=WL core=W0S in_regf=True
-  input  wire  [1:0]  regf_w23_f30_wval_i, // Core Write Value
-  input  wire         regf_w23_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w23_f30_wval_i, // Core Write Value
+  input  logic        regf_w23_f30_wr_i,   // Core Write Strobe
   // regf_w24_f0_o: bus=WL core=W1C in_regf=False
   output logic [1:0]  regf_w24_f0_wbus_o,  // Bus Write Value
   output logic        regf_w24_f0_wr_o,    // Bus Write Strobe
   // regf_w24_f2_o: bus=WL core=W1C in_regf=True
-  input  wire  [1:0]  regf_w24_f2_wval_i,  // Core Write Value
-  input  wire         regf_w24_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w24_f2_wval_i,  // Core Write Value
+  input  logic        regf_w24_f2_wr_i,    // Core Write Strobe
   // regf_w24_f4_o: bus=WL core=W1S in_regf=False
   output logic [1:0]  regf_w24_f4_wbus_o,  // Bus Write Value
   output logic        regf_w24_f4_wr_o,    // Bus Write Strobe
   // regf_w24_f6_o: bus=WL core=W1S in_regf=True
-  input  wire  [1:0]  regf_w24_f6_wval_i,  // Core Write Value
-  input  wire         regf_w24_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w24_f6_wval_i,  // Core Write Value
+  input  logic        regf_w24_f6_wr_i,    // Core Write Strobe
   // regf_w24_f8_o: bus=WL core=WL in_regf=False
   output logic [1:0]  regf_w24_f8_wbus_o,  // Bus Write Value
   output logic        regf_w24_f8_wr_o,    // Bus Write Strobe
   // regf_w24_f10_o: bus=WL core=WL in_regf=True
-  input  wire  [1:0]  regf_w24_f10_wval_i, // Core Write Value
-  input  wire         regf_w24_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f10_wval_i, // Core Write Value
+  input  logic        regf_w24_f10_wr_i,   // Core Write Strobe
   // regf_w24_f12_o: bus=WL core=RW in_regf=False
   output logic [1:0]  regf_w24_f12_wbus_o, // Bus Write Value
   output logic        regf_w24_f12_wr_o,   // Bus Write Strobe
   // regf_w24_f14_o: bus=WL core=RW in_regf=True
   output logic [1:0]  regf_w24_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w24_f14_wval_i, // Core Write Value
-  input  wire         regf_w24_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f14_wval_i, // Core Write Value
+  input  logic        regf_w24_f14_wr_i,   // Core Write Strobe
   // regf_w24_f16_o: bus=WL core=RW0C in_regf=False
   output logic [1:0]  regf_w24_f16_wbus_o, // Bus Write Value
   output logic        regf_w24_f16_wr_o,   // Bus Write Strobe
   // regf_w24_f18_o: bus=WL core=RW0C in_regf=True
   output logic [1:0]  regf_w24_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w24_f18_wval_i, // Core Write Value
-  input  wire         regf_w24_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f18_wval_i, // Core Write Value
+  input  logic        regf_w24_f18_wr_i,   // Core Write Strobe
   // regf_w24_f20_o: bus=WL core=RW0S in_regf=False
   output logic [1:0]  regf_w24_f20_wbus_o, // Bus Write Value
   output logic        regf_w24_f20_wr_o,   // Bus Write Strobe
   // regf_w24_f22_o: bus=WL core=RW0S in_regf=True
   output logic [1:0]  regf_w24_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w24_f22_wval_i, // Core Write Value
-  input  wire         regf_w24_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f22_wval_i, // Core Write Value
+  input  logic        regf_w24_f22_wr_i,   // Core Write Strobe
   // regf_w24_f24_o: bus=WL core=RW1C in_regf=False
   output logic [1:0]  regf_w24_f24_wbus_o, // Bus Write Value
   output logic        regf_w24_f24_wr_o,   // Bus Write Strobe
   // regf_w24_f26_o: bus=WL core=RW1C in_regf=True
   output logic [1:0]  regf_w24_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w24_f26_wval_i, // Core Write Value
-  input  wire         regf_w24_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f26_wval_i, // Core Write Value
+  input  logic        regf_w24_f26_wr_i,   // Core Write Strobe
   // regf_w24_f28_o: bus=WL core=RW1S in_regf=False
   output logic [1:0]  regf_w24_f28_wbus_o, // Bus Write Value
   output logic        regf_w24_f28_wr_o,   // Bus Write Strobe
   // regf_w24_f30_o: bus=WL core=RW1S in_regf=True
   output logic [1:0]  regf_w24_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w24_f30_wval_i, // Core Write Value
-  input  wire         regf_w24_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w24_f30_wval_i, // Core Write Value
+  input  logic        regf_w24_f30_wr_i,   // Core Write Strobe
   // regf_w25_f0_o: bus=WL core=RWL in_regf=False
   output logic [1:0]  regf_w25_f0_wbus_o,  // Bus Write Value
   output logic        regf_w25_f0_wr_o,    // Bus Write Strobe
   // regf_w25_f2_o: bus=WL core=RWL in_regf=True
   output logic [1:0]  regf_w25_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w25_f2_wval_i,  // Core Write Value
-  input  wire         regf_w25_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w25_f2_wval_i,  // Core Write Value
+  input  logic        regf_w25_f2_wr_i,    // Core Write Strobe
   // regf_w25_f4_o: bus=RW core=RO in_regf=False
-  input  wire  [1:0]  regf_w25_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w25_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w25_f4_wbus_o,  // Bus Write Value
   output logic        regf_w25_f4_wr_o,    // Bus Write Strobe
   // regf_w25_f6_o: bus=RW core=RO in_regf=True
   output logic [1:0]  regf_w25_f6_rval_o,  // Core Read Value
   // regf_w25_f8_o: bus=RW core=RC in_regf=False
-  input  wire  [1:0]  regf_w25_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w25_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w25_f8_wbus_o,  // Bus Write Value
   output logic        regf_w25_f8_wr_o,    // Bus Write Strobe
   // regf_w25_f10_o: bus=RW core=RC in_regf=True
   output logic [1:0]  regf_w25_f10_rval_o, // Core Read Value
-  input  wire         regf_w25_f10_rd_i,   // Core Read Strobe
+  input  logic        regf_w25_f10_rd_i,   // Core Read Strobe
   // regf_w25_f12_o: bus=RW core=RS in_regf=False
-  input  wire  [1:0]  regf_w25_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w25_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w25_f12_wbus_o, // Bus Write Value
   output logic        regf_w25_f12_wr_o,   // Bus Write Strobe
   // regf_w25_f14_o: bus=RW core=RS in_regf=True
   output logic [1:0]  regf_w25_f14_rval_o, // Core Read Value
-  input  wire         regf_w25_f14_rd_i,   // Core Read Strobe
+  input  logic        regf_w25_f14_rd_i,   // Core Read Strobe
   // regf_w25_f16_o: bus=RW core=RT in_regf=False
-  input  wire  [1:0]  regf_w25_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w25_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w25_f16_wbus_o, // Bus Write Value
   output logic        regf_w25_f16_wr_o,   // Bus Write Strobe
   // regf_w25_f18_o: bus=RW core=RT in_regf=True
   output logic [1:0]  regf_w25_f18_rval_o, // Core Read Value
-  input  wire         regf_w25_f18_rd_i,   // Core Read Strobe
+  input  logic        regf_w25_f18_rd_i,   // Core Read Strobe
   // regf_w25_f20_o: bus=RW core=RP in_regf=False
-  input  wire  [1:0]  regf_w25_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w25_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w25_f20_wbus_o, // Bus Write Value
   output logic        regf_w25_f20_wr_o,   // Bus Write Strobe
   // regf_w25_f22_o: bus=RW core=RP in_regf=True
   output logic [1:0]  regf_w25_f22_rval_o, // Core Read Value
   // regf_w25_f24_o: bus=RW core=WO in_regf=False
-  input  wire  [1:0]  regf_w25_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w25_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w25_f24_wbus_o, // Bus Write Value
   output logic        regf_w25_f24_wr_o,   // Bus Write Strobe
   // regf_w25_f26_o: bus=RW core=WO in_regf=True
-  input  wire  [1:0]  regf_w25_f26_wval_i, // Core Write Value
-  input  wire         regf_w25_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w25_f26_wval_i, // Core Write Value
+  input  logic        regf_w25_f26_wr_i,   // Core Write Strobe
   // regf_w25_f28_o: bus=RW core=W0C in_regf=False
-  input  wire  [1:0]  regf_w25_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w25_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w25_f28_wbus_o, // Bus Write Value
   output logic        regf_w25_f28_wr_o,   // Bus Write Strobe
   // regf_w25_f30_o: bus=RW core=W0C in_regf=True
-  input  wire  [1:0]  regf_w25_f30_wval_i, // Core Write Value
-  input  wire         regf_w25_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w25_f30_wval_i, // Core Write Value
+  input  logic        regf_w25_f30_wr_i,   // Core Write Strobe
   // regf_w26_f0_o: bus=RW core=W0S in_regf=False
-  input  wire  [1:0]  regf_w26_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w26_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w26_f0_wbus_o,  // Bus Write Value
   output logic        regf_w26_f0_wr_o,    // Bus Write Strobe
   // regf_w26_f2_o: bus=RW core=W0S in_regf=True
-  input  wire  [1:0]  regf_w26_f2_wval_i,  // Core Write Value
-  input  wire         regf_w26_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w26_f2_wval_i,  // Core Write Value
+  input  logic        regf_w26_f2_wr_i,    // Core Write Strobe
   // regf_w26_f4_o: bus=RW core=W1C in_regf=False
-  input  wire  [1:0]  regf_w26_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w26_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w26_f4_wbus_o,  // Bus Write Value
   output logic        regf_w26_f4_wr_o,    // Bus Write Strobe
   // regf_w26_f6_o: bus=RW core=W1C in_regf=True
-  input  wire  [1:0]  regf_w26_f6_wval_i,  // Core Write Value
-  input  wire         regf_w26_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w26_f6_wval_i,  // Core Write Value
+  input  logic        regf_w26_f6_wr_i,    // Core Write Strobe
   // regf_w26_f8_o: bus=RW core=W1S in_regf=False
-  input  wire  [1:0]  regf_w26_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w26_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w26_f8_wbus_o,  // Bus Write Value
   output logic        regf_w26_f8_wr_o,    // Bus Write Strobe
   // regf_w26_f10_o: bus=RW core=W1S in_regf=True
-  input  wire  [1:0]  regf_w26_f10_wval_i, // Core Write Value
-  input  wire         regf_w26_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f10_wval_i, // Core Write Value
+  input  logic        regf_w26_f10_wr_i,   // Core Write Strobe
   // regf_w26_f12_o: bus=RW core=WL in_regf=False
-  input  wire  [1:0]  regf_w26_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w26_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w26_f12_wbus_o, // Bus Write Value
   output logic        regf_w26_f12_wr_o,   // Bus Write Strobe
   // regf_w26_f14_o: bus=RW core=WL in_regf=True
-  input  wire  [1:0]  regf_w26_f14_wval_i, // Core Write Value
-  input  wire         regf_w26_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f14_wval_i, // Core Write Value
+  input  logic        regf_w26_f14_wr_i,   // Core Write Strobe
   // regf_w26_f16_o: bus=RW core=RW in_regf=False
-  input  wire  [1:0]  regf_w26_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w26_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w26_f16_wbus_o, // Bus Write Value
   output logic        regf_w26_f16_wr_o,   // Bus Write Strobe
   // regf_w26_f18_o: bus=RW core=RW in_regf=True
   output logic [1:0]  regf_w26_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w26_f18_wval_i, // Core Write Value
-  input  wire         regf_w26_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f18_wval_i, // Core Write Value
+  input  logic        regf_w26_f18_wr_i,   // Core Write Strobe
   // regf_w26_f20_o: bus=RW core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w26_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w26_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w26_f20_wbus_o, // Bus Write Value
   output logic        regf_w26_f20_wr_o,   // Bus Write Strobe
   // regf_w26_f22_o: bus=RW core=RW0C in_regf=True
   output logic [1:0]  regf_w26_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w26_f22_wval_i, // Core Write Value
-  input  wire         regf_w26_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f22_wval_i, // Core Write Value
+  input  logic        regf_w26_f22_wr_i,   // Core Write Strobe
   // regf_w26_f24_o: bus=RW core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w26_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w26_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w26_f24_wbus_o, // Bus Write Value
   output logic        regf_w26_f24_wr_o,   // Bus Write Strobe
   // regf_w26_f26_o: bus=RW core=RW0S in_regf=True
   output logic [1:0]  regf_w26_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w26_f26_wval_i, // Core Write Value
-  input  wire         regf_w26_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f26_wval_i, // Core Write Value
+  input  logic        regf_w26_f26_wr_i,   // Core Write Strobe
   // regf_w26_f28_o: bus=RW core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w26_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w26_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w26_f28_wbus_o, // Bus Write Value
   output logic        regf_w26_f28_wr_o,   // Bus Write Strobe
   // regf_w26_f30_o: bus=RW core=RW1C in_regf=True
   output logic [1:0]  regf_w26_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w26_f30_wval_i, // Core Write Value
-  input  wire         regf_w26_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w26_f30_wval_i, // Core Write Value
+  input  logic        regf_w26_f30_wr_i,   // Core Write Strobe
   // regf_w27_f0_o: bus=RW core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w27_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w27_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w27_f0_wbus_o,  // Bus Write Value
   output logic        regf_w27_f0_wr_o,    // Bus Write Strobe
   // regf_w27_f2_o: bus=RW core=RW1S in_regf=True
   output logic [1:0]  regf_w27_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w27_f2_wval_i,  // Core Write Value
-  input  wire         regf_w27_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w27_f2_wval_i,  // Core Write Value
+  input  logic        regf_w27_f2_wr_i,    // Core Write Strobe
   // regf_w27_f4_o: bus=RW core=RWL in_regf=False
-  input  wire  [1:0]  regf_w27_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w27_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w27_f4_wbus_o,  // Bus Write Value
   output logic        regf_w27_f4_wr_o,    // Bus Write Strobe
   // regf_w27_f6_o: bus=RW core=RWL in_regf=True
   output logic [1:0]  regf_w27_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w27_f6_wval_i,  // Core Write Value
-  input  wire         regf_w27_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w27_f6_wval_i,  // Core Write Value
+  input  logic        regf_w27_f6_wr_i,    // Core Write Strobe
   // regf_w27_f8_o: bus=RW0C core=RO in_regf=False
-  input  wire  [1:0]  regf_w27_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w27_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w27_f8_wbus_o,  // Bus Write Value
   output logic        regf_w27_f8_wr_o,    // Bus Write Strobe
   // regf_w27_f10_o: bus=RW0C core=RO in_regf=True
   output logic [1:0]  regf_w27_f10_rval_o, // Core Read Value
   // regf_w27_f12_o: bus=RW0C core=RC in_regf=False
-  input  wire  [1:0]  regf_w27_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w27_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w27_f12_wbus_o, // Bus Write Value
   output logic        regf_w27_f12_wr_o,   // Bus Write Strobe
   // regf_w27_f14_o: bus=RW0C core=RC in_regf=True
   output logic [1:0]  regf_w27_f14_rval_o, // Core Read Value
-  input  wire         regf_w27_f14_rd_i,   // Core Read Strobe
+  input  logic        regf_w27_f14_rd_i,   // Core Read Strobe
   // regf_w27_f16_o: bus=RW0C core=RS in_regf=False
-  input  wire  [1:0]  regf_w27_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w27_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w27_f16_wbus_o, // Bus Write Value
   output logic        regf_w27_f16_wr_o,   // Bus Write Strobe
   // regf_w27_f18_o: bus=RW0C core=RS in_regf=True
   output logic [1:0]  regf_w27_f18_rval_o, // Core Read Value
-  input  wire         regf_w27_f18_rd_i,   // Core Read Strobe
+  input  logic        regf_w27_f18_rd_i,   // Core Read Strobe
   // regf_w27_f20_o: bus=RW0C core=RT in_regf=False
-  input  wire  [1:0]  regf_w27_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w27_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w27_f20_wbus_o, // Bus Write Value
   output logic        regf_w27_f20_wr_o,   // Bus Write Strobe
   // regf_w27_f22_o: bus=RW0C core=RT in_regf=True
   output logic [1:0]  regf_w27_f22_rval_o, // Core Read Value
-  input  wire         regf_w27_f22_rd_i,   // Core Read Strobe
+  input  logic        regf_w27_f22_rd_i,   // Core Read Strobe
   // regf_w27_f24_o: bus=RW0C core=RP in_regf=False
-  input  wire  [1:0]  regf_w27_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w27_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w27_f24_wbus_o, // Bus Write Value
   output logic        regf_w27_f24_wr_o,   // Bus Write Strobe
   // regf_w27_f26_o: bus=RW0C core=RP in_regf=True
   output logic [1:0]  regf_w27_f26_rval_o, // Core Read Value
   // regf_w27_f28_o: bus=RW0C core=WO in_regf=False
-  input  wire  [1:0]  regf_w27_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w27_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w27_f28_wbus_o, // Bus Write Value
   output logic        regf_w27_f28_wr_o,   // Bus Write Strobe
   // regf_w27_f30_o: bus=RW0C core=WO in_regf=True
-  input  wire  [1:0]  regf_w27_f30_wval_i, // Core Write Value
-  input  wire         regf_w27_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w27_f30_wval_i, // Core Write Value
+  input  logic        regf_w27_f30_wr_i,   // Core Write Strobe
   // regf_w28_f0_o: bus=RW0C core=W0C in_regf=False
-  input  wire  [1:0]  regf_w28_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w28_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w28_f0_wbus_o,  // Bus Write Value
   output logic        regf_w28_f0_wr_o,    // Bus Write Strobe
   // regf_w28_f2_o: bus=RW0C core=W0C in_regf=True
-  input  wire  [1:0]  regf_w28_f2_wval_i,  // Core Write Value
-  input  wire         regf_w28_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w28_f2_wval_i,  // Core Write Value
+  input  logic        regf_w28_f2_wr_i,    // Core Write Strobe
   // regf_w28_f4_o: bus=RW0C core=W0S in_regf=False
-  input  wire  [1:0]  regf_w28_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w28_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w28_f4_wbus_o,  // Bus Write Value
   output logic        regf_w28_f4_wr_o,    // Bus Write Strobe
   // regf_w28_f6_o: bus=RW0C core=W0S in_regf=True
-  input  wire  [1:0]  regf_w28_f6_wval_i,  // Core Write Value
-  input  wire         regf_w28_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w28_f6_wval_i,  // Core Write Value
+  input  logic        regf_w28_f6_wr_i,    // Core Write Strobe
   // regf_w28_f8_o: bus=RW0C core=W1C in_regf=False
-  input  wire  [1:0]  regf_w28_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w28_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w28_f8_wbus_o,  // Bus Write Value
   output logic        regf_w28_f8_wr_o,    // Bus Write Strobe
   // regf_w28_f10_o: bus=RW0C core=W1C in_regf=True
-  input  wire  [1:0]  regf_w28_f10_wval_i, // Core Write Value
-  input  wire         regf_w28_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f10_wval_i, // Core Write Value
+  input  logic        regf_w28_f10_wr_i,   // Core Write Strobe
   // regf_w28_f12_o: bus=RW0C core=W1S in_regf=False
-  input  wire  [1:0]  regf_w28_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w28_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w28_f12_wbus_o, // Bus Write Value
   output logic        regf_w28_f12_wr_o,   // Bus Write Strobe
   // regf_w28_f14_o: bus=RW0C core=W1S in_regf=True
-  input  wire  [1:0]  regf_w28_f14_wval_i, // Core Write Value
-  input  wire         regf_w28_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f14_wval_i, // Core Write Value
+  input  logic        regf_w28_f14_wr_i,   // Core Write Strobe
   // regf_w28_f16_o: bus=RW0C core=WL in_regf=False
-  input  wire  [1:0]  regf_w28_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w28_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w28_f16_wbus_o, // Bus Write Value
   output logic        regf_w28_f16_wr_o,   // Bus Write Strobe
   // regf_w28_f18_o: bus=RW0C core=WL in_regf=True
-  input  wire  [1:0]  regf_w28_f18_wval_i, // Core Write Value
-  input  wire         regf_w28_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f18_wval_i, // Core Write Value
+  input  logic        regf_w28_f18_wr_i,   // Core Write Strobe
   // regf_w28_f20_o: bus=RW0C core=RW in_regf=False
-  input  wire  [1:0]  regf_w28_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w28_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w28_f20_wbus_o, // Bus Write Value
   output logic        regf_w28_f20_wr_o,   // Bus Write Strobe
   // regf_w28_f22_o: bus=RW0C core=RW in_regf=True
   output logic [1:0]  regf_w28_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w28_f22_wval_i, // Core Write Value
-  input  wire         regf_w28_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f22_wval_i, // Core Write Value
+  input  logic        regf_w28_f22_wr_i,   // Core Write Strobe
   // regf_w28_f24_o: bus=RW0C core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w28_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w28_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w28_f24_wbus_o, // Bus Write Value
   output logic        regf_w28_f24_wr_o,   // Bus Write Strobe
   // regf_w28_f26_o: bus=RW0C core=RW0C in_regf=True
   output logic [1:0]  regf_w28_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w28_f26_wval_i, // Core Write Value
-  input  wire         regf_w28_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f26_wval_i, // Core Write Value
+  input  logic        regf_w28_f26_wr_i,   // Core Write Strobe
   // regf_w28_f28_o: bus=RW0C core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w28_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w28_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w28_f28_wbus_o, // Bus Write Value
   output logic        regf_w28_f28_wr_o,   // Bus Write Strobe
   // regf_w28_f30_o: bus=RW0C core=RW0S in_regf=True
   output logic [1:0]  regf_w28_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w28_f30_wval_i, // Core Write Value
-  input  wire         regf_w28_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w28_f30_wval_i, // Core Write Value
+  input  logic        regf_w28_f30_wr_i,   // Core Write Strobe
   // regf_w29_f0_o: bus=RW0C core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w29_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w29_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w29_f0_wbus_o,  // Bus Write Value
   output logic        regf_w29_f0_wr_o,    // Bus Write Strobe
   // regf_w29_f2_o: bus=RW0C core=RW1C in_regf=True
   output logic [1:0]  regf_w29_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w29_f2_wval_i,  // Core Write Value
-  input  wire         regf_w29_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w29_f2_wval_i,  // Core Write Value
+  input  logic        regf_w29_f2_wr_i,    // Core Write Strobe
   // regf_w29_f4_o: bus=RW0C core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w29_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w29_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w29_f4_wbus_o,  // Bus Write Value
   output logic        regf_w29_f4_wr_o,    // Bus Write Strobe
   // regf_w29_f6_o: bus=RW0C core=RW1S in_regf=True
   output logic [1:0]  regf_w29_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w29_f6_wval_i,  // Core Write Value
-  input  wire         regf_w29_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w29_f6_wval_i,  // Core Write Value
+  input  logic        regf_w29_f6_wr_i,    // Core Write Strobe
   // regf_w29_f8_o: bus=RW0C core=RWL in_regf=False
-  input  wire  [1:0]  regf_w29_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w29_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w29_f8_wbus_o,  // Bus Write Value
   output logic        regf_w29_f8_wr_o,    // Bus Write Strobe
   // regf_w29_f10_o: bus=RW0C core=RWL in_regf=True
   output logic [1:0]  regf_w29_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w29_f10_wval_i, // Core Write Value
-  input  wire         regf_w29_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w29_f10_wval_i, // Core Write Value
+  input  logic        regf_w29_f10_wr_i,   // Core Write Strobe
   // regf_w29_f12_o: bus=RW0S core=RO in_regf=False
-  input  wire  [1:0]  regf_w29_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w29_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w29_f12_wbus_o, // Bus Write Value
   output logic        regf_w29_f12_wr_o,   // Bus Write Strobe
   // regf_w29_f14_o: bus=RW0S core=RO in_regf=True
   output logic [1:0]  regf_w29_f14_rval_o, // Core Read Value
   // regf_w29_f16_o: bus=RW0S core=RC in_regf=False
-  input  wire  [1:0]  regf_w29_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w29_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w29_f16_wbus_o, // Bus Write Value
   output logic        regf_w29_f16_wr_o,   // Bus Write Strobe
   // regf_w29_f18_o: bus=RW0S core=RC in_regf=True
   output logic [1:0]  regf_w29_f18_rval_o, // Core Read Value
-  input  wire         regf_w29_f18_rd_i,   // Core Read Strobe
+  input  logic        regf_w29_f18_rd_i,   // Core Read Strobe
   // regf_w29_f20_o: bus=RW0S core=RS in_regf=False
-  input  wire  [1:0]  regf_w29_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w29_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w29_f20_wbus_o, // Bus Write Value
   output logic        regf_w29_f20_wr_o,   // Bus Write Strobe
   // regf_w29_f22_o: bus=RW0S core=RS in_regf=True
   output logic [1:0]  regf_w29_f22_rval_o, // Core Read Value
-  input  wire         regf_w29_f22_rd_i,   // Core Read Strobe
+  input  logic        regf_w29_f22_rd_i,   // Core Read Strobe
   // regf_w29_f24_o: bus=RW0S core=RT in_regf=False
-  input  wire  [1:0]  regf_w29_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w29_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w29_f24_wbus_o, // Bus Write Value
   output logic        regf_w29_f24_wr_o,   // Bus Write Strobe
   // regf_w29_f26_o: bus=RW0S core=RT in_regf=True
   output logic [1:0]  regf_w29_f26_rval_o, // Core Read Value
-  input  wire         regf_w29_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w29_f26_rd_i,   // Core Read Strobe
   // regf_w29_f28_o: bus=RW0S core=RP in_regf=False
-  input  wire  [1:0]  regf_w29_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w29_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w29_f28_wbus_o, // Bus Write Value
   output logic        regf_w29_f28_wr_o,   // Bus Write Strobe
   // regf_w29_f30_o: bus=RW0S core=RP in_regf=True
   output logic [1:0]  regf_w29_f30_rval_o, // Core Read Value
   // regf_w30_f0_o: bus=RW0S core=WO in_regf=False
-  input  wire  [1:0]  regf_w30_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w30_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w30_f0_wbus_o,  // Bus Write Value
   output logic        regf_w30_f0_wr_o,    // Bus Write Strobe
   // regf_w30_f2_o: bus=RW0S core=WO in_regf=True
-  input  wire  [1:0]  regf_w30_f2_wval_i,  // Core Write Value
-  input  wire         regf_w30_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w30_f2_wval_i,  // Core Write Value
+  input  logic        regf_w30_f2_wr_i,    // Core Write Strobe
   // regf_w30_f4_o: bus=RW0S core=W0C in_regf=False
-  input  wire  [1:0]  regf_w30_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w30_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w30_f4_wbus_o,  // Bus Write Value
   output logic        regf_w30_f4_wr_o,    // Bus Write Strobe
   // regf_w30_f6_o: bus=RW0S core=W0C in_regf=True
-  input  wire  [1:0]  regf_w30_f6_wval_i,  // Core Write Value
-  input  wire         regf_w30_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w30_f6_wval_i,  // Core Write Value
+  input  logic        regf_w30_f6_wr_i,    // Core Write Strobe
   // regf_w30_f8_o: bus=RW0S core=W0S in_regf=False
-  input  wire  [1:0]  regf_w30_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w30_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w30_f8_wbus_o,  // Bus Write Value
   output logic        regf_w30_f8_wr_o,    // Bus Write Strobe
   // regf_w30_f10_o: bus=RW0S core=W0S in_regf=True
-  input  wire  [1:0]  regf_w30_f10_wval_i, // Core Write Value
-  input  wire         regf_w30_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f10_wval_i, // Core Write Value
+  input  logic        regf_w30_f10_wr_i,   // Core Write Strobe
   // regf_w30_f12_o: bus=RW0S core=W1C in_regf=False
-  input  wire  [1:0]  regf_w30_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w30_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w30_f12_wbus_o, // Bus Write Value
   output logic        regf_w30_f12_wr_o,   // Bus Write Strobe
   // regf_w30_f14_o: bus=RW0S core=W1C in_regf=True
-  input  wire  [1:0]  regf_w30_f14_wval_i, // Core Write Value
-  input  wire         regf_w30_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f14_wval_i, // Core Write Value
+  input  logic        regf_w30_f14_wr_i,   // Core Write Strobe
   // regf_w30_f16_o: bus=RW0S core=W1S in_regf=False
-  input  wire  [1:0]  regf_w30_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w30_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w30_f16_wbus_o, // Bus Write Value
   output logic        regf_w30_f16_wr_o,   // Bus Write Strobe
   // regf_w30_f18_o: bus=RW0S core=W1S in_regf=True
-  input  wire  [1:0]  regf_w30_f18_wval_i, // Core Write Value
-  input  wire         regf_w30_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f18_wval_i, // Core Write Value
+  input  logic        regf_w30_f18_wr_i,   // Core Write Strobe
   // regf_w30_f20_o: bus=RW0S core=WL in_regf=False
-  input  wire  [1:0]  regf_w30_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w30_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w30_f20_wbus_o, // Bus Write Value
   output logic        regf_w30_f20_wr_o,   // Bus Write Strobe
   // regf_w30_f22_o: bus=RW0S core=WL in_regf=True
-  input  wire  [1:0]  regf_w30_f22_wval_i, // Core Write Value
-  input  wire         regf_w30_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f22_wval_i, // Core Write Value
+  input  logic        regf_w30_f22_wr_i,   // Core Write Strobe
   // regf_w30_f24_o: bus=RW0S core=RW in_regf=False
-  input  wire  [1:0]  regf_w30_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w30_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w30_f24_wbus_o, // Bus Write Value
   output logic        regf_w30_f24_wr_o,   // Bus Write Strobe
   // regf_w30_f26_o: bus=RW0S core=RW in_regf=True
   output logic [1:0]  regf_w30_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w30_f26_wval_i, // Core Write Value
-  input  wire         regf_w30_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f26_wval_i, // Core Write Value
+  input  logic        regf_w30_f26_wr_i,   // Core Write Strobe
   // regf_w30_f28_o: bus=RW0S core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w30_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w30_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w30_f28_wbus_o, // Bus Write Value
   output logic        regf_w30_f28_wr_o,   // Bus Write Strobe
   // regf_w30_f30_o: bus=RW0S core=RW0C in_regf=True
   output logic [1:0]  regf_w30_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w30_f30_wval_i, // Core Write Value
-  input  wire         regf_w30_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w30_f30_wval_i, // Core Write Value
+  input  logic        regf_w30_f30_wr_i,   // Core Write Strobe
   // regf_w31_f0_o: bus=RW0S core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w31_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w31_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w31_f0_wbus_o,  // Bus Write Value
   output logic        regf_w31_f0_wr_o,    // Bus Write Strobe
   // regf_w31_f2_o: bus=RW0S core=RW0S in_regf=True
   output logic [1:0]  regf_w31_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w31_f2_wval_i,  // Core Write Value
-  input  wire         regf_w31_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w31_f2_wval_i,  // Core Write Value
+  input  logic        regf_w31_f2_wr_i,    // Core Write Strobe
   // regf_w31_f4_o: bus=RW0S core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w31_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w31_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w31_f4_wbus_o,  // Bus Write Value
   output logic        regf_w31_f4_wr_o,    // Bus Write Strobe
   // regf_w31_f6_o: bus=RW0S core=RW1C in_regf=True
   output logic [1:0]  regf_w31_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w31_f6_wval_i,  // Core Write Value
-  input  wire         regf_w31_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w31_f6_wval_i,  // Core Write Value
+  input  logic        regf_w31_f6_wr_i,    // Core Write Strobe
   // regf_w31_f8_o: bus=RW0S core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w31_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w31_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w31_f8_wbus_o,  // Bus Write Value
   output logic        regf_w31_f8_wr_o,    // Bus Write Strobe
   // regf_w31_f10_o: bus=RW0S core=RW1S in_regf=True
   output logic [1:0]  regf_w31_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w31_f10_wval_i, // Core Write Value
-  input  wire         regf_w31_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w31_f10_wval_i, // Core Write Value
+  input  logic        regf_w31_f10_wr_i,   // Core Write Strobe
   // regf_w31_f12_o: bus=RW0S core=RWL in_regf=False
-  input  wire  [1:0]  regf_w31_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w31_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w31_f12_wbus_o, // Bus Write Value
   output logic        regf_w31_f12_wr_o,   // Bus Write Strobe
   // regf_w31_f14_o: bus=RW0S core=RWL in_regf=True
   output logic [1:0]  regf_w31_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w31_f14_wval_i, // Core Write Value
-  input  wire         regf_w31_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w31_f14_wval_i, // Core Write Value
+  input  logic        regf_w31_f14_wr_i,   // Core Write Strobe
   // regf_w31_f16_o: bus=RW1C core=RO in_regf=False
-  input  wire  [1:0]  regf_w31_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w31_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w31_f16_wbus_o, // Bus Write Value
   output logic        regf_w31_f16_wr_o,   // Bus Write Strobe
   // regf_w31_f18_o: bus=RW1C core=RO in_regf=True
   output logic [1:0]  regf_w31_f18_rval_o, // Core Read Value
   // regf_w31_f20_o: bus=RW1C core=RC in_regf=False
-  input  wire  [1:0]  regf_w31_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w31_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w31_f20_wbus_o, // Bus Write Value
   output logic        regf_w31_f20_wr_o,   // Bus Write Strobe
   // regf_w31_f22_o: bus=RW1C core=RC in_regf=True
   output logic [1:0]  regf_w31_f22_rval_o, // Core Read Value
-  input  wire         regf_w31_f22_rd_i,   // Core Read Strobe
+  input  logic        regf_w31_f22_rd_i,   // Core Read Strobe
   // regf_w31_f24_o: bus=RW1C core=RS in_regf=False
-  input  wire  [1:0]  regf_w31_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w31_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w31_f24_wbus_o, // Bus Write Value
   output logic        regf_w31_f24_wr_o,   // Bus Write Strobe
   // regf_w31_f26_o: bus=RW1C core=RS in_regf=True
   output logic [1:0]  regf_w31_f26_rval_o, // Core Read Value
-  input  wire         regf_w31_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w31_f26_rd_i,   // Core Read Strobe
   // regf_w31_f28_o: bus=RW1C core=RT in_regf=False
-  input  wire  [1:0]  regf_w31_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w31_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w31_f28_wbus_o, // Bus Write Value
   output logic        regf_w31_f28_wr_o,   // Bus Write Strobe
   // regf_w31_f30_o: bus=RW1C core=RT in_regf=True
   output logic [1:0]  regf_w31_f30_rval_o, // Core Read Value
-  input  wire         regf_w31_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w31_f30_rd_i,   // Core Read Strobe
   // regf_w32_f0_o: bus=RW1C core=RP in_regf=False
-  input  wire  [1:0]  regf_w32_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w32_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w32_f0_wbus_o,  // Bus Write Value
   output logic        regf_w32_f0_wr_o,    // Bus Write Strobe
   // regf_w32_f2_o: bus=RW1C core=RP in_regf=True
   output logic [1:0]  regf_w32_f2_rval_o,  // Core Read Value
   // regf_w32_f4_o: bus=RW1C core=WO in_regf=False
-  input  wire  [1:0]  regf_w32_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w32_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w32_f4_wbus_o,  // Bus Write Value
   output logic        regf_w32_f4_wr_o,    // Bus Write Strobe
   // regf_w32_f6_o: bus=RW1C core=WO in_regf=True
-  input  wire  [1:0]  regf_w32_f6_wval_i,  // Core Write Value
-  input  wire         regf_w32_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w32_f6_wval_i,  // Core Write Value
+  input  logic        regf_w32_f6_wr_i,    // Core Write Strobe
   // regf_w32_f8_o: bus=RW1C core=W0C in_regf=False
-  input  wire  [1:0]  regf_w32_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w32_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w32_f8_wbus_o,  // Bus Write Value
   output logic        regf_w32_f8_wr_o,    // Bus Write Strobe
   // regf_w32_f10_o: bus=RW1C core=W0C in_regf=True
-  input  wire  [1:0]  regf_w32_f10_wval_i, // Core Write Value
-  input  wire         regf_w32_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f10_wval_i, // Core Write Value
+  input  logic        regf_w32_f10_wr_i,   // Core Write Strobe
   // regf_w32_f12_o: bus=RW1C core=W0S in_regf=False
-  input  wire  [1:0]  regf_w32_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w32_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w32_f12_wbus_o, // Bus Write Value
   output logic        regf_w32_f12_wr_o,   // Bus Write Strobe
   // regf_w32_f14_o: bus=RW1C core=W0S in_regf=True
-  input  wire  [1:0]  regf_w32_f14_wval_i, // Core Write Value
-  input  wire         regf_w32_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f14_wval_i, // Core Write Value
+  input  logic        regf_w32_f14_wr_i,   // Core Write Strobe
   // regf_w32_f16_o: bus=RW1C core=W1C in_regf=False
-  input  wire  [1:0]  regf_w32_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w32_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w32_f16_wbus_o, // Bus Write Value
   output logic        regf_w32_f16_wr_o,   // Bus Write Strobe
   // regf_w32_f18_o: bus=RW1C core=W1C in_regf=True
-  input  wire  [1:0]  regf_w32_f18_wval_i, // Core Write Value
-  input  wire         regf_w32_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f18_wval_i, // Core Write Value
+  input  logic        regf_w32_f18_wr_i,   // Core Write Strobe
   // regf_w32_f20_o: bus=RW1C core=W1S in_regf=False
-  input  wire  [1:0]  regf_w32_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w32_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w32_f20_wbus_o, // Bus Write Value
   output logic        regf_w32_f20_wr_o,   // Bus Write Strobe
   // regf_w32_f22_o: bus=RW1C core=W1S in_regf=True
-  input  wire  [1:0]  regf_w32_f22_wval_i, // Core Write Value
-  input  wire         regf_w32_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f22_wval_i, // Core Write Value
+  input  logic        regf_w32_f22_wr_i,   // Core Write Strobe
   // regf_w32_f24_o: bus=RW1C core=WL in_regf=False
-  input  wire  [1:0]  regf_w32_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w32_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w32_f24_wbus_o, // Bus Write Value
   output logic        regf_w32_f24_wr_o,   // Bus Write Strobe
   // regf_w32_f26_o: bus=RW1C core=WL in_regf=True
-  input  wire  [1:0]  regf_w32_f26_wval_i, // Core Write Value
-  input  wire         regf_w32_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f26_wval_i, // Core Write Value
+  input  logic        regf_w32_f26_wr_i,   // Core Write Strobe
   // regf_w32_f28_o: bus=RW1C core=RW in_regf=False
-  input  wire  [1:0]  regf_w32_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w32_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w32_f28_wbus_o, // Bus Write Value
   output logic        regf_w32_f28_wr_o,   // Bus Write Strobe
   // regf_w32_f30_o: bus=RW1C core=RW in_regf=True
   output logic [1:0]  regf_w32_f30_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w32_f30_wval_i, // Core Write Value
-  input  wire         regf_w32_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w32_f30_wval_i, // Core Write Value
+  input  logic        regf_w32_f30_wr_i,   // Core Write Strobe
   // regf_w33_f0_o: bus=RW1C core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w33_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w33_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w33_f0_wbus_o,  // Bus Write Value
   output logic        regf_w33_f0_wr_o,    // Bus Write Strobe
   // regf_w33_f2_o: bus=RW1C core=RW0C in_regf=True
   output logic [1:0]  regf_w33_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w33_f2_wval_i,  // Core Write Value
-  input  wire         regf_w33_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w33_f2_wval_i,  // Core Write Value
+  input  logic        regf_w33_f2_wr_i,    // Core Write Strobe
   // regf_w33_f4_o: bus=RW1C core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w33_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w33_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w33_f4_wbus_o,  // Bus Write Value
   output logic        regf_w33_f4_wr_o,    // Bus Write Strobe
   // regf_w33_f6_o: bus=RW1C core=RW0S in_regf=True
   output logic [1:0]  regf_w33_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w33_f6_wval_i,  // Core Write Value
-  input  wire         regf_w33_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w33_f6_wval_i,  // Core Write Value
+  input  logic        regf_w33_f6_wr_i,    // Core Write Strobe
   // regf_w33_f8_o: bus=RW1C core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w33_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w33_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w33_f8_wbus_o,  // Bus Write Value
   output logic        regf_w33_f8_wr_o,    // Bus Write Strobe
   // regf_w33_f10_o: bus=RW1C core=RW1C in_regf=True
   output logic [1:0]  regf_w33_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w33_f10_wval_i, // Core Write Value
-  input  wire         regf_w33_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w33_f10_wval_i, // Core Write Value
+  input  logic        regf_w33_f10_wr_i,   // Core Write Strobe
   // regf_w33_f12_o: bus=RW1C core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w33_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w33_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w33_f12_wbus_o, // Bus Write Value
   output logic        regf_w33_f12_wr_o,   // Bus Write Strobe
   // regf_w33_f14_o: bus=RW1C core=RW1S in_regf=True
   output logic [1:0]  regf_w33_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w33_f14_wval_i, // Core Write Value
-  input  wire         regf_w33_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w33_f14_wval_i, // Core Write Value
+  input  logic        regf_w33_f14_wr_i,   // Core Write Strobe
   // regf_w33_f16_o: bus=RW1C core=RWL in_regf=False
-  input  wire  [1:0]  regf_w33_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w33_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w33_f16_wbus_o, // Bus Write Value
   output logic        regf_w33_f16_wr_o,   // Bus Write Strobe
   // regf_w33_f18_o: bus=RW1C core=RWL in_regf=True
   output logic [1:0]  regf_w33_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w33_f18_wval_i, // Core Write Value
-  input  wire         regf_w33_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w33_f18_wval_i, // Core Write Value
+  input  logic        regf_w33_f18_wr_i,   // Core Write Strobe
   // regf_w33_f20_o: bus=RW1S core=RO in_regf=False
-  input  wire  [1:0]  regf_w33_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w33_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w33_f20_wbus_o, // Bus Write Value
   output logic        regf_w33_f20_wr_o,   // Bus Write Strobe
   // regf_w33_f22_o: bus=RW1S core=RO in_regf=True
   output logic [1:0]  regf_w33_f22_rval_o, // Core Read Value
   // regf_w33_f24_o: bus=RW1S core=RC in_regf=False
-  input  wire  [1:0]  regf_w33_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w33_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w33_f24_wbus_o, // Bus Write Value
   output logic        regf_w33_f24_wr_o,   // Bus Write Strobe
   // regf_w33_f26_o: bus=RW1S core=RC in_regf=True
   output logic [1:0]  regf_w33_f26_rval_o, // Core Read Value
-  input  wire         regf_w33_f26_rd_i,   // Core Read Strobe
+  input  logic        regf_w33_f26_rd_i,   // Core Read Strobe
   // regf_w33_f28_o: bus=RW1S core=RS in_regf=False
-  input  wire  [1:0]  regf_w33_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w33_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w33_f28_wbus_o, // Bus Write Value
   output logic        regf_w33_f28_wr_o,   // Bus Write Strobe
   // regf_w33_f30_o: bus=RW1S core=RS in_regf=True
   output logic [1:0]  regf_w33_f30_rval_o, // Core Read Value
-  input  wire         regf_w33_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w33_f30_rd_i,   // Core Read Strobe
   // regf_w34_f0_o: bus=RW1S core=RT in_regf=False
-  input  wire  [1:0]  regf_w34_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w34_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w34_f0_wbus_o,  // Bus Write Value
   output logic        regf_w34_f0_wr_o,    // Bus Write Strobe
   // regf_w34_f2_o: bus=RW1S core=RT in_regf=True
   output logic [1:0]  regf_w34_f2_rval_o,  // Core Read Value
-  input  wire         regf_w34_f2_rd_i,    // Core Read Strobe
+  input  logic        regf_w34_f2_rd_i,    // Core Read Strobe
   // regf_w34_f4_o: bus=RW1S core=RP in_regf=False
-  input  wire  [1:0]  regf_w34_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w34_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w34_f4_wbus_o,  // Bus Write Value
   output logic        regf_w34_f4_wr_o,    // Bus Write Strobe
   // regf_w34_f6_o: bus=RW1S core=RP in_regf=True
   output logic [1:0]  regf_w34_f6_rval_o,  // Core Read Value
   // regf_w34_f8_o: bus=RW1S core=WO in_regf=False
-  input  wire  [1:0]  regf_w34_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w34_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w34_f8_wbus_o,  // Bus Write Value
   output logic        regf_w34_f8_wr_o,    // Bus Write Strobe
   // regf_w34_f10_o: bus=RW1S core=WO in_regf=True
-  input  wire  [1:0]  regf_w34_f10_wval_i, // Core Write Value
-  input  wire         regf_w34_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f10_wval_i, // Core Write Value
+  input  logic        regf_w34_f10_wr_i,   // Core Write Strobe
   // regf_w34_f12_o: bus=RW1S core=W0C in_regf=False
-  input  wire  [1:0]  regf_w34_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w34_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w34_f12_wbus_o, // Bus Write Value
   output logic        regf_w34_f12_wr_o,   // Bus Write Strobe
   // regf_w34_f14_o: bus=RW1S core=W0C in_regf=True
-  input  wire  [1:0]  regf_w34_f14_wval_i, // Core Write Value
-  input  wire         regf_w34_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f14_wval_i, // Core Write Value
+  input  logic        regf_w34_f14_wr_i,   // Core Write Strobe
   // regf_w34_f16_o: bus=RW1S core=W0S in_regf=False
-  input  wire  [1:0]  regf_w34_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w34_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w34_f16_wbus_o, // Bus Write Value
   output logic        regf_w34_f16_wr_o,   // Bus Write Strobe
   // regf_w34_f18_o: bus=RW1S core=W0S in_regf=True
-  input  wire  [1:0]  regf_w34_f18_wval_i, // Core Write Value
-  input  wire         regf_w34_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f18_wval_i, // Core Write Value
+  input  logic        regf_w34_f18_wr_i,   // Core Write Strobe
   // regf_w34_f20_o: bus=RW1S core=W1C in_regf=False
-  input  wire  [1:0]  regf_w34_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w34_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w34_f20_wbus_o, // Bus Write Value
   output logic        regf_w34_f20_wr_o,   // Bus Write Strobe
   // regf_w34_f22_o: bus=RW1S core=W1C in_regf=True
-  input  wire  [1:0]  regf_w34_f22_wval_i, // Core Write Value
-  input  wire         regf_w34_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f22_wval_i, // Core Write Value
+  input  logic        regf_w34_f22_wr_i,   // Core Write Strobe
   // regf_w34_f24_o: bus=RW1S core=W1S in_regf=False
-  input  wire  [1:0]  regf_w34_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w34_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w34_f24_wbus_o, // Bus Write Value
   output logic        regf_w34_f24_wr_o,   // Bus Write Strobe
   // regf_w34_f26_o: bus=RW1S core=W1S in_regf=True
-  input  wire  [1:0]  regf_w34_f26_wval_i, // Core Write Value
-  input  wire         regf_w34_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f26_wval_i, // Core Write Value
+  input  logic        regf_w34_f26_wr_i,   // Core Write Strobe
   // regf_w34_f28_o: bus=RW1S core=WL in_regf=False
-  input  wire  [1:0]  regf_w34_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w34_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w34_f28_wbus_o, // Bus Write Value
   output logic        regf_w34_f28_wr_o,   // Bus Write Strobe
   // regf_w34_f30_o: bus=RW1S core=WL in_regf=True
-  input  wire  [1:0]  regf_w34_f30_wval_i, // Core Write Value
-  input  wire         regf_w34_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w34_f30_wval_i, // Core Write Value
+  input  logic        regf_w34_f30_wr_i,   // Core Write Strobe
   // regf_w35_f0_o: bus=RW1S core=RW in_regf=False
-  input  wire  [1:0]  regf_w35_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w35_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w35_f0_wbus_o,  // Bus Write Value
   output logic        regf_w35_f0_wr_o,    // Bus Write Strobe
   // regf_w35_f2_o: bus=RW1S core=RW in_regf=True
   output logic [1:0]  regf_w35_f2_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w35_f2_wval_i,  // Core Write Value
-  input  wire         regf_w35_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w35_f2_wval_i,  // Core Write Value
+  input  logic        regf_w35_f2_wr_i,    // Core Write Strobe
   // regf_w35_f4_o: bus=RW1S core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w35_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w35_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w35_f4_wbus_o,  // Bus Write Value
   output logic        regf_w35_f4_wr_o,    // Bus Write Strobe
   // regf_w35_f6_o: bus=RW1S core=RW0C in_regf=True
   output logic [1:0]  regf_w35_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w35_f6_wval_i,  // Core Write Value
-  input  wire         regf_w35_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w35_f6_wval_i,  // Core Write Value
+  input  logic        regf_w35_f6_wr_i,    // Core Write Strobe
   // regf_w35_f8_o: bus=RW1S core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w35_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w35_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w35_f8_wbus_o,  // Bus Write Value
   output logic        regf_w35_f8_wr_o,    // Bus Write Strobe
   // regf_w35_f10_o: bus=RW1S core=RW0S in_regf=True
   output logic [1:0]  regf_w35_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w35_f10_wval_i, // Core Write Value
-  input  wire         regf_w35_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w35_f10_wval_i, // Core Write Value
+  input  logic        regf_w35_f10_wr_i,   // Core Write Strobe
   // regf_w35_f12_o: bus=RW1S core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w35_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w35_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w35_f12_wbus_o, // Bus Write Value
   output logic        regf_w35_f12_wr_o,   // Bus Write Strobe
   // regf_w35_f14_o: bus=RW1S core=RW1C in_regf=True
   output logic [1:0]  regf_w35_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w35_f14_wval_i, // Core Write Value
-  input  wire         regf_w35_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w35_f14_wval_i, // Core Write Value
+  input  logic        regf_w35_f14_wr_i,   // Core Write Strobe
   // regf_w35_f16_o: bus=RW1S core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w35_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w35_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w35_f16_wbus_o, // Bus Write Value
   output logic        regf_w35_f16_wr_o,   // Bus Write Strobe
   // regf_w35_f18_o: bus=RW1S core=RW1S in_regf=True
   output logic [1:0]  regf_w35_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w35_f18_wval_i, // Core Write Value
-  input  wire         regf_w35_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w35_f18_wval_i, // Core Write Value
+  input  logic        regf_w35_f18_wr_i,   // Core Write Strobe
   // regf_w35_f20_o: bus=RW1S core=RWL in_regf=False
-  input  wire  [1:0]  regf_w35_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w35_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w35_f20_wbus_o, // Bus Write Value
   output logic        regf_w35_f20_wr_o,   // Bus Write Strobe
   // regf_w35_f22_o: bus=RW1S core=RWL in_regf=True
   output logic [1:0]  regf_w35_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w35_f22_wval_i, // Core Write Value
-  input  wire         regf_w35_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w35_f22_wval_i, // Core Write Value
+  input  logic        regf_w35_f22_wr_i,   // Core Write Strobe
   // regf_w35_f24_o: bus=RWL core=RO in_regf=False
-  input  wire  [1:0]  regf_w35_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w35_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w35_f24_wbus_o, // Bus Write Value
   output logic        regf_w35_f24_wr_o,   // Bus Write Strobe
   // regf_w35_f26_o: bus=RWL core=RO in_regf=True
   output logic [1:0]  regf_w35_f26_rval_o, // Core Read Value
   // regf_w35_f28_o: bus=RWL core=RC in_regf=False
-  input  wire  [1:0]  regf_w35_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w35_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w35_f28_wbus_o, // Bus Write Value
   output logic        regf_w35_f28_wr_o,   // Bus Write Strobe
   // regf_w35_f30_o: bus=RWL core=RC in_regf=True
   output logic [1:0]  regf_w35_f30_rval_o, // Core Read Value
-  input  wire         regf_w35_f30_rd_i,   // Core Read Strobe
+  input  logic        regf_w35_f30_rd_i,   // Core Read Strobe
   // regf_w36_f0_o: bus=RWL core=RS in_regf=False
-  input  wire  [1:0]  regf_w36_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w36_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w36_f0_wbus_o,  // Bus Write Value
   output logic        regf_w36_f0_wr_o,    // Bus Write Strobe
   // regf_w36_f2_o: bus=RWL core=RS in_regf=True
   output logic [1:0]  regf_w36_f2_rval_o,  // Core Read Value
-  input  wire         regf_w36_f2_rd_i,    // Core Read Strobe
+  input  logic        regf_w36_f2_rd_i,    // Core Read Strobe
   // regf_w36_f4_o: bus=RWL core=RT in_regf=False
-  input  wire  [1:0]  regf_w36_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w36_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w36_f4_wbus_o,  // Bus Write Value
   output logic        regf_w36_f4_wr_o,    // Bus Write Strobe
   // regf_w36_f6_o: bus=RWL core=RT in_regf=True
   output logic [1:0]  regf_w36_f6_rval_o,  // Core Read Value
-  input  wire         regf_w36_f6_rd_i,    // Core Read Strobe
+  input  logic        regf_w36_f6_rd_i,    // Core Read Strobe
   // regf_w36_f8_o: bus=RWL core=RP in_regf=False
-  input  wire  [1:0]  regf_w36_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w36_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w36_f8_wbus_o,  // Bus Write Value
   output logic        regf_w36_f8_wr_o,    // Bus Write Strobe
   // regf_w36_f10_o: bus=RWL core=RP in_regf=True
   output logic [1:0]  regf_w36_f10_rval_o, // Core Read Value
   // regf_w36_f12_o: bus=RWL core=WO in_regf=False
-  input  wire  [1:0]  regf_w36_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w36_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w36_f12_wbus_o, // Bus Write Value
   output logic        regf_w36_f12_wr_o,   // Bus Write Strobe
   // regf_w36_f14_o: bus=RWL core=WO in_regf=True
-  input  wire  [1:0]  regf_w36_f14_wval_i, // Core Write Value
-  input  wire         regf_w36_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w36_f14_wval_i, // Core Write Value
+  input  logic        regf_w36_f14_wr_i,   // Core Write Strobe
   // regf_w36_f16_o: bus=RWL core=W0C in_regf=False
-  input  wire  [1:0]  regf_w36_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w36_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w36_f16_wbus_o, // Bus Write Value
   output logic        regf_w36_f16_wr_o,   // Bus Write Strobe
   // regf_w36_f18_o: bus=RWL core=W0C in_regf=True
-  input  wire  [1:0]  regf_w36_f18_wval_i, // Core Write Value
-  input  wire         regf_w36_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w36_f18_wval_i, // Core Write Value
+  input  logic        regf_w36_f18_wr_i,   // Core Write Strobe
   // regf_w36_f20_o: bus=RWL core=W0S in_regf=False
-  input  wire  [1:0]  regf_w36_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w36_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w36_f20_wbus_o, // Bus Write Value
   output logic        regf_w36_f20_wr_o,   // Bus Write Strobe
   // regf_w36_f22_o: bus=RWL core=W0S in_regf=True
-  input  wire  [1:0]  regf_w36_f22_wval_i, // Core Write Value
-  input  wire         regf_w36_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w36_f22_wval_i, // Core Write Value
+  input  logic        regf_w36_f22_wr_i,   // Core Write Strobe
   // regf_w36_f24_o: bus=RWL core=W1C in_regf=False
-  input  wire  [1:0]  regf_w36_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w36_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w36_f24_wbus_o, // Bus Write Value
   output logic        regf_w36_f24_wr_o,   // Bus Write Strobe
   // regf_w36_f26_o: bus=RWL core=W1C in_regf=True
-  input  wire  [1:0]  regf_w36_f26_wval_i, // Core Write Value
-  input  wire         regf_w36_f26_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w36_f26_wval_i, // Core Write Value
+  input  logic        regf_w36_f26_wr_i,   // Core Write Strobe
   // regf_w36_f28_o: bus=RWL core=W1S in_regf=False
-  input  wire  [1:0]  regf_w36_f28_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w36_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w36_f28_wbus_o, // Bus Write Value
   output logic        regf_w36_f28_wr_o,   // Bus Write Strobe
   // regf_w36_f30_o: bus=RWL core=W1S in_regf=True
-  input  wire  [1:0]  regf_w36_f30_wval_i, // Core Write Value
-  input  wire         regf_w36_f30_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w36_f30_wval_i, // Core Write Value
+  input  logic        regf_w36_f30_wr_i,   // Core Write Strobe
   // regf_w37_f0_o: bus=RWL core=WL in_regf=False
-  input  wire  [1:0]  regf_w37_f0_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w37_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w37_f0_wbus_o,  // Bus Write Value
   output logic        regf_w37_f0_wr_o,    // Bus Write Strobe
   // regf_w37_f2_o: bus=RWL core=WL in_regf=True
-  input  wire  [1:0]  regf_w37_f2_wval_i,  // Core Write Value
-  input  wire         regf_w37_f2_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w37_f2_wval_i,  // Core Write Value
+  input  logic        regf_w37_f2_wr_i,    // Core Write Strobe
   // regf_w37_f4_o: bus=RWL core=RW in_regf=False
-  input  wire  [1:0]  regf_w37_f4_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w37_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w37_f4_wbus_o,  // Bus Write Value
   output logic        regf_w37_f4_wr_o,    // Bus Write Strobe
   // regf_w37_f6_o: bus=RWL core=RW in_regf=True
   output logic [1:0]  regf_w37_f6_rval_o,  // Core Read Value
-  input  wire  [1:0]  regf_w37_f6_wval_i,  // Core Write Value
-  input  wire         regf_w37_f6_wr_i,    // Core Write Strobe
+  input  logic [1:0]  regf_w37_f6_wval_i,  // Core Write Value
+  input  logic        regf_w37_f6_wr_i,    // Core Write Strobe
   // regf_w37_f8_o: bus=RWL core=RW0C in_regf=False
-  input  wire  [1:0]  regf_w37_f8_rbus_i,  // Bus Read Value
+  input  logic [1:0]  regf_w37_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w37_f8_wbus_o,  // Bus Write Value
   output logic        regf_w37_f8_wr_o,    // Bus Write Strobe
   // regf_w37_f10_o: bus=RWL core=RW0C in_regf=True
   output logic [1:0]  regf_w37_f10_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w37_f10_wval_i, // Core Write Value
-  input  wire         regf_w37_f10_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w37_f10_wval_i, // Core Write Value
+  input  logic        regf_w37_f10_wr_i,   // Core Write Strobe
   // regf_w37_f12_o: bus=RWL core=RW0S in_regf=False
-  input  wire  [1:0]  regf_w37_f12_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w37_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w37_f12_wbus_o, // Bus Write Value
   output logic        regf_w37_f12_wr_o,   // Bus Write Strobe
   // regf_w37_f14_o: bus=RWL core=RW0S in_regf=True
   output logic [1:0]  regf_w37_f14_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w37_f14_wval_i, // Core Write Value
-  input  wire         regf_w37_f14_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w37_f14_wval_i, // Core Write Value
+  input  logic        regf_w37_f14_wr_i,   // Core Write Strobe
   // regf_w37_f16_o: bus=RWL core=RW1C in_regf=False
-  input  wire  [1:0]  regf_w37_f16_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w37_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w37_f16_wbus_o, // Bus Write Value
   output logic        regf_w37_f16_wr_o,   // Bus Write Strobe
   // regf_w37_f18_o: bus=RWL core=RW1C in_regf=True
   output logic [1:0]  regf_w37_f18_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w37_f18_wval_i, // Core Write Value
-  input  wire         regf_w37_f18_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w37_f18_wval_i, // Core Write Value
+  input  logic        regf_w37_f18_wr_i,   // Core Write Strobe
   // regf_w37_f20_o: bus=RWL core=RW1S in_regf=False
-  input  wire  [1:0]  regf_w37_f20_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w37_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w37_f20_wbus_o, // Bus Write Value
   output logic        regf_w37_f20_wr_o,   // Bus Write Strobe
   // regf_w37_f22_o: bus=RWL core=RW1S in_regf=True
   output logic [1:0]  regf_w37_f22_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w37_f22_wval_i, // Core Write Value
-  input  wire         regf_w37_f22_wr_i,   // Core Write Strobe
+  input  logic [1:0]  regf_w37_f22_wval_i, // Core Write Value
+  input  logic        regf_w37_f22_wr_i,   // Core Write Strobe
   // regf_w37_f24_o: bus=RWL core=RWL in_regf=False
-  input  wire  [1:0]  regf_w37_f24_rbus_i, // Bus Read Value
+  input  logic [1:0]  regf_w37_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w37_f24_wbus_o, // Bus Write Value
   output logic        regf_w37_f24_wr_o,   // Bus Write Strobe
   // regf_w37_f26_o: bus=RWL core=RWL in_regf=True
   output logic [1:0]  regf_w37_f26_rval_o, // Core Read Value
-  input  wire  [1:0]  regf_w37_f26_wval_i, // Core Write Value
-  input  wire         regf_w37_f26_wr_i    // Core Write Strobe
+  input  logic [1:0]  regf_w37_f26_wval_i, // Core Write Value
+  input  logic        regf_w37_f26_wr_i    // Core Write Strobe
 );
 
 
@@ -2636,12 +2636,12 @@ module full_regf ( // tests.test_svmako.RegfMod
   // ------------------------------------------------------
   //  Local Parameter
   // ------------------------------------------------------
-  localparam [1:0] data_w0_f0_c   = 2'h0; // w0 / f0
-  localparam [1:0] data_w0_f14_c  = 2'h0; // w0 / f14
-  localparam [1:0] data_w2_f0_c   = 2'h0; // w2 / f0
-  localparam [1:0] data_w2_f14_c  = 2'h0; // w2 / f14
-  localparam [1:0] data_w10_f12_c = 2'h0; // w10 / f12
-  localparam [1:0] data_w10_f26_c = 2'h0; // w10 / f26
+  localparam logic [1:0] data_w0_f0_c   = 2'h0; // w0 / f0
+  localparam logic [1:0] data_w0_f14_c  = 2'h0; // w0 / f14
+  localparam logic [1:0] data_w2_f0_c   = 2'h0; // w2 / f0
+  localparam logic [1:0] data_w2_f14_c  = 2'h0; // w2 / f14
+  localparam logic [1:0] data_w10_f12_c = 2'h0; // w10 / f12
+  localparam logic [1:0] data_w10_f26_c = 2'h0; // w10 / f26
 
 
   // ------------------------------------------------------
@@ -5104,400 +5104,400 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w12_f2_rval_o  = data_w12_f2_r;
   assign regf_w12_f6_rval_o  = data_w12_f6_r;
   assign regf_w12_f10_rval_o = data_w12_f10_r;
-  assign regf_w12_f12_wbus_o = ((bus_w12_wren_s == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w12_f12_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w12_f12_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f14_rval_o = data_w12_f14_r;
-  assign regf_w12_f16_wbus_o = ((bus_w12_wren_s == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w12_f16_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w12_f16_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f18_rval_o = data_w12_f18_r;
-  assign regf_w12_f20_wbus_o = ((bus_w12_wren_s == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w12_f20_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w12_f20_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f22_rval_o = data_w12_f22_r;
-  assign regf_w12_f24_wbus_o = ((bus_w12_wren_s == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w12_f24_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w12_f24_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f26_rval_o = data_w12_f26_r;
-  assign regf_w12_f28_wbus_o = ((bus_w12_wren_s == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w12_f28_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w12_f28_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f30_rval_o = data_w12_f30_r;
-  assign regf_w13_f24_wbus_o = ((bus_w13_wren_s == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w13_f24_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w13_f24_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w13_f26_rval_o = data_w13_f26_r;
-  assign regf_w13_f28_wbus_o = ((bus_w13_wren_s == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w13_f28_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w13_f28_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w13_f30_rval_o = data_w13_f30_r;
-  assign regf_w14_f0_wbus_o  = ((bus_w14_wren_s == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w14_f0_wbus_o  = (bus_w14_wren_s == 1'b1) ? mem_wdata_i[1:0] : 2'h0;
   assign regf_w14_f0_wr_o    = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f2_rval_o  = data_w14_f2_r;
-  assign regf_w14_f4_wbus_o  = ((bus_w14_wren_s == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w14_f4_wbus_o  = (bus_w14_wren_s == 1'b1) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w14_f4_wr_o    = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f6_rval_o  = data_w14_f6_r;
-  assign regf_w14_f8_wbus_o  = ((bus_w14_wren_s == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w14_f8_wbus_o  = (bus_w14_wren_s == 1'b1) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w14_f8_wr_o    = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f10_rval_o = data_w14_f10_r;
-  assign regf_w14_f12_wbus_o = ((bus_w14_wren_s == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w14_f12_wbus_o = (bus_w14_wren_s == 1'b1) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w14_f12_wr_o   = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f14_rval_o = data_w14_f14_r;
-  assign regf_w14_f16_wbus_o = ((bus_w14_wren_s == 1'b1)) ? regf_w14_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
+  assign regf_w14_f16_wbus_o = (bus_w14_wren_s == 1'b1) ? regf_w14_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
   assign regf_w14_f16_wr_o   = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f18_rval_o = data_w14_f18_r;
-  assign regf_w14_f20_wbus_o = ((bus_w14_wren_s == 1'b1)) ? regf_w14_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
+  assign regf_w14_f20_wbus_o = (bus_w14_wren_s == 1'b1) ? regf_w14_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
   assign regf_w14_f20_wr_o   = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f22_rval_o = data_w14_f22_r;
-  assign regf_w14_f24_wbus_o = ((bus_w14_wren_s == 1'b1)) ? regf_w14_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
+  assign regf_w14_f24_wbus_o = (bus_w14_wren_s == 1'b1) ? regf_w14_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
   assign regf_w14_f24_wr_o   = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f26_rval_o = data_w14_f26_r;
-  assign regf_w14_f28_wbus_o = ((bus_w14_wren_s == 1'b1)) ? regf_w14_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
+  assign regf_w14_f28_wbus_o = (bus_w14_wren_s == 1'b1) ? regf_w14_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
   assign regf_w14_f28_wr_o   = (bus_w14_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w14_f30_rval_o = data_w14_f30_r;
-  assign regf_w15_f0_wbus_o  = ((bus_w15_wren_s == 1'b1)) ? regf_w15_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
+  assign regf_w15_f0_wbus_o  = (bus_w15_wren_s == 1'b1) ? regf_w15_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
   assign regf_w15_f0_wr_o    = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w15_f2_rval_o  = data_w15_f2_r;
-  assign regf_w15_f28_wbus_o = ((bus_w15_wren_s == 1'b1)) ? regf_w15_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
+  assign regf_w15_f28_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
   assign regf_w15_f28_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w15_f30_rval_o = data_w15_f30_r;
-  assign regf_w16_f0_wbus_o  = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
+  assign regf_w16_f0_wbus_o  = (bus_w16_wren_s == 1'b1) ? regf_w16_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
   assign regf_w16_f0_wr_o    = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f2_rval_o  = data_w16_f2_r;
-  assign regf_w16_f4_wbus_o  = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
+  assign regf_w16_f4_wbus_o  = (bus_w16_wren_s == 1'b1) ? regf_w16_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
   assign regf_w16_f4_wr_o    = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f6_rval_o  = data_w16_f6_r;
-  assign regf_w16_f8_wbus_o  = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
+  assign regf_w16_f8_wbus_o  = (bus_w16_wren_s == 1'b1) ? regf_w16_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
   assign regf_w16_f8_wr_o    = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f10_rval_o = data_w16_f10_r;
-  assign regf_w16_f12_wbus_o = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
+  assign regf_w16_f12_wbus_o = (bus_w16_wren_s == 1'b1) ? regf_w16_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
   assign regf_w16_f12_wr_o   = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f14_rval_o = data_w16_f14_r;
-  assign regf_w16_f16_wbus_o = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
+  assign regf_w16_f16_wbus_o = (bus_w16_wren_s == 1'b1) ? regf_w16_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
   assign regf_w16_f16_wr_o   = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f18_rval_o = data_w16_f18_r;
-  assign regf_w16_f20_wbus_o = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w16_f20_wbus_o = (bus_w16_wren_s == 1'b1) ? regf_w16_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
   assign regf_w16_f20_wr_o   = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f22_rval_o = data_w16_f22_r;
-  assign regf_w16_f24_wbus_o = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w16_f24_wbus_o = (bus_w16_wren_s == 1'b1) ? regf_w16_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w16_f24_wr_o   = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f26_rval_o = data_w16_f26_r;
-  assign regf_w16_f28_wbus_o = ((bus_w16_wren_s == 1'b1)) ? regf_w16_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w16_f28_wbus_o = (bus_w16_wren_s == 1'b1) ? regf_w16_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w16_f28_wr_o   = (bus_w16_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w16_f30_rval_o = data_w16_f30_r;
-  assign regf_w17_f0_wbus_o  = ((bus_w17_wren_s == 1'b1)) ? regf_w17_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w17_f0_wbus_o  = (bus_w17_wren_s == 1'b1) ? regf_w17_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w17_f0_wr_o    = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w17_f2_rval_o  = data_w17_f2_r;
-  assign regf_w17_f4_wbus_o  = ((bus_w17_wren_s == 1'b1)) ? regf_w17_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w17_f4_wbus_o  = (bus_w17_wren_s == 1'b1) ? regf_w17_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w17_f4_wr_o    = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w17_f6_rval_o  = data_w17_f6_r;
-  assign regf_w18_f0_wbus_o  = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w18_f0_wbus_o  = (bus_w18_wren_s == 1'b1) ? regf_w18_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w18_f0_wr_o    = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f2_rval_o  = data_w18_f2_r;
-  assign regf_w18_f4_wbus_o  = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w18_f4_wbus_o  = (bus_w18_wren_s == 1'b1) ? regf_w18_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w18_f4_wr_o    = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f6_rval_o  = data_w18_f6_r;
-  assign regf_w18_f8_wbus_o  = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w18_f8_wbus_o  = (bus_w18_wren_s == 1'b1) ? regf_w18_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w18_f8_wr_o    = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f10_rval_o = data_w18_f10_r;
-  assign regf_w18_f12_wbus_o = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w18_f12_wbus_o = (bus_w18_wren_s == 1'b1) ? regf_w18_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
   assign regf_w18_f12_wr_o   = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f14_rval_o = data_w18_f14_r;
-  assign regf_w18_f16_wbus_o = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w18_f16_wbus_o = (bus_w18_wren_s == 1'b1) ? regf_w18_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
   assign regf_w18_f16_wr_o   = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f18_rval_o = data_w18_f18_r;
-  assign regf_w18_f20_wbus_o = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w18_f20_wbus_o = (bus_w18_wren_s == 1'b1) ? regf_w18_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
   assign regf_w18_f20_wr_o   = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f22_rval_o = data_w18_f22_r;
-  assign regf_w18_f24_wbus_o = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w18_f24_wbus_o = (bus_w18_wren_s == 1'b1) ? regf_w18_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w18_f24_wr_o   = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f26_rval_o = data_w18_f26_r;
-  assign regf_w18_f28_wbus_o = ((bus_w18_wren_s == 1'b1)) ? regf_w18_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w18_f28_wbus_o = (bus_w18_wren_s == 1'b1) ? regf_w18_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w18_f28_wr_o   = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f30_rval_o = data_w18_f30_r;
-  assign regf_w19_f0_wbus_o  = ((bus_w19_wren_s == 1'b1)) ? regf_w19_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w19_f0_wbus_o  = (bus_w19_wren_s == 1'b1) ? regf_w19_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w19_f0_wr_o    = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w19_f2_rval_o  = data_w19_f2_r;
-  assign regf_w19_f4_wbus_o  = ((bus_w19_wren_s == 1'b1)) ? regf_w19_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w19_f4_wbus_o  = (bus_w19_wren_s == 1'b1) ? regf_w19_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w19_f4_wr_o    = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w19_f6_rval_o  = data_w19_f6_r;
-  assign regf_w19_f8_wbus_o  = ((bus_w19_wren_s == 1'b1)) ? regf_w19_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w19_f8_wbus_o  = (bus_w19_wren_s == 1'b1) ? regf_w19_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w19_f8_wr_o    = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w19_f10_rval_o = data_w19_f10_r;
-  assign regf_w20_f4_wbus_o  = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w20_f4_wbus_o  = (bus_w20_wren_s == 1'b1) ? regf_w20_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w20_f4_wr_o    = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f6_rval_o  = data_w20_f6_r;
-  assign regf_w20_f8_wbus_o  = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w20_f8_wbus_o  = (bus_w20_wren_s == 1'b1) ? regf_w20_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w20_f8_wr_o    = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f10_rval_o = data_w20_f10_r;
-  assign regf_w20_f12_wbus_o = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w20_f12_wbus_o = (bus_w20_wren_s == 1'b1) ? regf_w20_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
   assign regf_w20_f12_wr_o   = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f14_rval_o = data_w20_f14_r;
-  assign regf_w20_f16_wbus_o = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w20_f16_wbus_o = (bus_w20_wren_s == 1'b1) ? regf_w20_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
   assign regf_w20_f16_wr_o   = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f18_rval_o = data_w20_f18_r;
-  assign regf_w20_f20_wbus_o = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w20_f20_wbus_o = (bus_w20_wren_s == 1'b1) ? regf_w20_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
   assign regf_w20_f20_wr_o   = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f22_rval_o = data_w20_f22_r;
-  assign regf_w20_f24_wbus_o = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w20_f24_wbus_o = (bus_w20_wren_s == 1'b1) ? regf_w20_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w20_f24_wr_o   = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f26_rval_o = data_w20_f26_r;
-  assign regf_w20_f28_wbus_o = ((bus_w20_wren_s == 1'b1)) ? regf_w20_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
+  assign regf_w20_f28_wbus_o = (bus_w20_wren_s == 1'b1) ? regf_w20_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
   assign regf_w20_f28_wr_o   = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f30_rval_o = data_w20_f30_r;
-  assign regf_w21_f0_wbus_o  = ((bus_w21_wren_s == 1'b1)) ? regf_w21_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
+  assign regf_w21_f0_wbus_o  = (bus_w21_wren_s == 1'b1) ? regf_w21_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
   assign regf_w21_f0_wr_o    = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w21_f2_rval_o  = data_w21_f2_r;
-  assign regf_w21_f4_wbus_o  = ((bus_w21_wren_s == 1'b1)) ? regf_w21_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
+  assign regf_w21_f4_wbus_o  = (bus_w21_wren_s == 1'b1) ? regf_w21_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
   assign regf_w21_f4_wr_o    = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w21_f6_rval_o  = data_w21_f6_r;
-  assign regf_w21_f8_wbus_o  = ((bus_w21_wren_s == 1'b1)) ? regf_w21_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
+  assign regf_w21_f8_wbus_o  = (bus_w21_wren_s == 1'b1) ? regf_w21_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
   assign regf_w21_f8_wr_o    = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w21_f10_rval_o = data_w21_f10_r;
-  assign regf_w21_f12_wbus_o = ((bus_w21_wren_s == 1'b1)) ? regf_w21_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
+  assign regf_w21_f12_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
   assign regf_w21_f12_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w21_f14_rval_o = data_w21_f14_r;
-  assign regf_w22_f8_wbus_o  = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
+  assign regf_w22_f8_wbus_o  = (bus_w22_wren_s == 1'b1) ? regf_w22_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
   assign regf_w22_f8_wr_o    = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f10_rval_o = data_w22_f10_r;
-  assign regf_w22_f12_wbus_o = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
+  assign regf_w22_f12_wbus_o = (bus_w22_wren_s == 1'b1) ? regf_w22_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
   assign regf_w22_f12_wr_o   = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f14_rval_o = data_w22_f14_r;
-  assign regf_w22_f16_wbus_o = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
+  assign regf_w22_f16_wbus_o = (bus_w22_wren_s == 1'b1) ? regf_w22_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
   assign regf_w22_f16_wr_o   = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f18_rval_o = data_w22_f18_r;
-  assign regf_w22_f20_wbus_o = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
+  assign regf_w22_f20_wbus_o = (bus_w22_wren_s == 1'b1) ? regf_w22_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
   assign regf_w22_f20_wr_o   = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f22_rval_o = data_w22_f22_r;
-  assign regf_w22_f24_wbus_o = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
+  assign regf_w22_f24_wbus_o = (bus_w22_wren_s == 1'b1) ? regf_w22_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
   assign regf_w22_f24_wr_o   = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f26_rval_o = data_w22_f26_r;
-  assign regf_w22_f28_wbus_o = ((bus_w22_wren_s == 1'b1)) ? regf_w22_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
+  assign regf_w22_f28_wbus_o = (bus_w22_wren_s == 1'b1) ? regf_w22_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
   assign regf_w22_f28_wr_o   = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f30_rval_o = data_w22_f30_r;
-  assign regf_w23_f0_wbus_o  = (((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1))) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w23_f0_wbus_o  = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
   assign regf_w23_f0_wr_o    = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f2_rval_o  = data_w23_f2_r;
-  assign regf_w23_f4_wbus_o  = (((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1))) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w23_f4_wbus_o  = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w23_f4_wr_o    = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f6_rval_o  = data_w23_f6_r;
-  assign regf_w23_f8_wbus_o  = (((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1))) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w23_f8_wbus_o  = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w23_f8_wr_o    = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f10_rval_o = data_w23_f10_r;
-  assign regf_w23_f12_wbus_o = (((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1))) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w23_f12_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w23_f12_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f14_rval_o = data_w23_f14_r;
-  assign regf_w23_f16_wbus_o = (((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1))) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w23_f16_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w23_f16_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f18_rval_o = data_w23_f18_r;
-  assign regf_w24_f12_wbus_o = (((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1))) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w24_f12_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w24_f12_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f14_rval_o = data_w24_f14_r;
-  assign regf_w24_f16_wbus_o = (((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1))) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w24_f16_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w24_f16_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f18_rval_o = data_w24_f18_r;
-  assign regf_w24_f20_wbus_o = (((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1))) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w24_f20_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w24_f20_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f22_rval_o = data_w24_f22_r;
-  assign regf_w24_f24_wbus_o = (((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1))) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w24_f24_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w24_f24_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f26_rval_o = data_w24_f26_r;
-  assign regf_w24_f28_wbus_o = (((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1))) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w24_f28_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w24_f28_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f30_rval_o = data_w24_f30_r;
-  assign regf_w25_f0_wbus_o  = (((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1))) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w25_f0_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
   assign regf_w25_f0_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f2_rval_o  = data_w25_f2_r;
-  assign regf_w25_f4_wbus_o  = ((bus_w25_wren_s == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w25_f4_wbus_o  = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w25_f4_wr_o    = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f6_rval_o  = data_w25_f6_r;
-  assign regf_w25_f8_wbus_o  = ((bus_w25_wren_s == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w25_f8_wbus_o  = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w25_f8_wr_o    = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f10_rval_o = data_w25_f10_r;
-  assign regf_w25_f12_wbus_o = ((bus_w25_wren_s == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w25_f12_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w25_f12_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f14_rval_o = data_w25_f14_r;
-  assign regf_w25_f16_wbus_o = ((bus_w25_wren_s == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w25_f16_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w25_f16_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f18_rval_o = data_w25_f18_r;
-  assign regf_w25_f20_wbus_o = ((bus_w25_wren_s == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w25_f20_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w25_f20_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f22_rval_o = data_w25_f22_r;
-  assign regf_w26_f16_wbus_o = ((bus_w26_wren_s == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w26_f16_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w26_f16_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f18_rval_o = data_w26_f18_r;
-  assign regf_w26_f20_wbus_o = ((bus_w26_wren_s == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w26_f20_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w26_f20_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f22_rval_o = data_w26_f22_r;
-  assign regf_w26_f24_wbus_o = ((bus_w26_wren_s == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w26_f24_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w26_f24_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f26_rval_o = data_w26_f26_r;
-  assign regf_w26_f28_wbus_o = ((bus_w26_wren_s == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w26_f28_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w26_f28_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f30_rval_o = data_w26_f30_r;
-  assign regf_w27_f0_wbus_o  = ((bus_w27_wren_s == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w27_f0_wbus_o  = (bus_w27_wren_s == 1'b1) ? mem_wdata_i[1:0] : 2'h0;
   assign regf_w27_f0_wr_o    = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f2_rval_o  = data_w27_f2_r;
-  assign regf_w27_f4_wbus_o  = ((bus_w27_wren_s == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w27_f4_wbus_o  = (bus_w27_wren_s == 1'b1) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w27_f4_wr_o    = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f6_rval_o  = data_w27_f6_r;
-  assign regf_w27_f8_wbus_o  = ((bus_w27_wren_s == 1'b1)) ? regf_w27_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
+  assign regf_w27_f8_wbus_o  = (bus_w27_wren_s == 1'b1) ? regf_w27_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
   assign regf_w27_f8_wr_o    = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f10_rval_o = data_w27_f10_r;
-  assign regf_w27_f12_wbus_o = ((bus_w27_wren_s == 1'b1)) ? regf_w27_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
+  assign regf_w27_f12_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
   assign regf_w27_f12_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f14_rval_o = data_w27_f14_r;
-  assign regf_w27_f16_wbus_o = ((bus_w27_wren_s == 1'b1)) ? regf_w27_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
+  assign regf_w27_f16_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
   assign regf_w27_f16_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f18_rval_o = data_w27_f18_r;
-  assign regf_w27_f20_wbus_o = ((bus_w27_wren_s == 1'b1)) ? regf_w27_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
+  assign regf_w27_f20_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
   assign regf_w27_f20_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f22_rval_o = data_w27_f22_r;
-  assign regf_w27_f24_wbus_o = ((bus_w27_wren_s == 1'b1)) ? regf_w27_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
+  assign regf_w27_f24_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
   assign regf_w27_f24_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f26_rval_o = data_w27_f26_r;
-  assign regf_w28_f20_wbus_o = ((bus_w28_wren_s == 1'b1)) ? regf_w28_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
+  assign regf_w28_f20_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
   assign regf_w28_f20_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w28_f22_rval_o = data_w28_f22_r;
-  assign regf_w28_f24_wbus_o = ((bus_w28_wren_s == 1'b1)) ? regf_w28_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
+  assign regf_w28_f24_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
   assign regf_w28_f24_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w28_f26_rval_o = data_w28_f26_r;
-  assign regf_w28_f28_wbus_o = ((bus_w28_wren_s == 1'b1)) ? regf_w28_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
+  assign regf_w28_f28_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
   assign regf_w28_f28_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w28_f30_rval_o = data_w28_f30_r;
-  assign regf_w29_f0_wbus_o  = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
+  assign regf_w29_f0_wbus_o  = (bus_w29_wren_s == 1'b1) ? regf_w29_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
   assign regf_w29_f0_wr_o    = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f2_rval_o  = data_w29_f2_r;
-  assign regf_w29_f4_wbus_o  = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
+  assign regf_w29_f4_wbus_o  = (bus_w29_wren_s == 1'b1) ? regf_w29_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
   assign regf_w29_f4_wr_o    = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f6_rval_o  = data_w29_f6_r;
-  assign regf_w29_f8_wbus_o  = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
+  assign regf_w29_f8_wbus_o  = (bus_w29_wren_s == 1'b1) ? regf_w29_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
   assign regf_w29_f8_wr_o    = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f10_rval_o = data_w29_f10_r;
-  assign regf_w29_f12_wbus_o = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w29_f12_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
   assign regf_w29_f12_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f14_rval_o = data_w29_f14_r;
-  assign regf_w29_f16_wbus_o = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w29_f16_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
   assign regf_w29_f16_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f18_rval_o = data_w29_f18_r;
-  assign regf_w29_f20_wbus_o = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w29_f20_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
   assign regf_w29_f20_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f22_rval_o = data_w29_f22_r;
-  assign regf_w29_f24_wbus_o = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w29_f24_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w29_f24_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f26_rval_o = data_w29_f26_r;
-  assign regf_w29_f28_wbus_o = ((bus_w29_wren_s == 1'b1)) ? regf_w29_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w29_f28_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w29_f28_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f30_rval_o = data_w29_f30_r;
-  assign regf_w30_f24_wbus_o = ((bus_w30_wren_s == 1'b1)) ? regf_w30_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w30_f24_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w30_f24_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w30_f26_rval_o = data_w30_f26_r;
-  assign regf_w30_f28_wbus_o = ((bus_w30_wren_s == 1'b1)) ? regf_w30_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w30_f28_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w30_f28_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w30_f30_rval_o = data_w30_f30_r;
-  assign regf_w31_f0_wbus_o  = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w31_f0_wbus_o  = (bus_w31_wren_s == 1'b1) ? regf_w31_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w31_f0_wr_o    = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f2_rval_o  = data_w31_f2_r;
-  assign regf_w31_f4_wbus_o  = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w31_f4_wbus_o  = (bus_w31_wren_s == 1'b1) ? regf_w31_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w31_f4_wr_o    = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f6_rval_o  = data_w31_f6_r;
-  assign regf_w31_f8_wbus_o  = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w31_f8_wbus_o  = (bus_w31_wren_s == 1'b1) ? regf_w31_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w31_f8_wr_o    = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f10_rval_o = data_w31_f10_r;
-  assign regf_w31_f12_wbus_o = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w31_f12_wbus_o = (bus_w31_wren_s == 1'b1) ? regf_w31_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
   assign regf_w31_f12_wr_o   = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f14_rval_o = data_w31_f14_r;
-  assign regf_w31_f16_wbus_o = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w31_f16_wbus_o = (bus_w31_wren_s == 1'b1) ? regf_w31_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
   assign regf_w31_f16_wr_o   = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f18_rval_o = data_w31_f18_r;
-  assign regf_w31_f20_wbus_o = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w31_f20_wbus_o = (bus_w31_wren_s == 1'b1) ? regf_w31_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
   assign regf_w31_f20_wr_o   = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f22_rval_o = data_w31_f22_r;
-  assign regf_w31_f24_wbus_o = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w31_f24_wbus_o = (bus_w31_wren_s == 1'b1) ? regf_w31_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w31_f24_wr_o   = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f26_rval_o = data_w31_f26_r;
-  assign regf_w31_f28_wbus_o = ((bus_w31_wren_s == 1'b1)) ? regf_w31_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w31_f28_wbus_o = (bus_w31_wren_s == 1'b1) ? regf_w31_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w31_f28_wr_o   = (bus_w31_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w31_f30_rval_o = data_w31_f30_r;
-  assign regf_w32_f0_wbus_o  = ((bus_w32_wren_s == 1'b1)) ? regf_w32_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w32_f0_wbus_o  = (bus_w32_wren_s == 1'b1) ? regf_w32_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w32_f0_wr_o    = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f2_rval_o  = data_w32_f2_r;
-  assign regf_w32_f28_wbus_o = ((bus_w32_wren_s == 1'b1)) ? regf_w32_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w32_f28_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w32_f28_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f30_rval_o = data_w32_f30_r;
-  assign regf_w33_f0_wbus_o  = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w33_f0_wbus_o  = (bus_w33_wren_s == 1'b1) ? regf_w33_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w33_f0_wr_o    = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f2_rval_o  = data_w33_f2_r;
-  assign regf_w33_f4_wbus_o  = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w33_f4_wbus_o  = (bus_w33_wren_s == 1'b1) ? regf_w33_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w33_f4_wr_o    = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f6_rval_o  = data_w33_f6_r;
-  assign regf_w33_f8_wbus_o  = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w33_f8_wbus_o  = (bus_w33_wren_s == 1'b1) ? regf_w33_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w33_f8_wr_o    = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f10_rval_o = data_w33_f10_r;
-  assign regf_w33_f12_wbus_o = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w33_f12_wbus_o = (bus_w33_wren_s == 1'b1) ? regf_w33_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
   assign regf_w33_f12_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f14_rval_o = data_w33_f14_r;
-  assign regf_w33_f16_wbus_o = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w33_f16_wbus_o = (bus_w33_wren_s == 1'b1) ? regf_w33_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
   assign regf_w33_f16_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f18_rval_o = data_w33_f18_r;
-  assign regf_w33_f20_wbus_o = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
+  assign regf_w33_f20_wbus_o = (bus_w33_wren_s == 1'b1) ? regf_w33_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
   assign regf_w33_f20_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f22_rval_o = data_w33_f22_r;
-  assign regf_w33_f24_wbus_o = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
+  assign regf_w33_f24_wbus_o = (bus_w33_wren_s == 1'b1) ? regf_w33_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
   assign regf_w33_f24_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f26_rval_o = data_w33_f26_r;
-  assign regf_w33_f28_wbus_o = ((bus_w33_wren_s == 1'b1)) ? regf_w33_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
+  assign regf_w33_f28_wbus_o = (bus_w33_wren_s == 1'b1) ? regf_w33_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
   assign regf_w33_f28_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w33_f30_rval_o = data_w33_f30_r;
-  assign regf_w34_f0_wbus_o  = ((bus_w34_wren_s == 1'b1)) ? regf_w34_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
+  assign regf_w34_f0_wbus_o  = (bus_w34_wren_s == 1'b1) ? regf_w34_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
   assign regf_w34_f0_wr_o    = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w34_f2_rval_o  = data_w34_f2_r;
-  assign regf_w34_f4_wbus_o  = ((bus_w34_wren_s == 1'b1)) ? regf_w34_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
+  assign regf_w34_f4_wbus_o  = (bus_w34_wren_s == 1'b1) ? regf_w34_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
   assign regf_w34_f4_wr_o    = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w34_f6_rval_o  = data_w34_f6_r;
-  assign regf_w35_f0_wbus_o  = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
+  assign regf_w35_f0_wbus_o  = (bus_w35_wren_s == 1'b1) ? regf_w35_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
   assign regf_w35_f0_wr_o    = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f2_rval_o  = data_w35_f2_r;
-  assign regf_w35_f4_wbus_o  = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
+  assign regf_w35_f4_wbus_o  = (bus_w35_wren_s == 1'b1) ? regf_w35_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
   assign regf_w35_f4_wr_o    = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f6_rval_o  = data_w35_f6_r;
-  assign regf_w35_f8_wbus_o  = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
+  assign regf_w35_f8_wbus_o  = (bus_w35_wren_s == 1'b1) ? regf_w35_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
   assign regf_w35_f8_wr_o    = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f10_rval_o = data_w35_f10_r;
-  assign regf_w35_f12_wbus_o = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
+  assign regf_w35_f12_wbus_o = (bus_w35_wren_s == 1'b1) ? regf_w35_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
   assign regf_w35_f12_wr_o   = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f14_rval_o = data_w35_f14_r;
-  assign regf_w35_f16_wbus_o = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
+  assign regf_w35_f16_wbus_o = (bus_w35_wren_s == 1'b1) ? regf_w35_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
   assign regf_w35_f16_wr_o   = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f18_rval_o = data_w35_f18_r;
-  assign regf_w35_f20_wbus_o = ((bus_w35_wren_s == 1'b1)) ? regf_w35_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
+  assign regf_w35_f20_wbus_o = (bus_w35_wren_s == 1'b1) ? regf_w35_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
   assign regf_w35_f20_wr_o   = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f22_rval_o = data_w35_f22_r;
-  assign regf_w35_f24_wbus_o = (((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1))) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w35_f24_wbus_o = ((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w35_f24_wr_o   = ((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w35_f26_rval_o = data_w35_f26_r;
-  assign regf_w35_f28_wbus_o = (((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1))) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w35_f28_wbus_o = ((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w35_f28_wr_o   = ((bus_w35_wren_s == 1'b1) && (bus_w35_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w35_f30_rval_o = data_w35_f30_r;
-  assign regf_w36_f0_wbus_o  = (((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1))) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w36_f0_wbus_o  = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
   assign regf_w36_f0_wr_o    = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w36_f2_rval_o  = data_w36_f2_r;
-  assign regf_w36_f4_wbus_o  = (((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1))) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w36_f4_wbus_o  = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w36_f4_wr_o    = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w36_f6_rval_o  = data_w36_f6_r;
-  assign regf_w36_f8_wbus_o  = (((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1))) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w36_f8_wbus_o  = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w36_f8_wr_o    = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w36_f10_rval_o = data_w36_f10_r;
-  assign regf_w37_f4_wbus_o  = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w37_f4_wbus_o  = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w37_f4_wr_o    = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f6_rval_o  = data_w37_f6_r;
-  assign regf_w37_f8_wbus_o  = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w37_f8_wbus_o  = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w37_f8_wr_o    = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f10_rval_o = data_w37_f10_r;
-  assign regf_w37_f12_wbus_o = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w37_f12_wbus_o = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w37_f12_wr_o   = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f14_rval_o = data_w37_f14_r;
-  assign regf_w37_f16_wbus_o = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w37_f16_wbus_o = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w37_f16_wr_o   = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f18_rval_o = data_w37_f18_r;
-  assign regf_w37_f20_wbus_o = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w37_f20_wbus_o = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w37_f20_wr_o   = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f22_rval_o = data_w37_f22_r;
-  assign regf_w37_f24_wbus_o = (((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1))) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w37_f24_wbus_o = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w37_f24_wr_o   = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f26_rval_o = data_w37_f26_r;
 

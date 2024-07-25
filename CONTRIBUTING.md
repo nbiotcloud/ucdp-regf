@@ -26,6 +26,9 @@ source .venv/bin/activate
 
 ```bash
 # test
+# if dependencies have changed:
+nox
+# if only local code changed (avoids re-downloading all packages)
 nox -R
 ```
 
@@ -50,5 +53,5 @@ Next to that, there are some temporary files ignored by version control system.
 | `htmlcov/` | Test Execution Code Coverage Report in HTML format. |
 | `report.xml` | Test Execution Report. |
 | `.*_cache/` | Cache Directory. |
-| `.nox/` | [NOX][nox] directory. |
+| `.nox/` | [NOX](https://nox.thea.codes/en/stable/) directory. |
 | `.venv*` | Virtual Environments |
