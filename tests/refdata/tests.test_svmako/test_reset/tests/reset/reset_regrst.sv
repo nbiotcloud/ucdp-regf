@@ -42,17 +42,17 @@
 // =============================================================================
 
 `begin_keywords "1800-2009"
-`default_nettype none
+`default_nettype none  // implicit wires are forbidden
 
 module reset_regrst ( // tests.test_svmako.RegfMod
   // main_i
-  input  wire         main_clk_i,
-  input  wire         main_rst_an_i,           // Async Reset (Low-Active)
+  input  logic        main_clk_i,
+  input  logic        main_rst_an_i,           // Async Reset (Low-Active)
   // mem_i
-  input  wire         mem_ena_i,
-  input  wire  [12:0] mem_addr_i,
-  input  wire         mem_wena_i,
-  input  wire  [31:0] mem_wdata_i,
+  input  logic        mem_ena_i,
+  input  logic [12:0] mem_addr_i,
+  input  logic        mem_wena_i,
+  input  logic [31:0] mem_wdata_i,
   output logic [31:0] mem_rdata_o,
   output logic        mem_err_o,
   // regf_o
@@ -62,7 +62,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
   // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic        regf_ctrl_ena_rval_o,    // Core Read Value
   // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
-  input  wire         regf_ctrl_busy_rbus_i    // Bus Read Value
+  input  logic        regf_ctrl_busy_rbus_i    // Bus Read Value
 );
 
 

@@ -35,7 +35,7 @@ from typing import ClassVar, Literal, TypeAlias
 import ucdp as u
 from icdutil.num import calc_unsigned_width
 from tabulate import tabulate
-from ucdp_glbl import addrspace as _addrspace
+from ucdp_addr import addrspace as _addrspace
 from ucdp_glbl.mem import MemIoType
 
 ACCESSES: TypeAlias = _addrspace.ACCESSES

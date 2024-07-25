@@ -6,7 +6,11 @@
 /.pdm-python
 /dist/
 /docs.zip
-/report.xml
+**/report.xml
 /site/
 /.hypothesis
 .test2ref
+.DS_Store
+tests/sim_build*/**
+**/.coverage
+**/.coverage.*

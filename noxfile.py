@@ -40,7 +40,7 @@ os.environ.update(
         "LANGUAGE": "en_US",
     }
 )
-nox.options.sessions = ["format", "test", "checkdeps", "checktypes", "doc"]
+nox.options.sessions = ["format", "test", "testsv", "checkdeps", "checktypes", "doc"]
 
 
 @nox.session()
@@ -98,12 +98,21 @@ def doc_serve(session: nox.Session) -> None:
 
 @nox.session()
 def dev(session: nox.Session) -> None:
-    """Development Environment  - Additional Arguments Are Executed."""
+    """Development Environment - Additional Arguments Are Executed."""
     _init(session)
     session.run_always("pdm", "install", "-G", ":all")
     session.run("pip", "install", "-e", ".")
     if session.posargs:
         session.run(*session.posargs, external=True)
+
+
+@nox.session()
+def testsv(session: nox.Session) -> None:
+    """Run System Verilog Tests - Additional Arguments are forwarded to `pytest`."""
+    _init(session)
+    session.run_always("pdm", "install", "-G", ":all")
+    with session.chdir("tests"):
+        session.run("pytest", "-vvsrA", "regression.py", *session.posargs)
 
 
 def _init(session: nox.Session):

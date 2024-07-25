@@ -34,12 +34,12 @@
 // =============================================================================
 
 `begin_keywords "1800-2009"
-`default_nettype none
+`default_nettype none  // implicit wires are forbidden
 
 module corner ( // tests.test_svmako.CornerMod
   // main_i
-  input wire main_clk_i,
-  input wire main_rst_an_i // Async Reset (Low-Active)
+  input logic main_clk_i,
+  input logic main_rst_an_i // Async Reset (Low-Active)
 );
 
 
