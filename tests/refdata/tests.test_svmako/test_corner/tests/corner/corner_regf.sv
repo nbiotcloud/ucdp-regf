@@ -173,6 +173,7 @@ module corner_regf ( // tests.test_svmako.RegfMod
   logic [7:0] data_txdata_bytes_r    [0:4]; // Word txdata
   logic       data_dims_wrval_r      [0:2]; // Word dims
   logic       data_dims_spec3_r      [0:2];
+  logic       upd_strb_dims_wrval_r  [0:2];
   logic       data_guards_once_r;           // Word guards
   logic       data_guards_single_r;
   logic       data_guards_onetime_r;
@@ -322,8 +323,8 @@ module corner_regf ( // tests.test_svmako.RegfMod
       data_txdata_bytes_r   <= '{5{8'h00}};
       // Word: dims
       data_dims_wrval_r     <= '{3{1'b0}};
-      upd_strb_dims_wrval_r <= 1'b0;
       data_dims_spec3_r     <= '{3{1'b0}};
+      upd_strb_dims_wrval_r <= '{3{1'b0}};
       // Word: guards
       data_guards_once_r    <= 1'b0;
       data_guards_single_r  <= 1'b0;
@@ -363,15 +364,15 @@ module corner_regf ( // tests.test_svmako.RegfMod
       if (bus_dims_wren_s[0] == 1'b1) begin
         data_dims_wrval_r[0] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r <= bus_dims_wren_s[0];
+      upd_strb_dims_wrval_r[0] <= bus_dims_wren_s[0];
       if (bus_dims_wren_s[1] == 1'b1) begin
         data_dims_wrval_r[1] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r <= bus_dims_wren_s[1];
+      upd_strb_dims_wrval_r[1] <= bus_dims_wren_s[1];
       if (bus_dims_wren_s[2] == 1'b1) begin
         data_dims_wrval_r[2] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r <= bus_dims_wren_s[2];
+      upd_strb_dims_wrval_r[2] <= bus_dims_wren_s[2];
       if (regf_grpc_dims_spec3_wr_i[0] == 1'b1) begin
         data_dims_spec3_r[0] <= regf_grpc_dims_spec3_wval_i[0];
       end else if (bus_dims_rden_s[0] == 1'b1) begin
