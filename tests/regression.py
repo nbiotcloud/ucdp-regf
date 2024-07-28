@@ -92,6 +92,7 @@ def test_generic(test):
         seed=SEED,
         waves=waves,
         gui=gui,
+        make_args=["PYTHON3=python3"],
     )
 
     # gui param above does nothing for verilator as the handling is a bit special, so we do it here
