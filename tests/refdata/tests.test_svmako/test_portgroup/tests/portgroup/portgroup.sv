@@ -51,16 +51,18 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   // ------------------------------------------------------
   // regf_regf_rx_o_s
   // regf_regf_rx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic       regf_regf_rx_o_ctrl_ena_rval_o; // Core Read Value
+  logic               regf_regf_rx_o_ctrl_ena_rval_o; // Core Read Value
   // regf_regf_rx_o_rx_data0_o: bus=RO core=RW in_regf=False
-  logic [1:0] regf_regf_rx_o_rx_data0_rbus_i; // Bus Read Value
+  logic [width_p-1:0] regf_regf_rx_o_rx_data0_rbus_i; // Bus Read Value
   // regf_regf_rx_o_rx_data1_o: bus=RO core=RW in_regf=False
-  logic [1:0] regf_regf_rx_o_rx_data1_rbus_i; // Bus Read Value
+  logic [width_p-1:0] regf_regf_rx_o_rx_data1_rbus_i; // Bus Read Value
+  // regf_regf_rx_o_rx_data2_o: bus=RO core=RW in_regf=False
+  logic [width_p-1:0] regf_regf_rx_o_rx_data2_rbus_i; // Bus Read Value
   // regf_regf_tx_o_s
   // regf_regf_tx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic       regf_regf_tx_o_ctrl_ena_rval_o; // Core Read Value
+  logic               regf_regf_tx_o_ctrl_ena_rval_o; // Core Read Value
   // regf_regf_tx_o_tx_data0_o: bus=RW core=RO in_regf=True
-  logic [1:0] regf_regf_tx_o_tx_data0_rval_o; // Core Read Value
+  logic [width_p-1:0] regf_regf_tx_o_tx_data0_rval_o; // Core Read Value
 
 
   // ------------------------------------------------------
@@ -92,6 +94,8 @@ module portgroup #( // tests.test_svmako.PortgroupMod
     .regf_rx_rx_data0_rbus_i  (regf_regf_rx_o_rx_data0_rbus_i), // Bus Read Value
     // regf_rx_rx_data1_o: bus=RO core=RW in_regf=False
     .regf_rx_rx_data1_rbus_i  (regf_regf_rx_o_rx_data1_rbus_i), // Bus Read Value
+    // regf_rx_rx_data2_o: bus=RO core=RW in_regf=False
+    .regf_rx_rx_data2_rbus_i  (regf_regf_rx_o_rx_data2_rbus_i), // Bus Read Value
     // regf_tx_o
     // regf_tx_ctrl_ena_o: bus=RW core=RO in_regf=True
     .regf_tx_ctrl_ena_rval_o  (regf_regf_tx_o_ctrl_ena_rval_o), // Core Read Value
@@ -115,7 +119,9 @@ module portgroup #( // tests.test_svmako.PortgroupMod
     // regf_rx_data0_i: bus=RO core=RW in_regf=False
     .regf_rx_data0_rbus_o(regf_regf_rx_o_rx_data0_rbus_i), // Bus Read Value
     // regf_rx_data1_i: bus=RO core=RW in_regf=False
-    .regf_rx_data1_rbus_o(regf_regf_rx_o_rx_data1_rbus_i)  // Bus Read Value
+    .regf_rx_data1_rbus_o(regf_regf_rx_o_rx_data1_rbus_i), // Bus Read Value
+    // regf_rx_data2_i: bus=RO core=RW in_regf=False
+    .regf_rx_data2_rbus_o(regf_regf_rx_o_rx_data2_rbus_i)  // Bus Read Value
   );
 
 

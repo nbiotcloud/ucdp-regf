@@ -389,7 +389,7 @@ class UcdpRegfMod(u.ATailoredMod):
                 data.append(
                     (
                         "",
-                        rslvr._resolve_slice(field.slice),
+                        rslvr.resolve_slice(field.slice).replace(" ", ""),
                         f".{field.name}",
                         str(field.access),
                         rslvr.resolve_value(field.type_),
