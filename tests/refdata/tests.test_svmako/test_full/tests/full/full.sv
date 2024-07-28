@@ -720,70 +720,82 @@ module full();
     .regf_w14_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w14_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w14_f16_o: bus=W0C core=RO in_regf=False
+    .regf_w14_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w14_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w14_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w14_f18_o: bus=W0C core=RO in_regf=True
     .regf_w14_f18_rval_o(            ), // TODO - Core Read Value
     // regf_w14_f20_o: bus=W0C core=RC in_regf=False
+    .regf_w14_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w14_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w14_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w14_f22_o: bus=W0C core=RC in_regf=True
     .regf_w14_f22_rval_o(            ), // TODO - Core Read Value
     .regf_w14_f22_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w14_f24_o: bus=W0C core=RS in_regf=False
+    .regf_w14_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w14_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w14_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w14_f26_o: bus=W0C core=RS in_regf=True
     .regf_w14_f26_rval_o(            ), // TODO - Core Read Value
     .regf_w14_f26_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w14_f28_o: bus=W0C core=RT in_regf=False
+    .regf_w14_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w14_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w14_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w14_f30_o: bus=W0C core=RT in_regf=True
     .regf_w14_f30_rval_o(            ), // TODO - Core Read Value
     .regf_w14_f30_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w15_f0_o: bus=W0C core=RP in_regf=False
+    .regf_w15_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w15_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w15_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w15_f2_o: bus=W0C core=RP in_regf=True
     .regf_w15_f2_rval_o (            ), // TODO - Core Read Value
     // regf_w15_f4_o: bus=W0C core=WO in_regf=False
+    .regf_w15_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w15_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w15_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w15_f6_o: bus=W0C core=WO in_regf=True
     .regf_w15_f6_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w15_f6_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f8_o: bus=W0C core=W0C in_regf=False
+    .regf_w15_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w15_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w15_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w15_f10_o: bus=W0C core=W0C in_regf=True
     .regf_w15_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f12_o: bus=W0C core=W0S in_regf=False
+    .regf_w15_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w15_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w15_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w15_f14_o: bus=W0C core=W0S in_regf=True
     .regf_w15_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f16_o: bus=W0C core=W1C in_regf=False
+    .regf_w15_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w15_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w15_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w15_f18_o: bus=W0C core=W1C in_regf=True
     .regf_w15_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f20_o: bus=W0C core=W1S in_regf=False
+    .regf_w15_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w15_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w15_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w15_f22_o: bus=W0C core=W1S in_regf=True
     .regf_w15_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f24_o: bus=W0C core=WL in_regf=False
+    .regf_w15_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w15_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w15_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w15_f26_o: bus=W0C core=WL in_regf=True
     .regf_w15_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w15_f28_o: bus=W0C core=RW in_regf=False
+    .regf_w15_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w15_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w15_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w15_f30_o: bus=W0C core=RW in_regf=True
@@ -791,6 +803,7 @@ module full();
     .regf_w15_f30_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w15_f30_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f0_o: bus=W0C core=RW0C in_regf=False
+    .regf_w16_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w16_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w16_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w16_f2_o: bus=W0C core=RW0C in_regf=True
@@ -798,6 +811,7 @@ module full();
     .regf_w16_f2_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w16_f2_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f4_o: bus=W0C core=RW0S in_regf=False
+    .regf_w16_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w16_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w16_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w16_f6_o: bus=W0C core=RW0S in_regf=True
@@ -805,6 +819,7 @@ module full();
     .regf_w16_f6_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w16_f6_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f8_o: bus=W0C core=RW1C in_regf=False
+    .regf_w16_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w16_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w16_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w16_f10_o: bus=W0C core=RW1C in_regf=True
@@ -812,6 +827,7 @@ module full();
     .regf_w16_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w16_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f12_o: bus=W0C core=RW1S in_regf=False
+    .regf_w16_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w16_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w16_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w16_f14_o: bus=W0C core=RW1S in_regf=True
@@ -819,6 +835,7 @@ module full();
     .regf_w16_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w16_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f16_o: bus=W0C core=RWL in_regf=False
+    .regf_w16_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w16_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w16_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w16_f18_o: bus=W0C core=RWL in_regf=True
@@ -826,70 +843,82 @@ module full();
     .regf_w16_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w16_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w16_f20_o: bus=W0S core=RO in_regf=False
+    .regf_w16_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w16_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w16_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w16_f22_o: bus=W0S core=RO in_regf=True
     .regf_w16_f22_rval_o(            ), // TODO - Core Read Value
     // regf_w16_f24_o: bus=W0S core=RC in_regf=False
+    .regf_w16_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w16_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w16_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w16_f26_o: bus=W0S core=RC in_regf=True
     .regf_w16_f26_rval_o(            ), // TODO - Core Read Value
     .regf_w16_f26_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w16_f28_o: bus=W0S core=RS in_regf=False
+    .regf_w16_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w16_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w16_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w16_f30_o: bus=W0S core=RS in_regf=True
     .regf_w16_f30_rval_o(            ), // TODO - Core Read Value
     .regf_w16_f30_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w17_f0_o: bus=W0S core=RT in_regf=False
+    .regf_w17_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w17_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w17_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w17_f2_o: bus=W0S core=RT in_regf=True
     .regf_w17_f2_rval_o (            ), // TODO - Core Read Value
     .regf_w17_f2_rd_i   (1'b0        ), // TODO - Core Read Strobe
     // regf_w17_f4_o: bus=W0S core=RP in_regf=False
+    .regf_w17_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w17_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w17_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w17_f6_o: bus=W0S core=RP in_regf=True
     .regf_w17_f6_rval_o (            ), // TODO - Core Read Value
     // regf_w17_f8_o: bus=W0S core=WO in_regf=False
+    .regf_w17_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w17_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w17_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w17_f10_o: bus=W0S core=WO in_regf=True
     .regf_w17_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w17_f12_o: bus=W0S core=W0C in_regf=False
+    .regf_w17_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w17_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w17_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w17_f14_o: bus=W0S core=W0C in_regf=True
     .regf_w17_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w17_f16_o: bus=W0S core=W0S in_regf=False
+    .regf_w17_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w17_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w17_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w17_f18_o: bus=W0S core=W0S in_regf=True
     .regf_w17_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w17_f20_o: bus=W0S core=W1C in_regf=False
+    .regf_w17_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w17_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w17_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w17_f22_o: bus=W0S core=W1C in_regf=True
     .regf_w17_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w17_f24_o: bus=W0S core=W1S in_regf=False
+    .regf_w17_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w17_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w17_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w17_f26_o: bus=W0S core=W1S in_regf=True
     .regf_w17_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w17_f28_o: bus=W0S core=WL in_regf=False
+    .regf_w17_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w17_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w17_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w17_f30_o: bus=W0S core=WL in_regf=True
     .regf_w17_f30_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w17_f30_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f0_o: bus=W0S core=RW in_regf=False
+    .regf_w18_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w18_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w18_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w18_f2_o: bus=W0S core=RW in_regf=True
@@ -897,6 +926,7 @@ module full();
     .regf_w18_f2_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w18_f2_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f4_o: bus=W0S core=RW0C in_regf=False
+    .regf_w18_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w18_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w18_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w18_f6_o: bus=W0S core=RW0C in_regf=True
@@ -904,6 +934,7 @@ module full();
     .regf_w18_f6_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w18_f6_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f8_o: bus=W0S core=RW0S in_regf=False
+    .regf_w18_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w18_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w18_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w18_f10_o: bus=W0S core=RW0S in_regf=True
@@ -911,6 +942,7 @@ module full();
     .regf_w18_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w18_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f12_o: bus=W0S core=RW1C in_regf=False
+    .regf_w18_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w18_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w18_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w18_f14_o: bus=W0S core=RW1C in_regf=True
@@ -918,6 +950,7 @@ module full();
     .regf_w18_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w18_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f16_o: bus=W0S core=RW1S in_regf=False
+    .regf_w18_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w18_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w18_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w18_f18_o: bus=W0S core=RW1S in_regf=True
@@ -925,6 +958,7 @@ module full();
     .regf_w18_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w18_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f20_o: bus=W0S core=RWL in_regf=False
+    .regf_w18_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w18_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w18_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w18_f22_o: bus=W0S core=RWL in_regf=True
@@ -932,70 +966,82 @@ module full();
     .regf_w18_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w18_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w18_f24_o: bus=W1C core=RO in_regf=False
+    .regf_w18_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w18_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w18_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w18_f26_o: bus=W1C core=RO in_regf=True
     .regf_w18_f26_rval_o(            ), // TODO - Core Read Value
     // regf_w18_f28_o: bus=W1C core=RC in_regf=False
+    .regf_w18_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w18_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w18_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w18_f30_o: bus=W1C core=RC in_regf=True
     .regf_w18_f30_rval_o(            ), // TODO - Core Read Value
     .regf_w18_f30_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w19_f0_o: bus=W1C core=RS in_regf=False
+    .regf_w19_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w19_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w19_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w19_f2_o: bus=W1C core=RS in_regf=True
     .regf_w19_f2_rval_o (            ), // TODO - Core Read Value
     .regf_w19_f2_rd_i   (1'b0        ), // TODO - Core Read Strobe
     // regf_w19_f4_o: bus=W1C core=RT in_regf=False
+    .regf_w19_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w19_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w19_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w19_f6_o: bus=W1C core=RT in_regf=True
     .regf_w19_f6_rval_o (            ), // TODO - Core Read Value
     .regf_w19_f6_rd_i   (1'b0        ), // TODO - Core Read Strobe
     // regf_w19_f8_o: bus=W1C core=RP in_regf=False
+    .regf_w19_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w19_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w19_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w19_f10_o: bus=W1C core=RP in_regf=True
     .regf_w19_f10_rval_o(            ), // TODO - Core Read Value
     // regf_w19_f12_o: bus=W1C core=WO in_regf=False
+    .regf_w19_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w19_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w19_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w19_f14_o: bus=W1C core=WO in_regf=True
     .regf_w19_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w19_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w19_f16_o: bus=W1C core=W0C in_regf=False
+    .regf_w19_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w19_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w19_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w19_f18_o: bus=W1C core=W0C in_regf=True
     .regf_w19_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w19_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w19_f20_o: bus=W1C core=W0S in_regf=False
+    .regf_w19_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w19_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w19_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w19_f22_o: bus=W1C core=W0S in_regf=True
     .regf_w19_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w19_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w19_f24_o: bus=W1C core=W1C in_regf=False
+    .regf_w19_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w19_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w19_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w19_f26_o: bus=W1C core=W1C in_regf=True
     .regf_w19_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w19_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w19_f28_o: bus=W1C core=W1S in_regf=False
+    .regf_w19_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w19_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w19_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w19_f30_o: bus=W1C core=W1S in_regf=True
     .regf_w19_f30_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w19_f30_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f0_o: bus=W1C core=WL in_regf=False
+    .regf_w20_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w20_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w20_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w20_f2_o: bus=W1C core=WL in_regf=True
     .regf_w20_f2_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w20_f2_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f4_o: bus=W1C core=RW in_regf=False
+    .regf_w20_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w20_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w20_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w20_f6_o: bus=W1C core=RW in_regf=True
@@ -1003,6 +1049,7 @@ module full();
     .regf_w20_f6_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w20_f6_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f8_o: bus=W1C core=RW0C in_regf=False
+    .regf_w20_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w20_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w20_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w20_f10_o: bus=W1C core=RW0C in_regf=True
@@ -1010,6 +1057,7 @@ module full();
     .regf_w20_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w20_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f12_o: bus=W1C core=RW0S in_regf=False
+    .regf_w20_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w20_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w20_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w20_f14_o: bus=W1C core=RW0S in_regf=True
@@ -1017,6 +1065,7 @@ module full();
     .regf_w20_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w20_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f16_o: bus=W1C core=RW1C in_regf=False
+    .regf_w20_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w20_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w20_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w20_f18_o: bus=W1C core=RW1C in_regf=True
@@ -1024,6 +1073,7 @@ module full();
     .regf_w20_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w20_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f20_o: bus=W1C core=RW1S in_regf=False
+    .regf_w20_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w20_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w20_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w20_f22_o: bus=W1C core=RW1S in_regf=True
@@ -1031,6 +1081,7 @@ module full();
     .regf_w20_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w20_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f24_o: bus=W1C core=RWL in_regf=False
+    .regf_w20_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w20_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w20_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w20_f26_o: bus=W1C core=RWL in_regf=True
@@ -1038,70 +1089,82 @@ module full();
     .regf_w20_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w20_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w20_f28_o: bus=W1S core=RO in_regf=False
+    .regf_w20_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w20_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w20_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w20_f30_o: bus=W1S core=RO in_regf=True
     .regf_w20_f30_rval_o(            ), // TODO - Core Read Value
     // regf_w21_f0_o: bus=W1S core=RC in_regf=False
+    .regf_w21_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w21_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w21_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w21_f2_o: bus=W1S core=RC in_regf=True
     .regf_w21_f2_rval_o (            ), // TODO - Core Read Value
     .regf_w21_f2_rd_i   (1'b0        ), // TODO - Core Read Strobe
     // regf_w21_f4_o: bus=W1S core=RS in_regf=False
+    .regf_w21_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w21_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w21_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w21_f6_o: bus=W1S core=RS in_regf=True
     .regf_w21_f6_rval_o (            ), // TODO - Core Read Value
     .regf_w21_f6_rd_i   (1'b0        ), // TODO - Core Read Strobe
     // regf_w21_f8_o: bus=W1S core=RT in_regf=False
+    .regf_w21_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w21_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w21_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w21_f10_o: bus=W1S core=RT in_regf=True
     .regf_w21_f10_rval_o(            ), // TODO - Core Read Value
     .regf_w21_f10_rd_i  (1'b0        ), // TODO - Core Read Strobe
     // regf_w21_f12_o: bus=W1S core=RP in_regf=False
+    .regf_w21_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w21_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w21_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w21_f14_o: bus=W1S core=RP in_regf=True
     .regf_w21_f14_rval_o(            ), // TODO - Core Read Value
     // regf_w21_f16_o: bus=W1S core=WO in_regf=False
+    .regf_w21_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w21_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w21_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w21_f18_o: bus=W1S core=WO in_regf=True
     .regf_w21_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w21_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w21_f20_o: bus=W1S core=W0C in_regf=False
+    .regf_w21_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w21_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w21_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w21_f22_o: bus=W1S core=W0C in_regf=True
     .regf_w21_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w21_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w21_f24_o: bus=W1S core=W0S in_regf=False
+    .regf_w21_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w21_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w21_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w21_f26_o: bus=W1S core=W0S in_regf=True
     .regf_w21_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w21_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w21_f28_o: bus=W1S core=W1C in_regf=False
+    .regf_w21_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w21_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w21_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w21_f30_o: bus=W1S core=W1C in_regf=True
     .regf_w21_f30_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w21_f30_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f0_o: bus=W1S core=W1S in_regf=False
+    .regf_w22_f0_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w22_f0_wbus_o (            ), // TODO - Bus Write Value
     .regf_w22_f0_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w22_f2_o: bus=W1S core=W1S in_regf=True
     .regf_w22_f2_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w22_f2_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f4_o: bus=W1S core=WL in_regf=False
+    .regf_w22_f4_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w22_f4_wbus_o (            ), // TODO - Bus Write Value
     .regf_w22_f4_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w22_f6_o: bus=W1S core=WL in_regf=True
     .regf_w22_f6_wval_i (2'h0        ), // TODO - Core Write Value
     .regf_w22_f6_wr_i   (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f8_o: bus=W1S core=RW in_regf=False
+    .regf_w22_f8_rbus_i (2'h0        ), // TODO - Bus Read Value
     .regf_w22_f8_wbus_o (            ), // TODO - Bus Write Value
     .regf_w22_f8_wr_o   (            ), // TODO - Bus Write Strobe
     // regf_w22_f10_o: bus=W1S core=RW in_regf=True
@@ -1109,6 +1172,7 @@ module full();
     .regf_w22_f10_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w22_f10_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f12_o: bus=W1S core=RW0C in_regf=False
+    .regf_w22_f12_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w22_f12_wbus_o(            ), // TODO - Bus Write Value
     .regf_w22_f12_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w22_f14_o: bus=W1S core=RW0C in_regf=True
@@ -1116,6 +1180,7 @@ module full();
     .regf_w22_f14_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w22_f14_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f16_o: bus=W1S core=RW0S in_regf=False
+    .regf_w22_f16_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w22_f16_wbus_o(            ), // TODO - Bus Write Value
     .regf_w22_f16_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w22_f18_o: bus=W1S core=RW0S in_regf=True
@@ -1123,6 +1188,7 @@ module full();
     .regf_w22_f18_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w22_f18_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f20_o: bus=W1S core=RW1C in_regf=False
+    .regf_w22_f20_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w22_f20_wbus_o(            ), // TODO - Bus Write Value
     .regf_w22_f20_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w22_f22_o: bus=W1S core=RW1C in_regf=True
@@ -1130,6 +1196,7 @@ module full();
     .regf_w22_f22_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w22_f22_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f24_o: bus=W1S core=RW1S in_regf=False
+    .regf_w22_f24_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w22_f24_wbus_o(            ), // TODO - Bus Write Value
     .regf_w22_f24_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w22_f26_o: bus=W1S core=RW1S in_regf=True
@@ -1137,6 +1204,7 @@ module full();
     .regf_w22_f26_wval_i(2'h0        ), // TODO - Core Write Value
     .regf_w22_f26_wr_i  (1'b0        ), // TODO - Core Write Strobe
     // regf_w22_f28_o: bus=W1S core=RWL in_regf=False
+    .regf_w22_f28_rbus_i(2'h0        ), // TODO - Bus Read Value
     .regf_w22_f28_wbus_o(            ), // TODO - Bus Write Value
     .regf_w22_f28_wr_o  (            ), // TODO - Bus Write Strobe
     // regf_w22_f30_o: bus=W1S core=RWL in_regf=True

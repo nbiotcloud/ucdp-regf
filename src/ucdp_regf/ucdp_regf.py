@@ -295,9 +295,13 @@ class UcdpRegfMod(u.ATailoredMod):
         grdonce: list[str] = []
         signame = f"bus_{word.name}_{{os}}once_r"
         type_ = u.BitType(default=1)
+        strbtype_ = u.BitType()
         if word.depth:
             type_ = u.ArrayType(type_, word.depth)
+            strbtype_ = u.ArrayType(strbtype_, word.depth)
         for field in word.fields:
+            if field.upd_strb:
+                self.add_signal(strbtype_, f"upd_strb_{field.signame}_r")
             if not filter_buswriteonce(field):
                 continue
             if field.wr_guard:
@@ -463,10 +467,27 @@ class FieldIoType(u.AStructType):
         elif field.bus:
             busrd = field.bus.read
             buswr = field.bus.write
-            if busrd:
+            if busrd or (buswr and buswr.data is not None and buswr.data == ""):
                 self._add("rbus", field.type_, u.BWD, comment="Bus Read Value")
-                if busrd.data is not None:
-                    self._add("rd", u.BitType(), comment="Bus Read Strobe")
+            if busrd and busrd.data is not None:
+                self._add("rd", u.BitType(), comment="Bus Read Strobe")
+            # if busrd:
+            #     self._add("rbus", field.type_, u.BWD, comment="Bus Read Value")
+            #     if busrd.data is not None:
+            #         self._add("rd", u.BitType(), comment="Bus Read Strobe")
             if buswr:
                 self._add("wbus", field.type_, comment="Bus Write Value")
                 self._add("wr", u.BitType(), comment="Bus Write Strobe")
+
+
+# TODO:
+# define semantics of W(0|1)(C|S|T) for enum types!
+# BOZO word w14
+# BOZO field f0 busrd=None buswr=WriteOp(name='W', write='')
+# BOZO field f4 busrd=None buswr=WriteOp(name='W', write='')
+# BOZO field f8 busrd=None buswr=WriteOp(name='W', write='')
+# BOZO field f12 busrd=None buswr=WriteOp(name='W', write='')
+# BOZO field f16 busrd=None buswr=WriteOp(name='W0C', data='', op='&', write='')
+# BOZO field f20 busrd=None buswr=WriteOp(name='W0C', data='', op='&', write='')
+# BOZO field f24 busrd=None buswr=WriteOp(name='W0C', data='', op='&', write='')
+# BOZO field f28 busrd=None buswr=WriteOp(name='W0C', data='', op='&', write='')

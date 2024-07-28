@@ -68,8 +68,8 @@ reset_fl = [
 ]
 
 tests = [
-    # ("compile_test", "corner", corner_fl),
-    # ("compile_test", "full", full_fl),
+    ("compile_test", "corner", corner_fl),
+    ("compile_test", "full", full_fl),
     ("compile_test", "portgroup", portgroup_fl),
     ("compile_test", "reset", reset_fl),
 ]

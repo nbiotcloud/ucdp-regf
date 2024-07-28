@@ -66,8 +66,6 @@ def get_ff_rst_values(rslvr: usv.SvExprResolver, addrspace: Addrspace) -> Align:
           type_ = u.ArrayType(type_, word.depth)
         defval = f"{rslvr.get_default(type_)};"
         aligntext.add_row(signame, defval)
-        if field.upd_strb:
-          aligntext.add_row(f"upd_strb_{field.signame}_r", "1'b0;")
       # special purpose flops
       wordonce = False
       grdonce = {}
@@ -77,6 +75,12 @@ def get_ff_rst_values(rslvr: usv.SvExprResolver, addrspace: Addrspace) -> Align:
       if word.depth:
         type_ = u.ArrayType(type_, word.depth)
       for field in fields:
+        if field.upd_strb:
+          type_ = u.BitType()
+          if word.depth:
+            type_ = u.ArrayType(type_, word.depth)
+          defval = f"{rslvr.get_default(type_)};"
+          aligntext.add_row(f"upd_strb_{field.signame}_r", defval)
         if not filter_buswriteonce(field):
           continue
         if field.bus.write.once and field.wr_guard:
@@ -217,7 +221,7 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
           lines.extend((" else ".join(upd)).format(slc=slc).splitlines())
           if field.upd_strb:
             strbs = " | ".join(upd_strb)
-            lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
+            lines.append(f"upd_strb_{field.signame}_r{slc} <= {ff_dly}{strbs.format(slc=slc)};")
       else:
         slc = ""
         lines = (" else ".join(upd)).format(slc=slc).splitlines()
