@@ -32,16 +32,17 @@
 // Data Model: tests.test_svmako.RegfMod
 //
 //
-// Offset    Word    Field    Bus/Core    Reset    Const    Impl
-// --------  ------  -------  ----------  -------  -------  ------
+// Offset    Word                                 Field    Bus/Core    Reset    Const    Impl
+// --------  -----------------------------------  -------  ----------  -------  -------  ------
 // +0        ctrl
-//           [0]     .ena     RW/RO       0        False    regf
-//           [1]     .busy    RO/RW       0        False    core
+//           [0]                                  .ena     RW/RO       0        False    regf
+//           [1]                                  .busy    RO/RW       0        False    core
 // +1        rx
-//           [1:0]   .data0   RO/RW       0x0      False    core
-//           [3:2]   .data1   RO/RW       0x0      False    core
+//           [width_p-1:0]                        .data0   RO/RW       0x0      False    core
+//           [(width_p-1)+width_p:width_p]        .data1   RO/RW       0x0      False    core
+//           [(width_p-1)+(3*width_p):3*width_p]  .data2   RO/RW       0x0      False    core
 // +2        tx
-//           [1:0]   .data0   RW/RO       0x0      False    regf
+//           [width_p-1:0]                        .data0   RW/RO       0x0      False    regf
 //
 // =============================================================================
 
@@ -52,33 +53,35 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
   parameter integer width_p = 1
 ) (
   // main_i
-  input  logic        main_clk_i,
-  input  logic        main_rst_an_i,             // Async Reset (Low-Active)
+  input  logic               main_clk_i,
+  input  logic               main_rst_an_i,             // Async Reset (Low-Active)
   // mem_i
-  input  logic        mem_ena_i,
-  input  logic [12:0] mem_addr_i,
-  input  logic        mem_wena_i,
-  input  logic [31:0] mem_wdata_i,
-  output logic [31:0] mem_rdata_o,
-  output logic        mem_err_o,
+  input  logic               mem_ena_i,
+  input  logic [12:0]        mem_addr_i,
+  input  logic               mem_wena_i,
+  input  logic [31:0]        mem_wdata_i,
+  output logic [31:0]        mem_rdata_o,
+  output logic               mem_err_o,
   // regf_o
   // regf_top_o
   // regf_top_ctrl_ena_o: bus=RW core=RO in_regf=True
-  output logic        regf_top_ctrl_ena_rval_o,  // Core Read Value
+  output logic               regf_top_ctrl_ena_rval_o,  // Core Read Value
   // regf_top_ctrl_busy_o: bus=RO core=RW in_regf=False
-  input  logic        regf_top_ctrl_busy_rbus_i, // Bus Read Value
+  input  logic               regf_top_ctrl_busy_rbus_i, // Bus Read Value
   // regf_rx_o
   // regf_rx_ctrl_ena_o: bus=RW core=RO in_regf=True
-  output logic        regf_rx_ctrl_ena_rval_o,   // Core Read Value
+  output logic               regf_rx_ctrl_ena_rval_o,   // Core Read Value
   // regf_rx_rx_data0_o: bus=RO core=RW in_regf=False
-  input  logic [1:0]  regf_rx_rx_data0_rbus_i,   // Bus Read Value
+  input  logic [width_p-1:0] regf_rx_rx_data0_rbus_i,   // Bus Read Value
   // regf_rx_rx_data1_o: bus=RO core=RW in_regf=False
-  input  logic [1:0]  regf_rx_rx_data1_rbus_i,   // Bus Read Value
+  input  logic [width_p-1:0] regf_rx_rx_data1_rbus_i,   // Bus Read Value
+  // regf_rx_rx_data2_o: bus=RO core=RW in_regf=False
+  input  logic [width_p-1:0] regf_rx_rx_data2_rbus_i,   // Bus Read Value
   // regf_tx_o
   // regf_tx_ctrl_ena_o: bus=RW core=RO in_regf=True
-  output logic        regf_tx_ctrl_ena_rval_o,   // Core Read Value
+  output logic               regf_tx_ctrl_ena_rval_o,   // Core Read Value
   // regf_tx_tx_data0_o: bus=RW core=RO in_regf=True
-  output logic [1:0]  regf_tx_tx_data0_rval_o    // Core Read Value
+  output logic [width_p-1:0] regf_tx_tx_data0_rval_o    // Core Read Value
 );
 
 
@@ -87,13 +90,13 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic       data_ctrl_ena_r; // Word ctrl
-  logic [1:0] data_tx_data0_r; // Word tx
-  logic       bus_ctrl_wren_s; // bus word write enables
-  logic       bus_tx_wren_s;
-  logic       bus_ctrl_rden_s; // bus word read enables
-  logic       bus_rx_rden_s;
-  logic       bus_tx_rden_s;
+  logic               data_ctrl_ena_r; // Word ctrl
+  logic [width_p-1:0] data_tx_data0_r; // Word tx
+  logic               bus_ctrl_wren_s; // bus word write enables
+  logic               bus_tx_wren_s;
+  logic               bus_ctrl_rden_s; // bus word read enables
+  logic               bus_rx_rden_s;
+  logic               bus_tx_rden_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -147,13 +150,13 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
       data_ctrl_ena_r <= 1'b0;
       // Word: rx
       // Word: tx
-      data_tx_data0_r <= 2'h0;
+      data_tx_data0_r <= {width_p {1'b0}};
     end else begin
       if (bus_ctrl_wren_s == 1'b1) begin
         data_ctrl_ena_r <= mem_wdata_i[0];
       end
       if (bus_tx_wren_s == 1'b1) begin
-        data_tx_data0_r <= mem_wdata_i[1:0];
+        data_tx_data0_r <= mem_wdata_i[width_p - 1:0];
       end
     end
   end
@@ -168,10 +171,10 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
           mem_rdata_o = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
         end
         13'h0004: begin
-          mem_rdata_o = {28'h0000000, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
+          mem_rdata_o = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
         end
         13'h0008: begin
-          mem_rdata_o = {30'h00000000, data_tx_data0_r};
+          mem_rdata_o = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
         end
         default: begin
           mem_rdata_o = 32'h00000000;

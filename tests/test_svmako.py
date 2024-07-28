@@ -231,14 +231,12 @@ class PortgroupMod(u.AMod):
         word.add_field("busy", u.BusyType(), "RO", portgroups=("top",))
 
         word = regf.add_word("rx", portgroups=("rx",))
-        # word.add_field("data0", u.UintType(width_p), "RO")
-        # word.add_field("data1", u.UintType(width_p), "RO", offset=width_p)
-        word.add_field("data0", u.UintType(2), "RO")
-        word.add_field("data1", u.UintType(2), "RO", offset=2)
+        word.add_field("data0", u.UintType(width_p), "RO")
+        word.add_field("data1", u.UintType(width_p), "RO", offset=width_p)
+        word.add_field("data2", u.UintType(width_p), "RO", offset=3 * width_p)
 
         word = regf.add_word("tx", portgroups=("tx",))
-        # word.add_field("data0", u.UintType(width_p), "RW")
-        word.add_field("data0", u.UintType(2), "RW")
+        word.add_field("data0", u.UintType(width_p), "RW")
 
         rx = CoreMod(self, "u_rx", paramdict={"width_p": width_p})
         rx.add_param(width_p)
