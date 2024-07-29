@@ -40,13 +40,13 @@ module portgroup_tx #( // tests.test_svmako.CoreMod
   parameter integer width_p = 1
 ) (
   // main_i
-  input logic               main_clk_i,
-  input logic               main_rst_an_i,        // Async Reset (Low-Active)
+  input wire               main_clk_i,
+  input wire               main_rst_an_i,        // Async Reset (Low-Active)
   // regf_i
   // regf_ctrl_ena_i: bus=RW core=RO in_regf=True
-  input logic               regf_ctrl_ena_rval_i, // Core Read Value
+  input wire               regf_ctrl_ena_rval_i, // Core Read Value
   // regf_tx_data0_i: bus=RW core=RO in_regf=True
-  input logic [width_p-1:0] regf_tx_data0_rval_i  // Core Read Value
+  input wire [width_p-1:0] regf_tx_data0_rval_i  // Core Read Value
 );
 
 

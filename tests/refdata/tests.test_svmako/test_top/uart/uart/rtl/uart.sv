@@ -38,16 +38,16 @@
 
 module uart ( // uart.uart.UartMod
   // main_i
-  input  logic        main_clk_i,
-  input  logic        main_rst_an_i, // Async Reset (Low-Active)
+  input  wire         main_clk_i,
+  input  wire         main_rst_an_i, // Async Reset (Low-Active)
   // uart_o: RX/TX
-  input  logic        uart_rx_i,
+  input  wire         uart_rx_i,
   output logic        uart_tx_o,
   // bus_i
-  input  logic [1:0]  bus_trans_i,
-  input  logic [31:0] bus_addr_i,
-  input  logic        bus_write_i,
-  input  logic [31:0] bus_wdata_i,
+  input  wire  [1:0]  bus_trans_i,
+  input  wire  [31:0] bus_addr_i,
+  input  wire         bus_write_i,
+  input  wire  [31:0] bus_wdata_i,
   output logic        bus_ready_o,
   output logic        bus_resp_o,
   output logic [31:0] bus_rdata_o

@@ -38,8 +38,8 @@
 
 module reset ( // tests.test_svmako.ResetMod
   // main_i
-  input logic main_clk_i,
-  input logic main_rst_an_i // Async Reset (Low-Active)
+  input wire main_clk_i,
+  input wire main_rst_an_i // Async Reset (Low-Active)
 );
 
 

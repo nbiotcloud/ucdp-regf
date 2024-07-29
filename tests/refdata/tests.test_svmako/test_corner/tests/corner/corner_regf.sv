@@ -71,30 +71,30 @@
 
 module corner_regf ( // tests.test_svmako.RegfMod
   // main_i
-  input  logic        main_clk_i,
-  input  logic        main_rst_an_i,                            // Async Reset (Low-Active)
+  input  wire         main_clk_i,
+  input  wire         main_rst_an_i,                            // Async Reset (Low-Active)
   // mem_i
-  input  logic        mem_ena_i,
-  input  logic [12:0] mem_addr_i,
-  input  logic        mem_wena_i,
-  input  logic [31:0] mem_wdata_i,
+  input  wire         mem_ena_i,
+  input  wire  [12:0] mem_addr_i,
+  input  wire         mem_wena_i,
+  input  wire  [31:0] mem_wdata_i,
   output logic [31:0] mem_rdata_o,
   output logic        mem_err_o,
-  input  logic [4:0]  spec_i                        [0:6][0:2],
+  input  wire  [4:0]  spec_i                        [0:6][0:2],
   // regf_o
   // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic        regf_ctrl_ena_rval_o,                     // Core Read Value
   // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
-  input  logic        regf_ctrl_busy_rbus_i,                    // Bus Read Value
+  input  wire         regf_ctrl_busy_rbus_i,                    // Bus Read Value
   // regf_grpa_o
   // regf_grpa_ctrl_start_o: bus=RW core=RO in_regf=True
   output logic        regf_grpa_ctrl_start_rval_o,              // Core Read Value
   // regf_grpa_ctrl_status_o: bus=RO core=RW in_regf=False
-  input  logic        regf_grpa_ctrl_status_rbus_i,             // Bus Read Value
+  input  wire         regf_grpa_ctrl_status_rbus_i,             // Bus Read Value
   // regf_grpa_grddim_int_o: bus=RW core=RO in_regf=False
   output logic        regf_grpa_grddim_int_wr_o     [0:1],      // Bus Write Strobe
   output logic [11:0] regf_grpa_grddim_int_wbus_o   [0:1],      // Bus Write Value
-  input  logic [11:0] regf_grpa_grddim_int_rbus_i   [0:1],      // Bus Read Value
+  input  wire  [11:0] regf_grpa_grddim_int_rbus_i   [0:1],      // Bus Read Value
   // regf_grpb_o
   // regf_grpb_ctrl_start_o: bus=RW core=RO in_regf=True
   output logic        regf_grpb_ctrl_start_rval_o,              // Core Read Value
@@ -102,31 +102,31 @@ module corner_regf ( // tests.test_svmako.RegfMod
   output logic [3:0]  regf_ctrl_ver_rval_o,                     // Core Read Value
   // regf_grpc_o
   // regf_grpc_ctrl_spec1_o: bus=RC core=RW in_regf=False
-  input  logic        regf_grpc_ctrl_spec1_rbus_i,              // Bus Read Value
+  input  wire         regf_grpc_ctrl_spec1_rbus_i,              // Bus Read Value
   output logic        regf_grpc_ctrl_spec1_rd_o,                // Bus Read Strobe
   // regf_grpc_dims_spec2_o: bus=RW core=RC in_regf=False
   output logic        regf_grpc_dims_spec2_wr_o     [0:2],      // Bus Write Strobe
   output logic        regf_grpc_dims_spec2_wbus_o   [0:2],      // Bus Write Value
-  input  logic        regf_grpc_dims_spec2_rbus_i   [0:2],      // Bus Read Value
+  input  wire         regf_grpc_dims_spec2_rbus_i   [0:2],      // Bus Read Value
   // regf_grpc_dims_spec3_o: bus=RC core=RW in_regf=True
-  input  logic        regf_grpc_dims_spec3_wr_i     [0:2],      // Core Write Strobe
-  input  logic        regf_grpc_dims_spec3_wval_i   [0:2],      // Core Write Value
+  input  wire         regf_grpc_dims_spec3_wr_i     [0:2],      // Core Write Strobe
+  input  wire         regf_grpc_dims_spec3_wval_i   [0:2],      // Core Write Value
   output logic        regf_grpc_dims_spec3_rval_o   [0:2],      // Core Read Value
   // regf_txdata_bytes_o: bus=RW core=RO in_regf=True
   output logic [7:0]  regf_txdata_bytes_rval_o      [0:4],      // Core Read Value
   // regf_dims_roval_o: bus=RO core=RW in_regf=False
-  input  logic        regf_dims_roval_rbus_i        [0:2],      // Bus Read Value
+  input  wire         regf_dims_roval_rbus_i        [0:2],      // Bus Read Value
   // regf_dims_wrval_o: bus=RW core=RO in_regf=True
   output logic        regf_dims_wrval_upd_o         [0:2],      // Update Strobe
   output logic        regf_dims_wrval_rval_o        [0:2],      // Core Read Value
   // regf_guards_once_o: bus=WP core=RO in_regf=True
   output logic        regf_guards_once_rval_o,                  // Core Read Value
   // regf_guards_coreonce_o: bus=WP core=RO in_regf=False
-  input  logic        regf_guards_coreonce_rbus_i,              // Bus Read Value
+  input  wire         regf_guards_coreonce_rbus_i,              // Bus Read Value
   output logic        regf_guards_coreonce_wbus_o,              // Bus Write Value
   output logic        regf_guards_coreonce_wr_o,                // Bus Write Strobe
   // regf_guards_busonce_o: bus=WP core=RO in_regf=False
-  input  logic        regf_guards_busonce_rbus_i,               // Bus Read Value
+  input  wire         regf_guards_busonce_rbus_i,               // Bus Read Value
   output logic        regf_guards_busonce_wbus_o,               // Bus Write Value
   output logic        regf_guards_busonce_wr_o,                 // Bus Write Strobe
   // regf_guards_single_o: bus=WP core=RO in_regf=True
@@ -141,16 +141,16 @@ module corner_regf ( // tests.test_svmako.RegfMod
   output logic [3:0]  regf_guards_guard_c_rval_o,               // Core Read Value
   // regf_guards_cprio_o: bus=RW core=RW in_regf=True
   output logic        regf_guards_cprio_rval_o,                 // Core Read Value
-  input  logic        regf_guards_cprio_wval_i,                 // Core Write Value
-  input  logic        regf_guards_cprio_wr_i,                   // Core Write Strobe
+  input  wire         regf_guards_cprio_wval_i,                 // Core Write Value
+  input  wire         regf_guards_cprio_wr_i,                   // Core Write Strobe
   // regf_guards_bprio_o: bus=RW core=RW in_regf=True
   output logic        regf_guards_bprio_rval_o,                 // Core Read Value
-  input  logic        regf_guards_bprio_wval_i,                 // Core Write Value
-  input  logic        regf_guards_bprio_wr_i,                   // Core Write Strobe
+  input  wire         regf_guards_bprio_wval_i,                 // Core Write Value
+  input  wire         regf_guards_bprio_wr_i,                   // Core Write Strobe
   // regf_grddim_num_o: bus=RW core=RO in_regf=False
   output logic        regf_grddim_num_wr_o          [0:1],      // Bus Write Strobe
   output logic [11:0] regf_grddim_num_wbus_o        [0:1],      // Bus Write Value
-  input  logic [11:0] regf_grddim_num_rbus_i        [0:1],      // Bus Read Value
+  input  wire  [11:0] regf_grddim_num_rbus_i        [0:1],      // Bus Read Value
   // regf_grddim_const_o: bus=RO core=RO in_regf=True
   output logic [2:0]  regf_grddim_const_rval_o      [0:1]       // Core Read Value
 );

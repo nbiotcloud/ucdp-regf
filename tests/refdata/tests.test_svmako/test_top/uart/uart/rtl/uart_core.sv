@@ -8,8 +8,8 @@
 // GENERATE INPLACE BEGIN beginmod() ===========================================
 module uart_core ( // uart.uart.UartCoreMod
   // main_i
-  input  logic main_clk_i,
-  input  logic main_rst_an_i, // Async Reset (Low-Active)
+  input  wire  main_clk_i,
+  input  wire  main_rst_an_i, // Async Reset (Low-Active)
   output logic busy_o
 );
 // GENERATE INPLACE END beginmod ===============================================
