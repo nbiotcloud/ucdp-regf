@@ -24,7 +24,7 @@
 
 [project]
 name = "ucdp-regf"
-version = "0.5.0"
+version = "0.5.1"
 description = "Unified Chip Design Platform - Register File"
 readme = "README.md"
 authors = [
