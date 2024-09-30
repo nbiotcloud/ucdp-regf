@@ -116,7 +116,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
   // in-regf storage
   // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
-    if (main_rst_an_i == 1'b1) begin
+    if (main_rst_an_i == 1'b0) begin
       // Word: ctrl
       data_ctrl_ena_r <= 1'b0;
     end else if (bus_ctrl_clrall_rst_s == 1'b1) begin

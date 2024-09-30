@@ -39,10 +39,11 @@ class HdlFileList(u.ModFileList):
     template_filepaths: u.ToPaths = ("sv.mako",)
 
     @staticmethod
-    def get_mod_placeholder(mod) -> u.Placeholder:
+    def get_mod_placeholder(mod, **kwargs) -> u.Placeholder:
         """Get Module Placeholder."""
         view = "tb" if mod.is_tb else "rtl"
         return {
             "mod": mod,
             "view": view,
+            **kwargs,
         }
