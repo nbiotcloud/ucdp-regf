@@ -452,7 +452,7 @@ ${wgasgn.get()}
   // in-regf storage
   // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
-    if (main_rst_an_i == 1'b1) begin
+    if (main_rst_an_i == 1'b0) begin
 ${get_ff_rst_values(rslvr, mod.addrspace).get()}
 % if soft_rst:
     end else if (${soft_rst} == 1'b1) begin

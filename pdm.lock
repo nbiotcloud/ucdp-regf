@@ -36,6 +36,21 @@ files = [
 ]
 
 [[package]]
+name = "anycache"
+version = "2.2.0"
+requires_python = "<4,>=3.8"
+summary = "Cache any python object to file using improved pickling"
+groups = ["default", "test"]
+dependencies = [
+    "dill<0.4.0,>=0.3.7",
+    "filelock<4.0.0,>=3.13.0",
+]
+files = [
+    {file = "anycache-2.2.0-py3-none-any.whl", hash = "sha256:f4c23284b33bab5f7f46c5d6f024025b944c8a223eb8638f497b68c9913c8922"},
+    {file = "anycache-2.2.0.tar.gz", hash = "sha256:342ca6bf952f1b62f8725c92b50244f9ef6d0eb1547df768fe2ea2aa429f5c44"},
+]
+
+[[package]]
 name = "anytree"
 version = "2.12.1"
 requires_python = ">=3.7.2,<4"
@@ -75,18 +90,6 @@ dependencies = [
 files = [
     {file = "Babel-2.15.0-py3-none-any.whl", hash = "sha256:08706bdad8d0a3413266ab61bd6c34d0c28d6e1e7badf40a2cebe67644e2e1fb"},
     {file = "babel-2.15.0.tar.gz", hash = "sha256:8daf0e265d05768bc6c7a314cf1321e9a123afc328cc635c18622a2f30a04413"},
-]
-
-[[package]]
-name = "backports-strenum"
-version = "1.3.1"
-requires_python = ">=3.8.6,<3.11"
-summary = "Base class for creating enumerated constants that are also subclasses of str"
-groups = ["doc"]
-marker = "python_version < \"3.11\""
-files = [
-    {file = "backports_strenum-1.3.1-py3-none-any.whl", hash = "sha256:cdcfe36dc897e2615dc793b7d3097f54d359918fc448754a517e6f23044ccf83"},
-    {file = "backports_strenum-1.3.1.tar.gz", hash = "sha256:77c52407342898497714f0596e86188bb7084f89063226f4ba66863482f42414"},
 ]
 
 [[package]]
@@ -228,8 +231,18 @@ files = [
 ]
 
 [[package]]
+name = "click-bash4-2-completion"
+version = "0.1.0"
+requires_python = ">=3.7"
+summary = "Bash 4.2 completion support for Click 8.0.x"
+groups = ["default", "test"]
+files = [
+    {file = "click-bash4.2-completion-0.1.0.tar.gz", hash = "sha256:b81886fd921f1cecd73ce340078bc9e6776ffdd9f0b3bd8e26231417ac92d507"},
+]
+
+[[package]]
 name = "cocotb"
-version = "1.9.0"
+version = "1.9.1"
 requires_python = ">=3.6"
 summary = "cocotb is a coroutine based cosimulation library for writing VHDL and Verilog testbenches in Python."
 groups = ["test"]
@@ -237,22 +250,22 @@ dependencies = [
     "find-libpython",
 ]
 files = [
-    {file = "cocotb-1.9.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:c11e21d291ba2f889e33c21d76e9aec6ffdfb5666053dc34452666579daa675b"},
-    {file = "cocotb-1.9.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5832d894419a9e8fe5c242e3ac86588e16e2cb379822dcb154bfec8544ae858e"},
-    {file = "cocotb-1.9.0-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:89503f0749362d36b6fab8636710f1848943c21f9d488672921bac21e9edd29f"},
-    {file = "cocotb-1.9.0-cp310-cp310-win32.whl", hash = "sha256:598b841ed0809e5c64d8c383b8035f6ace5a6f9013f680cdc6981221911c005d"},
-    {file = "cocotb-1.9.0-cp310-cp310-win_amd64.whl", hash = "sha256:8cb4b0edf8f0b47c3b604b461cb574fc75fd97efa893cbaf828f4f2f71cf459e"},
-    {file = "cocotb-1.9.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:17556e3a23562f64d577d0eb117fe02e384aedee997b29497b5c395f5010ff82"},
-    {file = "cocotb-1.9.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:1a0381ced5590a726032ba2265c6b70ac12cfb49edb152be86a081bb7d104751"},
-    {file = "cocotb-1.9.0-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:997dbca2a2cd933fd0a44d9fadeebc1e8a40701db15ea06f207811933dceb350"},
-    {file = "cocotb-1.9.0-cp311-cp311-win32.whl", hash = "sha256:a7cea13cb2fe4f5ca735490846342885117778a73008a67ed9cac667aaaf3f0d"},
-    {file = "cocotb-1.9.0-cp311-cp311-win_amd64.whl", hash = "sha256:87a19d3012f505ba7fda37483b851ef0ca40290ad8a9b28a820b84f8574287bb"},
-    {file = "cocotb-1.9.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:0ba35617a677ff65a1273411a3dfdfc5f587128ad8cb9e941ab0eb17ec8fb3e2"},
-    {file = "cocotb-1.9.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:5a5c91027d7652aaf10e101743edd6b1e832039a19af75fca301275ef30f01d4"},
-    {file = "cocotb-1.9.0-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:02a58ef6c941114964096e7c039bdd4e67e63816cfd2f6a9af6a34cd92b00e8e"},
-    {file = "cocotb-1.9.0-cp312-cp312-win32.whl", hash = "sha256:c848de13583478d71cc91e528e17c051ca6a3b92e89d703ac5015f17cab1287b"},
-    {file = "cocotb-1.9.0-cp312-cp312-win_amd64.whl", hash = "sha256:a84edfbfa57dc6e16845a55feb0b4e1c8b6bbfa5ef1ab6768beba8d81e0546aa"},
-    {file = "cocotb-1.9.0.tar.gz", hash = "sha256:19b4e27b53a16e0b9c4cc5227c7f9d4dccac06e431a4f937e9f5513350196333"},
+    {file = "cocotb-1.9.1-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:1bdc70f626be2e2529cf3875a0dd418dfab46fde5f1107ade25d7c28799adb75"},
+    {file = "cocotb-1.9.1-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:777e1ddb203194ea311040ab068c0b4944098a1618c823613331351ac6e31f1f"},
+    {file = "cocotb-1.9.1-cp310-cp310-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:fadcf3d409f36c45ab2ca6486ccafabce6ed69b1fc5f11f0031bcf123f4105e6"},
+    {file = "cocotb-1.9.1-cp310-cp310-win32.whl", hash = "sha256:57efb38174aae826694f066d2630783516d8be34c2ea16fc6f1cd7aafa68b0f5"},
+    {file = "cocotb-1.9.1-cp310-cp310-win_amd64.whl", hash = "sha256:3613551188e40facddddeeffeb75e3d6d9ff7fcc59f908882d50e828e0be1db7"},
+    {file = "cocotb-1.9.1-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:4253035ba1585feb638bbecd05121aef840b4201402796b24a409c2f46ded8c2"},
+    {file = "cocotb-1.9.1-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:2eb9845e31fb17b70952c9da2ed933ffab1b41cd6f7f09a182196c62f3bdc77a"},
+    {file = "cocotb-1.9.1-cp311-cp311-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:c65377e17ccc055bdb46df2b0e4b57dd4ddde62d8d25401e85a9b219576ab0a1"},
+    {file = "cocotb-1.9.1-cp311-cp311-win32.whl", hash = "sha256:ec66a1e5819656f402e4d0e1f247d5e6d674197c6057b996b692648b50b7de86"},
+    {file = "cocotb-1.9.1-cp311-cp311-win_amd64.whl", hash = "sha256:04bab5164c3c4a67967ecd2276937088db1e9c00d2a653ebb8c0fece5bf221f0"},
+    {file = "cocotb-1.9.1-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:08b97544e0aa1db88c623cfee6626a8e79639894d01f7bfd75b548f5cdf16c71"},
+    {file = "cocotb-1.9.1-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.whl", hash = "sha256:0e514bb390fab574327d8be00643a2afcc8b00db385d9814557bcb772c8f7d63"},
+    {file = "cocotb-1.9.1-cp312-cp312-manylinux_2_5_i686.manylinux1_i686.manylinux_2_17_i686.manylinux2014_i686.whl", hash = "sha256:0b9a51e6e2afb31049bcd0ae747f30e5aadf72112ee9edaf8fd43d0627c50154"},
+    {file = "cocotb-1.9.1-cp312-cp312-win32.whl", hash = "sha256:b67226b541d8a0e01233ba0006034ad5d769f9c602358f6b8fdddfc90efb9b47"},
+    {file = "cocotb-1.9.1-cp312-cp312-win_amd64.whl", hash = "sha256:945dbe084b909cdf6aa0220e5ea7e143508bfca223e02ca848d011f020bb42c8"},
+    {file = "cocotb-1.9.1.tar.gz", hash = "sha256:21a79c4b5c3d4d7743abd54cfbda387377a2cbdbb8af4b068fbf7745d2f55d8c"},
 ]
 
 [[package]]
@@ -372,6 +385,17 @@ files = [
 ]
 
 [[package]]
+name = "dill"
+version = "0.3.9"
+requires_python = ">=3.8"
+summary = "serialize all of Python"
+groups = ["default", "test"]
+files = [
+    {file = "dill-0.3.9-py3-none-any.whl", hash = "sha256:468dff3b89520b474c0397703366b7b95eebe6303f108adf9b19da1f702be87a"},
+    {file = "dill-0.3.9.tar.gz", hash = "sha256:81aa267dddf68cbfe8029c42ca9ec6a4ab3b22371d1c450abc54422577b4512c"},
+]
+
+[[package]]
 name = "distlib"
 version = "0.3.8"
 summary = "Distribution utilities"
@@ -407,7 +431,7 @@ name = "filelock"
 version = "3.15.4"
 requires_python = ">=3.8"
 summary = "A platform independent file lock."
-groups = ["format"]
+groups = ["default", "format", "test"]
 files = [
     {file = "filelock-3.15.4-py3-none-any.whl", hash = "sha256:6ca1fffae96225dab4c6eaf1c4f4f28cd2568d3ec2a44e15a08520504de468e7"},
     {file = "filelock-3.15.4.tar.gz", hash = "sha256:2207938cbc1844345cb01a5a95524dae30f0ce089eba5b00378295a17e3e90cb"},
@@ -448,18 +472,17 @@ files = [
 
 [[package]]
 name = "griffe"
-version = "0.48.0"
+version = "1.3.1"
 requires_python = ">=3.8"
 summary = "Signatures for entire Python programs. Extract the structure, the frame, the skeleton of your project, to generate API documentation or find breaking changes in your API."
 groups = ["doc"]
 dependencies = [
     "astunparse>=1.6; python_version < \"3.9\"",
-    "backports-strenum>=1.3; python_version < \"3.11\"",
     "colorama>=0.4",
 ]
 files = [
-    {file = "griffe-0.48.0-py3-none-any.whl", hash = "sha256:f944c6ff7bd31cf76f264adcd6ab8f3d00a2f972ae5cc8db2d7b6dcffeff65a2"},
-    {file = "griffe-0.48.0.tar.gz", hash = "sha256:f099461c02f016b6be4af386d5aa92b01fb4efe6c1c2c360dda9a5d0a863bb7f"},
+    {file = "griffe-1.3.1-py3-none-any.whl", hash = "sha256:940aeb630bc3054b4369567f150b6365be6f11eef46b0ed8623aea96e6d17b19"},
+    {file = "griffe-1.3.1.tar.gz", hash = "sha256:3f86a716b631a4c0f96a43cb75d05d3c85975003c20540426c0eba3b0581c56a"},
 ]
 
 [[package]]
@@ -634,8 +657,8 @@ files = [
 
 [[package]]
 name = "makolator"
-version = "2.7.1"
-requires_python = "<4.0.0,>=3.8.2"
+version = "2.8.0"
+requires_python = "<4.0.0,>=3.10.0"
 summary = "Extended Mako Templates for Python"
 groups = ["default", "test"]
 dependencies = [
@@ -646,8 +669,8 @@ dependencies = [
     "uniquer<2.0.0,>=1.0.0",
 ]
 files = [
-    {file = "makolator-2.7.1-py3-none-any.whl", hash = "sha256:9763f696af3f0807d462311f273ffd7fce1f9d68452406651d76d4e89363311c"},
-    {file = "makolator-2.7.1.tar.gz", hash = "sha256:713e881803e38526b28a097114f42773cc5bf398c12606faf3a24b8d8d227297"},
+    {file = "makolator-2.8.0-py3-none-any.whl", hash = "sha256:7a8aa7b7b44c61b99de4375230957f8e6cde37299d7babfc59a33edca4c6bb24"},
+    {file = "makolator-2.8.0.tar.gz", hash = "sha256:607de14dd5fb4164f9f711f1353ee30247b8cb883dd802967d61cd6a8391f12d"},
 ]
 
 [[package]]
@@ -790,7 +813,7 @@ files = [
 
 [[package]]
 name = "mkdocs-autorefs"
-version = "1.0.1"
+version = "1.2.0"
 requires_python = ">=3.8"
 summary = "Automatically link across pages in MkDocs."
 groups = ["doc"]
@@ -800,8 +823,8 @@ dependencies = [
     "mkdocs>=1.1",
 ]
 files = [
-    {file = "mkdocs_autorefs-1.0.1-py3-none-any.whl", hash = "sha256:aacdfae1ab197780fb7a2dac92ad8a3d8f7ca8049a9cbe56a4218cd52e8da570"},
-    {file = "mkdocs_autorefs-1.0.1.tar.gz", hash = "sha256:f684edf847eced40b570b57846b15f0bf57fb93ac2c510450775dcf16accb971"},
+    {file = "mkdocs_autorefs-1.2.0-py3-none-any.whl", hash = "sha256:d588754ae89bd0ced0c70c06f58566a4ee43471eeeee5202427da7de9ef85a2f"},
+    {file = "mkdocs_autorefs-1.2.0.tar.gz", hash = "sha256:a86b93abff653521bda71cf3fc5596342b7a23982093915cb74273f67522190f"},
 ]
 
 [[package]]
@@ -838,17 +861,17 @@ files = [
 
 [[package]]
 name = "mkdocs-include-markdown-plugin"
-version = "6.2.1"
+version = "6.2.2"
 requires_python = ">=3.8"
 summary = "Mkdocs Markdown includer plugin."
 groups = ["doc"]
 dependencies = [
     "mkdocs>=1.4",
-    "wcmatch<9,>=8",
+    "wcmatch",
 ]
 files = [
-    {file = "mkdocs_include_markdown_plugin-6.2.1-py3-none-any.whl", hash = "sha256:8dfc3aee9435679b094cbdff023239e91d86cf357c40b0e99c28036449661830"},
-    {file = "mkdocs_include_markdown_plugin-6.2.1.tar.gz", hash = "sha256:46fc372886d48eec541d36138d1fe1db42afd08b976ef7c8d8d4ea6ee4d5d1e8"},
+    {file = "mkdocs_include_markdown_plugin-6.2.2-py3-none-any.whl", hash = "sha256:d293950f6499d2944291ca7b9bc4a60e652bbfd3e3a42b564f6cceee268694e7"},
+    {file = "mkdocs_include_markdown_plugin-6.2.2.tar.gz", hash = "sha256:f2bd5026650492a581d2fd44be6c22f90391910d76582b96a34c264f2d17875d"},
 ]
 
 [[package]]
@@ -867,7 +890,7 @@ files = [
 
 [[package]]
 name = "mkdocs-material"
-version = "9.5.30"
+version = "9.5.39"
 requires_python = ">=3.8"
 summary = "Documentation that simply works"
 groups = ["doc"]
@@ -885,8 +908,8 @@ dependencies = [
     "requests~=2.26",
 ]
 files = [
-    {file = "mkdocs_material-9.5.30-py3-none-any.whl", hash = "sha256:fc070689c5250a180e9b9d79d8491ef9a3a7acb240db0728728d6c31eeb131d4"},
-    {file = "mkdocs_material-9.5.30.tar.gz", hash = "sha256:3fd417dd42d679e3ba08b9e2d72cd8b8af142cc4a3969676ad6b00993dd182ec"},
+    {file = "mkdocs_material-9.5.39-py3-none-any.whl", hash = "sha256:0f2f68c8db89523cb4a59705cd01b4acd62b2f71218ccb67e1e004e560410d2b"},
+    {file = "mkdocs_material-9.5.39.tar.gz", hash = "sha256:25faa06142afa38549d2b781d475a86fb61de93189f532b88e69bf11e5e5c3be"},
 ]
 
 [[package]]
@@ -902,45 +925,46 @@ files = [
 
 [[package]]
 name = "mkdocstrings"
-version = "0.25.2"
+version = "0.26.1"
 requires_python = ">=3.8"
 summary = "Automatic documentation from sources, for MkDocs."
 groups = ["doc"]
 dependencies = [
     "Jinja2>=2.11.1",
-    "Markdown>=3.3",
+    "Markdown>=3.6",
     "MarkupSafe>=1.1",
     "click>=7.0",
     "importlib-metadata>=4.6; python_version < \"3.10\"",
-    "mkdocs-autorefs>=0.3.1",
+    "mkdocs-autorefs>=1.2",
     "mkdocs>=1.4",
-    "platformdirs>=2.2.0",
+    "platformdirs>=2.2",
     "pymdown-extensions>=6.3",
     "typing-extensions>=4.1; python_version < \"3.10\"",
 ]
 files = [
-    {file = "mkdocstrings-0.25.2-py3-none-any.whl", hash = "sha256:9e2cda5e2e12db8bb98d21e3410f3f27f8faab685a24b03b06ba7daa5b92abfc"},
-    {file = "mkdocstrings-0.25.2.tar.gz", hash = "sha256:5cf57ad7f61e8be3111a2458b4e49c2029c9cb35525393b179f9c916ca8042dc"},
+    {file = "mkdocstrings-0.26.1-py3-none-any.whl", hash = "sha256:29738bfb72b4608e8e55cc50fb8a54f325dc7ebd2014e4e3881a49892d5983cf"},
+    {file = "mkdocstrings-0.26.1.tar.gz", hash = "sha256:bb8b8854d6713d5348ad05b069a09f3b79edbc6a0f33a34c6821141adb03fe33"},
 ]
 
 [[package]]
 name = "mkdocstrings-python"
-version = "1.10.7"
+version = "1.11.1"
 requires_python = ">=3.8"
 summary = "A Python handler for mkdocstrings."
 groups = ["doc"]
 dependencies = [
-    "griffe>=0.48",
-    "mkdocstrings>=0.25",
+    "griffe>=0.49",
+    "mkdocs-autorefs>=1.2",
+    "mkdocstrings>=0.26",
 ]
 files = [
-    {file = "mkdocstrings_python-1.10.7-py3-none-any.whl", hash = "sha256:8999acb8e2cb6ae5edb844ce1ed6a5fcc14285f85cfd9df374d9a0f0be8a40b6"},
-    {file = "mkdocstrings_python-1.10.7.tar.gz", hash = "sha256:bfb5e29acfc69c9177d2b11c18d3127d16e553b8da9bb6d184e428d54795600b"},
+    {file = "mkdocstrings_python-1.11.1-py3-none-any.whl", hash = "sha256:a21a1c05acef129a618517bb5aae3e33114f569b11588b1e7af3e9d4061a71af"},
+    {file = "mkdocstrings_python-1.11.1.tar.gz", hash = "sha256:8824b115c5359304ab0b5378a91f6202324a849e1da907a3485b59208b797322"},
 ]
 
 [[package]]
 name = "mypy"
-version = "1.11.0"
+version = "1.11.2"
 requires_python = ">=3.8"
 summary = "Optional static typing for Python"
 groups = ["checktypes"]
@@ -950,23 +974,23 @@ dependencies = [
     "typing-extensions>=4.6.0",
 ]
 files = [
-    {file = "mypy-1.11.0-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:a3824187c99b893f90c845bab405a585d1ced4ff55421fdf5c84cb7710995229"},
-    {file = "mypy-1.11.0-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:96f8dbc2c85046c81bcddc246232d500ad729cb720da4e20fce3b542cab91287"},
-    {file = "mypy-1.11.0-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:1a5d8d8dd8613a3e2be3eae829ee891b6b2de6302f24766ff06cb2875f5be9c6"},
-    {file = "mypy-1.11.0-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:72596a79bbfb195fd41405cffa18210af3811beb91ff946dbcb7368240eed6be"},
-    {file = "mypy-1.11.0-cp310-cp310-win_amd64.whl", hash = "sha256:35ce88b8ed3a759634cb4eb646d002c4cef0a38f20565ee82b5023558eb90c00"},
-    {file = "mypy-1.11.0-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:98790025861cb2c3db8c2f5ad10fc8c336ed2a55f4daf1b8b3f877826b6ff2eb"},
-    {file = "mypy-1.11.0-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:25bcfa75b9b5a5f8d67147a54ea97ed63a653995a82798221cca2a315c0238c1"},
-    {file = "mypy-1.11.0-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:0bea2a0e71c2a375c9fa0ede3d98324214d67b3cbbfcbd55ac8f750f85a414e3"},
-    {file = "mypy-1.11.0-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:d2b3d36baac48e40e3064d2901f2fbd2a2d6880ec6ce6358825c85031d7c0d4d"},
-    {file = "mypy-1.11.0-cp311-cp311-win_amd64.whl", hash = "sha256:d8e2e43977f0e09f149ea69fd0556623919f816764e26d74da0c8a7b48f3e18a"},
-    {file = "mypy-1.11.0-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:1d44c1e44a8be986b54b09f15f2c1a66368eb43861b4e82573026e04c48a9e20"},
-    {file = "mypy-1.11.0-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:cea3d0fb69637944dd321f41bc896e11d0fb0b0aa531d887a6da70f6e7473aba"},
-    {file = "mypy-1.11.0-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:a83ec98ae12d51c252be61521aa5731f5512231d0b738b4cb2498344f0b840cd"},
-    {file = "mypy-1.11.0-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:c7b73a856522417beb78e0fb6d33ef89474e7a622db2653bc1285af36e2e3e3d"},
-    {file = "mypy-1.11.0-cp312-cp312-win_amd64.whl", hash = "sha256:f2268d9fcd9686b61ab64f077be7ffbc6fbcdfb4103e5dd0cc5eaab53a8886c2"},
-    {file = "mypy-1.11.0-py3-none-any.whl", hash = "sha256:56913ec8c7638b0091ef4da6fcc9136896914a9d60d54670a75880c3e5b99ace"},
-    {file = "mypy-1.11.0.tar.gz", hash = "sha256:93743608c7348772fdc717af4aeee1997293a1ad04bc0ea6efa15bf65385c538"},
+    {file = "mypy-1.11.2-cp310-cp310-macosx_10_9_x86_64.whl", hash = "sha256:d42a6dd818ffce7be66cce644f1dff482f1d97c53ca70908dff0b9ddc120b77a"},
+    {file = "mypy-1.11.2-cp310-cp310-macosx_11_0_arm64.whl", hash = "sha256:801780c56d1cdb896eacd5619a83e427ce436d86a3bdf9112527f24a66618fef"},
+    {file = "mypy-1.11.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:41ea707d036a5307ac674ea172875f40c9d55c5394f888b168033177fce47383"},
+    {file = "mypy-1.11.2-cp310-cp310-musllinux_1_1_x86_64.whl", hash = "sha256:6e658bd2d20565ea86da7d91331b0eed6d2eee22dc031579e6297f3e12c758c8"},
+    {file = "mypy-1.11.2-cp310-cp310-win_amd64.whl", hash = "sha256:478db5f5036817fe45adb7332d927daa62417159d49783041338921dcf646fc7"},
+    {file = "mypy-1.11.2-cp311-cp311-macosx_10_9_x86_64.whl", hash = "sha256:75746e06d5fa1e91bfd5432448d00d34593b52e7e91a187d981d08d1f33d4385"},
+    {file = "mypy-1.11.2-cp311-cp311-macosx_11_0_arm64.whl", hash = "sha256:a976775ab2256aadc6add633d44f100a2517d2388906ec4f13231fafbb0eccca"},
+    {file = "mypy-1.11.2-cp311-cp311-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:cd953f221ac1379050a8a646585a29574488974f79d8082cedef62744f0a0104"},
+    {file = "mypy-1.11.2-cp311-cp311-musllinux_1_1_x86_64.whl", hash = "sha256:57555a7715c0a34421013144a33d280e73c08df70f3a18a552938587ce9274f4"},
+    {file = "mypy-1.11.2-cp311-cp311-win_amd64.whl", hash = "sha256:36383a4fcbad95f2657642a07ba22ff797de26277158f1cc7bd234821468b1b6"},
+    {file = "mypy-1.11.2-cp312-cp312-macosx_10_9_x86_64.whl", hash = "sha256:e8960dbbbf36906c5c0b7f4fbf2f0c7ffb20f4898e6a879fcf56a41a08b0d318"},
+    {file = "mypy-1.11.2-cp312-cp312-macosx_11_0_arm64.whl", hash = "sha256:06d26c277962f3fb50e13044674aa10553981ae514288cb7d0a738f495550b36"},
+    {file = "mypy-1.11.2-cp312-cp312-manylinux_2_17_x86_64.manylinux2014_x86_64.manylinux_2_28_x86_64.whl", hash = "sha256:6e7184632d89d677973a14d00ae4d03214c8bc301ceefcdaf5c474866814c987"},
+    {file = "mypy-1.11.2-cp312-cp312-musllinux_1_1_x86_64.whl", hash = "sha256:3a66169b92452f72117e2da3a576087025449018afc2d8e9bfe5ffab865709ca"},
+    {file = "mypy-1.11.2-cp312-cp312-win_amd64.whl", hash = "sha256:969ea3ef09617aff826885a22ece0ddef69d95852cdad2f60c8bb06bf1f71f70"},
+    {file = "mypy-1.11.2-py3-none-any.whl", hash = "sha256:b499bc07dbdcd3de92b0a8b29fdf592c111276f6a12fe29c30f6c417dd546d12"},
+    {file = "mypy-1.11.2.tar.gz", hash = "sha256:7f9993ad3e0ffdc95c2a14b66dee63729f021968bff8ad911867579c65d13a79"},
 ]
 
 [[package]]
@@ -1479,16 +1503,16 @@ files = [
 
 [[package]]
 name = "test2ref"
-version = "0.4.2"
-requires_python = ">=3.8.2,<4.0.0"
+version = "0.5.0"
+requires_python = "<4.0,>=3.10.0"
 summary = "Testing Against Learned Reference Data"
 groups = ["test"]
 dependencies = [
-    "binaryornot<0.5.0,>=0.4.4",
+    "binaryornot>=0.4.4",
 ]
 files = [
-    {file = "test2ref-0.4.2-py3-none-any.whl", hash = "sha256:2078db738802abdcba29f53a84f6e27b2e81a4a2490d9cf45b71dfe98991ad35"},
-    {file = "test2ref-0.4.2.tar.gz", hash = "sha256:e4869d870268431ba88135e4987ba47fd24120623681f6cfd4445785b4b822e5"},
+    {file = "test2ref-0.5.0-py3-none-any.whl", hash = "sha256:c5645f61747224f49ec0eb69f7c3540e6c4842829a5f504da03159ee92fbc472"},
+    {file = "test2ref-0.5.0.tar.gz", hash = "sha256:d8f9b6c2e69a3aa8cd25d2b219a036aeff8d701a12721b3ed382f07ad8dd485b"},
 ]
 
 [[package]]
@@ -1527,18 +1551,20 @@ files = [
 
 [[package]]
 name = "ucdp"
-version = "0.11.1"
+version = "0.20.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform"
 groups = ["default", "test"]
 dependencies = [
+    "anycache>=2.2.0",
     "anytree>=2.12.1",
     "case-converter>=1.1.0",
+    "click-bash4-2-completion>=0.1.0",
     "click>=8.1.7",
     "fuzzywuzzy>=0.18.0",
     "humannum>=1.1.0",
     "icdutil>=0.3.1",
-    "makolator>=2.7.0",
+    "makolator>=2.8.0",
     "matchor>=0.1.0",
     "pydantic>=2.7.0",
     "python-Levenshtein>=0.25.1",
@@ -1546,41 +1572,42 @@ dependencies = [
     "uniquer>=1.0.2",
 ]
 files = [
-    {file = "ucdp-0.11.1-py3-none-any.whl", hash = "sha256:4fe0f503dd54d87d1ab1b3bf99d7469aa85b85b1cf4a01d5d38990a1d9f70805"},
-    {file = "ucdp-0.11.1.tar.gz", hash = "sha256:25d66d2acb418712ba15f1ad7db2183401d69f9f36b64cabe61729b6de814525"},
+    {file = "ucdp-0.20.0-py3-none-any.whl", hash = "sha256:78a2437bcda1b0aab8c353ce08255b3a31ee1e82d8235bfd2813436ad26e6f07"},
+    {file = "ucdp-0.20.0.tar.gz", hash = "sha256:411867916be11a425c24faf52e35f72f1836979cfd19d6f91ac49a030ae44c02"},
 ]
 
 [[package]]
 name = "ucdp-addr"
-version = "1.0.1"
+version = "1.4.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Address Map"
 groups = ["default"]
 dependencies = [
-    "ucdp>=0.8.0",
+    "ucdp-glbl>=1.1.1",
+    "ucdp>=0.16.0",
 ]
 files = [
-    {file = "ucdp_addr-1.0.1-py3-none-any.whl", hash = "sha256:7dc5ebb4a506bcb0ecc4cca3d1a8505c61bd82ff2927df820475176b76c2e62e"},
-    {file = "ucdp_addr-1.0.1.tar.gz", hash = "sha256:23f399d58f1ba35e51093c3df1932b430da1a0ccce783c2b39c682dfe4b3b77b"},
+    {file = "ucdp_addr-1.4.0-py3-none-any.whl", hash = "sha256:3b01ddc0636502f11c38ff97f52c087afa3d0d53cb5a088365b34a8456afb5eb"},
+    {file = "ucdp_addr-1.4.0.tar.gz", hash = "sha256:95011d1d6b79397d60ab61e0dff95a957be23b4529eb3e1437638bb051d7370c"},
 ]
 
 [[package]]
 name = "ucdp-glbl"
-version = "0.7.0"
+version = "1.2.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Global"
 groups = ["default"]
 dependencies = [
-    "ucdp>=0.8.0",
+    "ucdp>=0.16.0",
 ]
 files = [
-    {file = "ucdp_glbl-0.7.0-py3-none-any.whl", hash = "sha256:a947437980642903c909ca7c79ebc0f7b0b020aac706f95f7c13c004d0c0e456"},
-    {file = "ucdp_glbl-0.7.0.tar.gz", hash = "sha256:0299151696d9373782a3e56385f657a69ce43ac9124464e036acad7a89783d55"},
+    {file = "ucdp_glbl-1.2.0-py3-none-any.whl", hash = "sha256:2ae7d4610e12cde53d755f7d1b1dcd3fca7fafc2b0b42fd449f998434707dc64"},
+    {file = "ucdp_glbl-1.2.0.tar.gz", hash = "sha256:710624893a4da818af2416c1dd8168684433f8d574d07a93a385a21390d18d1f"},
 ]
 
 [[package]]
 name = "ucdp-sv"
-version = "0.8.3"
+version = "0.9.0"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - System Verilog Support"
 groups = ["test"]
@@ -1589,8 +1616,8 @@ dependencies = [
     "ucdp>=0.11.0",
 ]
 files = [
-    {file = "ucdp_sv-0.8.3-py3-none-any.whl", hash = "sha256:edc6859cfe679a288259fc75a126e7e84a25a539ed490bcb13cbc730effbe49c"},
-    {file = "ucdp_sv-0.8.3.tar.gz", hash = "sha256:c044b525a90f6fd8a72fcfc9eb1a3709fdea4bf08f3e4bca000fc49c22541277"},
+    {file = "ucdp_sv-0.9.0-py3-none-any.whl", hash = "sha256:daf0ffb8e70bd8a131b373d0878713fdb37a340d95d0741dcf95065830cf3f37"},
+    {file = "ucdp_sv-0.9.0.tar.gz", hash = "sha256:02cb6ae3a929b6e902ed40f71ba6aaff1d37faf038cf9ed45a9f0081bf1c5393"},
 ]
 
 [[package]]
