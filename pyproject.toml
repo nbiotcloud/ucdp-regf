@@ -24,7 +24,7 @@
 
 [project]
 name = "ucdp-regf"
-version = "0.6.1"
+dynamic = ["version"]
 description = "Unified Chip Design Platform - Register File"
 readme = "README.md"
 authors = [
@@ -76,6 +76,10 @@ doc = [
 
 [tool.pdm.build]
 includes = ["src/ucdp_regf"]
+
+[tool.pdm.version]
+source = "scm"
+fallback_version = "0.0.0"
 
 [tool.ruff]
 line-length = 120
