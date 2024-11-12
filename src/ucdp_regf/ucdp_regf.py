@@ -158,6 +158,14 @@ def check_field(wordname: str, field: Field) -> None:
         raise ValueError(f"Field '{wordname}.{field.name}' with constant value must be in_regf.")
 
 
+class Words(_addrspace.Words):
+    """Set of Words."""
+
+    def _add_field(self, name: str, type_: u.BaseScalarType, *args, **kwargs):
+        signame = kwargs.pop("signame", None) or f"{self.name}_{name}"
+        self.word.add_field(name, type_, *args, signame=signame, **kwargs)
+
+
 class Addrspace(_addrspace.Addrspace):
     """Address Space."""
 
@@ -173,6 +181,9 @@ class Addrspace(_addrspace.Addrspace):
         if upd_prio is None:
             upd_prio = self.upd_prio
         return Word(portgroups=portgroups, upd_prio=upd_prio, **kwargs)
+
+    def _create_words(self, **kwargs) -> Words:
+        return Words.create(**kwargs)
 
 
 def filter_regf_flipflops(field: Field):
@@ -365,6 +376,10 @@ class UcdpRegfMod(u.ATailoredMod):
     def add_word(self, *args, **kwargs):
         """Add Word."""
         return self.addrspace.add_word(*args, **kwargs)
+
+    def add_words(self, *args, **kwargs):
+        """Add Words."""
+        return self.addrspace.add_words(*args, **kwargs)
 
     def add_soft_rst(self, soft_reset: str = "soft_rst_i"):
         """

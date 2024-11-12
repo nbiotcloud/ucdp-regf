@@ -202,6 +202,12 @@ class CornerMod(u.AMod):
         word.add_field("const", u.UintType(3, default=5), bus=_addrspace.RO, core=_addrspace.RO, in_regf=True)
         word.add_field("int", u.UintType(12), "RW", wr_guard="ctrl.spec1", portgroups=("grpa",))
 
+        word = regf.add_words("wide")
+        word.add_field("a", u.UintType(16), "RW")
+        word.add_field("b", u.UintType(16), "RW")
+        word.add_field("c", u.UintType(16), "RW", signame="base")
+        word.add_field("d", u.UintType(16), "RW")
+
 
 def test_corner(tmp_path):
     """Register File with Some Manual Corner Cases."""

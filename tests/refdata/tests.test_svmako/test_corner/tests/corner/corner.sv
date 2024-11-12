@@ -136,7 +136,15 @@ module corner ( // tests.test_svmako.CornerMod
     .regf_grddim_num_wbus_o      (                 ), // TODO - Bus Write Value
     .regf_grddim_num_rbus_i      ('{2{12'h000}}    ), // TODO - Bus Read Value
     // regf_grddim_const_o: bus=RO core=RO in_regf=True
-    .regf_grddim_const_rval_o    (                 )  // TODO - Core Read Value
+    .regf_grddim_const_rval_o    (                 ), // TODO - Core Read Value
+    // regf_wide_a_o: bus=RW core=RO in_regf=True
+    .regf_wide_a_rval_o          (                 ), // TODO - Core Read Value
+    // regf_wide_b_o: bus=RW core=RO in_regf=True
+    .regf_wide_b_rval_o          (                 ), // TODO - Core Read Value
+    // regf_base_o: bus=RW core=RO in_regf=True
+    .regf_base_rval_o            (                 ), // TODO - Core Read Value
+    // regf_wide_d_o: bus=RW core=RO in_regf=True
+    .regf_wide_d_rval_o          (                 )  // TODO - Core Read Value
   );
 
 endmodule // corner
