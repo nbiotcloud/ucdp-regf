@@ -374,7 +374,6 @@ def map_wronce_guards(addrspace: Addrspace, guards: dict[str, tuple[str, str]]) 
 <%def name="logic(indent=0, skip=None)">\
 <%
   rslvr = usv.get_resolver(mod)
-  stride = mod.width // 8
   mem_addr_width = mod.ports['mem_addr_i'].type_.width
   mem_data_width = mod.ports['mem_wdata_i'].type_.width
   guards = mod._guards
@@ -395,12 +394,12 @@ ${get_bus_word_rden_defaults(rslvr, mod.addrspace).get()}
 % for word, _ in mod.addrspace.iter(fieldfilter=filter_buswrite):
 %   if word.depth:
 %     for idx in range(word.depth):
-        ${rslvr._get_uint_value((word.offset+idx)*stride, mem_addr_width)}: begin
+        ${rslvr._get_uint_value((word.offset+idx), mem_addr_width)}: begin
           bus_${word.name}_wren_s[${idx}] = 1'b1;
         end
 %     endfor
 %   else:
-        ${rslvr._get_uint_value(word.offset*stride, mem_addr_width)}: begin
+        ${rslvr._get_uint_value(word.offset, mem_addr_width)}: begin
           bus_${word.name}_wren_s = 1'b1;
         end
 %   endif
@@ -417,12 +416,12 @@ ${get_bus_word_rden_defaults(rslvr, mod.addrspace).get()}
 % for word, _ in mod.addrspace.iter(fieldfilter=filter_busread):
 %   if word.depth:
 %     for idx in range(word.depth):
-        ${rslvr._get_uint_value((word.offset+idx)*stride, mem_addr_width)}: begin
+        ${rslvr._get_uint_value((word.offset+idx), mem_addr_width)}: begin
           bus_${word.name}_rden_s[${idx}] = 1'b1;
         end
 %     endfor
 %   else:
-        ${rslvr._get_uint_value(word.offset*stride, mem_addr_width)}: begin
+        ${rslvr._get_uint_value(word.offset, mem_addr_width)}: begin
           bus_${word.name}_rden_s = 1'b1;
         end
 %   endif
@@ -477,13 +476,13 @@ ${upd}
 % for word, fields in mod.addrspace.iter(fieldfilter=filter_busread):
 %   if word.depth:
 %     for idx in range(word.depth):
-        ${rslvr._get_uint_value((word.offset+idx)*stride, mem_addr_width)}: begin
-          mem_rdata_o = ${get_rd_vec(rslvr, mod.width, fields, idx)}
+        ${rslvr._get_uint_value((word.offset+idx), mem_addr_width)}: begin
+          mem_rdata_o = ${get_rd_vec(rslvr, mem_data_width, fields, idx)}
         end
 %     endfor
 %   else:
-        ${rslvr._get_uint_value(word.offset*stride, mem_addr_width)}: begin
-          mem_rdata_o = ${get_rd_vec(rslvr, mod.width, fields)}
+        ${rslvr._get_uint_value(word.offset, mem_addr_width)}: begin
+          mem_rdata_o = ${get_rd_vec(rslvr, mem_data_width, fields)}
         end
 %   endif
 % endfor

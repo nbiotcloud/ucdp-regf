@@ -245,43 +245,43 @@ module corner_regf ( // tests.test_svmako.RegfMod
         13'h0000: begin
           bus_ctrl_wren_s = 1'b1;
         end
-        13'h0004: begin
+        13'h0001: begin
           bus_txdata_wren_s[0] = 1'b1;
         end
-        13'h0008: begin
+        13'h0002: begin
           bus_txdata_wren_s[1] = 1'b1;
         end
-        13'h000C: begin
+        13'h0003: begin
           bus_txdata_wren_s[2] = 1'b1;
         end
-        13'h0010: begin
+        13'h0004: begin
           bus_txdata_wren_s[3] = 1'b1;
         end
-        13'h0014: begin
+        13'h0005: begin
           bus_txdata_wren_s[4] = 1'b1;
         end
-        13'h0018: begin
+        13'h0006: begin
           bus_dims_wren_s[0] = 1'b1;
         end
-        13'h001C: begin
+        13'h0007: begin
           bus_dims_wren_s[1] = 1'b1;
         end
-        13'h0020: begin
+        13'h0008: begin
           bus_dims_wren_s[2] = 1'b1;
         end
-        13'h0024: begin
+        13'h0009: begin
           bus_guards_wren_s = 1'b1;
         end
-        13'h0024: begin
+        13'h0009: begin
           bus_grddim_wren_s[0] = 1'b1;
         end
-        13'h0028: begin
+        13'h000A: begin
           bus_grddim_wren_s[1] = 1'b1;
         end
-        13'h002C: begin
+        13'h000B: begin
           bus_wide0_wren_s = 1'b1;
         end
-        13'h0030: begin
+        13'h000C: begin
           bus_wide1_wren_s = 1'b1;
         end
         default: begin
@@ -296,43 +296,43 @@ module corner_regf ( // tests.test_svmako.RegfMod
         13'h0000: begin
           bus_ctrl_rden_s = 1'b1;
         end
-        13'h0004: begin
+        13'h0001: begin
           bus_txdata_rden_s[0] = 1'b1;
         end
-        13'h0008: begin
+        13'h0002: begin
           bus_txdata_rden_s[1] = 1'b1;
         end
-        13'h000C: begin
+        13'h0003: begin
           bus_txdata_rden_s[2] = 1'b1;
         end
-        13'h0010: begin
+        13'h0004: begin
           bus_txdata_rden_s[3] = 1'b1;
         end
-        13'h0014: begin
+        13'h0005: begin
           bus_txdata_rden_s[4] = 1'b1;
         end
-        13'h0018: begin
+        13'h0006: begin
           bus_dims_rden_s[0] = 1'b1;
         end
-        13'h001C: begin
+        13'h0007: begin
           bus_dims_rden_s[1] = 1'b1;
         end
-        13'h0020: begin
+        13'h0008: begin
           bus_dims_rden_s[2] = 1'b1;
         end
-        13'h0024: begin
+        13'h0009: begin
           bus_guards_rden_s = 1'b1;
         end
-        13'h0024: begin
+        13'h0009: begin
           bus_grddim_rden_s[0] = 1'b1;
         end
-        13'h0028: begin
+        13'h000A: begin
           bus_grddim_rden_s[1] = 1'b1;
         end
-        13'h002C: begin
+        13'h000B: begin
           bus_wide0_rden_s = 1'b1;
         end
-        13'h0030: begin
+        13'h000C: begin
           bus_wide1_rden_s = 1'b1;
         end
         default: begin
@@ -496,43 +496,43 @@ module corner_regf ( // tests.test_svmako.RegfMod
         13'h0000: begin
           mem_rdata_o = {20'h00000, regf_grpc_ctrl_spec1_rbus_i, data_ctrl_ver_c, regf_grpa_ctrl_status_rbus_i, data_ctrl_start_r, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
         end
-        13'h0004: begin
+        13'h0001: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[0]};
         end
-        13'h0008: begin
+        13'h0002: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[1]};
         end
-        13'h000C: begin
+        13'h0003: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[2]};
         end
-        13'h0010: begin
+        13'h0004: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[3]};
         end
-        13'h0014: begin
+        13'h0005: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[4]};
         end
-        13'h0018: begin
+        13'h0006: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[0], regf_grpc_dims_spec2_rbus_i[0], data_dims_wrval_r[0], regf_dims_roval_rbus_i[0]};
         end
-        13'h001C: begin
+        13'h0007: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[1], regf_grpc_dims_spec2_rbus_i[1], data_dims_wrval_r[1], regf_dims_roval_rbus_i[1]};
         end
-        13'h0020: begin
+        13'h0008: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[2], regf_grpc_dims_spec2_rbus_i[2], data_dims_wrval_r[2], regf_dims_roval_rbus_i[2]};
         end
-        13'h0024: begin
+        13'h0009: begin
           mem_rdata_o = {13'h0000, data_guards_bprio_r, data_guards_cprio_r, data_guards_guard_c_r, data_guards_guard_b_r, data_guards_guard_a_r, data_guards_onetime_r, data_guards_single_r, regf_guards_busonce_rbus_i, regf_guards_coreonce_rbus_i, data_guards_once_r};
         end
-        13'h0024: begin
+        13'h0009: begin
           mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[0], data_grddim_const_c[0], regf_grddim_num_rbus_i[0]};
         end
-        13'h0028: begin
+        13'h000A: begin
           mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[1], data_grddim_const_c[1], regf_grddim_num_rbus_i[1]};
         end
-        13'h002C: begin
+        13'h000B: begin
           mem_rdata_o = {data_wide_b_r, data_wide_a_r};
         end
-        13'h0030: begin
+        13'h000C: begin
           mem_rdata_o = {data_wide_d_r, data_base_r};
         end
         default: begin

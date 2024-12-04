@@ -113,7 +113,7 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
         13'h0000: begin
           bus_ctrl_wren_s = 1'b1;
         end
-        13'h0008: begin
+        13'h0002: begin
           bus_tx_wren_s = 1'b1;
         end
         default: begin
@@ -128,10 +128,10 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
         13'h0000: begin
           bus_ctrl_rden_s = 1'b1;
         end
-        13'h0004: begin
+        13'h0001: begin
           bus_rx_rden_s = 1'b1;
         end
-        13'h0008: begin
+        13'h0002: begin
           bus_tx_rden_s = 1'b1;
         end
         default: begin
@@ -170,10 +170,10 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
         13'h0000: begin
           mem_rdata_o = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
         end
-        13'h0004: begin
+        13'h0001: begin
           mem_rdata_o = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
         end
-        13'h0008: begin
+        13'h0002: begin
           mem_rdata_o = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
         end
         default: begin
