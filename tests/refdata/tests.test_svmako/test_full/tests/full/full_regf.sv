@@ -3129,82 +3129,82 @@ module full_regf ( // tests.test_svmako.RegfMod
     // write decode
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b1)) begin
       case (mem_addr_i)
-        13'h0030: begin
+        13'h000C: begin
           bus_w12_wren_s = 1'b1;
         end
-        13'h0034: begin
+        13'h000D: begin
           bus_w13_wren_s = 1'b1;
         end
-        13'h0038: begin
+        13'h000E: begin
           bus_w14_wren_s = 1'b1;
         end
-        13'h003C: begin
+        13'h000F: begin
           bus_w15_wren_s = 1'b1;
         end
-        13'h0040: begin
+        13'h0010: begin
           bus_w16_wren_s = 1'b1;
         end
-        13'h0044: begin
+        13'h0011: begin
           bus_w17_wren_s = 1'b1;
         end
-        13'h0048: begin
+        13'h0012: begin
           bus_w18_wren_s = 1'b1;
         end
-        13'h004C: begin
+        13'h0013: begin
           bus_w19_wren_s = 1'b1;
         end
-        13'h0050: begin
+        13'h0014: begin
           bus_w20_wren_s = 1'b1;
         end
-        13'h0054: begin
+        13'h0015: begin
           bus_w21_wren_s = 1'b1;
         end
-        13'h0058: begin
+        13'h0016: begin
           bus_w22_wren_s = 1'b1;
         end
-        13'h005C: begin
+        13'h0017: begin
           bus_w23_wren_s = 1'b1;
         end
-        13'h0060: begin
+        13'h0018: begin
           bus_w24_wren_s = 1'b1;
         end
-        13'h0064: begin
+        13'h0019: begin
           bus_w25_wren_s = 1'b1;
         end
-        13'h0068: begin
+        13'h001A: begin
           bus_w26_wren_s = 1'b1;
         end
-        13'h006C: begin
+        13'h001B: begin
           bus_w27_wren_s = 1'b1;
         end
-        13'h0070: begin
+        13'h001C: begin
           bus_w28_wren_s = 1'b1;
         end
-        13'h0074: begin
+        13'h001D: begin
           bus_w29_wren_s = 1'b1;
         end
-        13'h0078: begin
+        13'h001E: begin
           bus_w30_wren_s = 1'b1;
         end
-        13'h007C: begin
+        13'h001F: begin
           bus_w31_wren_s = 1'b1;
         end
-        13'h0080: begin
+        13'h0020: begin
           bus_w32_wren_s = 1'b1;
         end
-        13'h0084: begin
+        13'h0021: begin
           bus_w33_wren_s = 1'b1;
         end
-        13'h0088: begin
+        13'h0022: begin
           bus_w34_wren_s = 1'b1;
         end
-        13'h008C: begin
+        13'h0023: begin
           bus_w35_wren_s = 1'b1;
         end
-        13'h0090: begin
+        13'h0024: begin
           bus_w36_wren_s = 1'b1;
         end
-        13'h0094: begin
+        13'h0025: begin
           bus_w37_wren_s = 1'b1;
         end
         default: begin
@@ -3216,76 +3216,76 @@ module full_regf ( // tests.test_svmako.RegfMod
     // read decode
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        13'h0008: begin
+        13'h0002: begin
           bus_w2_rden_s = 1'b1;
         end
-        13'h000C: begin
+        13'h0003: begin
           bus_w3_rden_s = 1'b1;
         end
-        13'h0010: begin
+        13'h0004: begin
           bus_w4_rden_s = 1'b1;
         end
-        13'h0014: begin
+        13'h0005: begin
           bus_w5_rden_s = 1'b1;
         end
-        13'h0018: begin
+        13'h0006: begin
           bus_w6_rden_s = 1'b1;
         end
-        13'h001C: begin
+        13'h0007: begin
           bus_w7_rden_s = 1'b1;
         end
-        13'h0020: begin
+        13'h0008: begin
           bus_w8_rden_s = 1'b1;
         end
-        13'h0024: begin
+        13'h0009: begin
           bus_w9_rden_s = 1'b1;
         end
-        13'h0028: begin
+        13'h000A: begin
           bus_w10_rden_s = 1'b1;
         end
-        13'h002C: begin
+        13'h000B: begin
           bus_w11_rden_s = 1'b1;
         end
-        13'h0030: begin
+        13'h000C: begin
           bus_w12_rden_s = 1'b1;
         end
-        13'h0064: begin
+        13'h0019: begin
           bus_w25_rden_s = 1'b1;
         end
-        13'h0068: begin
+        13'h001A: begin
           bus_w26_rden_s = 1'b1;
         end
-        13'h006C: begin
+        13'h001B: begin
           bus_w27_rden_s = 1'b1;
         end
-        13'h0070: begin
+        13'h001C: begin
           bus_w28_rden_s = 1'b1;
         end
-        13'h0074: begin
+        13'h001D: begin
           bus_w29_rden_s = 1'b1;
         end
-        13'h0078: begin
+        13'h001E: begin
           bus_w30_rden_s = 1'b1;
         end
-        13'h007C: begin
+        13'h001F: begin
           bus_w31_rden_s = 1'b1;
         end
-        13'h0080: begin
+        13'h0020: begin
           bus_w32_rden_s = 1'b1;
         end
-        13'h0084: begin
+        13'h0021: begin
           bus_w33_rden_s = 1'b1;
         end
-        13'h0088: begin
+        13'h0022: begin
           bus_w34_rden_s = 1'b1;
         end
-        13'h008C: begin
+        13'h0023: begin
           bus_w35_rden_s = 1'b1;
         end
-        13'h0090: begin
+        13'h0024: begin
           bus_w36_rden_s = 1'b1;
         end
-        13'h0094: begin
+        13'h0025: begin
           bus_w37_rden_s = 1'b1;
         end
         default: begin
@@ -5022,76 +5022,76 @@ module full_regf ( // tests.test_svmako.RegfMod
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        13'h0008: begin
+        13'h0002: begin
           mem_rdata_o = {data_w2_f30_r, regf_w2_f28_rbus_i, data_w2_f26_r, regf_w2_f24_rbus_i, data_w2_f22_r, regf_w2_f20_rbus_i, data_w2_f18_r, regf_w2_f16_rbus_i, data_w2_f14_c, data_w2_f12_r, regf_w2_f10_rbus_i, data_w2_f8_r, regf_w2_f6_rbus_i, data_w2_f4_r, regf_w2_f2_rbus_i, data_w2_f0_c};
         end
-        13'h000C: begin
+        13'h0003: begin
           mem_rdata_o = {data_w3_f30_r, regf_w3_f28_rbus_i, data_w3_f26_r, regf_w3_f24_rbus_i, data_w3_f22_r, regf_w3_f20_rbus_i, data_w3_f18_r, regf_w3_f16_rbus_i, data_w3_f14_r, regf_w3_f12_rbus_i, data_w3_f10_r, regf_w3_f8_rbus_i, data_w3_f6_r, regf_w3_f4_rbus_i, data_w3_f2_r, regf_w3_f0_rbus_i};
         end
-        13'h0010: begin
+        13'h0004: begin
           mem_rdata_o = {data_w4_f30_r, regf_w4_f28_rbus_i, data_w4_f26_r, regf_w4_f24_rbus_i, data_w4_f22_r, regf_w4_f20_rbus_i, data_w4_f18_r, regf_w4_f16_rbus_i, data_w4_f14_r, regf_w4_f12_rbus_i, data_w4_f10_r, regf_w4_f8_rbus_i, data_w4_f6_r, regf_w4_f4_rbus_i, data_w4_f2_r, regf_w4_f0_rbus_i};
         end
-        13'h0014: begin
+        13'h0005: begin
           mem_rdata_o = {data_w5_f30_r, regf_w5_f28_rbus_i, data_w5_f26_r, regf_w5_f24_rbus_i, data_w5_f22_r, regf_w5_f20_rbus_i, data_w5_f18_r, regf_w5_f16_rbus_i, data_w5_f14_r, regf_w5_f12_rbus_i, data_w5_f10_r, regf_w5_f8_rbus_i, data_w5_f6_r, regf_w5_f4_rbus_i, data_w5_f2_r, regf_w5_f0_rbus_i};
         end
-        13'h0018: begin
+        13'h0006: begin
           mem_rdata_o = {data_w6_f30_r, regf_w6_f28_rbus_i, data_w6_f26_r, regf_w6_f24_rbus_i, data_w6_f22_r, regf_w6_f20_rbus_i, data_w6_f18_r, regf_w6_f16_rbus_i, data_w6_f14_r, regf_w6_f12_rbus_i, data_w6_f10_r, regf_w6_f8_rbus_i, data_w6_f6_r, regf_w6_f4_rbus_i, data_w6_f2_r, regf_w6_f0_rbus_i};
         end
-        13'h001C: begin
+        13'h0007: begin
           mem_rdata_o = {data_w7_f30_r, regf_w7_f28_rbus_i, data_w7_f26_r, regf_w7_f24_rbus_i, data_w7_f22_r, regf_w7_f20_rbus_i, data_w7_f18_r, regf_w7_f16_rbus_i, data_w7_f14_r, regf_w7_f12_rbus_i, data_w7_f10_r, regf_w7_f8_rbus_i, data_w7_f6_r, regf_w7_f4_rbus_i, data_w7_f2_r, regf_w7_f0_rbus_i};
         end
-        13'h0020: begin
+        13'h0008: begin
           mem_rdata_o = {data_w8_f30_r, regf_w8_f28_rbus_i, data_w8_f26_r, regf_w8_f24_rbus_i, data_w8_f22_r, regf_w8_f20_rbus_i, data_w8_f18_r, regf_w8_f16_rbus_i, data_w8_f14_r, regf_w8_f12_rbus_i, data_w8_f10_r, regf_w8_f8_rbus_i, data_w8_f6_r, regf_w8_f4_rbus_i, data_w8_f2_r, regf_w8_f0_rbus_i};
         end
-        13'h0024: begin
+        13'h0009: begin
           mem_rdata_o = {data_w9_f30_r, regf_w9_f28_rbus_i, data_w9_f26_r, regf_w9_f24_rbus_i, data_w9_f22_r, regf_w9_f20_rbus_i, data_w9_f18_r, regf_w9_f16_rbus_i, data_w9_f14_r, regf_w9_f12_rbus_i, data_w9_f10_r, regf_w9_f8_rbus_i, data_w9_f6_r, regf_w9_f4_rbus_i, data_w9_f2_r, regf_w9_f0_rbus_i};
         end
-        13'h0028: begin
+        13'h000A: begin
           mem_rdata_o = {data_w10_f30_r, regf_w10_f28_rbus_i, data_w10_f26_c, data_w10_f24_r, regf_w10_f22_rbus_i, data_w10_f20_r, regf_w10_f18_rbus_i, data_w10_f16_r, regf_w10_f14_rbus_i, data_w10_f12_c, data_w10_f10_r, regf_w10_f8_rbus_i, data_w10_f6_r, regf_w10_f4_rbus_i, data_w10_f2_r, regf_w10_f0_rbus_i};
         end
-        13'h002C: begin
+        13'h000B: begin
           mem_rdata_o = {data_w11_f30_r, regf_w11_f28_rbus_i, data_w11_f26_r, regf_w11_f24_rbus_i, data_w11_f22_r, regf_w11_f20_rbus_i, data_w11_f18_r, regf_w11_f16_rbus_i, data_w11_f14_r, regf_w11_f12_rbus_i, data_w11_f10_r, regf_w11_f8_rbus_i, data_w11_f6_r, regf_w11_f4_rbus_i, data_w11_f2_r, regf_w11_f0_rbus_i};
         end
-        13'h0030: begin
+        13'h000C: begin
           mem_rdata_o = {20'h00000, data_w12_f10_r, regf_w12_f8_rbus_i, data_w12_f6_r, regf_w12_f4_rbus_i, data_w12_f2_r, regf_w12_f0_rbus_i};
         end
-        13'h0064: begin
+        13'h0019: begin
           mem_rdata_o = {data_w25_f30_r, regf_w25_f28_rbus_i, data_w25_f26_r, regf_w25_f24_rbus_i, data_w25_f22_r, regf_w25_f20_rbus_i, data_w25_f18_r, regf_w25_f16_rbus_i, data_w25_f14_r, regf_w25_f12_rbus_i, data_w25_f10_r, regf_w25_f8_rbus_i, data_w25_f6_r, regf_w25_f4_rbus_i, 4'h0};
         end
-        13'h0068: begin
+        13'h001A: begin
           mem_rdata_o = {data_w26_f30_r, regf_w26_f28_rbus_i, data_w26_f26_r, regf_w26_f24_rbus_i, data_w26_f22_r, regf_w26_f20_rbus_i, data_w26_f18_r, regf_w26_f16_rbus_i, data_w26_f14_r, regf_w26_f12_rbus_i, data_w26_f10_r, regf_w26_f8_rbus_i, data_w26_f6_r, regf_w26_f4_rbus_i, data_w26_f2_r, regf_w26_f0_rbus_i};
         end
-        13'h006C: begin
+        13'h001B: begin
           mem_rdata_o = {data_w27_f30_r, regf_w27_f28_rbus_i, data_w27_f26_r, regf_w27_f24_rbus_i, data_w27_f22_r, regf_w27_f20_rbus_i, data_w27_f18_r, regf_w27_f16_rbus_i, data_w27_f14_r, regf_w27_f12_rbus_i, data_w27_f10_r, regf_w27_f8_rbus_i, data_w27_f6_r, regf_w27_f4_rbus_i, data_w27_f2_r, regf_w27_f0_rbus_i};
         end
-        13'h0070: begin
+        13'h001C: begin
           mem_rdata_o = {data_w28_f30_r, regf_w28_f28_rbus_i, data_w28_f26_r, regf_w28_f24_rbus_i, data_w28_f22_r, regf_w28_f20_rbus_i, data_w28_f18_r, regf_w28_f16_rbus_i, data_w28_f14_r, regf_w28_f12_rbus_i, data_w28_f10_r, regf_w28_f8_rbus_i, data_w28_f6_r, regf_w28_f4_rbus_i, data_w28_f2_r, regf_w28_f0_rbus_i};
         end
-        13'h0074: begin
+        13'h001D: begin
           mem_rdata_o = {data_w29_f30_r, regf_w29_f28_rbus_i, data_w29_f26_r, regf_w29_f24_rbus_i, data_w29_f22_r, regf_w29_f20_rbus_i, data_w29_f18_r, regf_w29_f16_rbus_i, data_w29_f14_r, regf_w29_f12_rbus_i, data_w29_f10_r, regf_w29_f8_rbus_i, data_w29_f6_r, regf_w29_f4_rbus_i, data_w29_f2_r, regf_w29_f0_rbus_i};
         end
-        13'h0078: begin
+        13'h001E: begin
           mem_rdata_o = {data_w30_f30_r, regf_w30_f28_rbus_i, data_w30_f26_r, regf_w30_f24_rbus_i, data_w30_f22_r, regf_w30_f20_rbus_i, data_w30_f18_r, regf_w30_f16_rbus_i, data_w30_f14_r, regf_w30_f12_rbus_i, data_w30_f10_r, regf_w30_f8_rbus_i, data_w30_f6_r, regf_w30_f4_rbus_i, data_w30_f2_r, regf_w30_f0_rbus_i};
         end
-        13'h007C: begin
+        13'h001F: begin
           mem_rdata_o = {data_w31_f30_r, regf_w31_f28_rbus_i, data_w31_f26_r, regf_w31_f24_rbus_i, data_w31_f22_r, regf_w31_f20_rbus_i, data_w31_f18_r, regf_w31_f16_rbus_i, data_w31_f14_r, regf_w31_f12_rbus_i, data_w31_f10_r, regf_w31_f8_rbus_i, data_w31_f6_r, regf_w31_f4_rbus_i, data_w31_f2_r, regf_w31_f0_rbus_i};
         end
-        13'h0080: begin
+        13'h0020: begin
           mem_rdata_o = {data_w32_f30_r, regf_w32_f28_rbus_i, data_w32_f26_r, regf_w32_f24_rbus_i, data_w32_f22_r, regf_w32_f20_rbus_i, data_w32_f18_r, regf_w32_f16_rbus_i, data_w32_f14_r, regf_w32_f12_rbus_i, data_w32_f10_r, regf_w32_f8_rbus_i, data_w32_f6_r, regf_w32_f4_rbus_i, data_w32_f2_r, regf_w32_f0_rbus_i};
         end
-        13'h0084: begin
+        13'h0021: begin
           mem_rdata_o = {data_w33_f30_r, regf_w33_f28_rbus_i, data_w33_f26_r, regf_w33_f24_rbus_i, data_w33_f22_r, regf_w33_f20_rbus_i, data_w33_f18_r, regf_w33_f16_rbus_i, data_w33_f14_r, regf_w33_f12_rbus_i, data_w33_f10_r, regf_w33_f8_rbus_i, data_w33_f6_r, regf_w33_f4_rbus_i, data_w33_f2_r, regf_w33_f0_rbus_i};
         end
-        13'h0088: begin
+        13'h0022: begin
           mem_rdata_o = {data_w34_f30_r, regf_w34_f28_rbus_i, data_w34_f26_r, regf_w34_f24_rbus_i, data_w34_f22_r, regf_w34_f20_rbus_i, data_w34_f18_r, regf_w34_f16_rbus_i, data_w34_f14_r, regf_w34_f12_rbus_i, data_w34_f10_r, regf_w34_f8_rbus_i, data_w34_f6_r, regf_w34_f4_rbus_i, data_w34_f2_r, regf_w34_f0_rbus_i};
         end
-        13'h008C: begin
+        13'h0023: begin
           mem_rdata_o = {data_w35_f30_r, regf_w35_f28_rbus_i, data_w35_f26_r, regf_w35_f24_rbus_i, data_w35_f22_r, regf_w35_f20_rbus_i, data_w35_f18_r, regf_w35_f16_rbus_i, data_w35_f14_r, regf_w35_f12_rbus_i, data_w35_f10_r, regf_w35_f8_rbus_i, data_w35_f6_r, regf_w35_f4_rbus_i, data_w35_f2_r, regf_w35_f0_rbus_i};
         end
-        13'h0090: begin
+        13'h0024: begin
           mem_rdata_o = {data_w36_f30_r, regf_w36_f28_rbus_i, data_w36_f26_r, regf_w36_f24_rbus_i, data_w36_f22_r, regf_w36_f20_rbus_i, data_w36_f18_r, regf_w36_f16_rbus_i, data_w36_f14_r, regf_w36_f12_rbus_i, data_w36_f10_r, regf_w36_f8_rbus_i, data_w36_f6_r, regf_w36_f4_rbus_i, data_w36_f2_r, regf_w36_f0_rbus_i};
         end
-        13'h0094: begin
+        13'h0025: begin
           mem_rdata_o = {4'h0, data_w37_f26_r, regf_w37_f24_rbus_i, data_w37_f22_r, regf_w37_f20_rbus_i, data_w37_f18_r, regf_w37_f16_rbus_i, data_w37_f14_r, regf_w37_f12_rbus_i, data_w37_f10_r, regf_w37_f8_rbus_i, data_w37_f6_r, regf_w37_f4_rbus_i, data_w37_f2_r, regf_w37_f0_rbus_i};
         end
         default: begin
