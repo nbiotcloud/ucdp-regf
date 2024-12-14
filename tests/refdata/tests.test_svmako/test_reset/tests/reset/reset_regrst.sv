@@ -150,7 +150,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
   // ------------------------------------------------------
   //  Output Assignments
   // ------------------------------------------------------
-  assign regf_ctrl_clrall_wbus_o = (bus_ctrl_wren_s == 1'b1) ? mem_wdata_i[0] : 1'h0;
+  assign regf_ctrl_clrall_wbus_o = (bus_ctrl_wren_s == 1'b1) ? mem_wdata_i[0] : 1'b0;
   assign regf_ctrl_clrall_wr_o   = (bus_ctrl_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_ctrl_ena_rval_o    = data_ctrl_ena_r;
 

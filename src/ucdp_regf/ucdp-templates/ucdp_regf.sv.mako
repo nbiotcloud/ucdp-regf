@@ -126,15 +126,16 @@ def get_rd_vec(rslvr: usv.SvExprResolver, width: int, fields: [Field], idx: None
   for field in fields:
     if (r := field.slice.right) > offs:  # leading rsvd bits
       vec.append(rslvr._get_uint_value(0, r-offs))
+    if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
+      flddata = "unsigned'({fldval})"
+    else:
+      flddata = "{fldval}"
     if field.in_regf:
-      if field.is_const:
-        vec.append(f"data_{field.signame}_c{slc}")
-      else:
-        vec.append(f"data_{field.signame}_r{slc}")
+      vec.append(flddata.format(fldval=f"data_{field.signame}_{'c' if field.is_const else 'r'}{slc}"))
     elif field.portgroups:  # from core: handle special naming; non-in_regf field cannot be part of more than 1 portgroup
-      vec.append(f"regf_{field.portgroups[0]}_{field.signame}_rbus_i{slc}")
+      vec.append(flddata.format(fldval=f"regf_{field.portgroups[0]}_{field.signame}_rbus_i{slc}"))
     else:  # from core: std names
-      vec.append(f"regf_{field.signame}_rbus_i{slc}")
+      vec.append(flddata.format(fldval=f"regf_{field.signame}_rbus_i{slc}"))
     offs = field.slice.left + 1
   if offs < width:  # trailing rsvd bits
     vec.append(rslvr._get_uint_value(0, width-offs))
@@ -188,7 +189,10 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
           buswren = f"({' && '.join(buswren)})"
         else:
           buswren = buswren[0]
-        wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"data_{field.signame}_r{{slc}}", f"mem_wdata_i{rslvr.resolve_slice(field.slice)}")
+        memwdata = f"mem_wdata_i{rslvr.resolve_slice(field.slice)}"
+        if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
+          memwdata = f"signed'({memwdata})"
+        wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"data_{field.signame}_r{{slc}}", memwdata)
         upd_bus.append(f"if {buswren} begin\n  data_{field.signame}_r{{slc}} <= {ff_dly}{wrexpr};\nend")
         upd_strb.append(f"bus_{word.name}_wren_s{{slc}}")
       if field.bus and field.bus.read and field.bus.read.data is not None:
@@ -311,10 +315,13 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
             buswren = buswren[0]
           wbus_o = f"regf_{{grp}}{field.signame}_wbus_o{{slc}}"
           wr_o = f"regf_{{grp}}{field.signame}_wr_o{{slc}}"
-          zval = rslvr._get_uint_value(0, field.slice.width)
+          zval = f"{rslvr._resolve_value(field.type_, value=0)}"
+          memwdata = f"mem_wdata_i{rslvr.resolve_slice(field.slice)}"
+          if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
+            memwdata = f"signed'({memwdata})"
           if field.portgroups:
             for grp in field.portgroups:
-              wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{grp}_{field.signame}_rbus_i", f"mem_wdata_i[{field.slice}]")
+              wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{grp}_{field.signame}_rbus_i", memwdata)
               if word.depth:
                 for idx in range(word.depth):
                   wrencond = buswren.format(slc=f"[{idx}]")
@@ -325,7 +332,7 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
                 aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wbus_o", f"= {wrencond} ? {wrexpr} : {zval};")
                 aligntext.add_row("assign", f"regf_{grp}_{field.signame}_wr_o", f"= {wrencond} ? 1'b1 : 1'b0;")
           else:
-            wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{field.signame}_rbus_i", f"mem_wdata_i[{field.slice}]")
+            wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"regf_{field.signame}_rbus_i", memwdata)
             if word.depth:
               for idx in range(word.depth):
                 wrencond = buswren.format(slc=f"[{idx}]")
