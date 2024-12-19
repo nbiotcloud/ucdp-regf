@@ -74,7 +74,7 @@ def checkdeps(session: nox.Session) -> None:
     if not IS_DEV:
         session.run_install("pip", "install", f"pdm=={PDM_VERSION}")
         session.run_install("pdm", "install")
-    session.run("python", "-c", "import ucdp")
+    session.run("python", "-c", "import ucdp_regf")
 
 
 @nox.session(python=PYTHON)

@@ -1,5 +1,5 @@
 site_name: UCDP-REGF
-site_description: Unified Chip Design Platform
+site_description: Unified Chip Design Platform - Register File
 site_url: https://ucdp-regf.readthedocs.io/en
 repo_url: https://github.com/nbiotcloud/ucdp-regf
 #strict: true
