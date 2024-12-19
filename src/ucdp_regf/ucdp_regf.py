@@ -90,6 +90,10 @@ class Word(_addrspace.Word):
     """Default Implementation within Regf."""
     upd_prio: Prio | None = None
     """Update Priority: None, 'b'us or 'c'core."""
+    upd_strb: bool = False
+    """Update strobe towards core."""
+    wr_guard: str | None = None
+    """Write guard name (must be unique)."""
 
     def _create_field(
         self,
@@ -100,7 +104,7 @@ class Word(_addrspace.Word):
         signame=None,
         in_regf=None,
         upd_prio=None,
-        upd_strb=False,
+        upd_strb=None,
         wr_guard=None,
         **kwargs,
     ) -> Field:
@@ -116,6 +120,10 @@ class Word(_addrspace.Word):
             in_regf = get_in_regf(bus, core)
         if upd_prio is None:
             upd_prio = self.upd_prio
+        if upd_strb is None:
+            upd_strb = self.upd_strb
+        if wr_guard is None:
+            wr_guard = self.wr_guard
         field = Field(
             name=name,
             bus=bus,
@@ -171,16 +179,23 @@ class Addrspace(_addrspace.Addrspace):
 
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
-
     upd_prio: Prio | None = None
     """Update Priority: None, 'bus' or 'core'."""
+    upd_strb: bool = False
+    """Update strobe towards core."""
+    wr_guard: str | None = None
+    """Write guard name (must be unique)."""
 
-    def _create_word(self, portgroups=None, upd_prio=None, **kwargs) -> Word:
+    def _create_word(self, portgroups=None, upd_prio=None, upd_strb=None, wr_guard=None, **kwargs) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
         if upd_prio is None:
             upd_prio = self.upd_prio
-        return Word(portgroups=portgroups, upd_prio=upd_prio, **kwargs)
+        if upd_strb is None:
+            upd_strb = self.upd_strb
+        if wr_guard is None:
+            wr_guard = self.wr_guard
+        return Word(portgroups=portgroups, upd_prio=upd_prio, upd_strb=upd_strb, wr_guard=wr_guard, **kwargs)
 
     def _create_words(self, **kwargs) -> Words:
         return Words.create(**kwargs)
@@ -217,6 +232,16 @@ class UcdpRegfMod(u.ATailoredMod):
     depth: int = 1024
     """Number of words."""
 
+    # Replicated from Addrspace
+    portgroups: tuple[str, ...] | None = None
+    """Default Portgroups for Words."""
+    upd_prio: Prio | None = None
+    """Update Priority: None, 'bus' or 'core'."""
+    upd_strb: bool = False
+    """Update strobe towards core."""
+    wr_guard: str | None = None
+    """Write guard name (must be unique)."""
+
     filelists: ClassVar[u.ModFileLists] = (
         u.ModFileList(
             name="hdl",
@@ -231,7 +256,20 @@ class UcdpRegfMod(u.ATailoredMod):
     @cached_property
     def addrspace(self) -> Addrspace:
         """Address Space."""
-        return Addrspace(name=self.hiername, width=self.width, depth=self.depth)
+        return Addrspace(
+            name=self.hiername,
+            width=self.width,
+            depth=self.depth,
+            portgroups=self.portgroups,
+            upd_prio=self.upd_prio,
+            upd_strb=self.upd_strb,
+            wr_guard=self.wr_guard,
+        )
+
+    @cached_property
+    def regfiotype(self) -> u.DynamicStructType:
+        """IO-Type With All Core Signals."""
+        return _get_regfiotype(self.addrspace)
 
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
@@ -240,8 +278,7 @@ class UcdpRegfMod(u.ATailoredMod):
         self.add_port(memiotype, "mem_i")
 
     def _build_dep(self):
-        regfiotype = _get_regfiotype(self.addrspace)
-        self.add_port(regfiotype, "regf_o")
+        self.add_port(self.regfiotype, "regf_o")
         if self.parent:
             _create_route(self, self.addrspace)
         self._add_const_decls()
@@ -439,11 +476,12 @@ def _create_route(mod: u.BaseMod, addrspace: Addrspace) -> None:
     for word in addrspace.words:
         for field in word.fields:
             if field.route:
-                regfportname = _get_route_regfportname(field)
+                regfportname = get_regfportname(field)
                 mod.parent.route(u.RoutePath(expr=regfportname, path=mod.name), field.route)
 
 
-def _get_route_regfportname(field: Field) -> str:
+def get_regfportname(field: Field) -> str:
+    """Determine Name of Portname."""
     portgroups = field.portgroups
     basename = f"regf_{field.signame}_" if not portgroups else f"regf_{portgroups[0]}_{field.signame}_"
     iotype = FieldIoType(field=field)
