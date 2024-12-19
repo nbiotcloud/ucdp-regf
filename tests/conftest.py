@@ -3,8 +3,9 @@
 from pathlib import Path
 
 import ucdp as u
-import ucdp_regf
 from pytest import fixture
+
+import ucdp_regf
 
 EXAMPLES_PATH = Path(ucdp_regf.__file__).parent / "examples"
 

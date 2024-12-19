@@ -16,7 +16,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: pip install --no-cache-dir nox
+        run: pip install --no-cache-dir nox==2024.10.9
       - name: Install Verilator
         run: sudo apt install verilator
       - name: NOX
@@ -39,7 +39,7 @@ jobs:
         with:
           python-version: ${{ matrix.python-version }}
       - name: Install dependencies
-        run: pip install --no-cache-dir nox
+        run: pip install --no-cache-dir nox==2024.10.9
       - name: Upload coverage data to coveralls.io
         run: nox -s dev -- coveralls --service=github --finish
         env:

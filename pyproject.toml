@@ -49,6 +49,10 @@ dependencies = [
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
 
+[tool.pdm.version]
+source = "scm"
+fallback_version = "0.0.0"
+
 [tool.pdm]
 [tool.pdm.dev-dependencies]
 format = [
@@ -76,10 +80,6 @@ doc = [
 
 [tool.pdm.build]
 includes = ["src/ucdp_regf"]
-
-[tool.pdm.version]
-source = "scm"
-fallback_version = "0.0.0"
 
 [tool.ruff]
 line-length = 120
@@ -187,7 +187,7 @@ addopts ="""
     --doctest-modules
     --ignore=noxfile.py
     --ignore-glob=tests/testdata*
-    --log-level=DEBUG
+    --log-level=INFO
     --junitxml=report.xml
 """
 filterwarnings = [
