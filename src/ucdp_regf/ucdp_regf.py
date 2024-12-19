@@ -35,6 +35,7 @@ from typing import ClassVar, Literal, TypeAlias
 import ucdp as u
 from icdutil.num import calc_unsigned_width
 from tabulate import tabulate
+from ucdp_addr import Addrspaces, Defines
 from ucdp_addr import addrspace as _addrspace
 from ucdp_glbl.mem import MemIoType
 
@@ -414,6 +415,10 @@ class UcdpRegfMod(u.ATailoredMod):
                 )
         headers = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         return tabulate(data, headers=headers)
+
+    def get_addrspaces(self, defines: Defines | None = None) -> Addrspaces:
+        """Yield Address Space."""
+        yield self.addrspace
 
 
 def _get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
