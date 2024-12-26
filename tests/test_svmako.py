@@ -139,8 +139,6 @@ class CornerMod(u.AMod):
         regf = RegfMod(self, "u_regf")
         regf.con("main_i", "main_i")
 
-        regf.add_port(u.ArrayType(u.ArrayType(u.UintType(5), 3), 7), "spec_i")
-
         word = regf.add_word("ctrl")
         word.add_field("ena", u.EnaType(), "RW")
         word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy_s)")
@@ -174,9 +172,8 @@ class CornerMod(u.AMod):
             upd_prio="core",
         )
 
-        word = regf.add_word("guards", in_regf=True, depth=0)
-        wronce = _addrspace.WriteOp(name="W", write="", once=True, title="WrOnce", descr="Write Once")
-        busacc = _addrspace.Access(name="WP", read=_addrspace._R, write=wronce)
+        word = regf.add_word("guards", in_regf=True, depth=1)
+        busacc = _addrspace.Access(name="WP", read=_addrspace._R, write=_addrspace._WL)
         word.add_field("once", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.ena & ctrl.busy")
         word.add_field("coreonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)
         word.add_field("busonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)

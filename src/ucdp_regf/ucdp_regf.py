@@ -222,6 +222,11 @@ def filter_busread(field: Field):
     return field.bus and field.bus.read
 
 
+def filter_rdmod(field: Field):
+    """Fields requiring extra read-enable."""
+    return field.bus and field.bus.read and field.bus.read.data is not None
+
+
 wf_ident = re.compile(r"(?P<word>\w+)\.(?P<field>\w+)")
 
 
@@ -374,7 +379,7 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
         cmt = "bus word read enables"
-        for word, _ in self.addrspace.iter(fieldfilter=filter_busread):
+        for word, _ in self.addrspace.iter(fieldfilter=filter_rdmod):
             signame = f"bus_{word.name}_rden_s"
             type_ = u.BitType()
             if word.depth:
@@ -434,6 +439,8 @@ class UcdpRegfMod(u.ATailoredMod):
     def get_overview(self) -> str:
         """Overview."""
         data = []
+        accs = []
+        fldaccs = set()
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
             data.append((f"+{word.slice}", word.name, "", "", "", "", ""))
@@ -450,8 +457,23 @@ class UcdpRegfMod(u.ATailoredMod):
                         impl,
                     )
                 )
+                if fbus := field.bus:
+                    fldaccs.add(fbus)
+                if fcore := field.core:
+                    fldaccs.add(fcore)
         headers = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
-        return tabulate(data, headers=headers)
+        regovr = tabulate(data, headers=headers)
+        for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name):
+            accs.append(  # noqa: PERF401
+                (
+                    fldacc.name,
+                    (fldacc.read and fldacc.read.title) or "",
+                    (fldacc.write and fldacc.write.title) or "",
+                )
+            )
+        headers = ("Mnemonic", "ReadOp", "WriteOp")
+        accovr = tabulate(accs, headers=headers)
+        return regovr + "\n\n\n" + accovr
 
     def get_addrspaces(self, defines: Defines | None = None) -> Addrspaces:
         """Yield Address Space."""
@@ -515,7 +537,7 @@ class FieldIoType(u.AStructType):
                     self._add("rval", field.type_, comment="Core Read Value")
                     if corerd.data is not None:
                         self._add("rd", u.BitType(), u.BWD, comment="Core Read Strobe")
-                if corewr:
+                if corewr:  # TODO: check whether field is read at all (regf or core)
                     if corewr.write is not None:
                         self._add("wval", field.type_, u.BWD, comment="Core Write Value")
                     if corewr.write is not None or corewr.op is not None:
@@ -529,10 +551,6 @@ class FieldIoType(u.AStructType):
                 self._add("rbus", field.type_, u.BWD, comment="Bus Read Value")
             if busrd and busrd.data is not None:
                 self._add("rd", u.BitType(), comment="Bus Read Strobe")
-            # if busrd:
-            #     self._add("rbus", field.type_, u.BWD, comment="Bus Read Value")
-            #     if busrd.data is not None:
-            #         self._add("rd", u.BitType(), comment="Bus Read Strobe")
             if buswr:
                 self._add("wbus", field.type_, comment="Bus Write Value")
                 self._add("wr", u.BitType(), comment="Bus Write Strobe")
