@@ -679,6 +679,27 @@
 //           [25:24]  .f24     RWL/RWL     0x0      False    core
 //           [27:26]  .f26     RWL/RWL     0x0      False    regf
 //
+//
+// Mnemonic    ReadOp          WriteOp
+// ----------  --------------  ----------------
+// RC          Read-Clear
+// RO          Read
+// RP          Read-Protected
+// RS          Read-Set
+// RT          Read-Toggle
+// RW          Read            Write
+// RW0C        Read            Write-Zero-Clear
+// RW0S        Read            Write-Zero-Set
+// RW1C        Read            Write-One-Clear
+// RW1S        Read            Write-One-Set
+// RWL         Read            Write Locked
+// W0C                         Write-Zero-Clear
+// W0S                         Write-Zero-Set
+// W1C                         Write-One-Clear
+// W1S                         Write-One-Set
+// WL                          Write Locked
+// WO                          Write
+//
 // =============================================================================
 
 `begin_keywords "1800-2009"
@@ -3047,30 +3068,13 @@ module full_regf ( // tests.test_svmako.RegfMod
   logic       bus_w35_wren_s;
   logic       bus_w36_wren_s;
   logic       bus_w37_wren_s;
-  logic       bus_w2_rden_s;    // bus word read enables
-  logic       bus_w3_rden_s;
-  logic       bus_w4_rden_s;
+  logic       bus_w4_rden_s;    // bus word read enables
   logic       bus_w5_rden_s;
   logic       bus_w6_rden_s;
   logic       bus_w7_rden_s;
   logic       bus_w8_rden_s;
   logic       bus_w9_rden_s;
   logic       bus_w10_rden_s;
-  logic       bus_w11_rden_s;
-  logic       bus_w12_rden_s;
-  logic       bus_w25_rden_s;
-  logic       bus_w26_rden_s;
-  logic       bus_w27_rden_s;
-  logic       bus_w28_rden_s;
-  logic       bus_w29_rden_s;
-  logic       bus_w30_rden_s;
-  logic       bus_w31_rden_s;
-  logic       bus_w32_rden_s;
-  logic       bus_w33_rden_s;
-  logic       bus_w34_rden_s;
-  logic       bus_w35_rden_s;
-  logic       bus_w36_rden_s;
-  logic       bus_w37_rden_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -3101,8 +3105,6 @@ module full_regf ( // tests.test_svmako.RegfMod
     bus_w35_wren_s = 1'b0;
     bus_w36_wren_s = 1'b0;
     bus_w37_wren_s = 1'b0;
-    bus_w2_rden_s  = 1'b0;
-    bus_w3_rden_s  = 1'b0;
     bus_w4_rden_s  = 1'b0;
     bus_w5_rden_s  = 1'b0;
     bus_w6_rden_s  = 1'b0;
@@ -3110,189 +3112,157 @@ module full_regf ( // tests.test_svmako.RegfMod
     bus_w8_rden_s  = 1'b0;
     bus_w9_rden_s  = 1'b0;
     bus_w10_rden_s = 1'b0;
-    bus_w11_rden_s = 1'b0;
-    bus_w12_rden_s = 1'b0;
-    bus_w25_rden_s = 1'b0;
-    bus_w26_rden_s = 1'b0;
-    bus_w27_rden_s = 1'b0;
-    bus_w28_rden_s = 1'b0;
-    bus_w29_rden_s = 1'b0;
-    bus_w30_rden_s = 1'b0;
-    bus_w31_rden_s = 1'b0;
-    bus_w32_rden_s = 1'b0;
-    bus_w33_rden_s = 1'b0;
-    bus_w34_rden_s = 1'b0;
-    bus_w35_rden_s = 1'b0;
-    bus_w36_rden_s = 1'b0;
-    bus_w37_rden_s = 1'b0;
 
-    // write decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b1)) begin
-      case (mem_addr_i)
-        13'h000C: begin
-          bus_w12_wren_s = 1'b1;
-        end
-        13'h000D: begin
-          bus_w13_wren_s = 1'b1;
-        end
-        13'h000E: begin
-          bus_w14_wren_s = 1'b1;
-        end
-        13'h000F: begin
-          bus_w15_wren_s = 1'b1;
-        end
-        13'h0010: begin
-          bus_w16_wren_s = 1'b1;
-        end
-        13'h0011: begin
-          bus_w17_wren_s = 1'b1;
-        end
-        13'h0012: begin
-          bus_w18_wren_s = 1'b1;
-        end
-        13'h0013: begin
-          bus_w19_wren_s = 1'b1;
-        end
-        13'h0014: begin
-          bus_w20_wren_s = 1'b1;
-        end
-        13'h0015: begin
-          bus_w21_wren_s = 1'b1;
-        end
-        13'h0016: begin
-          bus_w22_wren_s = 1'b1;
-        end
-        13'h0017: begin
-          bus_w23_wren_s = 1'b1;
-        end
-        13'h0018: begin
-          bus_w24_wren_s = 1'b1;
-        end
-        13'h0019: begin
-          bus_w25_wren_s = 1'b1;
-        end
-        13'h001A: begin
-          bus_w26_wren_s = 1'b1;
-        end
-        13'h001B: begin
-          bus_w27_wren_s = 1'b1;
-        end
-        13'h001C: begin
-          bus_w28_wren_s = 1'b1;
-        end
-        13'h001D: begin
-          bus_w29_wren_s = 1'b1;
-        end
-        13'h001E: begin
-          bus_w30_wren_s = 1'b1;
-        end
-        13'h001F: begin
-          bus_w31_wren_s = 1'b1;
-        end
-        13'h0020: begin
-          bus_w32_wren_s = 1'b1;
-        end
-        13'h0021: begin
-          bus_w33_wren_s = 1'b1;
-        end
-        13'h0022: begin
-          bus_w34_wren_s = 1'b1;
-        end
-        13'h0023: begin
-          bus_w35_wren_s = 1'b1;
-        end
-        13'h0024: begin
-          bus_w36_wren_s = 1'b1;
-        end
-        13'h0025: begin
-          bus_w37_wren_s = 1'b1;
-        end
-        default: begin
-          mem_err_o = 1'b1;
-        end
-      endcase
-    end
-
-    // read decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
+    // decode address
+    if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         13'h0002: begin
-          bus_w2_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
         end
         13'h0003: begin
-          bus_w3_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
         end
         13'h0004: begin
-          bus_w4_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w4_rden_s = ~mem_wena_i;
         end
         13'h0005: begin
-          bus_w5_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w5_rden_s = ~mem_wena_i;
         end
         13'h0006: begin
-          bus_w6_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w6_rden_s = ~mem_wena_i;
         end
         13'h0007: begin
-          bus_w7_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w7_rden_s = ~mem_wena_i;
         end
         13'h0008: begin
-          bus_w8_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w8_rden_s = ~mem_wena_i;
         end
         13'h0009: begin
-          bus_w9_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w9_rden_s = ~mem_wena_i;
         end
         13'h000A: begin
-          bus_w10_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
+          bus_w10_rden_s = ~mem_wena_i;
         end
         13'h000B: begin
-          bus_w11_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
         end
         13'h000C: begin
-          bus_w12_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w12_wren_s = mem_wena_i;
+        end
+        13'h000D: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w13_wren_s = mem_wena_i;
+        end
+        13'h000E: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w14_wren_s = mem_wena_i;
+        end
+        13'h000F: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w15_wren_s = mem_wena_i;
+        end
+        13'h0010: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w16_wren_s = mem_wena_i;
+        end
+        13'h0011: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w17_wren_s = mem_wena_i;
+        end
+        13'h0012: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w18_wren_s = mem_wena_i;
+        end
+        13'h0013: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w19_wren_s = mem_wena_i;
+        end
+        13'h0014: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w20_wren_s = mem_wena_i;
+        end
+        13'h0015: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w21_wren_s = mem_wena_i;
+        end
+        13'h0016: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w22_wren_s = mem_wena_i;
+        end
+        13'h0017: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w23_wren_s = mem_wena_i;
+        end
+        13'h0018: begin
+          mem_err_o = ~mem_wena_i;
+          bus_w24_wren_s = mem_wena_i;
         end
         13'h0019: begin
-          bus_w25_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w25_wren_s = mem_wena_i;
         end
         13'h001A: begin
-          bus_w26_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w26_wren_s = mem_wena_i;
         end
         13'h001B: begin
-          bus_w27_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w27_wren_s = mem_wena_i;
         end
         13'h001C: begin
-          bus_w28_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w28_wren_s = mem_wena_i;
         end
         13'h001D: begin
-          bus_w29_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w29_wren_s = mem_wena_i;
         end
         13'h001E: begin
-          bus_w30_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w30_wren_s = mem_wena_i;
         end
         13'h001F: begin
-          bus_w31_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w31_wren_s = mem_wena_i;
         end
         13'h0020: begin
-          bus_w32_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w32_wren_s = mem_wena_i;
         end
         13'h0021: begin
-          bus_w33_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w33_wren_s = mem_wena_i;
         end
         13'h0022: begin
-          bus_w34_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w34_wren_s = mem_wena_i;
         end
         13'h0023: begin
-          bus_w35_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w35_wren_s = mem_wena_i;
         end
         13'h0024: begin
-          bus_w36_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w36_wren_s = mem_wena_i;
         end
         13'h0025: begin
-          bus_w37_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_w37_wren_s = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
         end
       endcase
     end
+
   end
 
   // ------------------------------------------------------
@@ -5128,38 +5098,89 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w3_f22_rval_o  = data_w3_f22_r;
   assign regf_w3_f26_rval_o  = data_w3_f26_r;
   assign regf_w3_f30_rval_o  = data_w3_f30_r;
+  assign regf_w4_f0_rd_o     = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w4_f2_rval_o   = data_w4_f2_r;
+  assign regf_w4_f4_rd_o     = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w4_f6_rval_o   = data_w4_f6_r;
+  assign regf_w4_f8_rd_o     = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w4_f10_rval_o  = data_w4_f10_r;
+  assign regf_w4_f12_rd_o    = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w4_f14_rval_o  = data_w4_f14_r;
+  assign regf_w4_f16_rd_o    = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w4_f18_rval_o  = data_w4_f18_r;
+  assign regf_w4_f20_rd_o    = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w4_f24_rd_o    = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w4_f28_rd_o    = (bus_w4_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w5_f0_rd_o     = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w5_f4_rd_o     = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w5_f8_rd_o     = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w5_f12_rd_o    = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w5_f14_rval_o  = data_w5_f14_r;
+  assign regf_w5_f16_rd_o    = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w5_f18_rval_o  = data_w5_f18_r;
+  assign regf_w5_f20_rd_o    = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w5_f22_rval_o  = data_w5_f22_r;
+  assign regf_w5_f24_rd_o    = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w5_f26_rval_o  = data_w5_f26_r;
+  assign regf_w5_f28_rd_o    = (bus_w5_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w5_f30_rval_o  = data_w5_f30_r;
+  assign regf_w6_f0_rd_o     = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f2_rval_o   = data_w6_f2_r;
+  assign regf_w6_f4_rd_o     = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f6_rval_o   = data_w6_f6_r;
+  assign regf_w6_f8_rd_o     = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f10_rval_o  = data_w6_f10_r;
+  assign regf_w6_f12_rd_o    = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f14_rval_o  = data_w6_f14_r;
+  assign regf_w6_f16_rd_o    = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f18_rval_o  = data_w6_f18_r;
+  assign regf_w6_f20_rd_o    = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w6_f22_rval_o  = data_w6_f22_r;
+  assign regf_w6_f24_rd_o    = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w6_f28_rd_o    = (bus_w6_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w7_f0_rd_o     = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w7_f4_rd_o     = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w7_f8_rd_o     = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w7_f12_rd_o    = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w7_f16_rd_o    = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w7_f18_rval_o  = data_w7_f18_r;
+  assign regf_w7_f20_rd_o    = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w7_f22_rval_o  = data_w7_f22_r;
+  assign regf_w7_f24_rd_o    = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w7_f26_rval_o  = data_w7_f26_r;
+  assign regf_w7_f28_rd_o    = (bus_w7_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w7_f30_rval_o  = data_w7_f30_r;
+  assign regf_w8_f0_rd_o     = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f2_rval_o   = data_w8_f2_r;
+  assign regf_w8_f4_rd_o     = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f6_rval_o   = data_w8_f6_r;
+  assign regf_w8_f8_rd_o     = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f10_rval_o  = data_w8_f10_r;
+  assign regf_w8_f12_rd_o    = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f14_rval_o  = data_w8_f14_r;
+  assign regf_w8_f16_rd_o    = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f18_rval_o  = data_w8_f18_r;
+  assign regf_w8_f20_rd_o    = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f22_rval_o  = data_w8_f22_r;
+  assign regf_w8_f24_rd_o    = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w8_f26_rval_o  = data_w8_f26_r;
+  assign regf_w8_f28_rd_o    = (bus_w8_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f0_rd_o     = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f4_rd_o     = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f8_rd_o     = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f12_rd_o    = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f16_rd_o    = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w9_f20_rd_o    = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w9_f22_rval_o  = data_w9_f22_r;
+  assign regf_w9_f24_rd_o    = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w9_f26_rval_o  = data_w9_f26_r;
+  assign regf_w9_f28_rd_o    = (bus_w9_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w9_f30_rval_o  = data_w9_f30_r;
+  assign regf_w10_f0_rd_o    = (bus_w10_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w10_f2_rval_o  = data_w10_f2_r;
+  assign regf_w10_f4_rd_o    = (bus_w10_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w10_f6_rval_o  = data_w10_f6_r;
+  assign regf_w10_f8_rd_o    = (bus_w10_rden_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w10_f10_rval_o = data_w10_f10_r;
   assign regf_w10_f12_rval_o = data_w10_f12_c;
   assign regf_w10_f16_rval_o = data_w10_f16_r;
@@ -5187,6 +5208,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w12_f28_wbus_o = (bus_w12_wren_s == 1'b1) ? mem_wdata_i[29:28] : 2'h0;
   assign regf_w12_f28_wr_o   = (bus_w12_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w12_f30_rval_o = data_w12_f30_r;
+  assign regf_w13_f0_wbus_o  = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w13_f0_wr_o    = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w13_f4_wbus_o  = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w13_f4_wr_o    = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w13_f8_wbus_o  = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w13_f8_wr_o    = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w13_f12_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w13_f12_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w13_f16_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w13_f16_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w13_f20_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w13_f20_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w13_f24_wbus_o = (bus_w13_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w13_f24_wr_o   = (bus_w13_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w13_f26_rval_o = data_w13_f26_r;
@@ -5220,6 +5253,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w15_f0_wbus_o  = (bus_w15_wren_s == 1'b1) ? regf_w15_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
   assign regf_w15_f0_wr_o    = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w15_f2_rval_o  = data_w15_f2_r;
+  assign regf_w15_f4_wbus_o  = (bus_w15_wren_s == 1'b1) ? regf_w15_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
+  assign regf_w15_f4_wr_o    = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w15_f8_wbus_o  = (bus_w15_wren_s == 1'b1) ? regf_w15_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
+  assign regf_w15_f8_wr_o    = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w15_f12_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
+  assign regf_w15_f12_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w15_f16_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
+  assign regf_w15_f16_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w15_f20_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
+  assign regf_w15_f20_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w15_f24_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
+  assign regf_w15_f24_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w15_f28_wbus_o = (bus_w15_wren_s == 1'b1) ? regf_w15_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
   assign regf_w15_f28_wr_o   = (bus_w15_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w15_f30_rval_o = data_w15_f30_r;
@@ -5253,6 +5298,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w17_f4_wbus_o  = (bus_w17_wren_s == 1'b1) ? regf_w17_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w17_f4_wr_o    = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w17_f6_rval_o  = data_w17_f6_r;
+  assign regf_w17_f8_wbus_o  = (bus_w17_wren_s == 1'b1) ? regf_w17_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w17_f8_wr_o    = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w17_f12_wbus_o = (bus_w17_wren_s == 1'b1) ? regf_w17_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w17_f12_wr_o   = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w17_f16_wbus_o = (bus_w17_wren_s == 1'b1) ? regf_w17_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w17_f16_wr_o   = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w17_f20_wbus_o = (bus_w17_wren_s == 1'b1) ? regf_w17_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w17_f20_wr_o   = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w17_f24_wbus_o = (bus_w17_wren_s == 1'b1) ? regf_w17_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w17_f24_wr_o   = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w17_f28_wbus_o = (bus_w17_wren_s == 1'b1) ? regf_w17_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w17_f28_wr_o   = (bus_w17_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f0_wbus_o  = (bus_w18_wren_s == 1'b1) ? regf_w18_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w18_f0_wr_o    = (bus_w18_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w18_f2_rval_o  = data_w18_f2_r;
@@ -5286,6 +5343,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w19_f8_wbus_o  = (bus_w19_wren_s == 1'b1) ? regf_w19_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
   assign regf_w19_f8_wr_o    = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w19_f10_rval_o = data_w19_f10_r;
+  assign regf_w19_f12_wbus_o = (bus_w19_wren_s == 1'b1) ? regf_w19_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w19_f12_wr_o   = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w19_f16_wbus_o = (bus_w19_wren_s == 1'b1) ? regf_w19_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w19_f16_wr_o   = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w19_f20_wbus_o = (bus_w19_wren_s == 1'b1) ? regf_w19_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w19_f20_wr_o   = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w19_f24_wbus_o = (bus_w19_wren_s == 1'b1) ? regf_w19_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w19_f24_wr_o   = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w19_f28_wbus_o = (bus_w19_wren_s == 1'b1) ? regf_w19_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
+  assign regf_w19_f28_wr_o   = (bus_w19_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w20_f0_wbus_o  = (bus_w20_wren_s == 1'b1) ? regf_w20_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w20_f0_wr_o    = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f4_wbus_o  = (bus_w20_wren_s == 1'b1) ? regf_w20_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
   assign regf_w20_f4_wr_o    = (bus_w20_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w20_f6_rval_o  = data_w20_f6_r;
@@ -5319,6 +5388,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w21_f12_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
   assign regf_w21_f12_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w21_f14_rval_o = data_w21_f14_r;
+  assign regf_w21_f16_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
+  assign regf_w21_f16_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w21_f20_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
+  assign regf_w21_f20_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w21_f24_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
+  assign regf_w21_f24_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w21_f28_wbus_o = (bus_w21_wren_s == 1'b1) ? regf_w21_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
+  assign regf_w21_f28_wr_o   = (bus_w21_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w22_f0_wbus_o  = (bus_w22_wren_s == 1'b1) ? regf_w22_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
+  assign regf_w22_f0_wr_o    = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w22_f4_wbus_o  = (bus_w22_wren_s == 1'b1) ? regf_w22_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
+  assign regf_w22_f4_wr_o    = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f8_wbus_o  = (bus_w22_wren_s == 1'b1) ? regf_w22_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
   assign regf_w22_f8_wr_o    = (bus_w22_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w22_f10_rval_o = data_w22_f10_r;
@@ -5352,6 +5433,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w23_f16_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w23_f16_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w23_f18_rval_o = data_w23_f18_r;
+  assign regf_w23_f20_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w23_f20_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w23_f24_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w23_f24_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w23_f28_wbus_o = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w23_f28_wr_o   = ((bus_w23_wren_s == 1'b1) && (bus_w23_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f0_wbus_o  = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w24_f0_wr_o    = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f4_wbus_o  = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w24_f4_wr_o    = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f8_wbus_o  = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w24_f8_wr_o    = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f12_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
   assign regf_w24_f12_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f14_rval_o = data_w24_f14_r;
@@ -5385,6 +5478,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w25_f20_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[21:20] : 2'h0;
   assign regf_w25_f20_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w25_f22_rval_o = data_w25_f22_r;
+  assign regf_w25_f24_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w25_f24_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w25_f28_wbus_o = (bus_w25_wren_s == 1'b1) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w25_f28_wr_o   = (bus_w25_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w26_f0_wbus_o  = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w26_f0_wr_o    = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w26_f4_wbus_o  = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w26_f4_wr_o    = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w26_f8_wbus_o  = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w26_f8_wr_o    = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w26_f12_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w26_f12_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f16_wbus_o = (bus_w26_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
   assign regf_w26_f16_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f18_rval_o = data_w26_f18_r;
@@ -5418,6 +5523,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w27_f24_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f24_rbus_i & mem_wdata_i[25:24] : 2'h0;
   assign regf_w27_f24_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w27_f26_rval_o = data_w27_f26_r;
+  assign regf_w27_f28_wbus_o = (bus_w27_wren_s == 1'b1) ? regf_w27_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
+  assign regf_w27_f28_wr_o   = (bus_w27_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w28_f0_wbus_o  = (bus_w28_wren_s == 1'b1) ? regf_w28_f0_rbus_i & mem_wdata_i[1:0] : 2'h0;
+  assign regf_w28_f0_wr_o    = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w28_f4_wbus_o  = (bus_w28_wren_s == 1'b1) ? regf_w28_f4_rbus_i & mem_wdata_i[5:4] : 2'h0;
+  assign regf_w28_f4_wr_o    = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w28_f8_wbus_o  = (bus_w28_wren_s == 1'b1) ? regf_w28_f8_rbus_i & mem_wdata_i[9:8] : 2'h0;
+  assign regf_w28_f8_wr_o    = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w28_f12_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f12_rbus_i & mem_wdata_i[13:12] : 2'h0;
+  assign regf_w28_f12_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w28_f16_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f16_rbus_i & mem_wdata_i[17:16] : 2'h0;
+  assign regf_w28_f16_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w28_f20_wbus_o = (bus_w28_wren_s == 1'b1) ? regf_w28_f20_rbus_i & mem_wdata_i[21:20] : 2'h0;
   assign regf_w28_f20_wr_o   = (bus_w28_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w28_f22_rval_o = data_w28_f22_r;
@@ -5451,6 +5568,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w29_f28_wbus_o = (bus_w29_wren_s == 1'b1) ? regf_w29_f28_rbus_i | ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w29_f28_wr_o   = (bus_w29_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w29_f30_rval_o = data_w29_f30_r;
+  assign regf_w30_f0_wbus_o  = (bus_w30_wren_s == 1'b1) ? regf_w30_f0_rbus_i | ~mem_wdata_i[1:0] : 2'h0;
+  assign regf_w30_f0_wr_o    = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w30_f4_wbus_o  = (bus_w30_wren_s == 1'b1) ? regf_w30_f4_rbus_i | ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w30_f4_wr_o    = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w30_f8_wbus_o  = (bus_w30_wren_s == 1'b1) ? regf_w30_f8_rbus_i | ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w30_f8_wr_o    = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w30_f12_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f12_rbus_i | ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w30_f12_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w30_f16_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f16_rbus_i | ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w30_f16_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w30_f20_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f20_rbus_i | ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w30_f20_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w30_f24_wbus_o = (bus_w30_wren_s == 1'b1) ? regf_w30_f24_rbus_i | ~mem_wdata_i[25:24] : 2'h0;
   assign regf_w30_f24_wr_o   = (bus_w30_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w30_f26_rval_o = data_w30_f26_r;
@@ -5484,6 +5613,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w32_f0_wbus_o  = (bus_w32_wren_s == 1'b1) ? regf_w32_f0_rbus_i & ~mem_wdata_i[1:0] : 2'h0;
   assign regf_w32_f0_wr_o    = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f2_rval_o  = data_w32_f2_r;
+  assign regf_w32_f4_wbus_o  = (bus_w32_wren_s == 1'b1) ? regf_w32_f4_rbus_i & ~mem_wdata_i[5:4] : 2'h0;
+  assign regf_w32_f4_wr_o    = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w32_f8_wbus_o  = (bus_w32_wren_s == 1'b1) ? regf_w32_f8_rbus_i & ~mem_wdata_i[9:8] : 2'h0;
+  assign regf_w32_f8_wr_o    = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w32_f12_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f12_rbus_i & ~mem_wdata_i[13:12] : 2'h0;
+  assign regf_w32_f12_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w32_f16_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f16_rbus_i & ~mem_wdata_i[17:16] : 2'h0;
+  assign regf_w32_f16_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w32_f20_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f20_rbus_i & ~mem_wdata_i[21:20] : 2'h0;
+  assign regf_w32_f20_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w32_f24_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f24_rbus_i & ~mem_wdata_i[25:24] : 2'h0;
+  assign regf_w32_f24_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f28_wbus_o = (bus_w32_wren_s == 1'b1) ? regf_w32_f28_rbus_i & ~mem_wdata_i[29:28] : 2'h0;
   assign regf_w32_f28_wr_o   = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f30_rval_o = data_w32_f30_r;
@@ -5517,6 +5658,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w34_f4_wbus_o  = (bus_w34_wren_s == 1'b1) ? regf_w34_f4_rbus_i | mem_wdata_i[5:4] : 2'h0;
   assign regf_w34_f4_wr_o    = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w34_f6_rval_o  = data_w34_f6_r;
+  assign regf_w34_f8_wbus_o  = (bus_w34_wren_s == 1'b1) ? regf_w34_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
+  assign regf_w34_f8_wr_o    = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w34_f12_wbus_o = (bus_w34_wren_s == 1'b1) ? regf_w34_f12_rbus_i | mem_wdata_i[13:12] : 2'h0;
+  assign regf_w34_f12_wr_o   = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w34_f16_wbus_o = (bus_w34_wren_s == 1'b1) ? regf_w34_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
+  assign regf_w34_f16_wr_o   = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w34_f20_wbus_o = (bus_w34_wren_s == 1'b1) ? regf_w34_f20_rbus_i | mem_wdata_i[21:20] : 2'h0;
+  assign regf_w34_f20_wr_o   = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w34_f24_wbus_o = (bus_w34_wren_s == 1'b1) ? regf_w34_f24_rbus_i | mem_wdata_i[25:24] : 2'h0;
+  assign regf_w34_f24_wr_o   = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_w34_f28_wbus_o = (bus_w34_wren_s == 1'b1) ? regf_w34_f28_rbus_i | mem_wdata_i[29:28] : 2'h0;
+  assign regf_w34_f28_wr_o   = (bus_w34_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f0_wbus_o  = (bus_w35_wren_s == 1'b1) ? regf_w35_f0_rbus_i | mem_wdata_i[1:0] : 2'h0;
   assign regf_w35_f0_wr_o    = (bus_w35_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w35_f2_rval_o  = data_w35_f2_r;
@@ -5550,6 +5703,18 @@ module full_regf ( // tests.test_svmako.RegfMod
   assign regf_w36_f8_wbus_o  = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
   assign regf_w36_f8_wr_o    = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w36_f10_rval_o = data_w36_f10_r;
+  assign regf_w36_f12_wbus_o = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w36_f12_wr_o   = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w36_f16_wbus_o = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w36_f16_wr_o   = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w36_f20_wbus_o = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w36_f20_wr_o   = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w36_f24_wbus_o = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w36_f24_wr_o   = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w36_f28_wbus_o = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w36_f28_wr_o   = ((bus_w36_wren_s == 1'b1) && (bus_w36_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w37_f0_wbus_o  = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w37_f0_wr_o    = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f4_wbus_o  = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
   assign regf_w37_f4_wr_o    = ((bus_w37_wren_s == 1'b1) && (bus_w37_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w37_f6_rval_o  = data_w37_f6_r;

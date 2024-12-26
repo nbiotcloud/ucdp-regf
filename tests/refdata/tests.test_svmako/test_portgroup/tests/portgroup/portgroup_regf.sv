@@ -44,6 +44,12 @@
 // +2        tx
 //           [width_p-1:0]                        .data0   RW/RO       0x0      False    regf
 //
+//
+// Mnemonic    ReadOp    WriteOp
+// ----------  --------  ---------
+// RO          Read
+// RW          Read      Write
+//
 // =============================================================================
 
 `begin_keywords "1800-2009"
@@ -94,51 +100,34 @@ module portgroup_regf #( // tests.test_svmako.RegfMod
   logic [width_p-1:0] data_tx_data0_r; // Word tx
   logic               bus_ctrl_wren_s; // bus word write enables
   logic               bus_tx_wren_s;
-  logic               bus_ctrl_rden_s; // bus word read enables
-  logic               bus_rx_rden_s;
-  logic               bus_tx_rden_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
     bus_ctrl_wren_s = 1'b0;
     bus_tx_wren_s   = 1'b0;
-    bus_ctrl_rden_s = 1'b0;
-    bus_rx_rden_s   = 1'b0;
-    bus_tx_rden_s   = 1'b0;
 
-    // write decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b1)) begin
+
+    // decode address
+    if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         13'h0000: begin
-          bus_ctrl_wren_s = 1'b1;
-        end
-        13'h0002: begin
-          bus_tx_wren_s = 1'b1;
-        end
-        default: begin
-          mem_err_o = 1'b1;
-        end
-      endcase
-    end
-
-    // read decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
-      case (mem_addr_i)
-        13'h0000: begin
-          bus_ctrl_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_ctrl_wren_s = mem_wena_i;
         end
         13'h0001: begin
-          bus_rx_rden_s = 1'b1;
+          mem_err_o = mem_wena_i;
         end
         13'h0002: begin
-          bus_tx_rden_s = 1'b1;
+          mem_err_o = 0;
+          bus_tx_wren_s = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
         end
       endcase
     end
+
   end
 
   // ------------------------------------------------------

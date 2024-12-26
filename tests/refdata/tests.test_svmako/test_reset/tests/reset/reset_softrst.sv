@@ -38,6 +38,12 @@
 //           [0]     .ena     RW/RO       0        False    regf
 //           [4]     .busy    RO/RW       0        False    core
 //
+//
+// Mnemonic    ReadOp    WriteOp
+// ----------  --------  ---------
+// RO          Read
+// RW          Read      Write
+//
 // =============================================================================
 
 `begin_keywords "1800-2009"
@@ -70,19 +76,19 @@ module reset_softrst ( // tests.test_svmako.RegfMod
   // ------------------------------------------------------
   logic data_ctrl_ena_r; // Word ctrl
   logic bus_ctrl_wren_s; // bus word write enables
-  logic bus_ctrl_rden_s; // bus word read enables
 
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
     bus_ctrl_wren_s = 1'b0;
-    bus_ctrl_rden_s = 1'b0;
 
-    // write decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b1)) begin
+
+    // decode address
+    if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         13'h0000: begin
-          bus_ctrl_wren_s = 1'b1;
+          mem_err_o = 0;
+          bus_ctrl_wren_s = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
@@ -90,17 +96,6 @@ module reset_softrst ( // tests.test_svmako.RegfMod
       endcase
     end
 
-    // read decode
-    if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
-      case (mem_addr_i)
-        13'h0000: begin
-          bus_ctrl_rden_s = 1'b1;
-        end
-        default: begin
-          mem_err_o = 1'b1;
-        end
-      endcase
-    end
   end
 
   // ------------------------------------------------------
