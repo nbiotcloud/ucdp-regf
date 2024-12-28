@@ -165,6 +165,11 @@ def check_field(wordname: str, field: Field) -> None:
     # constant value with two locations
     if field.is_const and not field.in_regf:
         raise ValueError(f"Field '{wordname}.{field.name}' with constant value must be in_regf.")
+    # unobservable fields
+    if (field.bus is None or not field.bus.read) and (field.core is None or not field.core.read):
+        raise ValueError(
+            f"Field '{wordname}.{field.name}' with access '{field.access!s}' is unobservable (read nowhere)."
+        )
 
 
 class Words(_addrspace.Words):
@@ -215,11 +220,6 @@ def filter_buswrite(field: Field):
 def filter_buswriteonce(field: Field):
     """Write-Once Bus Fields."""
     return field.bus and field.bus.write and field.bus.write.once
-
-
-def filter_busread(field: Field):
-    """Readable Bus Fields."""
-    return field.bus and field.bus.read
 
 
 def filter_rdmod(field: Field):
