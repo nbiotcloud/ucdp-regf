@@ -95,6 +95,14 @@ def get_is_const(bus: Access | None, core: Access | None) -> bool:
             return False
     return True
 
+def get_is_unobservable(bus: Access | None, core: Access | None) -> bool:
+    """Check for unobservable fields (not read anywhere)."""
+    if bus is not None and bus.read:
+        return False
+    if core is not None and core.read:
+        return False
+    return True
+
 
 class FullMod(u.AMod):
     """A Simple UART."""
@@ -110,6 +118,8 @@ class FullMod(u.AMod):
             for core in ACCESSES:
                 for in_regf in (False, True):
                     if get_is_const(bus, core) and not in_regf:
+                        continue
+                    if get_is_unobservable(bus, core):
                         continue
                     word.add_field(f"f{fidx}", u.UintType(2), bus, core=core, in_regf=in_regf)
                     fidx += 2
