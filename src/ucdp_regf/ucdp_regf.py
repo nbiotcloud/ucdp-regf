@@ -167,7 +167,9 @@ def check_field(wordname: str, field: Field) -> None:
         raise ValueError(f"Field '{wordname}.{field.name}' with constant value must be in_regf.")
     # unobservable fields
     if (field.bus is None or not field.bus.read) and (field.core is None or not field.core.read):
-        raise ValueError(f"Field '{wordname}.{field.name}' with access '{str(field.access)}' is unobservable (read nowhere).")
+        raise ValueError(
+            f"Field '{wordname}.{field.name}' with access '{field.access!s}' is unobservable (read nowhere)."
+        )
 
 
 class Words(_addrspace.Words):

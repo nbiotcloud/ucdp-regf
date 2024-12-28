@@ -95,6 +95,7 @@ def get_is_const(bus: Access | None, core: Access | None) -> bool:
             return False
     return True
 
+
 def get_is_unobservable(bus: Access | None, core: Access | None) -> bool:
     """Check for unobservable fields (not read anywhere)."""
     if bus is not None and bus.read:
