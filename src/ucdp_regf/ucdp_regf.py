@@ -222,11 +222,6 @@ def filter_buswriteonce(field: Field):
     return field.bus and field.bus.write and field.bus.write.once
 
 
-def filter_busread(field: Field):
-    """Readable Bus Fields."""
-    return field.bus and field.bus.read
-
-
 def filter_rdmod(field: Field):
     """Fields requiring extra read-enable."""
     return field.bus and field.bus.read and field.bus.read.data is not None
