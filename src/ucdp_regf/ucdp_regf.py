@@ -519,7 +519,7 @@ def get_regfportname(field: Field) -> str:
             continue
         direction = u.OUT * valitem.orientation
         return f"{basename}{name}{direction.suffix}"
-    raise ValueError(f"Field {field.name} has no core access for route")
+    raise ValueError(f"Field {field.name} has no core access for route.")
 
 
 class FieldIoType(u.AStructType):
@@ -699,18 +699,23 @@ __test__ = {
     >>> aspc = regf.get_addrspaces()
     >>> print(tuple(aspc))
     (Addrspace(name='ex_regf', size=Bytesize('4 KB')),)
+
+
+    >>> class ExMod(u.AMod):
+    ...     def _build(self):
+    ...         self.add_signal(u.BitType(), "chk_s")
+    ...         regf = UcdpRegfMod(self, "u_regf")
+    ...         word = regf.add_word("w0")
+    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.NA, route="chk_s")
+    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
+    Traceback (most recent call last):
+    ...
+    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
+      Value error, Field chk has no core access for route. ...
     """
 }
 
+# ...         cacc = _addrspace.Access(name="NA", read=None, write=None)
 
 # TODO:
 # define semantics of W(0|1)(C|S|T) for enum types!
-# there should be fields w/o a core connection...
-# >>> class ExMod(u.AMod):
-# ...     def _build(self):
-# ...         self.add_signal(u.BitType(), "chk_s")
-# ...         regf = UcdpRegfMod(self, "u_regf")
-# ...         word = regf.add_word("w0")
-# ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=None, route="chk_s")
-# >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-# >>> print(regf.get_overview())
