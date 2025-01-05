@@ -5,7 +5,7 @@
 groups = ["default", "checktypes", "doc", "format", "test"]
 strategy = ["inherit_metadata"]
 lock_version = "4.5.0"
-content_hash = "sha256:3c5afbe42f63502bc45e1382ec64d016a1abb4bc12e3bc8ea83dd2303b726c03"
+content_hash = "sha256:0749395b017811fdddc7ab783858fc13ac050d724acef9871ab8acd79d20e994"
 
 [[metadata.targets]]
 requires_python = ">=3.10.0,<4.0"
@@ -1578,7 +1578,7 @@ files = [
 
 [[package]]
 name = "ucdp-addr"
-version = "1.5.1"
+version = "1.5.2"
 requires_python = "<4.0,>=3.10.0"
 summary = "Unified Chip Design Platform - Address Map"
 groups = ["default"]
@@ -1587,8 +1587,8 @@ dependencies = [
     "ucdp>=0.16.0",
 ]
 files = [
-    {file = "ucdp_addr-1.5.1-py3-none-any.whl", hash = "sha256:98aa9fc8e48d813ccbbbe0a0232771de18900a3be0fdfeb34580c7435b28b649"},
-    {file = "ucdp_addr-1.5.1.tar.gz", hash = "sha256:7af8aa295fd950a71022cc5e016b4a8303ceefbf5bfaa94d583dd0b43378e011"},
+    {file = "ucdp_addr-1.5.2-py3-none-any.whl", hash = "sha256:46e8458285cb9b8b26eee324690a82cd68f1aa858dad94d17f1af91cbb858d44"},
+    {file = "ucdp_addr-1.5.2.tar.gz", hash = "sha256:087c5667d25f8aca14a9f84f85234a3ff4477b4cc98805e205d739ff629e7df0"},
 ]
 
 [[package]]
