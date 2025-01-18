@@ -572,5 +572,6 @@ class FieldIoType(u.AStructType):
                 self._add("wbus", field.type_, comment="Bus Write Value")
                 self._add("wr", u.BitType(), comment="Bus Write Strobe")
 
+
 # TODO:
 # define semantics of W(0|1)(C|S|T) for enum types!

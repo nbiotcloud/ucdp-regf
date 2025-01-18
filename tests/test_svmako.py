@@ -30,6 +30,7 @@ from unittest import mock
 import ucdp as u
 from test2ref import assert_refdata
 from ucdp_addr import addrspace as _addrspace
+
 from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
 
 
