@@ -64,6 +64,7 @@ module corner ( // tests.test_svmako.CornerMod
     .mem_wdata_i                 (32'h00000000 ), // TODO
     .mem_rdata_o                 (             ), // TODO
     .mem_err_o                   (             ), // TODO
+    .grd_i                       (1'b0         ), // TODO
     // regf_o
     // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
     .regf_ctrl_ena_rval_o        (             ), // TODO - Core Read Value
@@ -130,6 +131,8 @@ module corner ( // tests.test_svmako.CornerMod
     .regf_guards_bprio_wr_i      ('{1{1'b0}}   ), // TODO - Core Write Strobe
     .regf_guards_bprio_wval_i    ('{1{1'b0}}   ), // TODO - Core Write Value
     .regf_guards_bprio_rval_o    (             ), // TODO - Core Read Value
+    // regf_guards_grdport_o: bus=RW core=RO in_regf=True
+    .regf_guards_grdport_rval_o  (             ), // TODO - Core Read Value
     // regf_grddim_num_o: bus=RW core=RO in_regf=False
     .regf_grddim_num_wr_o        (             ), // TODO - Bus Write Strobe
     .regf_grddim_num_wbus_o      (             ), // TODO - Bus Write Value
@@ -151,7 +154,8 @@ module corner ( // tests.test_svmako.CornerMod
     // regf_base_o: bus=RW core=RO in_regf=True
     .regf_base_rval_o            (             ), // TODO - Core Read Value
     // regf_wide_d_o: bus=RW core=RO in_regf=True
-    .regf_wide_d_rval_o          (             )  // TODO - Core Read Value
+    .regf_wide_d_rval_o          (             ), // TODO - Core Read Value
+    .another_grd_i               (1'b0         )  // TODO
   );
 
 endmodule // corner

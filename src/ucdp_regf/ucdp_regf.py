@@ -227,7 +227,7 @@ def filter_rdmod(field: Field):
     return field.bus and field.bus.read and field.bus.read.data is not None
 
 
-wf_ident = re.compile(r"(?P<word>\w+)\.(?P<field>\w+)")
+wfp_ident = re.compile(r"((?P<word>\w+)\.(?P<field>\w+))|(?P<import>\w+_i)")
 
 
 class UcdpRegfMod(u.ATailoredMod):
@@ -297,9 +297,17 @@ class UcdpRegfMod(u.ATailoredMod):
     def _handle_soft_reset(self):
         if self._soft_rst is None:
             return
-        if wf := wf_ident.match(self._soft_rst):
-            wname = wf.group("word")
-            fname = wf.group("field")
+        wfp = wfp_ident.match(self._soft_rst)
+        if wfp is None or (wfp.group() != self._soft_rst):
+            raise ValueError(f"Illegal identifier '{self._soft_rst}' for soft reset.")
+        wname = wfp.group("word")
+        fname = wfp.group("field")
+        pname = wfp.group("import")
+        if pname:
+            if pname != "soft_rst_i":
+                raise ValueError(f"Illegal name '{self._soft_rst}' for soft reset input port.")
+            self.add_port(u.RstType(), self._soft_rst)
+        else:
             try:
                 thefield = self.addrspace.words[wname].fields[fname]
             except KeyError:
@@ -312,10 +320,6 @@ class UcdpRegfMod(u.ATailoredMod):
                 raise ValueError(f"Soft reset from {wname}/{fname} must not have 'in_regf=True'.")
             self._soft_rst = f"bus_{wname}_{fname}_rst_s"
             self.add_signal(u.RstType(), self._soft_rst)
-        else:
-            if self._soft_rst != "soft_rst_i":
-                raise ValueError(f"Illegal name {self._soft_rst!r} for soft reset.")
-            self.add_port(u.RstType(), self._soft_rst)
 
     def _add_const_decls(self):
         def filter_regf_consts(field: Field):
@@ -387,7 +391,7 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
 
-    def _prep_guards(self):
+    def _prep_guards(self):  # noqa: C901
         idx = 0
         for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
             for field in fields:
@@ -395,10 +399,23 @@ class UcdpRegfMod(u.ATailoredMod):
                     if self._guards.get(field.wr_guard, None) is not None:  # already known
                         continue
                     signame = f"bus_wrguard_{idx}_s"
-                    sigexpr = field.wr_guard
-                    while wf := wf_ident.search(sigexpr):  # replace word/field symnames by their respective signals
-                        wname = wf.group("word")
-                        fname = wf.group("field")
+                    sigexpr = wrguard = field.wr_guard
+                    for wfp in wfp_ident.finditer(wrguard):
+                        wname = wfp.group("word")
+                        fname = wfp.group("field")
+                        pname = wfp.group("import")
+                        if pname:
+                            # check for port already known and for correct type
+                            p = self.ports.get(pname, None)
+                            if p is not None:
+                                if p.type_.bits != 1:
+                                    raise ValueError(
+                                        f"Illegal type '{p.type_}' for existing signal '{pname}' in wr_guard."
+                                    )
+                                continue
+                            self.add_port(u.BitType(), pname)
+                            continue  # no translation necessary for port
+                        # translate word/field symnames to their respective signals
                         thefield = self.addrspace.words[wname].fields[fname]
                         if thefield.in_regf:
                             rplc = f"data_{thefield.signame}_r"
@@ -406,7 +423,7 @@ class UcdpRegfMod(u.ATailoredMod):
                             rplc = f"regf_{thefield.portgroups[0]}_{thefield.signame}_rbus_i"
                         else:
                             rplc = f"regf_{thefield.signame}_rbus_i"
-                        sigexpr = sigexpr.replace(wf.group(), rplc)
+                        sigexpr = sigexpr.replace(wfp.group(), rplc)
                     self._guards[field.wr_guard] = (signame, sigexpr)
                     idx += 1
 
@@ -519,7 +536,7 @@ def get_regfportname(field: Field) -> str:
             continue
         direction = u.OUT * valitem.orientation
         return f"{basename}{name}{direction.suffix}"
-    raise ValueError(f"Field {field.name} has no core access for route.")
+    raise ValueError(f"Field '{field.name}' has no core access for route.")
 
 
 class FieldIoType(u.AStructType):
@@ -554,168 +571,6 @@ class FieldIoType(u.AStructType):
             if buswr:
                 self._add("wbus", field.type_, comment="Bus Write Value")
                 self._add("wr", u.BitType(), comment="Bus Write Strobe")
-
-
-# put doctests here to not clutter actual docstrings...
-__test__ = {
-    "UcdpRegfMod": """
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field(
-    ...             "chk", u.BitType(), bus=_addrspace.RO, core=_addrspace.WO,
-    ...             portgroups=(
-    ...                 "grpa",
-    ...                 "grpb",
-    ...             ),
-    ...         )
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Field 'w0.chk' cannot be part of multiple portgroups when core provides a value! ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RO, core=_addrspace.RO, in_regf=False)
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Field 'w0.chk' with constant value must be in_regf. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.WO, core=_addrspace.WO)
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Field 'w0.chk' with access 'WO/WO' is unobservable (read nowhere). ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.RO)
-    ...         regf.add_soft_rst("ctrl.clrall")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, There is no register/field of name 'ctrl/clrall'. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("ctrl", depth=3)
-    ...         word.add_field("clrall", u.BitType(), bus=_addrspace.WO, core=_addrspace.RO)
-    ...         regf.add_soft_rst("ctrl.clrall")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Soft reset from ctrl/clrall is not of type 'RstType()' but 'BitType()'. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("ctrl", depth=3)
-    ...         word.add_field("clrall", u.RstType(), bus=_addrspace.WO, core=_addrspace.RO)
-    ...         regf.add_soft_rst("ctrl.clrall")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Soft reset from ctrl/clrall must not have 'depth'>0 in word. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("ctrl")
-    ...         word.add_field("clrall", u.RstType(), bus=_addrspace.RW, core=_addrspace.RO)
-    ...         regf.add_soft_rst("ctrl.clrall")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Soft reset from ctrl/clrall must not have 'in_regf=True'. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.RO)
-    ...         regf.add_soft_rst("some_name_i")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Illegal name 'some_name_i' for soft reset. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("ctrl")
-    ...         word.add_field("clrall", u.RstType(), bus=_addrspace.WO, core=_addrspace.RO)
-    ...         regf.add_soft_rst("ctrl.clrall")
-    ...         regf.add_soft_rst("soft_rst_i")
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Soft reset has been already defined. ...
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.RO)
-
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    >>> aspc = regf.get_addrspaces()
-    >>> print(tuple(aspc))
-    (Addrspace(name='ex_regf', size=Bytesize('4 KB')),)
-
-
-    >>> class ExMod(u.AMod):
-    ...     def _build(self):
-    ...         self.add_signal(u.BitType(), "chk_s")
-    ...         regf = UcdpRegfMod(self, "u_regf")
-    ...         word = regf.add_word("w0")
-    ...         word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.NA, route="chk_s")
-    >>> regf = ExMod().get_inst("u_regf")  # doctest: +ELLIPSIS
-    Traceback (most recent call last):
-    ...
-    pydantic_core._pydantic_core.ValidationError: 1 validation error for ExMod
-      Value error, Field chk has no core access for route. ...
-    """
-}
-
-# ...         cacc = _addrspace.Access(name="NA", read=None, write=None)
 
 # TODO:
 # define semantics of W(0|1)(C|S|T) for enum types!

@@ -30,7 +30,6 @@ from unittest import mock
 import ucdp as u
 from test2ref import assert_refdata
 from ucdp_addr import addrspace as _addrspace
-
 from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
 
 
@@ -149,6 +148,7 @@ class CornerMod(u.AMod):
         # Register File
         regf = RegfMod(self, "u_regf")
         regf.con("main_i", "main_i")
+        regf.add_port(u.EnaType(), "grd_i")
 
         word = regf.add_word("ctrl")
         word.add_field("ena", u.EnaType(), "RW")
@@ -205,6 +205,7 @@ class CornerMod(u.AMod):
         word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy")
         word.add_field("cprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="core")
         word.add_field("bprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="bus")
+        word.add_field("grdport", u.BitType(), "RW", wr_guard="~(grd_i & ctrl.busy & another_grd_i)")
 
         word = regf.add_word("grddim", in_regf=False, depth=2)
         word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy")
