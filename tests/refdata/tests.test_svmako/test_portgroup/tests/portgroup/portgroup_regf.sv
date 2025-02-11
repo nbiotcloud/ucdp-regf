@@ -1,6 +1,8 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
@@ -58,35 +60,35 @@
 module portgroup_regf #( // tests.test_svmako.RegfMod
   parameter integer width_p = 1
 ) (
-  // main_i
-  input  wire                main_clk_i,
+  // main_i: Clock and Reset
+  input  wire                main_clk_i,                // Clock
   input  wire                main_rst_an_i,             // Async Reset (Low-Active)
   // mem_i
-  input  wire                mem_ena_i,
-  input  wire  [12:0]        mem_addr_i,
-  input  wire                mem_wena_i,
-  input  wire  [31:0]        mem_wdata_i,
-  output logic [31:0]        mem_rdata_o,
-  output logic               mem_err_o,
+  input  wire                mem_ena_i,                 // Memory Access Enable
+  input  wire  [12:0]        mem_addr_i,                // Memory Address
+  input  wire                mem_wena_i,                // Memory Write Enable
+  input  wire  [31:0]        mem_wdata_i,               // Memory Write Data
+  output logic [31:0]        mem_rdata_o,               // Memory Read Data
+  output logic               mem_err_o,                 // Memory Access Failed.
   // regf_o
-  // regf_top_o
-  // regf_top_ctrl_ena_o: bus=RW core=RO in_regf=True
+  //   regf_top_o
+  //     regf_top_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic               regf_top_ctrl_ena_rval_o,  // Core Read Value
-  // regf_top_ctrl_busy_o: bus=RO core=RW in_regf=False
+  //     regf_top_ctrl_busy_o: bus=RO core=RW in_regf=False
   input  wire                regf_top_ctrl_busy_rbus_i, // Bus Read Value
-  // regf_rx_o
-  // regf_rx_ctrl_ena_o: bus=RW core=RO in_regf=True
+  //   regf_rx_o
+  //     regf_rx_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic               regf_rx_ctrl_ena_rval_o,   // Core Read Value
-  // regf_rx_rx_data0_o: bus=RO core=RW in_regf=False
+  //     regf_rx_rx_data0_o: bus=RO core=RW in_regf=False
   input  wire  [width_p-1:0] regf_rx_rx_data0_rbus_i,   // Bus Read Value
-  // regf_rx_rx_data1_o: bus=RO core=RW in_regf=False
+  //     regf_rx_rx_data1_o: bus=RO core=RW in_regf=False
   input  wire  [width_p-1:0] regf_rx_rx_data1_rbus_i,   // Bus Read Value
-  // regf_rx_rx_data2_o: bus=RO core=RW in_regf=False
+  //     regf_rx_rx_data2_o: bus=RO core=RW in_regf=False
   input  wire  [width_p-1:0] regf_rx_rx_data2_rbus_i,   // Bus Read Value
-  // regf_tx_o
-  // regf_tx_ctrl_ena_o: bus=RW core=RO in_regf=True
+  //   regf_tx_o
+  //     regf_tx_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic               regf_tx_ctrl_ena_rval_o,   // Core Read Value
-  // regf_tx_tx_data0_o: bus=RW core=RO in_regf=True
+  //     regf_tx_tx_data0_o: bus=RW core=RO in_regf=True
   output logic [width_p-1:0] regf_tx_tx_data0_rval_o    // Core Read Value
 );
 
@@ -186,3 +188,11 @@ endmodule // portgroup_regf
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================
