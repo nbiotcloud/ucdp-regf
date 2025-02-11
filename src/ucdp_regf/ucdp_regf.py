@@ -33,27 +33,26 @@ from functools import cached_property
 from typing import ClassVar, Literal, TypeAlias
 
 import ucdp as u
+import ucdp_addr as ua
 from icdutil.num import calc_unsigned_width
 from tabulate import tabulate
-from ucdp_addr import Addrspaces, Defines
-from ucdp_addr import addrspace as _addrspace
 from ucdp_glbl.mem import MemIoType
 
-ACCESSES: TypeAlias = _addrspace.ACCESSES
-Access: TypeAlias = _addrspace.Access
-ReadOp: TypeAlias = _addrspace.ReadOp
-WriteOp: TypeAlias = _addrspace.WriteOp
+ACCESSES: TypeAlias = ua.ACCESSES
+Access: TypeAlias = ua.Access
+ReadOp: TypeAlias = ua.ReadOp
+WriteOp: TypeAlias = ua.WriteOp
 
 Prio = Literal["bus", "core"]
 
 _IN_REGF_DEFAULTS = {
-    _addrspace.RO: False,
-    _addrspace.WO: False,
-    _addrspace.RW: True,
+    ua.access.RO: False,
+    ua.access.WO: False,
+    ua.access.RW: True,
 }
 
 
-class Field(_addrspace.Field):
+class Field(ua.Field):
     """Field."""
 
     portgroups: tuple[str, ...] | None = None
@@ -82,7 +81,7 @@ class Field(_addrspace.Field):
         return False
 
 
-class Word(_addrspace.Word):
+class Word(ua.Word):
     """Word."""
 
     portgroups: tuple[str, ...] | None = None
@@ -116,7 +115,7 @@ class Word(_addrspace.Word):
         if in_regf is None:
             in_regf = self.in_regf
         if core is None:
-            core = _addrspace.get_counteraccess(bus)
+            core = ua.get_counteraccess(bus)
         if in_regf is None:
             in_regf = get_in_regf(bus, core)
         if upd_prio is None:
@@ -143,7 +142,7 @@ class Word(_addrspace.Word):
 
 def get_in_regf(bus: Access, core: Access) -> bool:
     """Calculate whether field is in regf."""
-    if bus == _addrspace.RO and core == _addrspace.RO:
+    if bus == ua.access.RO and core == ua.access.RO:
         return True
     return _IN_REGF_DEFAULTS.get(bus, True)
 
@@ -172,7 +171,7 @@ def check_field(wordname: str, field: Field) -> None:
         )
 
 
-class Words(_addrspace.Words):
+class Words(ua.addrspace.Words):
     """Set of Words."""
 
     def _add_field(self, name: str, type_: u.BaseScalarType, *args, **kwargs):
@@ -180,7 +179,7 @@ class Words(_addrspace.Words):
         self.word.add_field(name, type_, *args, signame=signame, **kwargs)
 
 
-class Addrspace(_addrspace.Addrspace):
+class Addrspace(ua.Addrspace):
     """Address Space."""
 
     portgroups: tuple[str, ...] | None = None
@@ -492,7 +491,7 @@ class UcdpRegfMod(u.ATailoredMod):
         accovr = tabulate(accs, headers=headers)
         return regovr + "\n\n\n" + accovr
 
-    def get_addrspaces(self, defines: Defines | None = None) -> Addrspaces:
+    def get_addrspaces(self, defines: ua.Defines | None = None) -> ua.Addrspaces:
         """Yield Address Space."""
         yield self.addrspace
 

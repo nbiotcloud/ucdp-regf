@@ -1,6 +1,8 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
@@ -37,8 +39,8 @@
 `default_nettype none  // implicit wires are forbidden
 
 module reset ( // tests.test_svmako.ResetMod
-  // main_i
-  input wire main_clk_i,
+  // main_i: Clock and Reset
+  input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)
 );
 
@@ -47,30 +49,25 @@ module reset ( // tests.test_svmako.ResetMod
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic busy1_s;
-  logic busy2_s;
+  logic busy1_s; // Busy
+  logic busy2_s; // Busy
 
 
   // ------------------------------------------------------
   //  tests.reset_softrst: u_softrst
   // ------------------------------------------------------
   reset_softrst u_softrst (
-    // main_i
-    .main_clk_i           (main_clk_i   ),
+    .main_clk_i           (main_clk_i   ), // Clock
     .main_rst_an_i        (main_rst_an_i), // Async Reset (Low-Active)
-    // mem_i
-    .mem_ena_i            (1'b0         ), // TODO
-    .mem_addr_i           (13'h0000     ), // TODO
-    .mem_wena_i           (1'b0         ), // TODO
-    .mem_wdata_i          (32'h00000000 ), // TODO
-    .mem_rdata_o          (             ), // TODO
-    .mem_err_o            (             ), // TODO
-    // regf_o
-    // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
+    .mem_ena_i            (1'b0         ), // TODO - Memory Access Enable
+    .mem_addr_i           (13'h0000     ), // TODO - Memory Address
+    .mem_wena_i           (1'b0         ), // TODO - Memory Write Enable
+    .mem_wdata_i          (32'h00000000 ), // TODO - Memory Write Data
+    .mem_rdata_o          (             ), // TODO - Memory Read Data
+    .mem_err_o            (             ), // TODO - Memory Access Failed.
     .regf_ctrl_ena_rval_o (             ), // TODO - Core Read Value
-    // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
     .regf_ctrl_busy_rbus_i(busy1_s      ), // Bus Read Value
-    .soft_rst_i           (1'b0         )  // TODO
+    .soft_rst_i           (1'b0         )  // TODO - Synchronous Reset
   );
 
 
@@ -78,23 +75,17 @@ module reset ( // tests.test_svmako.ResetMod
   //  tests.reset_regrst: u_regrst
   // ------------------------------------------------------
   reset_regrst u_regrst (
-    // main_i
-    .main_clk_i             (main_clk_i   ),
+    .main_clk_i             (main_clk_i   ), // Clock
     .main_rst_an_i          (main_rst_an_i), // Async Reset (Low-Active)
-    // mem_i
-    .mem_ena_i              (1'b0         ), // TODO
-    .mem_addr_i             (13'h0000     ), // TODO
-    .mem_wena_i             (1'b0         ), // TODO
-    .mem_wdata_i            (32'h00000000 ), // TODO
-    .mem_rdata_o            (             ), // TODO
-    .mem_err_o              (             ), // TODO
-    // regf_o
-    // regf_ctrl_clrall_o: bus=WO core=RO in_regf=False
+    .mem_ena_i              (1'b0         ), // TODO - Memory Access Enable
+    .mem_addr_i             (13'h0000     ), // TODO - Memory Address
+    .mem_wena_i             (1'b0         ), // TODO - Memory Write Enable
+    .mem_wdata_i            (32'h00000000 ), // TODO - Memory Write Data
+    .mem_rdata_o            (             ), // TODO - Memory Read Data
+    .mem_err_o              (             ), // TODO - Memory Access Failed.
     .regf_ctrl_clrall_wbus_o(             ), // TODO - Bus Write Value
     .regf_ctrl_clrall_wr_o  (             ), // TODO - Bus Write Strobe
-    // regf_ctrl_ena_o: bus=RW core=RO in_regf=True
     .regf_ctrl_ena_rval_o   (             ), // TODO - Core Read Value
-    // regf_ctrl_busy_o: bus=RO core=RW in_regf=False
     .regf_ctrl_busy_rbus_i  (busy2_s      )  // Bus Read Value
   );
 
@@ -102,3 +93,11 @@ endmodule // reset
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================
