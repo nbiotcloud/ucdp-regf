@@ -5,7 +5,15 @@
     }
   ],
   "settings": {
-    "verilog.linting.verilator.arguments": "--Wall +1800-2017ext+sv",
-    "verilog.linting.linter": "verilator"
+    "python.defaultInterpreterPath": ".venv/bin/python3",
+    "python.terminal.activateEnvInCurrentTerminal": true,
+    "files.trimTrailingWhitespace": true
+  },
+  "extensions": {
+    "recommendations": [
+      "ms-python.python",
+      "ms-python.vscode-pylance",
+      "charliermarsh.ruff"
+    ]
   }
 }

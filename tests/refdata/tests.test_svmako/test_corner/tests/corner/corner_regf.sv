@@ -8,7 +8,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -96,7 +96,7 @@ module corner_regf ( // tests.test_svmako.RegfMod
   input  wire                main_rst_an_i,                       // Async Reset (Low-Active)
   // mem_i
   input  wire                mem_ena_i,                           // Memory Access Enable
-  input  wire         [12:0] mem_addr_i,                          // Memory Address
+  input  wire         [11:0] mem_addr_i,                          // Memory Address
   input  wire                mem_wena_i,                          // Memory Write Enable
   input  wire         [31:0] mem_wdata_i,                         // Memory Write Data
   output logic        [31:0] mem_rdata_o,                         // Memory Read Data
@@ -264,67 +264,67 @@ module corner_regf ( // tests.test_svmako.RegfMod
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-        13'h0000: begin
+        12'h000: begin
           mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
           bus_ctrl_rden_s = ~mem_wena_i;
         end
-        13'h0001: begin
+        12'h001: begin
           mem_err_o = 0;
           bus_txdata_wren_s[0] = mem_wena_i;
         end
-        13'h0002: begin
+        12'h002: begin
           mem_err_o = 0;
           bus_txdata_wren_s[1] = mem_wena_i;
         end
-        13'h0003: begin
+        12'h003: begin
           mem_err_o = 0;
           bus_txdata_wren_s[2] = mem_wena_i;
         end
-        13'h0004: begin
+        12'h004: begin
           mem_err_o = 0;
           bus_txdata_wren_s[3] = mem_wena_i;
         end
-        13'h0005: begin
+        12'h005: begin
           mem_err_o = 0;
           bus_txdata_wren_s[4] = mem_wena_i;
         end
-        13'h0006: begin
+        12'h006: begin
           mem_err_o = 0;
           bus_dims_wren_s[0] = mem_wena_i;
           bus_dims_rden_s[0] = ~mem_wena_i;
         end
-        13'h0007: begin
+        12'h007: begin
           mem_err_o = 0;
           bus_dims_wren_s[1] = mem_wena_i;
           bus_dims_rden_s[1] = ~mem_wena_i;
         end
-        13'h0008: begin
+        12'h008: begin
           mem_err_o = 0;
           bus_dims_wren_s[2] = mem_wena_i;
           bus_dims_rden_s[2] = ~mem_wena_i;
         end
-        13'h0009: begin
+        12'h009: begin
           mem_err_o = 0;
           bus_guards_wren_s[0] = mem_wena_i;
         end
-        13'h000A: begin
+        12'h00A: begin
           mem_err_o = 0;
           bus_grddim_wren_s[0] = mem_wena_i;
         end
-        13'h000B: begin
+        12'h00B: begin
           mem_err_o = 0;
           bus_grddim_wren_s[1] = mem_wena_i;
         end
-        13'h000C: begin
+        12'h00C: begin
           mem_err_o = 0;
           bus_mixint_wren_s = mem_wena_i;
         end
-        13'h000D: begin
+        12'h00D: begin
           mem_err_o = 0;
           bus_wide0_wren_s = mem_wena_i;
         end
-        13'h000E: begin
+        12'h00E: begin
           mem_err_o = 0;
           bus_wide1_wren_s = mem_wena_i;
         end
@@ -501,49 +501,49 @@ module corner_regf ( // tests.test_svmako.RegfMod
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        13'h0000: begin
+        12'h000: begin
           mem_rdata_o = {20'h00000, regf_grpc_ctrl_spec1_rbus_i, data_ctrl_ver_c, regf_grpa_ctrl_status_rbus_i, data_ctrl_start_r, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
         end
-        13'h0001: begin
+        12'h001: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[0]};
         end
-        13'h0002: begin
+        12'h002: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[1]};
         end
-        13'h0003: begin
+        12'h003: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[2]};
         end
-        13'h0004: begin
+        12'h004: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[3]};
         end
-        13'h0005: begin
+        12'h005: begin
           mem_rdata_o = {24'h000000, data_txdata_bytes_r[4]};
         end
-        13'h0006: begin
+        12'h006: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[0], regf_grpc_dims_spec2_rbus_i[0], data_dims_wrval_r[0], regf_dims_roval_rbus_i[0]};
         end
-        13'h0007: begin
+        12'h007: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[1], regf_grpc_dims_spec2_rbus_i[1], data_dims_wrval_r[1], regf_dims_roval_rbus_i[1]};
         end
-        13'h0008: begin
+        12'h008: begin
           mem_rdata_o = {28'h0000000, data_dims_spec3_r[2], regf_grpc_dims_spec2_rbus_i[2], data_dims_wrval_r[2], regf_dims_roval_rbus_i[2]};
         end
-        13'h0009: begin
+        12'h009: begin
           mem_rdata_o = {12'h000, data_guards_grdport_r[0], data_guards_bprio_r[0], data_guards_cprio_r[0], data_guards_guard_c_r[0], data_guards_guard_b_r[0], data_guards_guard_a_r[0], 5'h00};
         end
-        13'h000A: begin
+        12'h00A: begin
           mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[0], data_grddim_const_c[0], regf_grddim_num_rbus_i[0]};
         end
-        13'h000B: begin
+        12'h00B: begin
           mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[1], data_grddim_const_c[1], regf_grddim_num_rbus_i[1]};
         end
-        13'h000C: begin
+        12'h00C: begin
           mem_rdata_o = {20'h00000, unsigned'(regf_mixint_c_int_rbus_i), data_mixint_r_uint_r, unsigned'(data_mixint_r_int_r)};
         end
-        13'h000D: begin
+        12'h00D: begin
           mem_rdata_o = {data_wide_b_r, data_wide_a_r};
         end
-        13'h000E: begin
+        12'h00E: begin
           mem_rdata_o = {data_wide_d_r, data_base_r};
         end
         default: begin
