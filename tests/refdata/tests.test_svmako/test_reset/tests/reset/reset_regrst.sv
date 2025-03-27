@@ -8,7 +8,7 @@
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -59,7 +59,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
   input  wire         main_rst_an_i,           // Async Reset (Low-Active)
   // mem_i
   input  wire         mem_ena_i,               // Memory Access Enable
-  input  wire  [12:0] mem_addr_i,              // Memory Address
+  input  wire  [11:0] mem_addr_i,              // Memory Address
   input  wire         mem_wena_i,              // Memory Write Enable
   input  wire  [31:0] mem_wdata_i,             // Memory Write Data
   output logic [31:0] mem_rdata_o,             // Memory Read Data
@@ -93,7 +93,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-        13'h0000: begin
+        12'h000: begin
           mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
         end
@@ -133,7 +133,7 @@ module reset_regrst ( // tests.test_svmako.RegfMod
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        13'h0000: begin
+        12'h000: begin
           mem_rdata_o = {27'h0000000, regf_ctrl_busy_rbus_i, 2'h0, data_ctrl_ena_r, 1'h0};
         end
         default: begin

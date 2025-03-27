@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -25,7 +25,7 @@
 """
 Address Space.
 
-Accesses
+TODO: example
 """
 
 import re
@@ -289,7 +289,7 @@ class UcdpRegfMod(u.ATailoredMod):
 
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
-        addrwidth = calc_unsigned_width(self.addrspace.size)
+        addrwidth = calc_unsigned_width(self.addrspace.size - 1)
         memiotype = MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True)
         self.add_port(memiotype, "mem_i")
 
@@ -488,7 +488,7 @@ class UcdpRegfMod(u.ATailoredMod):
                     fldaccs.add(fbus)
                 if fcore := field.core:
                     fldaccs.add(fcore)
-        headers = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
+        headers: tuple[str, ...] = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         regovr = tabulate(data, headers=headers)
         for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name):
             accs.append(  # noqa: PERF401
