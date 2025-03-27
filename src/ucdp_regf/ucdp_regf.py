@@ -184,6 +184,8 @@ class Addrspace(ua.Addrspace):
 
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
+    in_regf: bool | None = None
+    """Default Implementation within Regf."""
     upd_prio: Prio | None = None
     """Update Priority: None, 'bus' or 'core'."""
     upd_strb: bool = False
@@ -191,16 +193,22 @@ class Addrspace(ua.Addrspace):
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
 
-    def _create_word(self, portgroups=None, upd_prio=None, upd_strb=None, wr_guard=None, **kwargs) -> Word:
+    def _create_word(
+        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, **kwargs
+    ) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
+        if in_regf is None:
+            in_regf = self.in_regf
         if upd_prio is None:
             upd_prio = self.upd_prio
         if upd_strb is None:
             upd_strb = self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
-        return Word(portgroups=portgroups, upd_prio=upd_prio, upd_strb=upd_strb, wr_guard=wr_guard, **kwargs)
+        return Word(
+            portgroups=portgroups, in_regf=in_regf, upd_prio=upd_prio, upd_strb=upd_strb, wr_guard=wr_guard, **kwargs
+        )
 
     def _create_words(self, **kwargs) -> Words:
         return Words.create(**kwargs)
@@ -240,6 +248,8 @@ class UcdpRegfMod(u.ATailoredMod):
     # Replicated from Addrspace
     portgroups: tuple[str, ...] | None = None
     """Default Portgroups for Words."""
+    in_regf: bool | None = None
+    """Default Implementation within Regf."""
     upd_prio: Prio | None = None
     """Update Priority: None, 'bus' or 'core'."""
     upd_strb: bool = False
@@ -266,6 +276,7 @@ class UcdpRegfMod(u.ATailoredMod):
             width=self.width,
             depth=self.depth,
             portgroups=self.portgroups,
+            in_regf=self.in_regf,
             upd_prio=self.upd_prio,
             upd_strb=self.upd_strb,
             wr_guard=self.wr_guard,
