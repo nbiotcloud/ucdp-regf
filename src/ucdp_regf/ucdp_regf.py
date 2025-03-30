@@ -237,6 +237,8 @@ class UcdpRegfMod(u.ATailoredMod):
     """Width in Bits."""
     depth: int = 1024
     """Number of words."""
+    byte_acc: bool = False
+    """Provide Byte-wise Access."""
 
     # Replicated from Addrspace
     portgroups: tuple[str, ...] | None = None
@@ -275,12 +277,17 @@ class UcdpRegfMod(u.ATailoredMod):
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
         """IO-Type With All Core Signals."""
-        return _get_regfiotype(self.addrspace)
+        return _get_regfiotype(self.addrspace, self.byte_acc)
 
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
         addrwidth = calc_unsigned_width(self.addrspace.size)
-        memiotype = MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True)
+        if self.byte_acc:
+            memiotype = MemIoType.with_slicewidth(
+                datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, slicewidth=8
+            )
+        else:
+            memiotype = MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True)
         self.add_port(memiotype, "mem_i")
 
     def _build_dep(self):
@@ -293,6 +300,8 @@ class UcdpRegfMod(u.ATailoredMod):
         self._prep_guards()
         self._add_wrguard_decls()
         self._handle_soft_reset()
+        if self.byte_acc:
+            self.add_signal(u.UintType(self.width), "bit_en_s")
 
     def _handle_soft_reset(self):
         if self._soft_rst is None:
@@ -497,7 +506,7 @@ class UcdpRegfMod(u.ATailoredMod):
         yield self.addrspace
 
 
-def _get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
+def _get_regfiotype(addrspace: Addrspace, byte_acc: bool) -> u.DynamicStructType:
     portgroupmap: dict[str | None, u.DynamicStrucType] = {}
     portgroupmap[None] = regfiotype = u.DynamicStructType()
     for word in addrspace.words:
@@ -509,7 +518,7 @@ def _get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
                     portgroupmap[portgroup] = iotype = u.DynamicStructType()
                     regfiotype.add(portgroup, iotype)
                 comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
-                fieldiotype = FieldIoType(field=field)
+                fieldiotype = FieldIoType(field=field, byte_acc=byte_acc)
                 if word.depth:
                     fieldiotype = u.ArrayType(fieldiotype, word.depth)
                 iotype.add(field.signame, fieldiotype, comment=comment)
@@ -543,8 +552,9 @@ class FieldIoType(u.AStructType):
     """Field IO Type."""
 
     field: Field
+    byte_acc: bool = False
 
-    def _build(self):  # noqa: C901
+    def _build(self):  # noqa: C901, PLR0912
         field = self.field
         if field.in_regf:
             if field.core:
@@ -570,7 +580,10 @@ class FieldIoType(u.AStructType):
                 self._add("rd", u.BitType(), comment="Bus Read Strobe")
             if buswr:
                 self._add("wbus", field.type_, comment="Bus Write Value")
-                self._add("wr", u.BitType(), comment="Bus Write Strobe")
+                if self.byte_acc:  # write strobe as bit mask
+                    self._add("wr", u.UintType(field.type_.bits), comment="Bus Bit-Write Strobe")
+                else:
+                    self._add("wr", u.BitType(), comment="Bus Write Strobe")
 
 
 # TODO:

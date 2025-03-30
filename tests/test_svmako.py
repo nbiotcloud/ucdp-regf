@@ -309,3 +309,33 @@ def test_reset(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_reset, tmp_path)
+
+
+class ByteEnMod(u.AMod):
+    """Regfile with Byte Enables."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        regf = RegfMod(self, "u_byte_en", byte_acc=True)
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("w0")
+        word.add_field("f0", u.UintType(13), "RW")
+        word.add_field("f1", u.UintType(3), "RW")
+        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f3", u.UintType(3), "RO")
+
+        word = regf.add_word("w1")
+        word.add_field("f0", u.UintType(7), "RW", in_regf=False)
+        word.add_field("f1", u.UintType(3), "RWC")
+        word.add_field("f2", u.UintType(13), "RWL", in_regf=False)
+
+def test_byte_en(tmp_path):
+    """Byte Enables."""
+    mod = ByteEnMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_byte_en, tmp_path)
