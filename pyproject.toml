@@ -35,9 +35,7 @@ classifiers = [
 ]
 requires-python = ">=3.10.0,<4.0"
 dependencies = [
-    "ucdp>=0.9.0",
-    "ucdp-addr>=1.5.2",
-    "ucdp-glbl>=0.7.0",
+    "ucdp-addr>=1.8.2",
 ]
 
 [project.urls]
@@ -45,46 +43,42 @@ dependencies = [
 "Documentation" = "https://ucdp-regf.readthedocs.io/en/stable/"
 "Bug Tracker" = "https://github.com/nbiotcloud/ucdp-regf/issues"
 
+[dependency-groups]
+dev = [
+    "cocotb>=1.9.2",
+    "cocotb-test>=0.2.6",
+    "contextlib-chdir>=1.0.2",
+    "coveralls>=3.3.1",
+    "mkdocs-click>=0.8.1",
+    "mkdocs-include-markdown-plugin>=6.0.5",
+    "mkdocs-literate-nav>=0.6.1",
+    "mkdocs-material>=9.5.18",
+    "mkdocstrings-python>=1.9.2",
+    "mypy>=1.9.0",
+    "pre-commit>=4.1.0",
+    "pytest-cov>=5.0.0",
+    "ruff>=0.11.2",
+    "test2ref>=0.4.2",
+    "ucdp-addr>=1.8.2",
+    "ucdp-sv>=0.15.0",
+]
+
 [build-system]
 requires = ["pdm-backend"]
 build-backend = "pdm.backend"
+
+[tool.pdm.build]
+includes = ["src/ucdp_regf"]
 
 [tool.pdm.version]
 source = "scm"
 fallback_version = "0.0.0"
 
-[tool.pdm]
-[tool.pdm.dev-dependencies]
-format = [
-    "pre-commit>=3.5.0",
-]
-test = [
-    "cocotb-test>=0.2.5",
-    "cocotb>=1.8.1",
-    "contextlib-chdir>=1.0.2",
-    "coveralls>=3.3.1",
-    "pytest-cov>=5.0.0",
-    "test2ref>=0.4.2",
-    "ucdp-sv>=0.8.3",
-]
-checktypes = [
-    "mypy>=1.9.0",
-]
-doc = [
-    "mkdocs-include-markdown-plugin>=6.0.5",
-    "mkdocs-literate-nav>=0.6.1",
-    "mkdocs-material>=9.5.18",
-    "mkdocstrings-python>=1.9.2",
-    "mkdocs-click>=0.8.1",
-]
-
-[tool.pdm.build]
-includes = ["src/ucdp_regf"]
-
 [tool.ruff]
 line-length = 120
 fix = true
 target-version = "py310"
+
 [tool.ruff.lint]
 select = [
     # isort
@@ -95,6 +89,8 @@ select = [
     "E", "W",
     # pydocstyle
     "D",
+    # pep8-naming
+    "N",
     # flake8-2020
     "YTT",
     # flake8-bugbear
@@ -116,7 +112,7 @@ select = [
     # implicit string concatenation
     "ISC",
     # type-checking imports
-    "TCH",
+    "TC",
     # comprehensions
     "C",
     "C4",
@@ -166,9 +162,13 @@ ignore = [
     'UP038',
     # Assert
     'S101',
+    # Type-Checking
+    'TC001',
+    # Indent of doctest
+    'D412',
 ]
 [tool.ruff.lint.per-file-ignores]
-"test_*" = [
+"tests/*" = [
     # Magic Values
     "PLR2004",
     # Argument
@@ -180,13 +180,12 @@ convention = "google"
 
 [tool.pytest.ini_options]
 addopts ="""
-    --cov ucdp_regf
+    --cov src/ucdp_regf
     --cov-report term
     --cov-report html
     --doctest-glob=docs/*
     --doctest-modules
-    --ignore=noxfile.py
-    --ignore-glob=tests/testdata*
+    --ignore-glob=tests/testdata/*
     --log-level=INFO
     --junitxml=report.xml
 """
@@ -205,7 +204,7 @@ exclude_lines = [
 [tool.mypy]
 disable_error_code = "misc"
 ignore_missing_imports = true
-plugins = "pydantic.mypy"
+# plugins = "pydantic.mypy"
 
 [[tool.mypy.overrides]]
 module = "tests.*"

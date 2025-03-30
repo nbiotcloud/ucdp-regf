@@ -1,12 +1,14 @@
 // =============================================================================
 //
-// THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
 //
 // =============================================================================
 //
 //  MIT License
 //
-//  Copyright (c) 2024 nbiotcloud
+//  Copyright (c) 2024-2025 nbiotcloud
 //
 //  Permission is hereby granted, free of charge, to any person obtaining a copy
 //  of this software and associated documentation files (the "Software"), to deal
@@ -39,13 +41,13 @@
 module portgroup_tx #( // tests.test_svmako.CoreMod
   parameter integer width_p = 1
 ) (
-  // main_i
-  input wire               main_clk_i,
+  // main_i: Clock and Reset
+  input wire               main_clk_i,           // Clock
   input wire               main_rst_an_i,        // Async Reset (Low-Active)
   // regf_i
-  // regf_ctrl_ena_i: bus=RW core=RO in_regf=True
+  //   regf_ctrl_ena_i: bus=RW core=RO in_regf=True
   input wire               regf_ctrl_ena_rval_i, // Core Read Value
-  // regf_tx_data0_i: bus=RW core=RO in_regf=True
+  //   regf_tx_data0_i: bus=RW core=RO in_regf=True
   input wire [width_p-1:0] regf_tx_data0_rval_i  // Core Read Value
 );
 
@@ -54,3 +56,11 @@ endmodule // portgroup_tx
 
 `default_nettype wire
 `end_keywords
+
+// =============================================================================
+//
+//   @generated @fully-generated
+//
+//   THIS FILE IS GENERATED!!! DO NOT EDIT MANUALLY. CHANGES ARE LOST.
+//
+// =============================================================================

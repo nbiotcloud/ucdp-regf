@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -27,8 +27,8 @@ import re
 from collections.abc import Callable
 
 import ucdp as u
+import ucdp_addr as ua
 from pytest import fixture, raises
-from ucdp_addr import addrspace as _addrspace
 
 from ucdp_regf.ucdp_regf import UcdpRegfMod, Word
 
@@ -78,7 +78,7 @@ def test_field_bus_prio_na(word):
 def test_addspc(regf):
     """Test 'get_addrspaces'."""
     word = regf.add_word("w0")
-    word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.RO)
+    word.add_field("chk", u.BitType(), bus="RW", core="RO")
     aspc = regf.get_addrspaces()
     assert f"{tuple(aspc)}" == "(Addrspace(name='regf', size=Bytesize('4 KB')),)"
 
@@ -93,8 +93,8 @@ def test_field_exc(regf):
         word.add_field(
             "chk",
             u.BitType(),
-            bus=_addrspace.RO,
-            core=_addrspace.WO,
+            bus="RO",
+            core="WO",
             portgroups=(
                 "grpa",
                 "grpb",
@@ -102,10 +102,10 @@ def test_field_exc(regf):
         )
 
     with raises(ValueError, match=re.escape("Field 'w0.chk' with constant value must be in_regf.")):
-        word.add_field("chk", u.BitType(), bus=_addrspace.RO, core=_addrspace.RO, in_regf=False)
+        word.add_field("chk", u.BitType(), bus="RO", core="RO", in_regf=False)
 
     with raises(ValueError, match=re.escape("Field 'w0.chk' with access 'WO/WO' is unobservable (read nowhere).")):
-        word.add_field("chk", u.BitType(), bus=_addrspace.WO, core=_addrspace.WO)
+        word.add_field("chk", u.BitType(), bus="WO", core="WO")
 
 
 def test_regf_exc():  # noqa: C901, PLR0915
@@ -133,7 +133,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_rfname(regf: UcdpRegfMod) -> None:
         word = regf.add_word("w0")
-        word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.RO)
+        word.add_field("chk", u.BitType(), bus="RW", core="RO")
         regf.add_soft_rst("ctrl.clrall")
 
     with raises(ValueError, match=re.escape("There is no register/field of name 'ctrl/clrall'.")):
@@ -141,7 +141,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_rsttype(regf: UcdpRegfMod) -> None:
         word = regf.add_word("ctrl")
-        word.add_field("clrall", u.BitType(), bus=_addrspace.WO, core=_addrspace.RO)
+        word.add_field("clrall", u.BitType(), bus="WO", core="RO")
         regf.add_soft_rst("ctrl.clrall")
 
     with raises(ValueError, match=re.escape("Soft reset from ctrl/clrall is not of type 'RstType()' but 'BitType()'.")):
@@ -149,7 +149,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_depth(regf: UcdpRegfMod) -> None:
         word = regf.add_word("ctrl", depth=3)
-        word.add_field("clrall", u.RstType(), bus=_addrspace.WO, core=_addrspace.RO)
+        word.add_field("clrall", u.RstType(), bus="WO", core="RO")
         regf.add_soft_rst("ctrl.clrall")
 
     with raises(ValueError, match=re.escape("Soft reset from ctrl/clrall must not have 'depth'>0 in word.")):
@@ -157,7 +157,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_inregf(regf: UcdpRegfMod) -> None:
         word = regf.add_word("ctrl")
-        word.add_field("clrall", u.RstType(), bus=_addrspace.RW, core=_addrspace.RO)
+        word.add_field("clrall", u.RstType(), bus="RW", core="RO")
         regf.add_soft_rst("ctrl.clrall")
 
     with raises(ValueError, match=re.escape("Soft reset from ctrl/clrall must not have 'in_regf=True'.")):
@@ -165,7 +165,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_rstdupl(regf: UcdpRegfMod) -> None:
         word = regf.add_word("ctrl")
-        word.add_field("clrall", u.RstType(), bus=_addrspace.WO, core=_addrspace.RO)
+        word.add_field("clrall", u.RstType(), bus="WO", core="RO")
         regf.add_soft_rst("ctrl.clrall")
         regf.add_soft_rst("soft_rst_i")
 
@@ -182,7 +182,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     def exc_route(regf: UcdpRegfMod) -> None:
         word = regf.add_word("w0")
-        word.add_field("chk", u.BitType(), bus=_addrspace.RW, core=_addrspace.NA, route="chk_s")
+        word.add_field("chk", u.BitType(), bus="RW", core=ua.access.NA, route="chk_s")
 
     with raises(ValueError, match=re.escape("Field 'chk' has no core access for route.")):
         ExMod(tst_cond=exc_route).get_inst("u_regf")

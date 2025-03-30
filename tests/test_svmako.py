@@ -1,7 +1,7 @@
 #
 # MIT License
 #
-# Copyright (c) 2024 nbiotcloud
+# Copyright (c) 2024-2025 nbiotcloud
 #
 # Permission is hereby granted, free of charge, to any person obtaining a copy
 # of this software and associated documentation files (the "Software"), to deal
@@ -29,7 +29,6 @@ from unittest import mock
 
 import ucdp as u
 from test2ref import assert_refdata
-from ucdp_addr import addrspace as _addrspace
 
 from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
 
@@ -185,32 +184,31 @@ class CornerMod(u.AMod):
         )
 
         word = regf.add_word("guards", in_regf=True, depth=1)
-        busacc = _addrspace.Access(name="WP", read=_addrspace._R, write=_addrspace._WL)
-        word.add_field("once", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.ena & ctrl.busy")
-        word.add_field("coreonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)
-        word.add_field("busonce", u.BitType(), bus=busacc, core=_addrspace.RO, wr_guard="ctrl.busy", in_regf=False)
+        word.add_field("once", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.ena & ctrl.busy")
+        word.add_field("coreonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", in_regf=False)
+        word.add_field("busonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", in_regf=False)
         word.add_field(
             "single",
             u.BitType(),
-            bus=busacc,
-            core=_addrspace.RO,
+            bus="WL",
+            core="RO",
         )
         word.add_field(
             "onetime",
             u.BitType(),
-            bus=busacc,
-            core=_addrspace.RO,
+            bus="WL",
+            core="RO",
         )
         word.add_field("guard_a", u.UintType(4), "RW", wr_guard="ctrl.ena & ctrl.busy")
         word.add_field("guard_b", u.UintType(4), "RW", wr_guard="ctrl.busy")
         word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy")
-        word.add_field("cprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="core")
-        word.add_field("bprio", u.BitType(), bus=_addrspace.RW, core=_addrspace.RW, upd_prio="bus")
+        word.add_field("cprio", u.BitType(), bus="RW", core="RW", upd_prio="core")
+        word.add_field("bprio", u.BitType(), bus="RW", core="RW", upd_prio="bus")
         word.add_field("grdport", u.BitType(), "RW", wr_guard="~(grd_i & ctrl.busy & another_grd_i)")
 
         word = regf.add_word("grddim", in_regf=False, depth=2)
         word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy")
-        word.add_field("const", u.UintType(3, default=5), bus=_addrspace.RO, core=_addrspace.RO, in_regf=True)
+        word.add_field("const", u.UintType(3, default=5), bus="RO", core="RO", in_regf=True)
         word.add_field("int", u.UintType(12), "RW", wr_guard="ctrl.spec1", portgroups=("grpa",))
 
         word = regf.add_word("mixint")
