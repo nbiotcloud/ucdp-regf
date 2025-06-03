@@ -287,11 +287,15 @@ class UcdpRegfMod(u.ATailoredMod):
         """IO-Type With All Core Signals."""
         return get_regfiotype(self.addrspace)
 
+    @cached_property
+    def memiotype(self) -> MemIoType:
+        """Memory IO-Type."""
+        addrwidth = calc_unsigned_width(self.depth - 1)
+        return MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, addressing="data")
+
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
-        addrwidth = calc_unsigned_width(self.addrspace.size - 1)
-        memiotype = MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True)
-        self.add_port(memiotype, "mem_i")
+        self.add_port(self.memiotype, "mem_i")
 
     def _build_dep(self):
         self.add_port(self.regfiotype, "regf_o")
@@ -466,7 +470,6 @@ class UcdpRegfMod(u.ATailoredMod):
     def get_overview(self) -> str:
         """Overview."""
         data = []
-        accs = []
         fldaccs = set()
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
@@ -490,17 +493,20 @@ class UcdpRegfMod(u.ATailoredMod):
                     fldaccs.add(fcore)
         headers: tuple[str, ...] = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         regovr = tabulate(data, headers=headers)
-        for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name):
-            accs.append(  # noqa: PERF401
-                (
-                    fldacc.name,
-                    (fldacc.read and fldacc.read.title) or "",
-                    (fldacc.write and fldacc.write.title) or "",
-                )
+        accs = [
+            (
+                fldacc.name,
+                (fldacc.read and fldacc.read.title) or "",
+                (fldacc.write and fldacc.write.title) or "",
             )
+            for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name)
+        ]
         headers = ("Mnemonic", "ReadOp", "WriteOp")
         accovr = tabulate(accs, headers=headers)
-        return regovr + "\n\n\n" + accovr
+        addrspace = self.addrspace
+        addressing = f"Addressing-Width: {self.memiotype.addressing}"
+        size = f"Size:             {addrspace.depth}x{addrspace.width} ({addrspace.size})"
+        return f"{addressing}\n{size}\n\n\n{regovr}\n\n\n{accovr}"
 
     def get_addrspaces(self, defines: ua.Defines | None = None) -> ua.Addrspaces:
         """Yield Address Space."""

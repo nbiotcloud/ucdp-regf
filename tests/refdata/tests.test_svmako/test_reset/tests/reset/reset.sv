@@ -60,7 +60,7 @@ module reset ( // tests.test_svmako.ResetMod
     .main_clk_i           (main_clk_i   ), // Clock
     .main_rst_an_i        (main_rst_an_i), // Async Reset (Low-Active)
     .mem_ena_i            (1'b0         ), // TODO - Memory Access Enable
-    .mem_addr_i           (12'h000      ), // TODO - Memory Address
+    .mem_addr_i           (10'h000      ), // TODO - Memory Address
     .mem_wena_i           (1'b0         ), // TODO - Memory Write Enable
     .mem_wdata_i          (32'h00000000 ), // TODO - Memory Write Data
     .mem_rdata_o          (             ), // TODO - Memory Read Data
@@ -78,7 +78,7 @@ module reset ( // tests.test_svmako.ResetMod
     .main_clk_i             (main_clk_i   ), // Clock
     .main_rst_an_i          (main_rst_an_i), // Async Reset (Low-Active)
     .mem_ena_i              (1'b0         ), // TODO - Memory Access Enable
-    .mem_addr_i             (12'h000      ), // TODO - Memory Address
+    .mem_addr_i             (10'h000      ), // TODO - Memory Address
     .mem_wena_i             (1'b0         ), // TODO - Memory Write Enable
     .mem_wdata_i            (32'h00000000 ), // TODO - Memory Write Data
     .mem_rdata_o            (             ), // TODO - Memory Read Data
