@@ -285,7 +285,7 @@ class UcdpRegfMod(u.ATailoredMod):
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
         """IO-Type With All Core Signals."""
-        return _get_regfiotype(self.addrspace)
+        return get_regfiotype(self.addrspace)
 
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
@@ -507,7 +507,8 @@ class UcdpRegfMod(u.ATailoredMod):
         yield self.addrspace
 
 
-def _get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
+def get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
+    """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: dict[str | None, u.DynamicStrucType] = {}
     portgroupmap[None] = regfiotype = u.DynamicStructType()
     for word in addrspace.words:
@@ -534,7 +535,7 @@ def _create_route(mod: u.BaseMod, addrspace: Addrspace) -> None:
                 mod.parent.route(u.RoutePath(expr=regfportname, path=mod.name), field.route)
 
 
-def get_regfportname(field: Field) -> str:
+def get_regfportname(field: Field, direction: u.Direction = u.OUT) -> str:
     """Determine Name of Portname."""
     portgroups = field.portgroups
     basename = f"regf_{field.signame}_" if not portgroups else f"regf_{portgroups[0]}_{field.signame}_"
@@ -544,8 +545,8 @@ def get_regfportname(field: Field) -> str:
             valitem = iotype[name]
         except KeyError:
             continue
-        direction = u.OUT * valitem.orientation
-        return f"{basename}{name}{direction.suffix}"
+        itemdirection = direction * valitem.orientation
+        return f"{basename}{name}{itemdirection.suffix}"
     raise ValueError(f"Field '{field.name}' has no core access for route.")
 
 
