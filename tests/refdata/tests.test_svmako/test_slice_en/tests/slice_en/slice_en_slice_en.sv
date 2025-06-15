@@ -34,6 +34,10 @@
 // Data Model: tests.test_svmako.RegfMod
 //
 //
+// Addressing-Width: data
+// Size:             1024x32 (4 KB)
+//
+//
 // Offset    Word     Field    Bus/Core    Reset    Const    Impl
 // --------  -------  -------  ----------  -------  -------  ------
 // +0        w0
@@ -68,7 +72,7 @@ module slice_en_slice_en ( // tests.test_svmako.RegfMod
   input  wire                main_rst_an_i,     // Async Reset (Low-Active)
   // mem_i
   input  wire                mem_ena_i,         // Memory Access Enable
-  input  wire         [11:0] mem_addr_i,        // Memory Address
+  input  wire         [9:0]  mem_addr_i,        // Memory Address
   input  wire                mem_wena_i,        // Memory Write Enable
   input  wire         [31:0] mem_wdata_i,       // Memory Write Data
   output logic        [31:0] mem_rdata_o,       // Memory Read Data
@@ -124,15 +128,15 @@ module slice_en_slice_en ( // tests.test_svmako.RegfMod
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-        12'h000: begin
+        10'h000: begin
           mem_err_o = 0;
           bus_w0_wren_s = mem_wena_i;
         end
-        12'h001: begin
+        10'h001: begin
           mem_err_o = 0;
           bus_w1_wren_s = mem_wena_i;
         end
-        12'h002: begin
+        10'h002: begin
           mem_err_o = 0;
           bus_w2_wren_s = mem_wena_i;
         end
@@ -183,13 +187,13 @@ module slice_en_slice_en ( // tests.test_svmako.RegfMod
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        12'h000: begin
+        10'h000: begin
           mem_rdata_o = {regf_w0_f3_rbus_i, 13'h0000, data_w0_f1_r, data_w0_f0_r};
         end
-        12'h001: begin
+        10'h001: begin
           mem_rdata_o = {9'h000, regf_w1_f2_rbus_i, data_w1_f1_r, regf_w1_f0_rbus_i};
         end
-        12'h002: begin
+        10'h002: begin
           mem_rdata_o = {19'h00000, unsigned'(data_w2_f1_r)};
         end
         default: begin

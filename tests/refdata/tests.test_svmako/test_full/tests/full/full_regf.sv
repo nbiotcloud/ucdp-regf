@@ -34,6 +34,10 @@
 // Data Model: tests.test_svmako.RegfMod
 //
 //
+// Addressing-Width: data
+// Size:             1024x32 (4 KB)
+//
+//
 // Offset    Word     Field    Bus/Core    Reset    Const    Impl
 // --------  -------  -------  ----------  -------  -------  ------
 // +0        w0
@@ -668,7 +672,7 @@ module full_regf ( // tests.test_svmako.RegfMod
   input  wire         main_rst_an_i,       // Async Reset (Low-Active)
   // mem_i
   input  wire         mem_ena_i,           // Memory Access Enable
-  input  wire  [11:0] mem_addr_i,          // Memory Address
+  input  wire  [9:0]  mem_addr_i,          // Memory Address
   input  wire         mem_wena_i,          // Memory Write Enable
   input  wire  [31:0] mem_wdata_i,         // Memory Write Data
   output logic [31:0] mem_rdata_o,         // Memory Read Data
@@ -2876,140 +2880,140 @@ module full_regf ( // tests.test_svmako.RegfMod
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-        12'h001: begin
+        10'h001: begin
           mem_err_o = mem_wena_i;
         end
-        12'h002: begin
+        10'h002: begin
           mem_err_o = mem_wena_i;
           bus_w2_rden_s = ~mem_wena_i;
         end
-        12'h003: begin
+        10'h003: begin
           mem_err_o = mem_wena_i;
           bus_w3_rden_s = ~mem_wena_i;
         end
-        12'h004: begin
+        10'h004: begin
           mem_err_o = mem_wena_i;
           bus_w4_rden_s = ~mem_wena_i;
         end
-        12'h005: begin
+        10'h005: begin
           mem_err_o = mem_wena_i;
         end
-        12'h006: begin
+        10'h006: begin
           mem_err_o = mem_wena_i;
         end
-        12'h007: begin
+        10'h007: begin
           mem_err_o = mem_wena_i;
         end
-        12'h008: begin
+        10'h008: begin
           mem_err_o = mem_wena_i;
           bus_w8_rden_s = ~mem_wena_i;
         end
-        12'h009: begin
+        10'h009: begin
           mem_err_o = mem_wena_i;
           bus_w9_rden_s = ~mem_wena_i;
         end
-        12'h00A: begin
+        10'h00A: begin
           mem_err_o = mem_wena_i;
           bus_w10_rden_s = ~mem_wena_i;
         end
-        12'h00B: begin
+        10'h00B: begin
           mem_err_o = mem_wena_i;
           bus_w11_rden_s = ~mem_wena_i;
         end
-        12'h00C: begin
+        10'h00C: begin
           mem_err_o = mem_wena_i;
           bus_w12_rden_s = ~mem_wena_i;
         end
-        12'h00D: begin
+        10'h00D: begin
           mem_err_o = 0;
           bus_w13_wren_s = mem_wena_i;
           bus_w13_rden_s = ~mem_wena_i;
         end
-        12'h00E: begin
+        10'h00E: begin
           mem_err_o = 0;
           bus_w14_wren_s = mem_wena_i;
         end
-        12'h00F: begin
+        10'h00F: begin
           mem_err_o = 0;
           bus_w15_wren_s = mem_wena_i;
         end
-        12'h010: begin
+        10'h010: begin
           mem_err_o = 0;
           bus_w16_wren_s = mem_wena_i;
         end
-        12'h011: begin
+        10'h011: begin
           mem_err_o = 0;
           bus_w17_wren_s = mem_wena_i;
         end
-        12'h012: begin
+        10'h012: begin
           mem_err_o = 0;
           bus_w18_wren_s = mem_wena_i;
         end
-        12'h013: begin
+        10'h013: begin
           mem_err_o = 0;
           bus_w19_wren_s = mem_wena_i;
         end
-        12'h014: begin
+        10'h014: begin
           mem_err_o = 0;
           bus_w20_wren_s = mem_wena_i;
         end
-        12'h015: begin
+        10'h015: begin
           mem_err_o = 0;
           bus_w21_wren_s = mem_wena_i;
         end
-        12'h016: begin
+        10'h016: begin
           mem_err_o = 0;
           bus_w22_wren_s = mem_wena_i;
         end
-        12'h017: begin
+        10'h017: begin
           mem_err_o = 0;
           bus_w23_wren_s = mem_wena_i;
         end
-        12'h018: begin
+        10'h018: begin
           mem_err_o = 0;
           bus_w24_wren_s = mem_wena_i;
         end
-        12'h019: begin
+        10'h019: begin
           mem_err_o = 0;
           bus_w25_wren_s = mem_wena_i;
         end
-        12'h01A: begin
+        10'h01A: begin
           mem_err_o = 0;
           bus_w26_wren_s = mem_wena_i;
         end
-        12'h01B: begin
+        10'h01B: begin
           mem_err_o = ~mem_wena_i;
           bus_w27_wren_s = mem_wena_i;
         end
-        12'h01C: begin
+        10'h01C: begin
           mem_err_o = ~mem_wena_i;
           bus_w28_wren_s = mem_wena_i;
         end
-        12'h01D: begin
+        10'h01D: begin
           mem_err_o = ~mem_wena_i;
           bus_w29_wren_s = mem_wena_i;
         end
-        12'h01E: begin
+        10'h01E: begin
           mem_err_o = ~mem_wena_i;
           bus_w30_wren_s = mem_wena_i;
         end
-        12'h01F: begin
+        10'h01F: begin
           mem_err_o = ~mem_wena_i;
           bus_w31_wren_s = mem_wena_i;
         end
-        12'h020: begin
+        10'h020: begin
           mem_err_o = ~mem_wena_i;
           bus_w32_wren_s = mem_wena_i;
         end
-        12'h021: begin
+        10'h021: begin
           mem_err_o = ~mem_wena_i;
           bus_w33_wren_s = mem_wena_i;
         end
-        12'h022: begin
+        10'h022: begin
           mem_err_o = ~mem_wena_i;
           bus_w34_wren_s = mem_wena_i;
         end
-        12'h023: begin
+        10'h023: begin
           mem_err_o = ~mem_wena_i;
           bus_w35_wren_s = mem_wena_i;
         end
@@ -4574,79 +4578,79 @@ module full_regf ( // tests.test_svmako.RegfMod
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-        12'h002: begin
+        10'h002: begin
           mem_rdata_o = {data_w2_f30_r, regf_w2_f28_rbus_i, data_w2_f26_r, regf_w2_f24_rbus_i, data_w2_f22_r, regf_w2_f20_rbus_i, data_w2_f18_r, regf_w2_f16_rbus_i, 16'h0000};
         end
-        12'h003: begin
+        10'h003: begin
           mem_rdata_o = {data_w3_f30_r, regf_w3_f28_rbus_i, data_w3_f26_r, regf_w3_f24_rbus_i, data_w3_f22_r, regf_w3_f20_rbus_i, data_w3_f18_r, regf_w3_f16_rbus_i, data_w3_f14_r, regf_w3_f12_rbus_i, data_w3_f10_r, regf_w3_f8_rbus_i, data_w3_f6_r, regf_w3_f4_rbus_i, data_w3_f2_r, regf_w3_f0_rbus_i};
         end
-        12'h004: begin
+        10'h004: begin
           mem_rdata_o = {data_w4_f30_c, data_w4_f28_r, regf_w4_f26_rbus_i, data_w4_f24_c, data_w4_f22_r, regf_w4_f20_rbus_i, data_w4_f18_r, regf_w4_f16_rbus_i, data_w4_f14_r, regf_w4_f12_rbus_i, data_w4_f10_r, regf_w4_f8_rbus_i, data_w4_f6_r, regf_w4_f4_rbus_i, data_w4_f2_r, regf_w4_f0_rbus_i};
         end
-        12'h005: begin
+        10'h005: begin
           mem_rdata_o = {regf_w5_f30_rbus_i, data_w5_f28_r, regf_w5_f26_rbus_i, data_w5_f24_r, regf_w5_f22_rbus_i, data_w5_f20_r, regf_w5_f18_rbus_i, data_w5_f16_r, regf_w5_f14_rbus_i, data_w5_f12_r, regf_w5_f10_rbus_i, data_w5_f8_r, regf_w5_f6_rbus_i, data_w5_f4_r, regf_w5_f2_rbus_i, data_w5_f0_c};
         end
-        12'h006: begin
+        10'h006: begin
           mem_rdata_o = {data_w6_f30_r, regf_w6_f28_rbus_i, data_w6_f26_c, data_w6_f24_r, regf_w6_f22_rbus_i, data_w6_f20_r, regf_w6_f18_rbus_i, data_w6_f16_r, regf_w6_f14_rbus_i, data_w6_f12_r, regf_w6_f10_rbus_i, data_w6_f8_r, regf_w6_f6_rbus_i, data_w6_f4_r, regf_w6_f2_rbus_i, data_w6_f0_r};
         end
-        12'h007: begin
+        10'h007: begin
           mem_rdata_o = {data_w7_f30_r, regf_w7_f28_rbus_i, data_w7_f26_r, regf_w7_f24_rbus_i, data_w7_f22_r, regf_w7_f20_rbus_i, data_w7_f18_r, regf_w7_f16_rbus_i, data_w7_f14_r, regf_w7_f12_rbus_i, data_w7_f10_r, regf_w7_f8_rbus_i, data_w7_f6_r, regf_w7_f4_rbus_i, data_w7_f2_c, data_w7_f0_c};
         end
-        12'h008: begin
+        10'h008: begin
           mem_rdata_o = {data_w8_f30_r, regf_w8_f28_rbus_i, data_w8_f26_r, regf_w8_f24_rbus_i, data_w8_f22_r, regf_w8_f20_rbus_i, data_w8_f18_r, regf_w8_f16_rbus_i, data_w8_f14_r, regf_w8_f12_rbus_i, data_w8_f10_r, regf_w8_f8_rbus_i, data_w8_f6_r, regf_w8_f4_rbus_i, data_w8_f2_r, regf_w8_f0_rbus_i};
         end
-        12'h009: begin
+        10'h009: begin
           mem_rdata_o = {data_w9_f30_r, regf_w9_f28_rbus_i, data_w9_f26_r, regf_w9_f24_rbus_i, data_w9_f22_r, regf_w9_f20_rbus_i, data_w9_f18_r, regf_w9_f16_rbus_i, data_w9_f14_r, regf_w9_f12_rbus_i, data_w9_f10_r, regf_w9_f8_rbus_i, data_w9_f6_r, regf_w9_f4_rbus_i, data_w9_f2_r, regf_w9_f0_rbus_i};
         end
-        12'h00A: begin
+        10'h00A: begin
           mem_rdata_o = {data_w10_f30_r, regf_w10_f28_rbus_i, data_w10_f26_r, regf_w10_f24_rbus_i, data_w10_f22_r, regf_w10_f20_rbus_i, data_w10_f18_r, regf_w10_f16_rbus_i, data_w10_f14_r, regf_w10_f12_rbus_i, data_w10_f10_r, regf_w10_f8_rbus_i, data_w10_f6_r, regf_w10_f4_rbus_i, data_w10_f2_r, regf_w10_f0_rbus_i};
         end
-        12'h00B: begin
+        10'h00B: begin
           mem_rdata_o = {data_w11_f30_r, regf_w11_f28_rbus_i, data_w11_f26_r, regf_w11_f24_rbus_i, data_w11_f22_r, regf_w11_f20_rbus_i, data_w11_f18_r, regf_w11_f16_rbus_i, data_w11_f14_r, regf_w11_f12_rbus_i, data_w11_f10_r, regf_w11_f8_rbus_i, data_w11_f6_r, regf_w11_f4_rbus_i, data_w11_f2_r, regf_w11_f0_rbus_i};
         end
-        12'h00C: begin
+        10'h00C: begin
           mem_rdata_o = {data_w12_f30_r, regf_w12_f28_rbus_i, data_w12_f26_r, regf_w12_f24_rbus_i, data_w12_f22_r, regf_w12_f20_rbus_i, data_w12_f18_r, regf_w12_f16_rbus_i, data_w12_f14_r, regf_w12_f12_rbus_i, data_w12_f10_r, regf_w12_f8_rbus_i, data_w12_f6_r, regf_w12_f4_rbus_i, data_w12_f2_r, regf_w12_f0_rbus_i};
         end
-        12'h00D: begin
+        10'h00D: begin
           mem_rdata_o = {data_w13_f30_r, regf_w13_f28_rbus_i, data_w13_f26_r, regf_w13_f24_rbus_i, data_w13_f22_r, regf_w13_f20_rbus_i, data_w13_f18_r, regf_w13_f16_rbus_i, data_w13_f14_r, regf_w13_f12_rbus_i, data_w13_f10_r, regf_w13_f8_rbus_i, data_w13_f6_r, regf_w13_f4_rbus_i, data_w13_f2_r, regf_w13_f0_rbus_i};
         end
-        12'h00E: begin
+        10'h00E: begin
           mem_rdata_o = {data_w14_f30_r, regf_w14_f28_rbus_i, data_w14_f26_r, regf_w14_f24_rbus_i, data_w14_f22_r, regf_w14_f20_rbus_i, data_w14_f18_r, regf_w14_f16_rbus_i, data_w14_f14_r, regf_w14_f12_rbus_i, data_w14_f10_r, regf_w14_f8_rbus_i, data_w14_f6_r, regf_w14_f4_rbus_i, data_w14_f2_r, regf_w14_f0_rbus_i};
         end
-        12'h00F: begin
+        10'h00F: begin
           mem_rdata_o = {data_w15_f30_r, regf_w15_f28_rbus_i, data_w15_f26_r, regf_w15_f24_rbus_i, data_w15_f22_r, regf_w15_f20_rbus_i, data_w15_f18_r, regf_w15_f16_rbus_i, data_w15_f14_r, regf_w15_f12_rbus_i, data_w15_f10_r, regf_w15_f8_rbus_i, data_w15_f6_r, regf_w15_f4_rbus_i, data_w15_f2_r, regf_w15_f0_rbus_i};
         end
-        12'h010: begin
+        10'h010: begin
           mem_rdata_o = {data_w16_f30_r, regf_w16_f28_rbus_i, data_w16_f26_r, regf_w16_f24_rbus_i, data_w16_f22_r, regf_w16_f20_rbus_i, data_w16_f18_r, regf_w16_f16_rbus_i, data_w16_f14_r, regf_w16_f12_rbus_i, data_w16_f10_r, regf_w16_f8_rbus_i, data_w16_f6_r, regf_w16_f4_rbus_i, data_w16_f2_r, regf_w16_f0_rbus_i};
         end
-        12'h011: begin
+        10'h011: begin
           mem_rdata_o = {data_w17_f30_r, regf_w17_f28_rbus_i, data_w17_f26_r, regf_w17_f24_rbus_i, data_w17_f22_r, regf_w17_f20_rbus_i, data_w17_f18_r, regf_w17_f16_rbus_i, data_w17_f14_r, regf_w17_f12_rbus_i, data_w17_f10_r, regf_w17_f8_rbus_i, data_w17_f6_r, regf_w17_f4_rbus_i, data_w17_f2_r, regf_w17_f0_rbus_i};
         end
-        12'h012: begin
+        10'h012: begin
           mem_rdata_o = {data_w18_f30_r, regf_w18_f28_rbus_i, data_w18_f26_r, regf_w18_f24_rbus_i, data_w18_f22_r, regf_w18_f20_rbus_i, data_w18_f18_r, regf_w18_f16_rbus_i, data_w18_f14_r, regf_w18_f12_rbus_i, data_w18_f10_r, regf_w18_f8_rbus_i, data_w18_f6_r, regf_w18_f4_rbus_i, data_w18_f2_r, regf_w18_f0_rbus_i};
         end
-        12'h013: begin
+        10'h013: begin
           mem_rdata_o = {data_w19_f30_r, regf_w19_f28_rbus_i, data_w19_f26_r, regf_w19_f24_rbus_i, data_w19_f22_r, regf_w19_f20_rbus_i, data_w19_f18_r, regf_w19_f16_rbus_i, data_w19_f14_r, regf_w19_f12_rbus_i, data_w19_f10_r, regf_w19_f8_rbus_i, data_w19_f6_r, regf_w19_f4_rbus_i, data_w19_f2_r, regf_w19_f0_rbus_i};
         end
-        12'h014: begin
+        10'h014: begin
           mem_rdata_o = {data_w20_f30_r, regf_w20_f28_rbus_i, data_w20_f26_r, regf_w20_f24_rbus_i, data_w20_f22_r, regf_w20_f20_rbus_i, data_w20_f18_r, regf_w20_f16_rbus_i, data_w20_f14_r, regf_w20_f12_rbus_i, data_w20_f10_r, regf_w20_f8_rbus_i, data_w20_f6_r, regf_w20_f4_rbus_i, data_w20_f2_r, regf_w20_f0_rbus_i};
         end
-        12'h015: begin
+        10'h015: begin
           mem_rdata_o = {data_w21_f30_r, regf_w21_f28_rbus_i, data_w21_f26_r, regf_w21_f24_rbus_i, data_w21_f22_r, regf_w21_f20_rbus_i, data_w21_f18_r, regf_w21_f16_rbus_i, data_w21_f14_r, regf_w21_f12_rbus_i, data_w21_f10_r, regf_w21_f8_rbus_i, data_w21_f6_r, regf_w21_f4_rbus_i, data_w21_f2_r, regf_w21_f0_rbus_i};
         end
-        12'h016: begin
+        10'h016: begin
           mem_rdata_o = {data_w22_f30_r, regf_w22_f28_rbus_i, data_w22_f26_r, regf_w22_f24_rbus_i, data_w22_f22_r, regf_w22_f20_rbus_i, data_w22_f18_r, regf_w22_f16_rbus_i, data_w22_f14_r, regf_w22_f12_rbus_i, data_w22_f10_r, regf_w22_f8_rbus_i, data_w22_f6_r, regf_w22_f4_rbus_i, data_w22_f2_r, regf_w22_f0_rbus_i};
         end
-        12'h017: begin
+        10'h017: begin
           mem_rdata_o = {data_w23_f30_r, regf_w23_f28_rbus_i, data_w23_f26_r, regf_w23_f24_rbus_i, data_w23_f22_r, regf_w23_f20_rbus_i, data_w23_f18_r, regf_w23_f16_rbus_i, data_w23_f14_r, regf_w23_f12_rbus_i, data_w23_f10_r, regf_w23_f8_rbus_i, data_w23_f6_r, regf_w23_f4_rbus_i, data_w23_f2_r, regf_w23_f0_rbus_i};
         end
-        12'h018: begin
+        10'h018: begin
           mem_rdata_o = {data_w24_f30_r, regf_w24_f28_rbus_i, data_w24_f26_r, regf_w24_f24_rbus_i, data_w24_f22_r, regf_w24_f20_rbus_i, data_w24_f18_r, regf_w24_f16_rbus_i, data_w24_f14_r, regf_w24_f12_rbus_i, data_w24_f10_r, regf_w24_f8_rbus_i, data_w24_f6_r, regf_w24_f4_rbus_i, data_w24_f2_r, regf_w24_f0_rbus_i};
         end
-        12'h019: begin
+        10'h019: begin
           mem_rdata_o = {data_w25_f30_r, regf_w25_f28_rbus_i, data_w25_f26_r, regf_w25_f24_rbus_i, data_w25_f22_r, regf_w25_f20_rbus_i, data_w25_f18_r, regf_w25_f16_rbus_i, data_w25_f14_r, regf_w25_f12_rbus_i, data_w25_f10_r, regf_w25_f8_rbus_i, data_w25_f6_r, regf_w25_f4_rbus_i, data_w25_f2_r, regf_w25_f0_rbus_i};
         end
-        12'h01A: begin
+        10'h01A: begin
           mem_rdata_o = {4'h0, data_w26_f26_r, regf_w26_f24_rbus_i, data_w26_f22_r, regf_w26_f20_rbus_i, data_w26_f18_r, regf_w26_f16_rbus_i, data_w26_f14_r, regf_w26_f12_rbus_i, data_w26_f10_r, regf_w26_f8_rbus_i, data_w26_f6_r, regf_w26_f4_rbus_i, data_w26_f2_r, regf_w26_f0_rbus_i};
         end
         default: begin

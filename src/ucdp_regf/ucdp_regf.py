@@ -36,7 +36,7 @@ import ucdp as u
 import ucdp_addr as ua
 from icdutil.num import calc_unsigned_width
 from tabulate import tabulate
-from ucdp_glbl.mem import MemIoType, SliceWidths
+from ucdp_glbl.mem import MemIoType, SliceWidths, calc_slicewidths
 
 # ACCESSES: TypeAlias = ua.ACCESSES
 Access: TypeAlias = ua.Access
@@ -246,8 +246,6 @@ class UcdpRegfMod(u.ATailoredMod):
     """Number of words."""
     slicing: int | SliceWidths | None = None
     """Use sliced write enables (of same or individual widths)."""
-    # byte_acc: bool = False
-    # """Provide Byte-wise Access."""
 
     # Replicated from Addrspace
     portgroups: tuple[str, ...] | None = None
@@ -291,21 +289,20 @@ class UcdpRegfMod(u.ATailoredMod):
         """IO-Type With All Core Signals."""
         return _get_regfiotype(self.addrspace, (self.slicing is not None))
 
+    @cached_property
+    def memiotype(self) -> MemIoType:
+        """Memory IO-Type."""
+        addrwidth = calc_unsigned_width(self.depth - 1)
+        slicing = self.slicing
+        if slicing is not None and isinstance(slicing, int):
+            slicing = calc_slicewidths(self.width, self.slicing)
+        return MemIoType(
+            datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, slicewidths=slicing, addressing="data"
+        )
+
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
-        addrwidth = calc_unsigned_width(self.addrspace.size - 1)
-        if self.slicing is not None:
-            if isinstance(self.slicing, tuple):
-                memiotype = MemIoType(
-                    datawidth=self.width, addrwidth=addrwidth, slicewidths=self.slicing, writable=True, err=True
-                )
-            else:
-                memiotype = MemIoType.with_slicewidth(
-                    datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, slicewidth=self.slicing
-                )
-        else:
-            memiotype = MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True)
-        self.add_port(memiotype, "mem_i")
+        self.add_port(self.memiotype, "mem_i")
 
     def _build_dep(self):
         self.add_port(self.regfiotype, "regf_o")
@@ -482,7 +479,6 @@ class UcdpRegfMod(u.ATailoredMod):
     def get_overview(self) -> str:
         """Overview."""
         data = []
-        accs = []
         fldaccs = set()
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
@@ -506,17 +502,20 @@ class UcdpRegfMod(u.ATailoredMod):
                     fldaccs.add(fcore)
         headers: tuple[str, ...] = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         regovr = tabulate(data, headers=headers)
-        for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name):
-            accs.append(  # noqa: PERF401
-                (
-                    fldacc.name,
-                    (fldacc.read and fldacc.read.title) or "",
-                    (fldacc.write and fldacc.write.title) or "",
-                )
+        accs = [
+            (
+                fldacc.name,
+                (fldacc.read and fldacc.read.title) or "",
+                (fldacc.write and fldacc.write.title) or "",
             )
+            for fldacc in sorted(fldaccs, key=lambda fldacc: fldacc.name)
+        ]
         headers = ("Mnemonic", "ReadOp", "WriteOp")
         accovr = tabulate(accs, headers=headers)
-        return regovr + "\n\n\n" + accovr
+        addrspace = self.addrspace
+        addressing = f"Addressing-Width: {self.memiotype.addressing}"
+        size = f"Size:             {addrspace.depth}x{addrspace.width} ({addrspace.size})"
+        return f"{addressing}\n{size}\n\n\n{regovr}\n\n\n{accovr}"
 
     def get_addrspaces(self, defines: ua.Defines | None = None) -> ua.Addrspaces:
         """Yield Address Space."""
@@ -524,6 +523,7 @@ class UcdpRegfMod(u.ATailoredMod):
 
 
 def _get_regfiotype(addrspace: Addrspace, sliced_en: bool) -> u.DynamicStructType:
+    """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: dict[str | None, u.DynamicStrucType] = {}
     portgroupmap[None] = regfiotype = u.DynamicStructType()
     for word in addrspace.words:
@@ -550,7 +550,7 @@ def _create_route(mod: u.BaseMod, addrspace: Addrspace) -> None:
                 mod.parent.route(u.RoutePath(expr=regfportname, path=mod.name), field.route)
 
 
-def get_regfportname(field: Field) -> str:
+def get_regfportname(field: Field, direction: u.Direction = u.OUT) -> str:
     """Determine Name of Portname."""
     portgroups = field.portgroups
     basename = f"regf_{field.signame}_" if not portgroups else f"regf_{portgroups[0]}_{field.signame}_"
@@ -560,8 +560,8 @@ def get_regfportname(field: Field) -> str:
             valitem = iotype[name]
         except KeyError:
             continue
-        direction = u.OUT * valitem.orientation
-        return f"{basename}{name}{direction.suffix}"
+        itemdirection = direction * valitem.orientation
+        return f"{basename}{name}{itemdirection.suffix}"
     raise ValueError(f"Field '{field.name}' has no core access for route.")
 
 
