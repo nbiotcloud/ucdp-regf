@@ -30,15 +30,15 @@
 //
 // =============================================================================
 //
-// Module:     tests.byte_en
-// Data Model: tests.test_svmako.ByteEnMod
+// Module:     tests.slice_en
+// Data Model: tests.test_svmako.SliceEnMod
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module byte_en ( // tests.test_svmako.ByteEnMod
+module slice_en ( // tests.test_svmako.SliceEnMod
   // main_i: Clock and Reset
   input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)
@@ -47,9 +47,9 @@ module byte_en ( // tests.test_svmako.ByteEnMod
 
 
   // ------------------------------------------------------
-  //  tests.byte_en_byte_en: u_byte_en
+  //  tests.slice_en_slice_en: u_slice_en
   // ------------------------------------------------------
-  byte_en_byte_en u_byte_en (
+  slice_en_slice_en u_slice_en (
     .main_clk_i       (main_clk_i   ), // Clock
     .main_rst_an_i    (main_rst_an_i), // Async Reset (Low-Active)
     .mem_ena_i        (1'b0         ), // TODO - Memory Access Enable
@@ -57,7 +57,7 @@ module byte_en ( // tests.test_svmako.ByteEnMod
     .mem_wena_i       (1'b0         ), // TODO - Memory Write Enable
     .mem_wdata_i      (32'h00000000 ), // TODO - Memory Write Data
     .mem_rdata_o      (             ), // TODO - Memory Read Data
-    .mem_sel_i        (4'h0         ), // TODO - Slice Selects
+    .mem_sel_i        (6'h00        ), // TODO - Slice Selects
     .mem_err_o        (             ), // TODO - Memory Access Failed.
     .regf_w0_f0_rval_o(             ), // TODO - Core Read Value
     .regf_w0_f1_rval_o(             ), // TODO - Core Read Value
@@ -73,7 +73,7 @@ module byte_en ( // tests.test_svmako.ByteEnMod
     .regf_w2_f1_rval_o(             )  // TODO - Core Read Value
   );
 
-endmodule // byte_en
+endmodule // slice_en
 
 `default_nettype wire
 `end_keywords

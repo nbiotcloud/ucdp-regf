@@ -26,6 +26,7 @@
 import ucdp as u
 import ucdpsv as usv
 from aligntext import Align
+from ucdp_glbl.mem import SliceWidths
 from ucdp_regf.ucdp_regf import Field, Word, Addrspace, Access, WriteOp, ReadOp
 from collections.abc import Iterator
 
@@ -142,10 +143,19 @@ def get_bus_word_rden_defaults(rslvr: usv.SvExprResolver, addrspace: Addrspace) 
     aligntext.add_row(signame, defval)
   return aligntext
 
-def get_bit_enables(width: int) -> str:
+def get_bit_enables(width: int, slicing: int | SliceWidths) -> str:
   vec = []
-  for idx in range((width // 8)-1, -1, -1):
-    vec.append(f"{{8{{mem_sel_i[{idx}]}}}}")
+  if isinstance(slicing, int):
+    if slicing == 1:  # bit enables
+      return "mem_sel_i"
+    for idx in range((width // slicing)-1, -1, -1):
+      vec.append(f"{{{slicing}{{mem_sel_i[{idx}]}}}}")
+  else:
+    for idx, slc in enumerate(slicing):
+      if slc > 1:
+        vec.append(f"{{{slc}{{mem_sel_i[{idx}]}}}}")
+      else:
+        vec.append(f"mem_sel_i[{idx}]")
   vec = ", ".join(vec)
   return f"{{{vec}}}"
 
@@ -192,7 +202,7 @@ def get_rdexpr(rslvr: usv.SvExprResolver, type_:u.BaseScalarType, read_acc: Read
 
 
 def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: dict[str, tuple[str, str]],
-                       byte_acc: bool = False, indent: int = 0) -> Iterator[str]:
+                       sliced_en: bool = False, indent: int = 0) -> Iterator[str]:
   pre = " " * indent
   ff_dly = f"#{rslvr.ff_dly} " if rslvr.ff_dly else ""
   for word in addrspace.words:
@@ -207,6 +217,7 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
       upd_strb = []
       if field.bus and field.bus.write:
         buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
+        busmask = f"bit_en_s{rslvr.resolve_slice(field.slice)}"  # in case of sliced access
         if field.bus.write.once and field.wr_guard:
           grdidx = grdonce.setdefault(field.wr_guard, len(grdonce))
           oncespec = f"grd{grdidx}"
@@ -223,10 +234,10 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
         memwdata = f"mem_wdata_i{rslvr.resolve_slice(field.slice)}"
         if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
           memwdata = f"signed'({memwdata})"
-        if byte_acc:
-          memwmask = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
-          memwdata = f"(data_{field.signame}_r{{slc}} & ~{memwmask}) | ({memwdata & memwmask})"
+          busmask = f"signed'({busmask})"
         wrexpr = get_wrexpr(rslvr, field.type_, field.bus.write, f"data_{field.signame}_r{{slc}}", memwdata)
+        if sliced_en:
+          wrexpr = f"(data_{field.signame}_r{{slc}} & ~{busmask}) | ({wrexpr} & {busmask})"
         upd_bus.append(f"if {buswren} begin\n  data_{field.signame}_r{{slc}} <= {ff_dly}{wrexpr};\nend")
         upd_strb.append(f"bus_{word.name}_wren_s{{slc}}")
       if field.bus and field.bus.read and field.bus.read.data is not None:
@@ -239,7 +250,7 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
       else:
         grpname = ""
       basename = f"regf_{grpname}{field.signame}"
-      if field.core and field.core.write:
+      if field.core and field.core.write:  # no byte-enables from core, though
         wrexpr = get_wrexpr(rslvr, field.type_, field.core.write, f"data_{field.signame}_r{{slc}}", f"{basename}_wval_i{{slc}}")
         upd_core.append(f"if ({basename}_wr_i{{slc}} == 1'b1) begin\n  data_{field.signame}_r{{slc}} <= {ff_dly}{wrexpr};\nend")
         upd_strb.append(f"{basename}_wr_i{{slc}}")
@@ -314,7 +325,7 @@ def get_wrguard_assigns(guards: dict[str, tuple[str, str]], indent: int = 0) -> 
   return aligntext
 
 def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: dict[str, tuple[str, str]],
-                     wronce_guards: dict[str, int], byte_acc: bool = False, indent: int = 0) -> Align:
+                     wronce_guards: dict[str, int], sliced_en: bool = False, indent: int = 0) -> Align:
   aligntext = Align(rtrim=True)
   aligntext.set_separators(first=" "*indent)
   for word, fields in addrspace.iter(): # BOZO coreread?!?
@@ -355,7 +366,7 @@ def get_outp_assigns(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: di
             for slc in iter_word_depth(word):
               wrencond = buswren.format(slc=slc)
               aligntext.add_row("assign", f"regf_{gn}{field.signame}_wbus_o{slc}", f"= {wrencond} ? {wrexpr} : {zval};")
-              if byte_acc:
+              if sliced_en:
                 aligntext.add_row("assign", f"regf_{gn}{field.signame}_wr_o{slc}", f"= {memwmask};")
               else:
                 aligntext.add_row("assign", f"regf_{gn}{field.signame}_wr_o{slc}", f"= {wrencond} ? 1'b1 : 1'b0;")
@@ -408,7 +419,8 @@ def map_wronce_guards(addrspace: Addrspace, guards: dict[str, tuple[str, str]]) 
   guards = mod._guards
   wronce_guards = map_wronce_guards(mod.addrspace, guards)
   soft_rst = mod._soft_rst
-  byte_acc = mod.byte_acc
+  slicing = mod.slicing
+  sliced_en = slicing is not None
 %>
 ${parent.logic(indent=indent, skip=skip)}\
 
@@ -472,8 +484,8 @@ ${get_bus_word_rden_defaults(rslvr, mod.addrspace).get()}
       endcase
     end
 
-% if byte_acc:
-    bit_en_s = ${get_bit_enables(mem_data_width)};
+% if sliced_en:
+    bit_en_s = ${get_bit_enables(mem_data_width, slicing)};
 % endif
   end
 
@@ -502,7 +514,7 @@ ${get_ff_rst_values(rslvr, mod.addrspace).get()}
 ${get_ff_rst_values(rslvr, mod.addrspace).get()}
 % endif
     end else begin
-% for upd in iter_field_updates(rslvr, mod.addrspace, guards, indent=6):
+% for upd in iter_field_updates(rslvr, mod.addrspace, guards, sliced_en, indent=6):
 ${upd}
 % endfor
 % for upd in iter_wronce_updates(rslvr, mod.addrspace, guards, indent=6):
@@ -542,5 +554,5 @@ ${upd}
   // ------------------------------------------------------
   //  Output Assignments
   // ------------------------------------------------------
-${get_outp_assigns(rslvr, mod.addrspace, guards, wronce_guards, byte_acc, indent=2).get()}
+${get_outp_assigns(rslvr, mod.addrspace, guards, wronce_guards, sliced_en, indent=2).get()}
 </%def>

@@ -30,7 +30,7 @@
 //
 // =============================================================================
 //
-// Module:     tests.byte_en_byte_en
+// Module:     tests.bit_en_bit_en
 // Data Model: tests.test_svmako.RegfMod
 //
 //
@@ -62,7 +62,7 @@
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module byte_en_byte_en ( // tests.test_svmako.RegfMod
+module bit_en_bit_en ( // tests.test_svmako.RegfMod
   // main_i: Clock and Reset
   input  wire                main_clk_i,        // Clock
   input  wire                main_rst_an_i,     // Async Reset (Low-Active)
@@ -72,7 +72,7 @@ module byte_en_byte_en ( // tests.test_svmako.RegfMod
   input  wire                mem_wena_i,        // Memory Write Enable
   input  wire         [31:0] mem_wdata_i,       // Memory Write Data
   output logic        [31:0] mem_rdata_o,       // Memory Read Data
-  input  wire         [3:0]  mem_sel_i,         // Slice Selects
+  input  wire         [31:0] mem_sel_i,         // Slice Selects
   output logic               mem_err_o,         // Memory Access Failed.
   // regf_o
   //   regf_w0_f0_o: bus=RW core=RO in_regf=True
@@ -142,7 +142,7 @@ module byte_en_byte_en ( // tests.test_svmako.RegfMod
       endcase
     end
 
-    bit_en_s = {{8{mem_sel_i[3]}}, {8{mem_sel_i[2]}}, {8{mem_sel_i[1]}}, {8{mem_sel_i[0]}}};
+    bit_en_s = mem_sel_i;
   end
 
   // ------------------------------------------------------
@@ -214,7 +214,7 @@ module byte_en_byte_en ( // tests.test_svmako.RegfMod
   assign regf_w1_f2_wr_o   = bit_en_s[22:10];
   assign regf_w2_f1_rval_o = data_w2_f1_r;
 
-endmodule // byte_en_byte_en
+endmodule // bit_en_bit_en
 
 `default_nettype wire
 `end_keywords
