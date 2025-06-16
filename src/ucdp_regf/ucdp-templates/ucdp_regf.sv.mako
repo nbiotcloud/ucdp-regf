@@ -151,7 +151,7 @@ def get_bit_enables(width: int, slicing: int | SliceWidths) -> str:
     for idx in range((width // slicing)-1, -1, -1):
       vec.append(f"{{{slicing}{{mem_sel_i[{idx}]}}}}")
   else:
-    for idx, slc in enumerate(slicing):
+    for idx, slc in reversed(list(enumerate(slicing))):
       if slc > 1:
         vec.append(f"{{{slc}{{mem_sel_i[{idx}]}}}}")
       else:

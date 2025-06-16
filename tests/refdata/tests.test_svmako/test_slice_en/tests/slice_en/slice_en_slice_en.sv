@@ -146,7 +146,7 @@ module slice_en_slice_en ( // tests.test_svmako.RegfMod
       endcase
     end
 
-    bit_en_s = {mem_sel_i[0], {2{mem_sel_i[1]}}, mem_sel_i[2], {4{mem_sel_i[3]}}, {8{mem_sel_i[4]}}, {16{mem_sel_i[5]}}};
+    bit_en_s = {{16{mem_sel_i[5]}}, {8{mem_sel_i[4]}}, {4{mem_sel_i[3]}}, mem_sel_i[2], {2{mem_sel_i[1]}}, mem_sel_i[0]};
   end
 
   // ------------------------------------------------------
