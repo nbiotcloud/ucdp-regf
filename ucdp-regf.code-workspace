@@ -7,7 +7,8 @@
   "settings": {
     "python.defaultInterpreterPath": ".venv/bin/python3",
     "python.terminal.activateEnvInCurrentTerminal": true,
-    "files.trimTrailingWhitespace": true
+    "files.trimTrailingWhitespace": true,
+    "ruff.interpreter": [".venv/bin/python"]
   },
   "extensions": {
     "recommendations": [
