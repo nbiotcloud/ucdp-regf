@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.slice_en
-// Data Model: tests.test_svmako.SliceEnMod
+// Library:    tests
+// Module:     slice_en
+// Data Model: SliceEnMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module slice_en ( // tests.test_svmako.SliceEnMod
+module slice_en (
   // main_i: Clock and Reset
   input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)

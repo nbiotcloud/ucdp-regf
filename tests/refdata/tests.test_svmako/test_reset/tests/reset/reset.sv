@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.reset
-// Data Model: tests.test_svmako.ResetMod
+// Library:    tests
+// Module:     reset
+// Data Model: ResetMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module reset ( // tests.test_svmako.ResetMod
+module reset (
   // main_i: Clock and Reset
   input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)

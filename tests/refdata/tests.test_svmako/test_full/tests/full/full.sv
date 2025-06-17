@@ -30,8 +30,10 @@
 //
 // =============================================================================
 //
-// Module:     tests.full
-// Data Model: tests.test_svmako.FullMod
+// Library:    tests
+// Module:     full
+// Data Model: FullMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 

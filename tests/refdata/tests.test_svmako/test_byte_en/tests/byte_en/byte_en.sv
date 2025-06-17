@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.byte_en
-// Data Model: tests.test_svmako.ByteEnMod
+// Library:    tests
+// Module:     byte_en
+// Data Model: ByteEnMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module byte_en ( // tests.test_svmako.ByteEnMod
+module byte_en (
   // main_i: Clock and Reset
   input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)

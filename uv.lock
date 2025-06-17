@@ -611,7 +611,7 @@ wheels = [
 
 [[package]]
 name = "makolator"
-version = "2.10.1"
+version = "2.12.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "aligntext" },
@@ -620,9 +620,9 @@ dependencies = [
     { name = "outputfile" },
     { name = "uniquer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/6e/a1/07584f0650b00169b7c394366db32e4ccb077a585ddaf68fca7d1065915a/makolator-2.10.1.tar.gz", hash = "sha256:0bd7cf8d135f03ee95654814785c45122885f8fb9f78a2fd35b07a4b4842df77", size = 30279 }
+sdist = { url = "https://files.pythonhosted.org/packages/ca/60/2ef0db9ede351299b8d2884ba4534f3cbac9ed0adcd56379307fae1c75d1/makolator-2.12.0.tar.gz", hash = "sha256:083caf5b2a3ba1cd4bfaf1eb4d3069a2f34fecec7017ae548a0765ae34c994a7", size = 32156 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/f0/29/c3a8e364fe40624ac08b2d53572036ac171eea2c1d482c2c9b83259d8e9f/makolator-2.10.1-py3-none-any.whl", hash = "sha256:84a5bf1be039ce62f07be2a1aa1a339a88c3ceea9666af04bc4b09f2f41e4163", size = 28648 },
+    { url = "https://files.pythonhosted.org/packages/81/32/0343e3dc649da1006ca64cc35371870c25aa726748bdbcec58fee068694d/makolator-2.12.0-py3-none-any.whl", hash = "sha256:a001ba9ad73a3f55ebf34eb25d6cafc8ca60d7069a765bbc32e5c1d172ececa2", size = 29698 },
 ]
 
 [[package]]
@@ -1520,7 +1520,7 @@ wheels = [
 
 [[package]]
 name = "ucdp"
-version = "0.27.2"
+version = "0.33.0"
 source = { registry = "https://pypi.org/simple" }
 dependencies = [
     { name = "anycache" },
@@ -1533,14 +1533,15 @@ dependencies = [
     { name = "icdutil" },
     { name = "makolator" },
     { name = "matchor" },
+    { name = "platformdirs" },
     { name = "pydantic" },
     { name = "python-levenshtein" },
     { name = "rich" },
     { name = "uniquer" },
 ]
-sdist = { url = "https://files.pythonhosted.org/packages/cf/d4/05185ebe013c7585f1a51b693430930c24fa4ab70c934ae5c3a17788f86e/ucdp-0.27.2.tar.gz", hash = "sha256:66d25a611204c8e838443432496862ffd252cee7fceaabd0212bcb0a1da0ff12", size = 131198 }
+sdist = { url = "https://files.pythonhosted.org/packages/18/c6/ae49937bfce9a788ecdff9e1d037cb791e7e35966b27d934db6e0d9a5407/ucdp-0.33.0.tar.gz", hash = "sha256:4bd6c2de00d8165274f61eeaf7f92de13c97eb832fbe4051b96a2650a5cf44d4", size = 139240 }
 wheels = [
-    { url = "https://files.pythonhosted.org/packages/a8/78/088d15d1e19b90d9fcedf45a044e3a747cd8cbec2a03c3555116374b4fa3/ucdp-0.27.2-py3-none-any.whl", hash = "sha256:2a89e1bfb849ad8389413ed3447d329a5f1e35cb1ff373620b34f844b890558a", size = 180114 },
+    { url = "https://files.pythonhosted.org/packages/71/32/01a3268a7685e1c3aa872b0f02366021eec7010b5a6b58590d2d25b67e0b/ucdp-0.33.0-py3-none-any.whl", hash = "sha256:d417ec4efd4b817790c7058080c9d046d301396c4f712c31673324184f37a722", size = 185013 },
 ]
 
 [[package]]

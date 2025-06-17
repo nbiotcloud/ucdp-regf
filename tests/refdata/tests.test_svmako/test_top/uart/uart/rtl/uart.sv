@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     uart.uart
-// Data Model: uart.uart.UartMod
+// Library:    uart
+// Module:     uart
+// Data Model: UartMod
+//             uart/uart.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module uart ( // uart.uart.UartMod
+module uart (
   // main_i: Clock and Reset
   input  wire         main_clk_i,    // Clock
   input  wire         main_rst_an_i, // Async Reset (Low-Active)

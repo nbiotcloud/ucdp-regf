@@ -30,8 +30,10 @@
 //
 // =============================================================================
 //
-// Module:     tests.portgroup_regf
-// Data Model: tests.test_svmako.RegfMod
+// Library:    tests
+// Module:     portgroup_regf
+// Data Model: RegfMod
+//             tests/test_svmako.py
 //
 //
 // Addressing-Width: data
@@ -61,7 +63,7 @@
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module portgroup_regf #( // tests.test_svmako.RegfMod
+module portgroup_regf #(
   parameter integer width_p = 1
 ) (
   // main_i: Clock and Reset

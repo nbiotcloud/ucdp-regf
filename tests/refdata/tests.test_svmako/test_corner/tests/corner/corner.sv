@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.corner
-// Data Model: tests.test_svmako.CornerMod
+// Library:    tests
+// Module:     corner
+// Data Model: CornerMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module corner ( // tests.test_svmako.CornerMod
+module corner (
   // main_i: Clock and Reset
   input wire main_clk_i,   // Clock
   input wire main_rst_an_i // Async Reset (Low-Active)

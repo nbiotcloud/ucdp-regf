@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.portgroup_rx
-// Data Model: tests.test_svmako.CoreMod
+// Library:    tests
+// Module:     portgroup_rx
+// Data Model: CoreMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module portgroup_rx #( // tests.test_svmako.CoreMod
+module portgroup_rx #(
   parameter integer width_p = 1
 ) (
   // main_i: Clock and Reset
