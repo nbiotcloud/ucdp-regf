@@ -250,7 +250,7 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
       else:
         grpname = ""
       basename = f"regf_{grpname}{field.signame}"
-      if field.core and field.core.write:  # no byte-enables from core, though
+      if field.core and field.core.write:  # no slice-enables from core, though
         wrexpr = get_wrexpr(rslvr, field.type_, field.core.write, f"data_{field.signame}_r{{slc}}", f"{basename}_wval_i{{slc}}")
         upd_core.append(f"if ({basename}_wr_i{{slc}} == 1'b1) begin\n  data_{field.signame}_r{{slc}} <= {ff_dly}{wrexpr};\nend")
         upd_strb.append(f"{basename}_wr_i{{slc}}")
@@ -270,13 +270,13 @@ def iter_field_updates(rslvr: usv.SvExprResolver, addrspace: Addrspace, guards: 
           lines.extend((" else ".join(upd)).format(slc=slc).splitlines())
           if field.upd_strb:
             strbs = " | ".join(upd_strb)
-            lines.append(f"upd_strb_{field.signame}_r{slc} <= {ff_dly}{strbs.format(slc=slc)};")
+            lines.append(f"upd_strb_{field.signame}_r{slc} <= {buswren.format(slc=slc)} ? 1'b1 : 1'b0;")
       else:
         slc = ""
         lines = (" else ".join(upd)).format(slc=slc).splitlines()
         if field.upd_strb:
           strbs = " | ".join(upd_strb)
-          lines.append(f"upd_strb_{field.signame}_r <= {ff_dly}{strbs.format(slc=slc)};")
+          lines.append(f"upd_strb_{field.signame}_r <= {buswren.format(slc=slc)} ? 1'b1 : 1'b0;")
       for ln in lines:
         yield f"{pre}{ln}"
 

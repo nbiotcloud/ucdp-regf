@@ -287,7 +287,7 @@ class UcdpRegfMod(u.ATailoredMod):
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
         """IO-Type With All Core Signals."""
-        return _get_regfiotype(self.addrspace, (self.slicing is not None))
+        return get_regfiotype(self.addrspace, (self.slicing is not None))
 
     @cached_property
     def memiotype(self) -> MemIoType:
@@ -522,7 +522,7 @@ class UcdpRegfMod(u.ATailoredMod):
         yield self.addrspace
 
 
-def _get_regfiotype(addrspace: Addrspace, sliced_en: bool) -> u.DynamicStructType:
+def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
     """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: dict[str | None, u.DynamicStrucType] = {}
     portgroupmap[None] = regfiotype = u.DynamicStructType()

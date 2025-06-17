@@ -202,13 +202,13 @@ class CornerMod(u.AMod):
         )
         word.add_field("guard_a", u.UintType(4), "RW", wr_guard="ctrl.ena & ctrl.busy")
         word.add_field("guard_b", u.UintType(4), "RW", wr_guard="ctrl.busy")
-        word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy")
+        word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy", upd_strb=True)
         word.add_field("cprio", u.BitType(), bus="RW", core="RW", upd_prio="core")
         word.add_field("bprio", u.BitType(), bus="RW", core="RW", upd_prio="bus")
         word.add_field("grdport", u.BitType(), "RW", wr_guard="~(grd_i & ctrl.busy & another_grd_i)")
 
         word = regf.add_word("grddim", in_regf=False, depth=2)
-        word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy")
+        word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy", upd_strb=True)
         word.add_field("const", u.UintType(3, default=5), bus="RO", core="RO", in_regf=True)
         word.add_field("int", u.UintType(12), "RW", wr_guard="ctrl.spec1", portgroups=("grpa",))
 

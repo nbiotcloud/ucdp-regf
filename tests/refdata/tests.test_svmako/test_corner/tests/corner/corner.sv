@@ -95,6 +95,7 @@ module corner ( // tests.test_svmako.CornerMod
     .regf_guards_onetime_rval_o  (             ), // TODO - Core Read Value
     .regf_guards_guard_a_rval_o  (             ), // TODO - Core Read Value
     .regf_guards_guard_b_rval_o  (             ), // TODO - Core Read Value
+    .regf_guards_guard_c_upd_o   (             ), // TODO - Update Strobe
     .regf_guards_guard_c_rval_o  (             ), // TODO - Core Read Value
     .regf_guards_cprio_wr_i      ('{1{1'b0}}   ), // TODO - Core Write Strobe
     .regf_guards_cprio_wval_i    ('{1{1'b0}}   ), // TODO - Core Write Value
