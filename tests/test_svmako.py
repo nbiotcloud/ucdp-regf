@@ -28,9 +28,10 @@ from typing import ClassVar
 from unittest import mock
 
 import ucdp as u
+import ucdp_addr as ua
 from test2ref import assert_refdata
 
-from ucdp_regf.ucdp_regf import ACCESSES, Access, UcdpRegfMod
+from ucdp_regf.ucdp_regf import Access, UcdpRegfMod
 
 
 def test_top(example_simple, tmp_path):
@@ -114,8 +115,8 @@ class FullMod(u.AMod):
         widx = 0
         word = regf.add_word(f"w{widx}")
         fidx = 0
-        for bus in (None, *ACCESSES):
-            for core in ACCESSES:
+        for bus in (None, *ua.ACCESSES):
+            for core in ua.ACCESSES:
                 for in_regf in (False, True):
                     if get_is_const(bus, core) and not in_regf:
                         continue
@@ -201,13 +202,13 @@ class CornerMod(u.AMod):
         )
         word.add_field("guard_a", u.UintType(4), "RW", wr_guard="ctrl.ena & ctrl.busy")
         word.add_field("guard_b", u.UintType(4), "RW", wr_guard="ctrl.busy")
-        word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy")
+        word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy", upd_strb=True)
         word.add_field("cprio", u.BitType(), bus="RW", core="RW", upd_prio="core")
         word.add_field("bprio", u.BitType(), bus="RW", core="RW", upd_prio="bus")
         word.add_field("grdport", u.BitType(), "RW", wr_guard="~(grd_i & ctrl.busy & another_grd_i)")
 
         word = regf.add_word("grddim", in_regf=False, depth=2)
-        word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy")
+        word.add_field("num", u.UintType(12), "RW", wr_guard="ctrl.busy", upd_strb=True)
         word.add_field("const", u.UintType(3, default=5), bus="RO", core="RO", in_regf=True)
         word.add_field("int", u.UintType(12), "RW", wr_guard="ctrl.spec1", portgroups=("grpa",))
 
@@ -307,3 +308,105 @@ def test_reset(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_reset, tmp_path)
+
+
+class ByteEnMod(u.AMod):
+    """Regfile with Byte Enables."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        regf = RegfMod(self, "u_byte_en", slicing=8)
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("w0")
+        word.add_field("f0", u.UintType(13), "RW")
+        word.add_field("f1", u.UintType(3), "RW")
+        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f3", u.UintType(3), "RO")
+
+        word = regf.add_word("w1")
+        word.add_field("f0", u.UintType(7), "RW", in_regf=False)
+        word.add_field("f1", u.UintType(3), "RW1C")
+        word.add_field("f2", u.UintType(13), "RWL", in_regf=False)
+
+        word = regf.add_word("w2")
+        word.add_field("f1", u.SintType(13), "RW")
+
+
+def test_byte_en(tmp_path):
+    """Byte Enables."""
+    mod = ByteEnMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_byte_en, tmp_path)
+
+
+class SliceEnMod(u.AMod):
+    """Regfile with Sliced Enables."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        regf = RegfMod(self, "u_slice_en", slicing=(1, 2, 1, 4, 8, 16))
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("w0")
+        word.add_field("f0", u.UintType(13), "RW")
+        word.add_field("f1", u.UintType(3), "RW")
+        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f3", u.UintType(3), "RO")
+
+        word = regf.add_word("w1")
+        word.add_field("f0", u.UintType(7), "RW", in_regf=False)
+        word.add_field("f1", u.UintType(3), "RW1C")
+        word.add_field("f2", u.UintType(13), "RWL", in_regf=False)
+
+        word = regf.add_word("w2")
+        word.add_field("f1", u.SintType(13), "RW")
+
+
+def test_slice_en(tmp_path):
+    """Sliced Enables."""
+    mod = SliceEnMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_slice_en, tmp_path)
+
+
+class BitEnMod(u.AMod):
+    """Regfile with Sliced Enables."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        self.add_port(u.ClkRstAnType(), "main_i")
+
+        regf = RegfMod(self, "u_bit_en", slicing=1)
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("w0")
+        word.add_field("f0", u.UintType(13), "RW")
+        word.add_field("f1", u.UintType(3), "RW")
+        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f3", u.UintType(3), "RO")
+
+        word = regf.add_word("w1")
+        word.add_field("f0", u.UintType(7), "RW", in_regf=False)
+        word.add_field("f1", u.UintType(3), "RW1C")
+        word.add_field("f2", u.UintType(13), "RWL", in_regf=False)
+
+        word = regf.add_word("w2")
+        word.add_field("f1", u.SintType(13), "RW")
+
+
+def test_bit_en(tmp_path):
+    """Bit Enables."""
+    mod = BitEnMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_bit_en, tmp_path)

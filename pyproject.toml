@@ -112,7 +112,7 @@ select = [
     # implicit string concatenation
     "ISC",
     # type-checking imports
-    "TC",
+    "TCH",
     # comprehensions
     "C",
     "C4",

@@ -36,9 +36,9 @@ import ucdp as u
 import ucdp_addr as ua
 from icdutil.num import calc_unsigned_width
 from tabulate import tabulate
-from ucdp_glbl.mem import MemIoType
+from ucdp_glbl.mem import MemIoType, SliceWidths, calc_slicewidths
 
-ACCESSES: TypeAlias = ua.ACCESSES
+# ACCESSES: TypeAlias = ua.ACCESSES
 Access: TypeAlias = ua.Access
 ReadOp: TypeAlias = ua.ReadOp
 WriteOp: TypeAlias = ua.WriteOp
@@ -244,6 +244,8 @@ class UcdpRegfMod(u.ATailoredMod):
     """Width in Bits."""
     depth: int = 1024
     """Number of words."""
+    slicing: int | SliceWidths | None = None
+    """Use sliced write enables (of same or individual widths)."""
 
     # Replicated from Addrspace
     portgroups: tuple[str, ...] | None = None
@@ -285,13 +287,18 @@ class UcdpRegfMod(u.ATailoredMod):
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
         """IO-Type With All Core Signals."""
-        return get_regfiotype(self.addrspace)
+        return get_regfiotype(self.addrspace, (self.slicing is not None))
 
     @cached_property
     def memiotype(self) -> MemIoType:
         """Memory IO-Type."""
         addrwidth = calc_unsigned_width(self.depth - 1)
-        return MemIoType(datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, addressing="data")
+        slicing = self.slicing
+        if slicing is not None and isinstance(slicing, int):
+            slicing = calc_slicewidths(self.width, self.slicing)
+        return MemIoType(
+            datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, slicewidths=slicing, addressing="data"
+        )
 
     def _build(self):
         self.add_port(u.ClkRstAnType(), "main_i")
@@ -307,6 +314,8 @@ class UcdpRegfMod(u.ATailoredMod):
         self._prep_guards()
         self._add_wrguard_decls()
         self._handle_soft_reset()
+        if self.slicing:
+            self.add_signal(u.UintType(self.width), "bit_en_s")
 
     def _handle_soft_reset(self):
         if self._soft_rst is None:
@@ -513,7 +522,7 @@ class UcdpRegfMod(u.ATailoredMod):
         yield self.addrspace
 
 
-def get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
+def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
     """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: dict[str | None, u.DynamicStrucType] = {}
     portgroupmap[None] = regfiotype = u.DynamicStructType()
@@ -526,7 +535,7 @@ def get_regfiotype(addrspace: Addrspace) -> u.DynamicStructType:
                     portgroupmap[portgroup] = iotype = u.DynamicStructType()
                     regfiotype.add(portgroup, iotype)
                 comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
-                fieldiotype = FieldIoType(field=field)
+                fieldiotype = FieldIoType(field=field, sliced_en=sliced_en)
                 if word.depth:
                     fieldiotype = u.ArrayType(fieldiotype, word.depth)
                 iotype.add(field.signame, fieldiotype, comment=comment)
@@ -560,8 +569,9 @@ class FieldIoType(u.AStructType):
     """Field IO Type."""
 
     field: Field
+    sliced_en: bool = False
 
-    def _build(self):  # noqa: C901
+    def _build(self):  # noqa: C901, PLR0912
         field = self.field
         if field.in_regf:
             if field.core:
@@ -587,7 +597,10 @@ class FieldIoType(u.AStructType):
                 self._add("rd", u.BitType(), comment="Bus Read Strobe")
             if buswr:
                 self._add("wbus", field.type_, comment="Bus Write Value")
-                self._add("wr", u.BitType(), comment="Bus Write Strobe")
+                if self.sliced_en:  # write strobe as bit mask
+                    self._add("wr", u.UintType(field.type_.bits), comment="Bus Bit-Write Strobe")
+                else:
+                    self._add("wr", u.BitType(), comment="Bus Write Strobe")
 
 
 # TODO:
