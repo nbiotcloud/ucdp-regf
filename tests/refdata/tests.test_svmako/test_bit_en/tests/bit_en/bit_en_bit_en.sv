@@ -30,8 +30,10 @@
 //
 // =============================================================================
 //
-// Module:     tests.bit_en_bit_en
-// Data Model: tests.test_svmako.RegfMod
+// Library:    tests
+// Module:     bit_en_bit_en
+// Data Model: RegfMod
+//             tests/test_svmako.py
 //
 //
 // Addressing-Width: data
@@ -66,7 +68,7 @@
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module bit_en_bit_en ( // tests.test_svmako.RegfMod
+module bit_en_bit_en (
   // main_i: Clock and Reset
   input  wire                main_clk_i,        // Clock
   input  wire                main_rst_an_i,     // Async Reset (Low-Active)

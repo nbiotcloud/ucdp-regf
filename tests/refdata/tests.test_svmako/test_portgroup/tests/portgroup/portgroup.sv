@@ -30,15 +30,17 @@
 //
 // =============================================================================
 //
-// Module:     tests.portgroup
-// Data Model: tests.test_svmako.PortgroupMod
+// Library:    tests
+// Module:     portgroup
+// Data Model: PortgroupMod
+//             tests/test_svmako.py
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module portgroup #( // tests.test_svmako.PortgroupMod
+module portgroup #(
   parameter integer width_p = 1
 ) (
   // main_i: Clock and Reset
@@ -52,19 +54,19 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   //  Signals
   // ------------------------------------------------------
   // regf_regf_rx_o_s
-  //   regf_regf_rx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic               regf_regf_rx_o_ctrl_ena_rval_o; // Core Read Value
-  //   regf_regf_rx_o_rx_data0_o: bus=RO core=RW in_regf=False
-  logic [width_p-1:0] regf_regf_rx_o_rx_data0_rbus_i; // Bus Read Value
-  //   regf_regf_rx_o_rx_data1_o: bus=RO core=RW in_regf=False
-  logic [width_p-1:0] regf_regf_rx_o_rx_data1_rbus_i; // Bus Read Value
-  //   regf_regf_rx_o_rx_data2_o: bus=RO core=RW in_regf=False
-  logic [width_p-1:0] regf_regf_rx_o_rx_data2_rbus_i; // Bus Read Value
+  //   regf_regf_rx_o_ctrl_ena_s: bus=RW core=RO in_regf=True
+  logic               regf_regf_rx_o_ctrl_ena_rval_s; // Core Read Value
+  //   regf_regf_rx_o_rx_data0_s: bus=RO core=RW in_regf=False
+  logic [width_p-1:0] regf_regf_rx_o_rx_data0_rbus_s; // Bus Read Value
+  //   regf_regf_rx_o_rx_data1_s: bus=RO core=RW in_regf=False
+  logic [width_p-1:0] regf_regf_rx_o_rx_data1_rbus_s; // Bus Read Value
+  //   regf_regf_rx_o_rx_data2_s: bus=RO core=RW in_regf=False
+  logic [width_p-1:0] regf_regf_rx_o_rx_data2_rbus_s; // Bus Read Value
   // regf_regf_tx_o_s
-  //   regf_regf_tx_o_ctrl_ena_o: bus=RW core=RO in_regf=True
-  logic               regf_regf_tx_o_ctrl_ena_rval_o; // Core Read Value
-  //   regf_regf_tx_o_tx_data0_o: bus=RW core=RO in_regf=True
-  logic [width_p-1:0] regf_regf_tx_o_tx_data0_rval_o; // Core Read Value
+  //   regf_regf_tx_o_ctrl_ena_s: bus=RW core=RO in_regf=True
+  logic               regf_regf_tx_o_ctrl_ena_rval_s; // Core Read Value
+  //   regf_regf_tx_o_tx_data0_s: bus=RW core=RO in_regf=True
+  logic [width_p-1:0] regf_regf_tx_o_tx_data0_rval_s; // Core Read Value
 
 
   // ------------------------------------------------------
@@ -83,12 +85,12 @@ module portgroup #( // tests.test_svmako.PortgroupMod
     .mem_err_o                (                              ), // TODO - Memory Access Failed.
     .regf_top_ctrl_ena_rval_o (                              ), // TODO - Core Read Value
     .regf_top_ctrl_busy_rbus_i(1'b0                          ), // TODO - Bus Read Value
-    .regf_rx_ctrl_ena_rval_o  (regf_regf_rx_o_ctrl_ena_rval_o), // Core Read Value
-    .regf_rx_rx_data0_rbus_i  (regf_regf_rx_o_rx_data0_rbus_i), // Bus Read Value
-    .regf_rx_rx_data1_rbus_i  (regf_regf_rx_o_rx_data1_rbus_i), // Bus Read Value
-    .regf_rx_rx_data2_rbus_i  (regf_regf_rx_o_rx_data2_rbus_i), // Bus Read Value
-    .regf_tx_ctrl_ena_rval_o  (regf_regf_tx_o_ctrl_ena_rval_o), // Core Read Value
-    .regf_tx_tx_data0_rval_o  (regf_regf_tx_o_tx_data0_rval_o)  // Core Read Value
+    .regf_rx_ctrl_ena_rval_o  (regf_regf_rx_o_ctrl_ena_rval_s), // Core Read Value
+    .regf_rx_rx_data0_rbus_i  (regf_regf_rx_o_rx_data0_rbus_s), // Bus Read Value
+    .regf_rx_rx_data1_rbus_i  (regf_regf_rx_o_rx_data1_rbus_s), // Bus Read Value
+    .regf_rx_rx_data2_rbus_i  (regf_regf_rx_o_rx_data2_rbus_s), // Bus Read Value
+    .regf_tx_ctrl_ena_rval_o  (regf_regf_tx_o_ctrl_ena_rval_s), // Core Read Value
+    .regf_tx_tx_data0_rval_o  (regf_regf_tx_o_tx_data0_rval_s)  // Core Read Value
   );
 
 
@@ -100,10 +102,10 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   ) u_rx (
     .main_clk_i          (main_clk_i                    ), // Clock
     .main_rst_an_i       (main_rst_an_i                 ), // Async Reset (Low-Active)
-    .regf_ctrl_ena_rval_i(regf_regf_rx_o_ctrl_ena_rval_o), // Core Read Value
-    .regf_rx_data0_rbus_o(regf_regf_rx_o_rx_data0_rbus_i), // Bus Read Value
-    .regf_rx_data1_rbus_o(regf_regf_rx_o_rx_data1_rbus_i), // Bus Read Value
-    .regf_rx_data2_rbus_o(regf_regf_rx_o_rx_data2_rbus_i)  // Bus Read Value
+    .regf_ctrl_ena_rval_i(regf_regf_rx_o_ctrl_ena_rval_s), // Core Read Value
+    .regf_rx_data0_rbus_o(regf_regf_rx_o_rx_data0_rbus_s), // Bus Read Value
+    .regf_rx_data1_rbus_o(regf_regf_rx_o_rx_data1_rbus_s), // Bus Read Value
+    .regf_rx_data2_rbus_o(regf_regf_rx_o_rx_data2_rbus_s)  // Bus Read Value
   );
 
 
@@ -115,8 +117,8 @@ module portgroup #( // tests.test_svmako.PortgroupMod
   ) u_tx (
     .main_clk_i          (main_clk_i                    ), // Clock
     .main_rst_an_i       (main_rst_an_i                 ), // Async Reset (Low-Active)
-    .regf_ctrl_ena_rval_i(regf_regf_tx_o_ctrl_ena_rval_o), // Core Read Value
-    .regf_tx_data0_rval_i(regf_regf_tx_o_tx_data0_rval_o)  // Core Read Value
+    .regf_ctrl_ena_rval_i(regf_regf_tx_o_ctrl_ena_rval_s), // Core Read Value
+    .regf_tx_data0_rval_i(regf_regf_tx_o_tx_data0_rval_s)  // Core Read Value
   );
 
 endmodule // portgroup

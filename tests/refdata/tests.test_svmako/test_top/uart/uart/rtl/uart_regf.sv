@@ -30,8 +30,10 @@
 //
 // =============================================================================
 //
-// Module:     uart.uart_regf
-// Data Model: glbl.regf.RegfMod
+// Library:    uart
+// Module:     uart_regf
+// Data Model: RegfMod
+//             glbl/regf.py
 //
 //
 // Addressing-Width: data
@@ -55,7 +57,7 @@
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module uart_regf ( // glbl.regf.RegfMod
+module uart_regf (
   // main_i: Clock and Reset
   input  wire         main_clk_i,           // Clock
   input  wire         main_rst_an_i,        // Async Reset (Low-Active)
