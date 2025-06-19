@@ -29,6 +29,7 @@ Utilities.
 # ruff: noqa: C901, PERF401, PLR0912, PLR0915
 
 from collections.abc import Iterator
+from typing import TypeAlias
 
 import ucdp as u
 import ucdpsv as usv
@@ -36,6 +37,9 @@ from aligntext import Align
 from ucdp_glbl.mem import SliceWidths
 
 from ucdp_regf.ucdp_regf import Addrspace, Field, ReadOp, Word, WriteOp
+
+Guards: TypeAlias = dict[str, tuple[str, str]]
+WrOnceGuards: TypeAlias = dict[str, int]
 
 
 def filter_regf_flipflops(field: Field) -> bool:
@@ -181,11 +185,28 @@ def get_bit_enables(width: int, slicing: int | SliceWidths) -> str:
     return f"{{{vecstr}}}"
 
 
-def get_rd_vec(rslvr: usv.SvExprResolver, width: int, fields: list[Field], idx: None | int = None) -> str:
+def get_rd_vec(rslvr: usv.SvExprResolver, width: int, word: Word, fields: list[Field], idx: None | int = None) -> str:
     """Read Vector."""
+    slc = f"[{idx}]" if idx is not None else ""
+    if word.fieldio:
+        return _get_rd_vec(rslvr, "regf", fields, width, slc)
+    if word.wordio:
+        field = Field.from_word(word)
+        if filter_busread(field):
+            return _get_rd_vec(rslvr, "regfword", [field], width, slc, srcfields=fields)
+    return _get_rd_vec(rslvr, "", [], width, slc)
+
+
+def _get_rd_vec(
+    rslvr: usv.SvExprResolver,
+    basename: str,
+    fields: list[Field],
+    width: int,
+    slc: str,
+    srcfields: list[Field] | None = None,
+) -> str:
     offs = 0
     vec = []
-    slc = f"[{idx}]" if idx is not None else ""
     for field in fields:
         if (r := field.slice.right) > offs:  # leading rsvd bits
             vec.append(rslvr._get_uint_value(0, r - offs))
@@ -194,19 +215,21 @@ def get_rd_vec(rslvr: usv.SvExprResolver, width: int, fields: list[Field], idx: 
         else:
             flddata = "{fldval}"
         if field.in_regf:
-            vec.append(flddata.format(fldval=f"data_{field.signame}_{'c' if field.is_const else 'r'}{slc}"))
-        elif (
-            field.portgroups
-        ):  # from core: handle special naming; non-in_regf field cannot be part of more than 1 portgroup
-            vec.append(flddata.format(fldval=f"regf_{field.portgroups[0]}_{field.signame}_rbus_i{slc}"))
+            if srcfields is not None:
+                vec.append(_get_rd_vec(rslvr, basename, srcfields, width, slc))
+            else:
+                vec.append(flddata.format(fldval=f"data_{field.signame}_{'c' if field.is_const else 'r'}{slc}"))
+        elif field.portgroups:
+            # from core: handle special naming; non-in_regf field cannot be part of more than 1 portgroup
+            vec.append(flddata.format(fldval=f"{basename}_{field.portgroups[0]}_{field.signame}_rbus_i{slc}"))
         else:  # from core: std names
-            vec.append(flddata.format(fldval=f"regf_{field.signame}_rbus_i{slc}"))
+            vec.append(flddata.format(fldval=f"{basename}_{field.signame}_rbus_i{slc}"))
         offs = field.slice.left + 1
     if offs < width:  # trailing rsvd bits
         vec.append(rslvr._get_uint_value(0, width - offs))
     if len(vec) > 1:
-        return f"{{{', '.join(reversed(vec))}}};"
-    return f"{vec[0]};"
+        return f"{{{', '.join(reversed(vec))}}}"
+    return f"{vec[0]}"
 
 
 def get_wrexpr(
@@ -317,7 +340,6 @@ def iter_field_updates(
                     slc = f"[{idx}]"
                     lines.extend((" else ".join(upd)).format(slc=slc).splitlines())
                     if field.upd_strb:
-                        # strbs = " | ".join(upd_strb)
                         lines.append(f"upd_strb_{field.signame}_r{slc} <= {buswrenexpr.format(slc=slc)} ? 1'b1 : 1'b0;")
             else:
                 slc = ""
@@ -379,8 +401,8 @@ def get_wrguard_assigns(guards: dict[str, tuple[str, str]], indent: int = 0) -> 
 def get_outp_assigns(
     rslvr: usv.SvExprResolver,
     addrspace: Addrspace,
-    guards: dict[str, tuple[str, str]],
-    wronce_guards: dict[str, int],
+    guards: Guards,
+    wronce_guards: WrOnceGuards,
     sliced_en: bool = False,
     indent: int = 0,
 ) -> Align:
@@ -388,61 +410,95 @@ def get_outp_assigns(
     aligntext = Align(rtrim=True)
     aligntext.set_separators(first=" " * indent)
     for word, fields in addrspace.iter():  # BOZO coreread?!?
-        cndname = f"bus_{word.name}_{{os}}once_r"
-        for field in fields:
-            post = "c" if field.is_const else "r"
-            if field.in_regf:
-                if field.core and field.core.read:
-                    for gn in iter_pgrp_names(field):
-                        aligntext.add_row(
-                            "assign", f"regf_{gn}{field.signame}_rval_o", f"= data_{field.signame}_{post};"
-                        )
-                if field.upd_strb:
-                    for gn in iter_pgrp_names(field):
-                        aligntext.add_row("assign", f"regf_{gn}{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
-            else:  # in core
-                if field.bus and field.bus.write:
-                    buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
-                    if field.bus.write.once and field.wr_guard:
-                        oncespec = f"grd{wronce_guards[field.signame]}"
-                        buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
-                    elif field.bus.write.once:
-                        oncespec = "wr"
-                        buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
-                    elif field.wr_guard:
-                        buswren.append(f"({guards[field.wr_guard][0]} == 1'b1)")
-                    if len(buswren) > 1:
-                        buswrenexpr = f"({' && '.join(buswren)})"
-                    else:
-                        buswrenexpr = buswren[0]
-                    # wbus_o = f"regf_{{grp}}{field.signame}_wbus_o{{slc}}"
-                    # wr_o = f"regf_{{grp}}{field.signame}_wr_o{{slc}}"
-                    zval = f"{rslvr._resolve_value(field.type_, value=0)}"
-                    memwdata = f"mem_wdata_i{rslvr.resolve_slice(field.slice)}"
-                    memwmask = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
-                    if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
-                        memwdata = f"signed'({memwdata})"
-                    for gn in iter_pgrp_names(field):
-                        wrexpr = get_wrexpr(
-                            rslvr, field.type_, field.bus.write, f"regf_{gn}{field.signame}_rbus_i", memwdata
-                        )
-                        for slc in iter_word_depth(word):
-                            wrencond = buswrenexpr.format(slc=slc)
-                            aligntext.add_row(
-                                "assign", f"regf_{gn}{field.signame}_wbus_o{slc}", f"= {wrencond} ? {wrexpr} : {zval};"
-                            )
-                            if sliced_en:
-                                aligntext.add_row("assign", f"regf_{gn}{field.signame}_wr_o{slc}", f"= {memwmask};")
-                            else:
-                                aligntext.add_row(
-                                    "assign", f"regf_{gn}{field.signame}_wr_o{slc}", f"= {wrencond} ? 1'b1 : 1'b0;"
-                                )
-                if field.bus and field.bus.read and field.bus.read.data is not None:
-                    busrden = f"= (bus_{word.name}_rden_s{{slc}} == 1'b1) ? 1'b1 : 1'b0;"
-                    for gn in iter_pgrp_names(field):
-                        for slc in iter_word_depth(word):
-                            aligntext.add_row("assign", f"regf_{gn}{field.signame}_rd_o", busrden.format(slc=slc))
+        if word.fieldio:
+            for field in fields:
+                _add_outp_assigns(rslvr, aligntext, "regf", word, field, guards, wronce_guards, sliced_en)
+        if word.wordio:
+            field = Field.from_word(word)
+            _add_outp_assigns(
+                rslvr, aligntext, "regfword", word, field, guards, wronce_guards, sliced_en, srcfields=fields
+            )
     return aligntext
+
+
+def _add_outp_assigns(
+    rslvr: usv.SvExprResolver,
+    aligntext: Align,
+    basename: str,
+    word: Word,
+    field: Field,
+    guards: Guards,
+    wronce_guards: WrOnceGuards,
+    sliced_en: bool = False,
+    srcfields: list[Field] | None = None,
+) -> None:
+    cndname = f"bus_{word.name}_{{os}}once_r"
+    post = "c" if field.is_const else "r"
+    if field.in_regf:
+        if field.core and field.core.read:
+            for gn in iter_pgrp_names(field):
+                if srcfields:
+                    for slc in iter_word_depth(word):
+                        vec = _get_rd_vec(rslvr, "regfword", [field], word.width, slc, srcfields=srcfields)
+                        aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_rval_o{slc}", f"= {vec};")
+                else:
+                    vec = f"data_{field.signame}_{post}"
+                    aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_rval_o", f"= {vec};")
+        if field.upd_strb:
+            for gn in iter_pgrp_names(field):
+                if srcfields:
+                    for slc in iter_word_depth(word):
+                        strb = (
+                            " | ".join(f"upd_strb_{field.signame}_r{slc}" for field in srcfields if field.upd_strb)
+                            or "1'b0"
+                        )
+                        aligntext.add_row("assign", f"{basename}_{gn}{word.name}_upd_o{slc}", f"= {strb};")
+                else:
+                    aligntext.add_row(
+                        "assign", f"{basename}_{gn}{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;"
+                    )
+    else:  # in core
+        if field.bus and field.bus.write:
+            buswren = [f"(bus_{word.name}_wren_s{{slc}} == 1'b1)"]
+            if field.bus.write.once and field.wr_guard:
+                oncespec = f"grd{wronce_guards[field.signame]}"
+                buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
+            elif field.bus.write.once:
+                oncespec = "wr"
+                buswren.append(f"({cndname.format(os=oncespec)}{{slc}} == 1'b1)")
+            elif field.wr_guard:
+                buswren.append(f"({guards[field.wr_guard][0]} == 1'b1)")
+            if len(buswren) > 1:
+                buswrenexpr = f"({' && '.join(buswren)})"
+            else:
+                buswrenexpr = buswren[0]
+            # wbus_o = f"{basename}_{{grp}}{field.signame}_wbus_o{{slc}}"
+            # wr_o = f"{basename}_{{grp}}{field.signame}_wr_o{{slc}}"
+            zval = f"{rslvr._resolve_value(field.type_, value=0)}"
+            memwdata = f"mem_wdata_i{rslvr.resolve_slice(field.slice)}"
+            memwmask = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
+            if isinstance(field.type_, u.IntegerType) or isinstance(field.type_, u.SintType):
+                memwdata = f"signed'({memwdata})"
+            for gn in iter_pgrp_names(field):
+                wrexpr = get_wrexpr(
+                    rslvr, field.type_, field.bus.write, f"{basename}_{gn}{field.signame}_rbus_i", memwdata
+                )
+                for slc in iter_word_depth(word):
+                    wrencond = buswrenexpr.format(slc=slc)
+                    aligntext.add_row(
+                        "assign", f"{basename}_{gn}{field.signame}_wbus_o{slc}", f"= {wrencond} ? {wrexpr} : {zval};"
+                    )
+                    if sliced_en:
+                        aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_wr_o{slc}", f"= {memwmask};")
+                    else:
+                        aligntext.add_row(
+                            "assign", f"{basename}_{gn}{field.signame}_wr_o{slc}", f"= {wrencond} ? 1'b1 : 1'b0;"
+                        )
+        if field.bus and field.bus.read and field.bus.read.data is not None:
+            busrden = f"= (bus_{word.name}_rden_s{{slc}} == 1'b1) ? 1'b1 : 1'b0;"
+            for gn in iter_pgrp_names(field):
+                for slc in iter_word_depth(word):
+                    aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_rd_o", busrden.format(slc=slc))
 
 
 def get_soft_rst_assign(

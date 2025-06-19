@@ -16,3 +16,4 @@ docs.zip
 report.xml
 site/
 tests/sim_build*/**
+.lint

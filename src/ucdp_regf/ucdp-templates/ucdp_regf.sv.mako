@@ -25,10 +25,6 @@
 <%!
 import ucdp as u
 import ucdpsv as usv
-from aligntext import Align
-from ucdp_glbl.mem import SliceWidths
-from ucdp_regf.ucdp_regf import Field, Word, Addrspace, Access, WriteOp, ReadOp
-from collections.abc import Iterator
 from ucdp_regf import util
 %>
 <%inherit file="sv.mako"/>
@@ -155,12 +151,12 @@ ${upd}
 %   if word.depth:
 %     for idx in range(word.depth):
         ${rslvr._get_uint_value((word.offset+idx), mem_addr_width)}: begin
-          mem_rdata_o = ${util.get_rd_vec(rslvr, mem_data_width, fields, idx)}
+          mem_rdata_o = ${util.get_rd_vec(rslvr, mem_data_width, word, fields, idx)};
         end
 %     endfor
 %   else:
         ${rslvr._get_uint_value(word.offset, mem_addr_width)}: begin
-          mem_rdata_o = ${util.get_rd_vec(rslvr, mem_data_width, fields)}
+          mem_rdata_o = ${util.get_rd_vec(rslvr, mem_data_width, word, fields)};
         end
 %   endif
 % endfor
