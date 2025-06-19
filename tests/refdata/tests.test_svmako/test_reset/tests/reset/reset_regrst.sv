@@ -78,6 +78,7 @@ module reset_regrst (
   output logic        regf_ctrl_ena_rval_o,    // Core Read Value
   //   regf_ctrl_busy_o: bus=RO core=RW in_regf=False
   input  wire         regf_ctrl_busy_rbus_i    // Bus Read Value
+  // regfword_o
 );
 
 

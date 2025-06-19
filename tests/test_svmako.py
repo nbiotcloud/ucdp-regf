@@ -410,3 +410,31 @@ def test_bit_en(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_bit_en, tmp_path)
+
+
+class WordFieldMod(u.AMod):
+    """A Simple UART."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        regf = RegfMod(self, "u_regf")
+
+        coremap = {"RW": "RO", "RO": "RW"}
+        wordkwargs = ({}, {"wordio": True}, {"wordio": True, "fieldio": False})  # type: ignore[var-annotated]
+        for depth in (None, 1, 5):
+            for kidx, kwargs in enumerate(wordkwargs):
+                for bus in ("RW", "RO"):
+                    word = regf.add_word(
+                        f"word{kidx}_{bus.lower()}_d{depth or 0}", bus=bus, core=coremap[bus], depth=depth, **kwargs
+                    )
+                    word.add_field("a", u.UintType(7, default=3))
+                    word.add_field("b", u.BitType())
+
+
+def test_word_field(tmp_path):
+    """Register File with All Combinations."""
+    mod = WordFieldMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_word_field, tmp_path)

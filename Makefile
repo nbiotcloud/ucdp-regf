@@ -31,6 +31,15 @@ test: .venv/.valid ## [ALL] Run Unittests via 'pytest' with {PYTEST_OPTIONS}
 	@echo  "See coverage report:\n\n    file://${PWD}/htmlcov/index.html\n"
 
 
+.PHONY: lint-sv
+lint-sv: .venv/.valid ## Run verilator on reference data
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_full/tests/*/*.sv
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_reset/tests/*/*.sv
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_portgroup/tests/*/*.sv
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_corner/tests/*/*.sv
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_bit_en/tests/*/*.sv
+	${ENV} verilator --lint-only tests/refdata/tests.test_svmako/test_byte_en/tests/*/*.sv
+
 .PHONY: checktypes
 checktypes: .venv/.valid ## [ALL] Run Type-Checking via 'mypy'
 	${ENV} mypy .

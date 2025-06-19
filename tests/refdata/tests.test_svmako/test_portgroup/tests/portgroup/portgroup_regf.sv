@@ -96,6 +96,7 @@ module portgroup_regf #(
   output logic               regf_tx_ctrl_ena_rval_o,   // Core Read Value
   //     regf_tx_tx_data0_o: bus=RW core=RO in_regf=True
   output logic [width_p-1:0] regf_tx_tx_data0_rval_o    // Core Read Value
+  // regfword_o
 );
 
 

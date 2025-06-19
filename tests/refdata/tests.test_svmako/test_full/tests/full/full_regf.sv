@@ -2506,6 +2506,7 @@ module full_regf (
   output logic [1:0]  regf_w35_f2_rval_o,  // Core Read Value
   input  wire  [1:0]  regf_w35_f2_wval_i,  // Core Write Value
   input  wire         regf_w35_f2_wr_i     // Core Write Strobe
+  // regfword_o
 );
 
 
