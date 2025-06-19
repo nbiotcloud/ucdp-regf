@@ -198,7 +198,8 @@ module corner_regf (
   output logic        [15:0] regf_base_rval_o,                    // Core Read Value
   //   regf_wide_d_o: bus=RW core=RO in_regf=True
   output logic        [15:0] regf_wide_d_rval_o,                  // Core Read Value
-  //   -
+  // regfword_o
+  // -
   input  wire                another_grd_i
 );
 

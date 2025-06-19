@@ -80,6 +80,34 @@ class Field(ua.Field):
             return True
         return False
 
+    @staticmethod
+    def from_word(word: "Word", **kwargs) -> "Field":
+        """Create Field Containing Word."""
+        type_ = u.UintType(word.width)
+        core = word.core
+        if core is None:
+            core = ua.get_counteraccess(word.bus)
+        in_regf = word.in_regf
+        if in_regf is None:
+            in_regf = get_in_regf(word.bus, core)
+
+        return Field(
+            name=word.name,
+            type_=type_,
+            bus=word.bus,
+            core=core,
+            offset=0,
+            portgroups=word.portgroups,
+            in_regf=in_regf,
+            upd_prio=word.upd_prio,
+            upd_strb=word.upd_strb,
+            wr_guard=word.wr_guard,
+            signame=word.name,
+            doc=word.doc,
+            attrs=word.attrs,
+            **kwargs,
+        )
+
 
 class Word(ua.Word):
     """Word."""
@@ -94,6 +122,10 @@ class Word(ua.Word):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    wordio: bool = False
+    """Create Word-Based Interface Towards Core."""
+    fieldio: bool = True
+    """Create Field-Based Interface Towards Core."""
 
     def _create_field(
         self,
@@ -286,8 +318,13 @@ class UcdpRegfMod(u.ATailoredMod):
 
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
-        """IO-Type With All Core Signals."""
+        """IO-Type With All Field-Wise Core Signals ."""
         return get_regfiotype(self.addrspace, (self.slicing is not None))
+
+    @cached_property
+    def regfwordiotype(self) -> u.DynamicStructType:
+        """IO-Type With All Word-Wise Core Signals ."""
+        return get_regfwordiotype(self.addrspace, (self.slicing is not None))
 
     @cached_property
     def memiotype(self) -> MemIoType:
@@ -306,6 +343,7 @@ class UcdpRegfMod(u.ATailoredMod):
 
     def _build_dep(self):
         self.add_port(self.regfiotype, "regf_o")
+        self.add_port(self.regfwordiotype, "regfword_o")
         if self.parent:
             _create_route(self, self.addrspace)
         self._add_const_decls()
@@ -522,24 +560,43 @@ class UcdpRegfMod(u.ATailoredMod):
         yield self.addrspace
 
 
+Portgroupmap: TypeAlias = dict[str | None, u.DynamicStructType]
+
+
 def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
     """Determine IO-Type for fields in `addrspace`."""
-    portgroupmap: dict[str | None, u.DynamicStrucType] = {}
-    portgroupmap[None] = regfiotype = u.DynamicStructType()
+    portgroupmap: Portgroupmap = {None: u.DynamicStructType()}
     for word in addrspace.words:
+        if not word.fieldio:
+            continue
         for field in word.fields:
-            for portgroup in field.portgroups or [None]:
-                try:
-                    iotype = portgroupmap[portgroup]
-                except KeyError:
-                    portgroupmap[portgroup] = iotype = u.DynamicStructType()
-                    regfiotype.add(portgroup, iotype)
-                comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
-                fieldiotype = FieldIoType(field=field, sliced_en=sliced_en)
-                if word.depth:
-                    fieldiotype = u.ArrayType(fieldiotype, word.depth)
-                iotype.add(field.signame, fieldiotype, comment=comment)
-    return regfiotype
+            _add_field(portgroupmap, field, sliced_en, word.depth)
+    return portgroupmap[None]
+
+
+def get_regfwordiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
+    """Determine IO-Type for words in `addrspace`."""
+    portgroupmap: Portgroupmap = {None: u.DynamicStructType()}
+    for word in addrspace.words:
+        if not word.wordio:
+            continue
+        field = Field.from_word(word)
+        _add_field(portgroupmap, field, sliced_en, word.depth)
+    return portgroupmap[None]
+
+
+def _add_field(portgroupmap: Portgroupmap, field: Field, sliced_en: bool, depth: int | None = None):
+    for portgroup in field.portgroups or [None]:
+        try:
+            iotype = portgroupmap[portgroup]
+        except KeyError:
+            portgroupmap[portgroup] = iotype = u.DynamicStructType()
+            portgroupmap[None].add(portgroup, iotype)
+        comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
+        fieldiotype = FieldIoType(field=field, sliced_en=sliced_en)
+        if depth:
+            fieldiotype = u.ArrayType(fieldiotype, depth)
+        iotype.add(field.signame, fieldiotype, comment=comment)
 
 
 def _create_route(mod: u.BaseMod, addrspace: Addrspace) -> None:
@@ -601,6 +658,36 @@ class FieldIoType(u.AStructType):
                     self._add("wr", u.UintType(field.type_.bits), comment="Bus Bit-Write Strobe")
                 else:
                     self._add("wr", u.BitType(), comment="Bus Write Strobe")
+
+
+def offset2addr(offset: int, width: int, addrwidth: int) -> u.Hex:
+    """
+    Offset to Address.
+
+    Example:
+
+        >>> offset2addr(0, 32, 12)
+        Hex('0x000')
+        >>> offset2addr(1, 32, 12)
+        Hex('0x004')
+        >>> offset2addr(2, 32, 12)
+        Hex('0x008')
+        >>> offset2addr(4, 32, 12)
+        Hex('0x010')
+        >>> offset2addr(4, 15, 12)
+        Hex('0x007')
+    """
+    return u.Hex(offset * width / 8, width=addrwidth)
+
+
+def offsetslice2addrslice(slice: u.Slice, width: int, addrwidth: int) -> u.Slice:
+    """
+    Offset Slice to Address Slice.
+
+    >>> offsetslice2addrslice(u.Slice(left=3, right=1), 32, 12)
+    Slice('0x00C:0x004')
+    """
+    return u.Slice(left=offset2addr(slice.left, width, addrwidth), right=offset2addr(slice.right, width, addrwidth))
 
 
 # TODO:

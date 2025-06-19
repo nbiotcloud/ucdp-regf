@@ -101,6 +101,7 @@ module slice_en_slice_en (
   output logic        [12:0] regf_w1_f2_wr_o,   // Bus Bit-Write Strobe
   //   regf_w2_f1_o: bus=RW core=RO in_regf=True
   output logic signed [12:0] regf_w2_f1_rval_o  // Core Read Value
+  // regfword_o
 );
 
 

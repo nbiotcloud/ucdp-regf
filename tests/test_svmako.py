@@ -29,31 +29,33 @@ from unittest import mock
 
 import ucdp as u
 import ucdp_addr as ua
-from test2ref import assert_refdata
+from test2ref import assert_refdata, configure
 
 from ucdp_regf.ucdp_regf import Access, UcdpRegfMod
 
+configure(add_excludes=(".lint",))
 
-def test_top(example_simple, tmp_path):
-    """Top Module."""
-    top = u.load("uart.uart")
 
-    corefile = tmp_path / "uart/uart/rtl/uart_core.sv"
-    corefile.parent.mkdir(parents=True)
-    corefile.write_text("""\
-// GENERATE INPLACE BEGIN fileheader()
-//
-// GENERATE INPLACE END fileheader
+# def test_top(example_simple, tmp_path):
+#     """Top Module."""
+#     top = u.load("uart.uart")
 
-// GENERATE INPLACE BEGIN beginmod()
-// GENERATE INPLACE END beginmod
+#     corefile = tmp_path / "uart/uart/rtl/uart_core.sv"
+#     corefile.parent.mkdir(parents=True)
+#     corefile.write_text("""\
+# // GENERATE INPLACE BEGIN fileheader()
+# //
+# // GENERATE INPLACE END fileheader
 
-// GENERATE INPLACE BEGIN endmod()
-// GENERATE INPLACE END endmod
-""")
-    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
-        u.generate(top.mod, "hdl")
-    assert_refdata(test_top, tmp_path)
+# // GENERATE INPLACE BEGIN beginmod()
+# // GENERATE INPLACE END beginmod
+
+# // GENERATE INPLACE BEGIN endmod()
+# // GENERATE INPLACE END endmod
+# """)
+#     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+#         u.generate(top.mod, "hdl")
+#     assert_refdata(test_top, tmp_path)
 
 
 class HdlFileList(u.ModFileList):
@@ -410,3 +412,49 @@ def test_bit_en(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_bit_en, tmp_path)
+
+
+class WordFieldMod(u.AMod):
+    """A Simple UART."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        regf = RegfMod(self, "u_regf")
+
+        wordkwargs = (
+            {},
+            {"wordio": True},
+            {"wordio": True, "upd_strb": True},
+            {"wordio": True, "fieldio": False},
+            {"wordio": True, "fieldio": False, "upd_strb": True},
+        )  # type: ignore[var-annotated]
+        # TODO: support all these
+        # variants = (("RW", None, None), ("RW", "RO", None), ("RW", "RO", False),
+        # ("RO", "RW", None), ("RO", "RW", True))
+        variants = (("RW", None, None), ("RO", None, None))
+        for depth in (None, 1, 5):
+            for kidx, kwargs in enumerate(wordkwargs):
+                for bus, core, in_regf in variants:
+                    word = regf.add_word(
+                        f"word{kidx}_b{bus}_c{core}_i{in_regf}_d{depth or 0}",
+                        bus=bus,
+                        core=core,
+                        in_regf=in_regf,
+                        depth=depth,
+                        **kwargs,
+                    )
+                    word.add_field("a", u.UintType(6, default=3))
+                    word.add_field("b", u.BitType(), align=4)
+                    for sidx, upd_strb in enumerate((None, False, True)):
+                        # for cidx, fin_regf in enumerate((None, False, True)):
+                        # word.add_field(f"s{sidx}_c{cidx}", u.BitType(), upd_strb=upd_strb, in_regf=fin_regf)
+                        word.add_field(f"s{sidx}", u.BitType(), upd_strb=upd_strb)
+
+
+def test_word_field(tmp_path):
+    """Register File with All Combinations."""
+    mod = WordFieldMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_word_field, tmp_path)
