@@ -2884,140 +2884,126 @@ module full_regf (
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h001: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h002: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w2_rden_s = ~mem_wena_i;
         end
         10'h003: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w3_rden_s = ~mem_wena_i;
         end
         10'h004: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w4_rden_s = ~mem_wena_i;
         end
         10'h005: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h006: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h007: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h008: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w8_rden_s = ~mem_wena_i;
         end
         10'h009: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w9_rden_s = ~mem_wena_i;
         end
         10'h00A: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w10_rden_s = ~mem_wena_i;
         end
         10'h00B: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w11_rden_s = ~mem_wena_i;
         end
         10'h00C: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
           bus_w12_rden_s = ~mem_wena_i;
         end
         10'h00D: begin
-          mem_err_o = 0;
           bus_w13_wren_s = mem_wena_i;
           bus_w13_rden_s = ~mem_wena_i;
         end
         10'h00E: begin
-          mem_err_o = 0;
           bus_w14_wren_s = mem_wena_i;
         end
         10'h00F: begin
-          mem_err_o = 0;
           bus_w15_wren_s = mem_wena_i;
         end
         10'h010: begin
-          mem_err_o = 0;
           bus_w16_wren_s = mem_wena_i;
         end
         10'h011: begin
-          mem_err_o = 0;
           bus_w17_wren_s = mem_wena_i;
         end
         10'h012: begin
-          mem_err_o = 0;
           bus_w18_wren_s = mem_wena_i;
         end
         10'h013: begin
-          mem_err_o = 0;
           bus_w19_wren_s = mem_wena_i;
         end
         10'h014: begin
-          mem_err_o = 0;
           bus_w20_wren_s = mem_wena_i;
         end
         10'h015: begin
-          mem_err_o = 0;
           bus_w21_wren_s = mem_wena_i;
         end
         10'h016: begin
-          mem_err_o = 0;
           bus_w22_wren_s = mem_wena_i;
         end
         10'h017: begin
-          mem_err_o = 0;
           bus_w23_wren_s = mem_wena_i;
         end
         10'h018: begin
-          mem_err_o = 0;
           bus_w24_wren_s = mem_wena_i;
         end
         10'h019: begin
-          mem_err_o = 0;
           bus_w25_wren_s = mem_wena_i;
         end
         10'h01A: begin
-          mem_err_o = 0;
           bus_w26_wren_s = mem_wena_i;
         end
         10'h01B: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w27_wren_s = mem_wena_i;
         end
         10'h01C: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w28_wren_s = mem_wena_i;
         end
         10'h01D: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w29_wren_s = mem_wena_i;
         end
         10'h01E: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w30_wren_s = mem_wena_i;
         end
         10'h01F: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w31_wren_s = mem_wena_i;
         end
         10'h020: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w32_wren_s = mem_wena_i;
         end
         10'h021: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w33_wren_s = mem_wena_i;
         end
         10'h022: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w34_wren_s = mem_wena_i;
         end
         10'h023: begin
-          mem_err_o = ~mem_wena_i;
+        mem_err_o = ~mem_wena_i;
           bus_w35_wren_s = mem_wena_i;
         end
         default: begin

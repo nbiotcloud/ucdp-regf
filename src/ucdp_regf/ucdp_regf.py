@@ -51,6 +51,8 @@ _IN_REGF_DEFAULTS = {
     ua.access.RW: True,
 }
 
+GRDERRMODE: TypeAlias = Literal[None, "W", "C"]
+
 
 class Field(ua.Field):
     """Field."""
@@ -65,6 +67,8 @@ class Field(ua.Field):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GRDERRMODE = None
+    """Bus error on write to guarded/write-once field."""
     signame: str
     """Signal Basename to Core."""
     route: u.Routeables | None = None
@@ -122,6 +126,8 @@ class Word(ua.Word):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GRDERRMODE = None
+    """Bus error on write to word with guarded/write-once fields."""
     wordio: bool = False
     """Create Word-Based Interface Towards Core."""
     fieldio: bool = True
@@ -138,6 +144,7 @@ class Word(ua.Word):
         upd_prio=None,
         upd_strb=None,
         wr_guard=None,
+        guard_err=None,
         **kwargs,
     ) -> Field:
         if portgroups is None:
@@ -156,6 +163,8 @@ class Word(ua.Word):
             upd_strb = self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
+        if guard_err is None:
+            guard_err = self.guard_err
         field = Field(
             name=name,
             bus=bus,
@@ -166,6 +175,7 @@ class Word(ua.Word):
             upd_prio=upd_prio,
             upd_strb=upd_strb,
             wr_guard=wr_guard,
+            guard_err=guard_err,
             **kwargs,
         )
         check_field(self.name, field)
@@ -224,9 +234,11 @@ class Addrspace(ua.Addrspace):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GRDERRMODE = None
+    """Bus error on write to words with guarded/write-once fields."""
 
     def _create_word(
-        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, **kwargs
+        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, guard_err=None, **kwargs
     ) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
@@ -238,8 +250,16 @@ class Addrspace(ua.Addrspace):
             upd_strb = self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
+        if guard_err is None:
+            guard_err = self.guard_err
         return Word(
-            portgroups=portgroups, in_regf=in_regf, upd_prio=upd_prio, upd_strb=upd_strb, wr_guard=wr_guard, **kwargs
+            portgroups=portgroups,
+            in_regf=in_regf,
+            upd_prio=upd_prio,
+            upd_strb=upd_strb,
+            wr_guard=wr_guard,
+            guard_err=guard_err,
+            **kwargs,
         )
 
     def _create_words(self, **kwargs) -> Words:
@@ -290,6 +310,8 @@ class UcdpRegfMod(u.ATailoredMod):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GRDERRMODE = None
+    """Bus error on write to words with guarded/write-once fields."""
 
     filelists: ClassVar[u.ModFileLists] = (
         u.ModFileList(
@@ -314,6 +336,7 @@ class UcdpRegfMod(u.ATailoredMod):
             upd_prio=self.upd_prio,
             upd_strb=self.upd_strb,
             wr_guard=self.wr_guard,
+            guard_err=self.guard_err,
         )
 
     @cached_property

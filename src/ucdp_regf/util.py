@@ -355,7 +355,7 @@ def iter_wronce_updates(
 ) -> Iterator[str]:
     """Write Once Updates."""
     pre = " " * indent
-    # ff_dly = f"#{rslvr.ff_dly} " if rslvr.ff_dly else ""
+    ff_dly = f"#{rslvr.ff_dly} " if rslvr.ff_dly else ""
     for word, fields in addrspace.iter(fieldfilter=filter_buswriteonce):
         wordonce = False
         grdonce: dict[str, int] = {}
@@ -377,7 +377,7 @@ def iter_wronce_updates(
                 buswrenexpr = f"({' && '.join(buswren)})"
             else:
                 buswrenexpr = buswren[0]
-            upd = f"if {buswrenexpr} begin\n  {target}{{slc}} <= 1'b0;\nend"
+            upd = f"if {buswrenexpr} begin\n  {target}{{slc}} <= {ff_dly}1'b0;\nend"
             if word.depth:
                 lines = []
                 for idx in range(word.depth):

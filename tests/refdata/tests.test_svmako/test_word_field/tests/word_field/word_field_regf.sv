@@ -688,93 +688,78 @@ module word_field_regf (
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d0_wren_s = mem_wena_i;
         end
         10'h001: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h002: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d0_wren_s = mem_wena_i;
         end
         10'h003: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h004: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d0_wren_s = mem_wena_i;
         end
         10'h005: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h006: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d0_wren_s = mem_wena_i;
         end
         10'h007: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h008: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d0_wren_s = mem_wena_i;
         end
         10'h009: begin
-          mem_err_o = mem_wena_i;
+        mem_err_o = mem_wena_i;
         end
         10'h00A: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d1_wren_s[0] = mem_wena_i;
         end
         10'h00B: begin
           mem_err_o = mem_wena_i;
         end
         10'h00C: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d1_wren_s[0] = mem_wena_i;
         end
         10'h00D: begin
           mem_err_o = mem_wena_i;
         end
         10'h00E: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d1_wren_s[0] = mem_wena_i;
         end
         10'h00F: begin
           mem_err_o = mem_wena_i;
         end
         10'h010: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d1_wren_s[0] = mem_wena_i;
         end
         10'h011: begin
           mem_err_o = mem_wena_i;
         end
         10'h012: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d1_wren_s[0] = mem_wena_i;
         end
         10'h013: begin
           mem_err_o = mem_wena_i;
         end
         10'h014: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d5_wren_s[0] = mem_wena_i;
         end
         10'h015: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d5_wren_s[1] = mem_wena_i;
         end
         10'h016: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d5_wren_s[2] = mem_wena_i;
         end
         10'h017: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d5_wren_s[3] = mem_wena_i;
         end
         10'h018: begin
-          mem_err_o = 0;
           bus_word0_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
         10'h019: begin
@@ -793,23 +778,18 @@ module word_field_regf (
           mem_err_o = mem_wena_i;
         end
         10'h01E: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d5_wren_s[0] = mem_wena_i;
         end
         10'h01F: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d5_wren_s[1] = mem_wena_i;
         end
         10'h020: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d5_wren_s[2] = mem_wena_i;
         end
         10'h021: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d5_wren_s[3] = mem_wena_i;
         end
         10'h022: begin
-          mem_err_o = 0;
           bus_word1_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
         10'h023: begin
@@ -828,23 +808,18 @@ module word_field_regf (
           mem_err_o = mem_wena_i;
         end
         10'h028: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[0] = mem_wena_i;
         end
         10'h029: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[1] = mem_wena_i;
         end
         10'h02A: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[2] = mem_wena_i;
         end
         10'h02B: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[3] = mem_wena_i;
         end
         10'h02C: begin
-          mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
         10'h02D: begin
@@ -863,23 +838,18 @@ module word_field_regf (
           mem_err_o = mem_wena_i;
         end
         10'h032: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d5_wren_s[0] = mem_wena_i;
         end
         10'h033: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d5_wren_s[1] = mem_wena_i;
         end
         10'h034: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d5_wren_s[2] = mem_wena_i;
         end
         10'h035: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d5_wren_s[3] = mem_wena_i;
         end
         10'h036: begin
-          mem_err_o = 0;
           bus_word3_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
         10'h037: begin
@@ -898,23 +868,18 @@ module word_field_regf (
           mem_err_o = mem_wena_i;
         end
         10'h03C: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d5_wren_s[0] = mem_wena_i;
         end
         10'h03D: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d5_wren_s[1] = mem_wena_i;
         end
         10'h03E: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d5_wren_s[2] = mem_wena_i;
         end
         10'h03F: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d5_wren_s[3] = mem_wena_i;
         end
         10'h040: begin
-          mem_err_o = 0;
           bus_word4_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
         10'h041: begin

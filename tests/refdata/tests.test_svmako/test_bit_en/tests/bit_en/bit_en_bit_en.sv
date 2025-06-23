@@ -132,15 +132,12 @@ module bit_en_bit_en (
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_w0_wren_s = mem_wena_i;
         end
         10'h001: begin
-          mem_err_o = 0;
           bus_w1_wren_s = mem_wena_i;
         end
         10'h002: begin
-          mem_err_o = 0;
           bus_w2_wren_s = mem_wena_i;
         end
         default: begin

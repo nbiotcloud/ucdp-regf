@@ -26,6 +26,12 @@
 import ucdp as u
 import ucdpsv as usv
 from ucdp_regf import util
+from pydantic import BaseModel
+
+class adec(BaseModel):
+    merr: str | None = None
+    mwr: str | None = None
+    mrd: str | None = None
 %>
 <%inherit file="sv.mako"/>
 
@@ -54,44 +60,50 @@ ${util.get_bus_word_rden_defaults(rslvr, mod.addrspace).get()}
 % for word, fields in mod.addrspace.iter(fieldfilter=util.filter_busacc):
 <%
     wrflds = [field for field in fields if field.bus.write]
+    gerrfields = [field for field in wrflds if field.guard_err]
     rdflds = [field for field in fields if field.bus.read]
-    rdmodflds = [field for field in rdflds if field.bus.read.data is not None]
-    declns = []
+    rdmodflds = [field for field in rdflds if field.bus.read.data is not None]  # modified by read access
+    declines= adec()
     if wrflds and rdflds:
-      declns.append("mem_err_o = 0")
+      declines.merr = None
     elif wrflds:
-      declns.append("mem_err_o = ~mem_wena_i")
+      declines.merr = "mem_err_o = ~mem_wena_i"
     else:
-      declns.append("mem_err_o = mem_wena_i")
+      declines.merr = "mem_err_o = mem_wena_i"
+
     if wrflds:
-      declns.append(f"bus_{word.name}_wren_s{{idx}} = mem_wena_i")
-    else:
-      declns.append(None)
+      declines.mwr = f"bus_{word.name}_wren_s{{idx}} = mem_wena_i"
     if rdmodflds:
-      declns.append(f"bus_{word.name}_rden_s{{idx}} = ~mem_wena_i")
-    else:
-      declns.append(None)
+      declines.mrd = f"bus_{word.name}_rden_s{{idx}} = ~mem_wena_i"
+##
+## guard-err:
+## mem_err |= OR(guard, wronce) & mem_wena_i
+##
 %>\
 %   if word.depth:
 %     for idx in range(word.depth):
         ${rslvr._get_uint_value((word.offset+idx), mem_addr_width)}: begin
-          ${declns[0]};
-%       if declns[1]:
-          ${declns[1].format(idx=f"[{idx}]")};
+%       if declines.merr:
+          ${declines.merr};
 %       endif
-%       if declns[2]:
-          ${declns[2].format(idx=f"[{idx}]")};
+%       if declines.mwr:
+          ${declines.mwr.format(idx=f"[{idx}]")};
+%       endif
+%       if declines.mrd:
+          ${declines.mrd.format(idx=f"[{idx}]")};
 %       endif
         end
 %     endfor
 %   else:
         ${rslvr._get_uint_value(word.offset, mem_addr_width)}: begin
-          ${declns[0]};
-%     if declns[1]:
-          ${declns[1].format(idx="")};
+%     if declines.merr:
+        ${declines.merr};
 %     endif
-%     if declns[2]:
-          ${declns[2].format(idx="")};
+%     if declines.mwr:
+          ${declines.mwr.format(idx="")};
+%     endif
+%     if declines.mrd:
+          ${declines.mrd.format(idx="")};
 %     endif
         end
 %   endif

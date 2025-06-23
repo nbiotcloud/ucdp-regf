@@ -275,67 +275,52 @@ module corner_regf (
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
           bus_ctrl_rden_s = ~mem_wena_i;
         end
         10'h001: begin
-          mem_err_o = 0;
           bus_txdata_wren_s[0] = mem_wena_i;
         end
         10'h002: begin
-          mem_err_o = 0;
           bus_txdata_wren_s[1] = mem_wena_i;
         end
         10'h003: begin
-          mem_err_o = 0;
           bus_txdata_wren_s[2] = mem_wena_i;
         end
         10'h004: begin
-          mem_err_o = 0;
           bus_txdata_wren_s[3] = mem_wena_i;
         end
         10'h005: begin
-          mem_err_o = 0;
           bus_txdata_wren_s[4] = mem_wena_i;
         end
         10'h006: begin
-          mem_err_o = 0;
           bus_dims_wren_s[0] = mem_wena_i;
           bus_dims_rden_s[0] = ~mem_wena_i;
         end
         10'h007: begin
-          mem_err_o = 0;
           bus_dims_wren_s[1] = mem_wena_i;
           bus_dims_rden_s[1] = ~mem_wena_i;
         end
         10'h008: begin
-          mem_err_o = 0;
           bus_dims_wren_s[2] = mem_wena_i;
           bus_dims_rden_s[2] = ~mem_wena_i;
         end
         10'h009: begin
-          mem_err_o = 0;
           bus_guards_wren_s[0] = mem_wena_i;
         end
         10'h00A: begin
-          mem_err_o = 0;
           bus_grddim_wren_s[0] = mem_wena_i;
         end
         10'h00B: begin
-          mem_err_o = 0;
           bus_grddim_wren_s[1] = mem_wena_i;
         end
         10'h00C: begin
-          mem_err_o = 0;
           bus_mixint_wren_s = mem_wena_i;
         end
         10'h00D: begin
-          mem_err_o = 0;
           bus_wide0_wren_s = mem_wena_i;
         end
         10'h00E: begin
-          mem_err_o = 0;
           bus_wide1_wren_s = mem_wena_i;
         end
         default: begin

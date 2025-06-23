@@ -97,7 +97,6 @@ module reset_softrst (
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
         end
         default: begin
