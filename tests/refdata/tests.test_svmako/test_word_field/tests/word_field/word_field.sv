@@ -67,6 +67,22 @@ module word_field();
     .regf_word0_bRO_cNone_iNone_d0_s0_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d0_s1_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d0_s2_rbus_i (1'b0              ), // TODO - Bus Read Value
+    .regf_word0_bRW_cRW_iNone_d0_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d0_a_wval_i    (6'h03             ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d0_a_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d0_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d0_b_wval_i    (1'b0              ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d0_b_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d0_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d0_s0_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d0_s0_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d0_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d0_s1_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d0_s1_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d0_s2_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d0_s2_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d0_s2_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d0_s2_upd_o    (                  ), // TODO - Update Strobe
     .regf_word1_bRW_cNone_iNone_d0_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d0_b_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d0_s0_rval_o (                  ), // TODO - Core Read Value
@@ -78,6 +94,22 @@ module word_field();
     .regf_word1_bRO_cNone_iNone_d0_s0_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d0_s1_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d0_s2_rbus_i (1'b0              ), // TODO - Bus Read Value
+    .regf_word1_bRW_cRW_iNone_d0_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d0_a_wval_i    (6'h03             ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d0_a_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d0_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d0_b_wval_i    (1'b0              ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d0_b_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d0_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d0_s0_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d0_s0_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d0_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d0_s1_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d0_s1_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d0_s2_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d0_s2_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d0_s2_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d0_s2_upd_o    (                  ), // TODO - Update Strobe
     .regf_word2_bRW_cNone_iNone_d0_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word2_bRW_cNone_iNone_d0_a_upd_o   (                  ), // TODO - Update Strobe
     .regf_word2_bRW_cNone_iNone_d0_b_rval_o  (                  ), // TODO - Core Read Value
@@ -92,6 +124,25 @@ module word_field();
     .regf_word2_bRO_cNone_iNone_d0_s0_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d0_s1_rbus_i (1'b0              ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d0_s2_rbus_i (1'b0              ), // TODO - Bus Read Value
+    .regf_word2_bRW_cRW_iNone_d0_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d0_a_wval_i    (6'h03             ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d0_a_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d0_a_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d0_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d0_b_wval_i    (1'b0              ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d0_b_wr_i      (1'b0              ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d0_b_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d0_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d0_s0_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d0_s0_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d0_s0_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d0_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d0_s1_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d0_s1_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d0_s2_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d0_s2_wval_i   (1'b0              ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d0_s2_wr_i     (1'b0              ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d0_s2_upd_o    (                  ), // TODO - Update Strobe
     .regf_word0_bRW_cNone_iNone_d1_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word0_bRW_cNone_iNone_d1_b_rval_o  (                  ), // TODO - Core Read Value
     .regf_word0_bRW_cNone_iNone_d1_s0_rval_o (                  ), // TODO - Core Read Value
@@ -103,6 +154,22 @@ module word_field();
     .regf_word0_bRO_cNone_iNone_d1_s0_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d1_s1_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d1_s2_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word0_bRW_cRW_iNone_d1_a_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d1_a_wval_i    ('{1{6'h03}}       ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d1_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d1_b_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d1_b_wval_i    ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d1_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d1_s0_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d1_s0_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d1_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d1_s1_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d1_s1_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d1_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d1_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word0_bRW_cRW_iNone_d1_s2_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d1_s2_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d1_s2_rval_o   (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d1_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d1_b_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d1_s0_rval_o (                  ), // TODO - Core Read Value
@@ -114,6 +181,22 @@ module word_field();
     .regf_word1_bRO_cNone_iNone_d1_s0_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d1_s1_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d1_s2_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word1_bRW_cRW_iNone_d1_a_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d1_a_wval_i    ('{1{6'h03}}       ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d1_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d1_b_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d1_b_wval_i    ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d1_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d1_s0_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d1_s0_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d1_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d1_s1_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d1_s1_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d1_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d1_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word1_bRW_cRW_iNone_d1_s2_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d1_s2_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d1_s2_rval_o   (                  ), // TODO - Core Read Value
     .regf_word2_bRW_cNone_iNone_d1_a_upd_o   (                  ), // TODO - Update Strobe
     .regf_word2_bRW_cNone_iNone_d1_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word2_bRW_cNone_iNone_d1_b_upd_o   (                  ), // TODO - Update Strobe
@@ -128,6 +211,25 @@ module word_field();
     .regf_word2_bRO_cNone_iNone_d1_s0_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d1_s1_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d1_s2_rbus_i ('{1{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word2_bRW_cRW_iNone_d1_a_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d1_a_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d1_a_wval_i    ('{1{6'h03}}       ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d1_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d1_b_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d1_b_wr_i      ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d1_b_wval_i    ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d1_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d1_s0_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d1_s0_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d1_s0_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d1_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d1_s1_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d1_s1_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d1_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d1_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d1_s2_wr_i     ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d1_s2_wval_i   ('{1{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d1_s2_rval_o   (                  ), // TODO - Core Read Value
     .regf_word0_bRW_cNone_iNone_d5_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word0_bRW_cNone_iNone_d5_b_rval_o  (                  ), // TODO - Core Read Value
     .regf_word0_bRW_cNone_iNone_d5_s0_rval_o (                  ), // TODO - Core Read Value
@@ -139,6 +241,22 @@ module word_field();
     .regf_word0_bRO_cNone_iNone_d5_s0_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d5_s1_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word0_bRO_cNone_iNone_d5_s2_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word0_bRW_cRW_iNone_d5_a_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d5_a_wval_i    ('{5{6'h03}}       ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d5_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d5_b_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d5_b_wval_i    ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d5_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d5_s0_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d5_s0_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d5_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d5_s1_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d5_s1_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d5_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word0_bRW_cRW_iNone_d5_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word0_bRW_cRW_iNone_d5_s2_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word0_bRW_cRW_iNone_d5_s2_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word0_bRW_cRW_iNone_d5_s2_rval_o   (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d5_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d5_b_rval_o  (                  ), // TODO - Core Read Value
     .regf_word1_bRW_cNone_iNone_d5_s0_rval_o (                  ), // TODO - Core Read Value
@@ -150,6 +268,22 @@ module word_field();
     .regf_word1_bRO_cNone_iNone_d5_s0_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d5_s1_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word1_bRO_cNone_iNone_d5_s2_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word1_bRW_cRW_iNone_d5_a_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d5_a_wval_i    ('{5{6'h03}}       ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d5_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d5_b_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d5_b_wval_i    ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d5_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d5_s0_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d5_s0_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d5_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d5_s1_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d5_s1_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d5_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word1_bRW_cRW_iNone_d5_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word1_bRW_cRW_iNone_d5_s2_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word1_bRW_cRW_iNone_d5_s2_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word1_bRW_cRW_iNone_d5_s2_rval_o   (                  ), // TODO - Core Read Value
     .regf_word2_bRW_cNone_iNone_d5_a_upd_o   (                  ), // TODO - Update Strobe
     .regf_word2_bRW_cNone_iNone_d5_a_rval_o  (                  ), // TODO - Core Read Value
     .regf_word2_bRW_cNone_iNone_d5_b_upd_o   (                  ), // TODO - Update Strobe
@@ -164,36 +298,97 @@ module word_field();
     .regf_word2_bRO_cNone_iNone_d5_s0_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d5_s1_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
     .regf_word2_bRO_cNone_iNone_d5_s2_rbus_i ('{5{1'b0}}        ), // TODO - Bus Read Value
+    .regf_word2_bRW_cRW_iNone_d5_a_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d5_a_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d5_a_wval_i    ('{5{6'h03}}       ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d5_a_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d5_b_upd_o     (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d5_b_wr_i      ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d5_b_wval_i    ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d5_b_rval_o    (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d5_s0_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d5_s0_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d5_s0_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d5_s0_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d5_s1_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d5_s1_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d5_s1_rval_o   (                  ), // TODO - Core Read Value
+    .regf_word2_bRW_cRW_iNone_d5_s2_upd_o    (                  ), // TODO - Update Strobe
+    .regf_word2_bRW_cRW_iNone_d5_s2_wr_i     ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regf_word2_bRW_cRW_iNone_d5_s2_wval_i   ('{5{1'b0}}        ), // TODO - Core Write Value
+    .regf_word2_bRW_cRW_iNone_d5_s2_rval_o   (                  ), // TODO - Core Read Value
     .regfword_word1_bRW_cNone_iNone_d0_rval_o(                  ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d0_rbus_i(32'h00000000      ), // TODO - Bus Read Value
+    .regfword_word1_bRW_cRW_iNone_d0_rval_o  (                  ), // TODO - Core Read Value
+    .regfword_word1_bRW_cRW_iNone_d0_wval_i  (32'h00000000      ), // TODO - Core Write Value
+    .regfword_word1_bRW_cRW_iNone_d0_wr_i    (1'b0              ), // TODO - Core Write Strobe
     .regfword_word2_bRW_cNone_iNone_d0_rval_o(                  ), // TODO - Core Read Value
     .regfword_word2_bRW_cNone_iNone_d0_upd_o (                  ), // TODO - Update Strobe
     .regfword_word2_bRO_cNone_iNone_d0_rbus_i(32'h00000000      ), // TODO - Bus Read Value
+    .regfword_word2_bRW_cRW_iNone_d0_rval_o  (                  ), // TODO - Core Read Value
+    .regfword_word2_bRW_cRW_iNone_d0_wval_i  (32'h00000000      ), // TODO - Core Write Value
+    .regfword_word2_bRW_cRW_iNone_d0_wr_i    (1'b0              ), // TODO - Core Write Strobe
+    .regfword_word2_bRW_cRW_iNone_d0_upd_o   (                  ), // TODO - Update Strobe
     .regfword_word3_bRW_cNone_iNone_d0_rval_o(                  ), // TODO - Core Read Value
     .regfword_word3_bRO_cNone_iNone_d0_rbus_i(32'h00000000      ), // TODO - Bus Read Value
+    .regfword_word3_bRW_cRW_iNone_d0_rval_o  (                  ), // TODO - Core Read Value
+    .regfword_word3_bRW_cRW_iNone_d0_wval_i  (32'h00000000      ), // TODO - Core Write Value
+    .regfword_word3_bRW_cRW_iNone_d0_wr_i    (1'b0              ), // TODO - Core Write Strobe
     .regfword_word4_bRW_cNone_iNone_d0_rval_o(                  ), // TODO - Core Read Value
     .regfword_word4_bRW_cNone_iNone_d0_upd_o (                  ), // TODO - Update Strobe
     .regfword_word4_bRO_cNone_iNone_d0_rbus_i(32'h00000000      ), // TODO - Bus Read Value
+    .regfword_word4_bRW_cRW_iNone_d0_rval_o  (                  ), // TODO - Core Read Value
+    .regfword_word4_bRW_cRW_iNone_d0_wval_i  (32'h00000000      ), // TODO - Core Write Value
+    .regfword_word4_bRW_cRW_iNone_d0_wr_i    (1'b0              ), // TODO - Core Write Strobe
+    .regfword_word4_bRW_cRW_iNone_d0_upd_o   (                  ), // TODO - Update Strobe
     .regfword_word1_bRW_cNone_iNone_d1_rval_o(                  ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d1_rbus_i('{1{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word1_bRW_cRW_iNone_d1_wr_i    ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word1_bRW_cRW_iNone_d1_wval_i  ('{1{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word1_bRW_cRW_iNone_d1_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word2_bRW_cNone_iNone_d1_upd_o (                  ), // TODO - Update Strobe
     .regfword_word2_bRW_cNone_iNone_d1_rval_o(                  ), // TODO - Core Read Value
     .regfword_word2_bRO_cNone_iNone_d1_rbus_i('{1{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word2_bRW_cRW_iNone_d1_upd_o   (                  ), // TODO - Update Strobe
+    .regfword_word2_bRW_cRW_iNone_d1_wr_i    ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word2_bRW_cRW_iNone_d1_wval_i  ('{1{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word2_bRW_cRW_iNone_d1_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word3_bRW_cNone_iNone_d1_rval_o(                  ), // TODO - Core Read Value
     .regfword_word3_bRO_cNone_iNone_d1_rbus_i('{1{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word3_bRW_cRW_iNone_d1_wr_i    ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word3_bRW_cRW_iNone_d1_wval_i  ('{1{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word3_bRW_cRW_iNone_d1_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word4_bRW_cNone_iNone_d1_upd_o (                  ), // TODO - Update Strobe
     .regfword_word4_bRW_cNone_iNone_d1_rval_o(                  ), // TODO - Core Read Value
     .regfword_word4_bRO_cNone_iNone_d1_rbus_i('{1{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word4_bRW_cRW_iNone_d1_upd_o   (                  ), // TODO - Update Strobe
+    .regfword_word4_bRW_cRW_iNone_d1_wr_i    ('{1{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word4_bRW_cRW_iNone_d1_wval_i  ('{1{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word4_bRW_cRW_iNone_d1_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word1_bRW_cNone_iNone_d5_rval_o(                  ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d5_rbus_i('{5{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word1_bRW_cRW_iNone_d5_wr_i    ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word1_bRW_cRW_iNone_d5_wval_i  ('{5{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word1_bRW_cRW_iNone_d5_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word2_bRW_cNone_iNone_d5_upd_o (                  ), // TODO - Update Strobe
     .regfword_word2_bRW_cNone_iNone_d5_rval_o(                  ), // TODO - Core Read Value
     .regfword_word2_bRO_cNone_iNone_d5_rbus_i('{5{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word2_bRW_cRW_iNone_d5_upd_o   (                  ), // TODO - Update Strobe
+    .regfword_word2_bRW_cRW_iNone_d5_wr_i    ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word2_bRW_cRW_iNone_d5_wval_i  ('{5{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word2_bRW_cRW_iNone_d5_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word3_bRW_cNone_iNone_d5_rval_o(                  ), // TODO - Core Read Value
     .regfword_word3_bRO_cNone_iNone_d5_rbus_i('{5{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word3_bRW_cRW_iNone_d5_wr_i    ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word3_bRW_cRW_iNone_d5_wval_i  ('{5{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word3_bRW_cRW_iNone_d5_rval_o  (                  ), // TODO - Core Read Value
     .regfword_word4_bRW_cNone_iNone_d5_upd_o (                  ), // TODO - Update Strobe
     .regfword_word4_bRW_cNone_iNone_d5_rval_o(                  ), // TODO - Core Read Value
-    .regfword_word4_bRO_cNone_iNone_d5_rbus_i('{5{32'h00000000}})  // TODO - Bus Read Value
+    .regfword_word4_bRO_cNone_iNone_d5_rbus_i('{5{32'h00000000}}), // TODO - Bus Read Value
+    .regfword_word4_bRW_cRW_iNone_d5_upd_o   (                  ), // TODO - Update Strobe
+    .regfword_word4_bRW_cRW_iNone_d5_wr_i    ('{5{1'b0}}        ), // TODO - Core Write Strobe
+    .regfword_word4_bRW_cRW_iNone_d5_wval_i  ('{5{32'h00000000}}), // TODO - Core Write Value
+    .regfword_word4_bRW_cRW_iNone_d5_rval_o  (                  )  // TODO - Core Read Value
   );
 
 endmodule // word_field

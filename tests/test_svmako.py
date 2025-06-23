@@ -432,7 +432,7 @@ class WordFieldMod(u.AMod):
         # TODO: support all these
         # variants = (("RW", None, None), ("RW", "RO", None), ("RW", "RO", False),
         # ("RO", "RW", None), ("RO", "RW", True))
-        variants = (("RW", None, None), ("RO", None, None))
+        variants = (("RW", None, None), ("RO", None, None), ("RW", "RW", None))
         for depth in (None, 1, 5):
             for kidx, kwargs in enumerate(wordkwargs):
                 for bus, core, in_regf in variants:
