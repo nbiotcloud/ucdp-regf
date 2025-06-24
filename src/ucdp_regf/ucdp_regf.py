@@ -59,7 +59,7 @@ class Field(ua.Field):
     """Portgroups."""
     in_regf: bool
     """Implementation within Regf."""
-    upd_prio: Prio | None
+    upd_prio: Prio | None = None
     """Update Priority: None, 'b'us or 'c'core."""
     upd_strb: bool = False
     """Update strobe towards core."""
@@ -94,18 +94,18 @@ class Field(ua.Field):
         return Field(
             name=word.name,
             type_=type_,
-            bus=word.bus,
-            core=core,
+            bus=ua.RW,  # word.bus,
+            core=ua.RO,  # core,
             offset=0,
             portgroups=word.portgroups,
-            in_regf=in_regf,
-            upd_prio=word.upd_prio,
+            in_regf=True,  # in_regf,
+            # upd_prio=word.upd_prio,
             upd_strb=word.upd_strb,
-            wr_guard=word.wr_guard,
+            # wr_guard=word.wr_guard,
             signame=word.name,
             doc=word.doc,
-            attrs=word.attrs,
-            **kwargs,
+            # attrs=word.attrs,
+            # **kwargs,
         )
 
 
@@ -266,6 +266,11 @@ def filter_rdmod(field: Field):
     return field.bus and field.bus.read and field.bus.read.data is not None
 
 
+def filter_busread(field: Field) -> bool:
+    """Bus-Readable Fields."""
+    return field.bus and field.bus.read
+
+
 wfp_ident = re.compile(r"((?P<word>\w+)\.(?P<field>\w+))|(?P<import>\w+_i)")
 
 
@@ -351,6 +356,7 @@ class UcdpRegfMod(u.ATailoredMod):
         self._add_bus_word_en_decls()
         self._prep_guards()
         self._add_wrguard_decls()
+        self._add_word_vector_decls()
         self._handle_soft_reset()
         if self.slicing:
             self.add_signal(u.UintType(self.width), "bit_en_s")
@@ -418,6 +424,8 @@ class UcdpRegfMod(u.ATailoredMod):
         if word.depth:
             type_ = u.ArrayType(type_, word.depth)
             strbtype_ = u.ArrayType(strbtype_, word.depth)
+        if word.upd_strb:
+            self.add_signal(strbtype_, f"upd_strb_{word.name}_r")
         for field in word.fields:
             if field.upd_strb:
                 self.add_signal(strbtype_, f"upd_strb_{field.signame}_r")
@@ -447,6 +455,18 @@ class UcdpRegfMod(u.ATailoredMod):
         for word, _ in self.addrspace.iter(fieldfilter=filter_rdmod):
             signame = f"bus_{word.name}_rden_s"
             type_ = u.BitType()
+            if word.depth:
+                type_ = u.ArrayType(type_, word.depth)
+            self.add_signal(type_, signame, comment=cmt)
+            cmt = None
+
+    def _add_word_vector_decls(self):
+        cmt = "word vectors"
+        for word, fields in self.addrspace.iter():
+            if not (word.wordio or any(filter_busread(field) for field in fields)):
+                continue
+            signame = f"wvec_{word.name}_s"
+            type_ = u.UintType(self.width)
             if word.depth:
                 type_ = u.ArrayType(type_, word.depth)
             self.add_signal(type_, signame, comment=cmt)

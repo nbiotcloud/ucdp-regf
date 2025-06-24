@@ -109,6 +109,9 @@ module portgroup_regf #(
   logic [width_p-1:0] data_tx_data0_r; // Word tx
   logic               bus_ctrl_wren_s; // bus word write enables
   logic               bus_tx_wren_s;
+  logic [31:0]        wvec_ctrl_s;     // word vectors
+  logic [31:0]        wvec_rx_s;
+  logic [31:0]        wvec_tx_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -160,19 +163,26 @@ module portgroup_regf #(
   end
 
   // ------------------------------------------------------
+  //  Collect word vectors
+  // ------------------------------------------------------
+  assign wvec_ctrl_s = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
+  assign wvec_rx_s   = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
+  assign wvec_tx_s   = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
+
+  // ------------------------------------------------------
   //  Bus Read-Mux
   // ------------------------------------------------------
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
+          mem_rdata_o = wvec_ctrl_s;
         end
         10'h001: begin
-          mem_rdata_o = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
+          mem_rdata_o = wvec_rx_s;
         end
         10'h002: begin
-          mem_rdata_o = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
+          mem_rdata_o = wvec_tx_s;
         end
         default: begin
           mem_rdata_o = 32'h00000000;
