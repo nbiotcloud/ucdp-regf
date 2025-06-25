@@ -77,10 +77,10 @@ def filter_coreread(field: Field) -> bool:
     return field.core and field.core.read
 
 
-def iter_pgrp_names(field: Field) -> Iterator[str]:
+def iter_pgrp_names(obj: Field | Word) -> Iterator[str]:
     """Iterate over port group names."""
-    if field.portgroups:
-        for grp in field.portgroups:
+    if obj.portgroups:
+        for grp in obj.portgroups:
             yield f"{grp}_"
     else:
         yield ""
@@ -444,14 +444,14 @@ def get_outp_assigns(
             for field in fields:
                 _add_outp_assigns(rslvr, aligntext, "regf", word, field, guards, wronce_guards, sliced_en)
         if word.wordio:
-            aligntext.add_row("assign", f"regfword_{word.name}_rval_o", f"= wvec_{word.name}_s;")
-            if word.upd_strb:
-                aligntext.add_row("assign", f"regfword_{word.name}_upd_o", f"= upd_strb_{word.name}_r;")
-        #      aligntext.add_row("assign",
-        #     field = Field.from_word(word)
-        #     _add_outp_assigns(
-        #         rslvr, aligntext, "regfword", word, field, guards, wronce_guards, sliced_en, srcfields=fields
-        #     )
+            for gn in iter_pgrp_names(word):
+                aligntext.add_row("assign", f"regfword_{gn}{word.name}_rval_o", f"= wvec_{word.name}_s;")
+                if word.upd_strb:
+                    aligntext.add_row("assign", f"regfword_{gn}{word.name}_upd_o", f"= upd_strb_{word.name}_r;")
+            # field = Field.from_word(word)
+            # _add_outp_assigns(
+            #     rslvr, aligntext, "regfword", word, field, guards, wronce_guards, sliced_en, #srcfields=fields
+            # )
     return aligntext
 
 
