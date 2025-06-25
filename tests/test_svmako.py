@@ -426,8 +426,8 @@ class WordFieldMod(u.AMod):
             {},
             {"wordio": True},
             {"wordio": True, "upd_strb": True},
-            {"wordio": True, "fieldio": False},
-            {"wordio": True, "fieldio": False, "upd_strb": True},
+            # {"wordio": True, "fieldio": False}, # bus=RO with fieldio=False is missing the value inputs!
+            # {"wordio": True, "fieldio": False, "upd_strb": True},
         )  # type: ignore[var-annotated]
         # TODO: support all these
         # variants = (("RW", None, None), ("RW", "RO", None), ("RW", "RO", False),
@@ -436,6 +436,9 @@ class WordFieldMod(u.AMod):
         for depth in (None, 1, 5):
             for kidx, kwargs in enumerate(wordkwargs):
                 for bus, core, in_regf in variants:
+                    # bus=RO can't have an upd_strb as it's not written from bus
+                    if (bus == "RO") and kwargs.get("upd_strb", False):
+                        continue
                     word = regf.add_word(
                         f"word{kidx}_b{bus}_c{core}_i{in_regf}_d{depth or 0}",
                         bus=bus,
@@ -450,6 +453,18 @@ class WordFieldMod(u.AMod):
                         # for cidx, fin_regf in enumerate((None, False, True)):
                         # word.add_field(f"s{sidx}_c{cidx}", u.BitType(), upd_strb=upd_strb, in_regf=fin_regf)
                         word.add_field(f"s{sidx}", u.BitType(), upd_strb=upd_strb)
+        word = regf.add_word(
+            "www",
+            bus=ua.RW,
+            wordio=True,
+            portgroups=(
+                "foo",
+                "bar",
+            ),
+            upd_strb=True,
+        )
+        word.add_field("a", u.UintType(6, default=3), upd_strb=False)
+        word.add_field("b", u.BitType(), align=4, upd_strb=False)
 
 
 def test_word_field(tmp_path):
