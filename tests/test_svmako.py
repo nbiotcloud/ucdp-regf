@@ -453,6 +453,18 @@ class WordFieldMod(u.AMod):
                         # for cidx, fin_regf in enumerate((None, False, True)):
                         # word.add_field(f"s{sidx}_c{cidx}", u.BitType(), upd_strb=upd_strb, in_regf=fin_regf)
                         word.add_field(f"s{sidx}", u.BitType(), upd_strb=upd_strb)
+        word = regf.add_word(
+            "www",
+            bus=ua.RW,
+            wordio=True,
+            portgroups=(
+                "foo",
+                "bar",
+            ),
+            upd_strb=True,
+        )
+        word.add_field("a", u.UintType(6, default=3), upd_strb=False)
+        word.add_field("b", u.BitType(), align=4, upd_strb=False)
 
 
 def test_word_field(tmp_path):

@@ -132,6 +132,9 @@
 //           [9]                       .s0      RW/RO       0        False    regf
 //           [10]                      .s1      RW/RO       0        False    regf
 //           [11]                      .s2      RW/RO       0        False    regf
+// +35       www
+//           [5:0]                     .a       RW/RO       0x3      False    regf
+//           [8]                       .b       RW/RO       0        False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -324,6 +327,16 @@ module word_field_regf (
   //   regf_word2_bRW_cNone_iNone_d5_s2_o: bus=RW core=RO in_regf=True
   output logic        regf_word2_bRW_cNone_iNone_d5_s2_upd_o    [0:4], // Update Strobe
   output logic        regf_word2_bRW_cNone_iNone_d5_s2_rval_o   [0:4], // Core Read Value
+  //   regf_foo_o
+  //     regf_foo_www_a_o: bus=RW core=RO in_regf=True
+  output logic [5:0]  regf_foo_www_a_rval_o,                           // Core Read Value
+  //     regf_foo_www_b_o: bus=RW core=RO in_regf=True
+  output logic        regf_foo_www_b_rval_o,                           // Core Read Value
+  //   regf_bar_o
+  //     regf_bar_www_a_o: bus=RW core=RO in_regf=True
+  output logic [5:0]  regf_bar_www_a_rval_o,                           // Core Read Value
+  //     regf_bar_www_b_o: bus=RW core=RO in_regf=True
+  output logic        regf_bar_www_b_rval_o,                           // Core Read Value
   // regfword_o
   //   regfword_word1_bRW_cNone_iNone_d0_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRW_cNone_iNone_d0_rval_o,        // Core Read Value
@@ -345,7 +358,15 @@ module word_field_regf (
   output logic [31:0] regfword_word1_bRO_cNone_iNone_d5_rval_o  [0:4], // Core Read Value
   //   regfword_word2_bRW_cNone_iNone_d5_o: bus=RW core=RO in_regf=True
   output logic        regfword_word2_bRW_cNone_iNone_d5_upd_o   [0:4], // Update Strobe
-  output logic [31:0] regfword_word2_bRW_cNone_iNone_d5_rval_o  [0:4]  // Core Read Value
+  output logic [31:0] regfword_word2_bRW_cNone_iNone_d5_rval_o  [0:4], // Core Read Value
+  //   regfword_foo_o
+  //     regfword_foo_www_o: bus=RW core=RO in_regf=True
+  output logic [31:0] regfword_foo_www_rval_o,                         // Core Read Value
+  output logic        regfword_foo_www_upd_o,                          // Update Strobe
+  //   regfword_bar_o
+  //     regfword_bar_www_o: bus=RW core=RO in_regf=True
+  output logic [31:0] regfword_bar_www_rval_o,                         // Core Read Value
+  output logic        regfword_bar_www_upd_o                           // Update Strobe
 );
 
 
@@ -426,6 +447,9 @@ module word_field_regf (
   logic        upd_strb_word2_bRW_cNone_iNone_d5_b_r   [0:4];
   logic        upd_strb_word2_bRW_cNone_iNone_d5_s0_r  [0:4];
   logic        upd_strb_word2_bRW_cNone_iNone_d5_s2_r  [0:4];
+  logic [5:0]  data_www_a_r;                                  // Word www
+  logic        data_www_b_r;
+  logic        upd_strb_www_r;
   logic        bus_word0_bRW_cNone_iNone_d0_wren_s;           // bus word write enables
   logic        bus_word1_bRW_cNone_iNone_d0_wren_s;
   logic        bus_word2_bRW_cNone_iNone_d0_wren_s;
@@ -435,6 +459,7 @@ module word_field_regf (
   logic        bus_word0_bRW_cNone_iNone_d5_wren_s     [0:4];
   logic        bus_word1_bRW_cNone_iNone_d5_wren_s     [0:4];
   logic        bus_word2_bRW_cNone_iNone_d5_wren_s     [0:4];
+  logic        bus_www_wren_s;
   logic [31:0] wvec_word0_bRW_cNone_iNone_d0_s;               // word vectors
   logic [31:0] wvec_word0_bRO_cNone_iNone_d0_s;
   logic [31:0] wvec_word1_bRW_cNone_iNone_d0_s;
@@ -450,6 +475,7 @@ module word_field_regf (
   logic [31:0] wvec_word1_bRW_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_word1_bRO_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_word2_bRW_cNone_iNone_d5_s         [0:4];
+  logic [31:0] wvec_www_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -463,6 +489,7 @@ module word_field_regf (
     bus_word0_bRW_cNone_iNone_d5_wren_s = '{5{1'b0}};
     bus_word1_bRW_cNone_iNone_d5_wren_s = '{5{1'b0}};
     bus_word2_bRW_cNone_iNone_d5_wren_s = '{5{1'b0}};
+    bus_www_wren_s                      = 1'b0;
 
 
     // decode address
@@ -594,6 +621,10 @@ module word_field_regf (
           mem_err_o = 0;
           bus_word2_bRW_cNone_iNone_d5_wren_s[4] = mem_wena_i;
         end
+        10'h023: begin
+          mem_err_o = 0;
+          bus_www_wren_s = mem_wena_i;
+        end
         default: begin
           mem_err_o = 1'b1;
         end
@@ -694,6 +725,10 @@ module word_field_regf (
       upd_strb_word2_bRW_cNone_iNone_d5_b_r  <= '{5{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d5_s0_r <= '{5{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d5_s2_r <= '{5{1'b0}};
+      // Word: www
+      data_www_a_r                           <= 6'h03;
+      data_www_b_r                           <= 1'b0;
+      upd_strb_www_r                         <= 1'b0;
     end else begin
       if (bus_word0_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word0_bRW_cNone_iNone_d0_a_r <= mem_wdata_i[5:0];
@@ -1059,6 +1094,13 @@ module word_field_regf (
       upd_strb_word2_bRW_cNone_iNone_d5_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
       upd_strb_word2_bRW_cNone_iNone_d5_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
       upd_strb_word2_bRW_cNone_iNone_d5_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      if (bus_www_wren_s == 1'b1) begin
+        data_www_a_r <= mem_wdata_i[5:0];
+      end
+      if (bus_www_wren_s == 1'b1) begin
+        data_www_b_r <= mem_wdata_i[8];
+      end
+      upd_strb_www_r <= (bus_www_wren_s == 1'b1) ? 1'b1 : 1'b0;
     end
   end
 
@@ -1100,6 +1142,7 @@ module word_field_regf (
   assign wvec_word2_bRW_cNone_iNone_d5_s[2] = {20'h00000, data_word2_bRW_cNone_iNone_d5_s2_r[2], data_word2_bRW_cNone_iNone_d5_s1_r[2], data_word2_bRW_cNone_iNone_d5_s0_r[2], data_word2_bRW_cNone_iNone_d5_b_r[2], 2'h0, data_word2_bRW_cNone_iNone_d5_a_r[2]};
   assign wvec_word2_bRW_cNone_iNone_d5_s[3] = {20'h00000, data_word2_bRW_cNone_iNone_d5_s2_r[3], data_word2_bRW_cNone_iNone_d5_s1_r[3], data_word2_bRW_cNone_iNone_d5_s0_r[3], data_word2_bRW_cNone_iNone_d5_b_r[3], 2'h0, data_word2_bRW_cNone_iNone_d5_a_r[3]};
   assign wvec_word2_bRW_cNone_iNone_d5_s[4] = {20'h00000, data_word2_bRW_cNone_iNone_d5_s2_r[4], data_word2_bRW_cNone_iNone_d5_s1_r[4], data_word2_bRW_cNone_iNone_d5_s0_r[4], data_word2_bRW_cNone_iNone_d5_b_r[4], 2'h0, data_word2_bRW_cNone_iNone_d5_a_r[4]};
+  assign wvec_www_s                         = {23'h000000, data_www_b_r, 2'h0, data_www_a_r};
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -1212,6 +1255,9 @@ module word_field_regf (
         10'h022: begin
           mem_rdata_o = wvec_word2_bRW_cNone_iNone_d5_s[4];
         end
+        10'h023: begin
+          mem_rdata_o = wvec_www_s;
+        end
         default: begin
           mem_rdata_o = 32'h00000000;
         end
@@ -1299,6 +1345,14 @@ module word_field_regf (
   assign regf_word2_bRW_cNone_iNone_d5_s2_upd_o   = upd_strb_word2_bRW_cNone_iNone_d5_s2_r;
   assign regfword_word2_bRW_cNone_iNone_d5_rval_o = wvec_word2_bRW_cNone_iNone_d5_s;
   assign regfword_word2_bRW_cNone_iNone_d5_upd_o  = upd_strb_word2_bRW_cNone_iNone_d5_r;
+  assign regf_foo_www_a_rval_o                    = data_www_a_r;
+  assign regf_bar_www_a_rval_o                    = data_www_a_r;
+  assign regf_foo_www_b_rval_o                    = data_www_b_r;
+  assign regf_bar_www_b_rval_o                    = data_www_b_r;
+  assign regfword_foo_www_rval_o                  = wvec_www_s;
+  assign regfword_foo_www_upd_o                   = upd_strb_www_r;
+  assign regfword_bar_www_rval_o                  = wvec_www_s;
+  assign regfword_bar_www_upd_o                   = upd_strb_www_r;
 
 endmodule // word_field_regf
 
