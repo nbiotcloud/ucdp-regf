@@ -84,8 +84,9 @@ module reset_softrst (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic data_ctrl_ena_r; // Word ctrl
-  logic bus_ctrl_wren_s; // bus word write enables
+  logic        data_ctrl_ena_r; // Word ctrl
+  logic        bus_ctrl_wren_s; // bus word write enables
+  logic [31:0] wvec_ctrl_s;     // word vectors
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -126,13 +127,18 @@ module reset_softrst (
   end
 
   // ------------------------------------------------------
+  //  Collect word vectors
+  // ------------------------------------------------------
+  assign wvec_ctrl_s = {27'h0000000, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
+
+  // ------------------------------------------------------
   //  Bus Read-Mux
   // ------------------------------------------------------
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = {27'h0000000, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
+          mem_rdata_o = wvec_ctrl_s;
         end
         default: begin
           mem_rdata_o = 32'h00000000;

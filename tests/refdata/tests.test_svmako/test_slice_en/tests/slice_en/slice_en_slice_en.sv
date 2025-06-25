@@ -118,6 +118,9 @@ module slice_en_slice_en (
   logic               bus_w0_wren_s;   // bus word write enables
   logic               bus_w1_wren_s;
   logic               bus_w2_wren_s;
+  logic        [31:0] wvec_w0_s;       // word vectors
+  logic        [31:0] wvec_w1_s;
+  logic        [31:0] wvec_w2_s;
   logic        [31:0] bit_en_s;
 
   always_comb begin: proc_bus_addr_dec
@@ -185,19 +188,26 @@ module slice_en_slice_en (
   end
 
   // ------------------------------------------------------
+  //  Collect word vectors
+  // ------------------------------------------------------
+  assign wvec_w0_s = {regf_w0_f3_rbus_i, 13'h0000, data_w0_f1_r, data_w0_f0_r};
+  assign wvec_w1_s = {9'h000, regf_w1_f2_rbus_i, data_w1_f1_r, regf_w1_f0_rbus_i};
+  assign wvec_w2_s = {19'h00000, unsigned'(data_w2_f1_r)};
+
+  // ------------------------------------------------------
   //  Bus Read-Mux
   // ------------------------------------------------------
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = {regf_w0_f3_rbus_i, 13'h0000, data_w0_f1_r, data_w0_f0_r};
+          mem_rdata_o = wvec_w0_s;
         end
         10'h001: begin
-          mem_rdata_o = {9'h000, regf_w1_f2_rbus_i, data_w1_f1_r, regf_w1_f0_rbus_i};
+          mem_rdata_o = wvec_w1_s;
         end
         10'h002: begin
-          mem_rdata_o = {19'h00000, unsigned'(data_w2_f1_r)};
+          mem_rdata_o = wvec_w2_s;
         end
         default: begin
           mem_rdata_o = 32'h00000000;

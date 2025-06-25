@@ -426,8 +426,8 @@ class WordFieldMod(u.AMod):
             {},
             {"wordio": True},
             {"wordio": True, "upd_strb": True},
-            {"wordio": True, "fieldio": False},
-            {"wordio": True, "fieldio": False, "upd_strb": True},
+            # {"wordio": True, "fieldio": False}, # bus=RO with fieldio=False is missing the value inputs!
+            # {"wordio": True, "fieldio": False, "upd_strb": True},
         )  # type: ignore[var-annotated]
         # TODO: support all these
         # variants = (("RW", None, None), ("RW", "RO", None), ("RW", "RO", False),
@@ -436,6 +436,9 @@ class WordFieldMod(u.AMod):
         for depth in (None, 1, 5):
             for kidx, kwargs in enumerate(wordkwargs):
                 for bus, core, in_regf in variants:
+                    # bus=RO can't have an upd_strb as it's not written from bus
+                    if (bus == "RO") and kwargs.get("upd_strb", False):
+                        continue
                     word = regf.add_word(
                         f"word{kidx}_b{bus}_c{core}_i{in_regf}_d{depth or 0}",
                         bus=bus,

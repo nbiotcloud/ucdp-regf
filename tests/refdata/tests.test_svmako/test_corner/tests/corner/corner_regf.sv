@@ -256,6 +256,14 @@ module corner_regf (
   logic               bus_wrguard_1_s;
   logic               bus_wrguard_2_s;
   logic               bus_wrguard_3_s;
+  logic        [31:0] wvec_ctrl_s;                     // word vectors
+  logic        [31:0] wvec_txdata_s             [0:4];
+  logic        [31:0] wvec_dims_s               [0:2];
+  logic        [31:0] wvec_guards_s             [0:0];
+  logic        [31:0] wvec_grddim_s             [0:1];
+  logic        [31:0] wvec_mixint_s;
+  logic        [31:0] wvec_wide0_s;
+  logic        [31:0] wvec_wide1_s;
 
   always_comb begin: proc_bus_addr_dec
     // defaults
@@ -509,55 +517,74 @@ module corner_regf (
   end
 
   // ------------------------------------------------------
+  //  Collect word vectors
+  // ------------------------------------------------------
+  assign wvec_ctrl_s      = {20'h00000, regf_grpc_ctrl_spec1_rbus_i, data_ctrl_ver_c, regf_grpa_ctrl_status_rbus_i, data_ctrl_start_r, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
+  assign wvec_txdata_s[0] = {24'h000000, data_txdata_bytes_r[0]};
+  assign wvec_txdata_s[1] = {24'h000000, data_txdata_bytes_r[1]};
+  assign wvec_txdata_s[2] = {24'h000000, data_txdata_bytes_r[2]};
+  assign wvec_txdata_s[3] = {24'h000000, data_txdata_bytes_r[3]};
+  assign wvec_txdata_s[4] = {24'h000000, data_txdata_bytes_r[4]};
+  assign wvec_dims_s[0]   = {28'h0000000, data_dims_spec3_r[0], regf_grpc_dims_spec2_rbus_i[0], data_dims_wrval_r[0], regf_dims_roval_rbus_i[0]};
+  assign wvec_dims_s[1]   = {28'h0000000, data_dims_spec3_r[1], regf_grpc_dims_spec2_rbus_i[1], data_dims_wrval_r[1], regf_dims_roval_rbus_i[1]};
+  assign wvec_dims_s[2]   = {28'h0000000, data_dims_spec3_r[2], regf_grpc_dims_spec2_rbus_i[2], data_dims_wrval_r[2], regf_dims_roval_rbus_i[2]};
+  assign wvec_guards_s[0] = {12'h000, data_guards_grdport_r[0], data_guards_bprio_r[0], data_guards_cprio_r[0], data_guards_guard_c_r[0], data_guards_guard_b_r[0], data_guards_guard_a_r[0], 5'h00};
+  assign wvec_grddim_s[0] = {5'h00, regf_grpa_grddim_int_rbus_i[0], data_grddim_const_c[0], regf_grddim_num_rbus_i[0]};
+  assign wvec_grddim_s[1] = {5'h00, regf_grpa_grddim_int_rbus_i[1], data_grddim_const_c[1], regf_grddim_num_rbus_i[1]};
+  assign wvec_mixint_s    = {20'h00000, unsigned'(regf_mixint_c_int_rbus_i), data_mixint_r_uint_r, unsigned'(data_mixint_r_int_r)};
+  assign wvec_wide0_s     = {data_wide_b_r, data_wide_a_r};
+  assign wvec_wide1_s     = {data_wide_d_r, data_base_r};
+
+  // ------------------------------------------------------
   //  Bus Read-Mux
   // ------------------------------------------------------
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = {20'h00000, regf_grpc_ctrl_spec1_rbus_i, data_ctrl_ver_c, regf_grpa_ctrl_status_rbus_i, data_ctrl_start_r, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
+          mem_rdata_o = wvec_ctrl_s;
         end
         10'h001: begin
-          mem_rdata_o = {24'h000000, data_txdata_bytes_r[0]};
+          mem_rdata_o = wvec_txdata_s[0];
         end
         10'h002: begin
-          mem_rdata_o = {24'h000000, data_txdata_bytes_r[1]};
+          mem_rdata_o = wvec_txdata_s[1];
         end
         10'h003: begin
-          mem_rdata_o = {24'h000000, data_txdata_bytes_r[2]};
+          mem_rdata_o = wvec_txdata_s[2];
         end
         10'h004: begin
-          mem_rdata_o = {24'h000000, data_txdata_bytes_r[3]};
+          mem_rdata_o = wvec_txdata_s[3];
         end
         10'h005: begin
-          mem_rdata_o = {24'h000000, data_txdata_bytes_r[4]};
+          mem_rdata_o = wvec_txdata_s[4];
         end
         10'h006: begin
-          mem_rdata_o = {28'h0000000, data_dims_spec3_r[0], regf_grpc_dims_spec2_rbus_i[0], data_dims_wrval_r[0], regf_dims_roval_rbus_i[0]};
+          mem_rdata_o = wvec_dims_s[0];
         end
         10'h007: begin
-          mem_rdata_o = {28'h0000000, data_dims_spec3_r[1], regf_grpc_dims_spec2_rbus_i[1], data_dims_wrval_r[1], regf_dims_roval_rbus_i[1]};
+          mem_rdata_o = wvec_dims_s[1];
         end
         10'h008: begin
-          mem_rdata_o = {28'h0000000, data_dims_spec3_r[2], regf_grpc_dims_spec2_rbus_i[2], data_dims_wrval_r[2], regf_dims_roval_rbus_i[2]};
+          mem_rdata_o = wvec_dims_s[2];
         end
         10'h009: begin
-          mem_rdata_o = {12'h000, data_guards_grdport_r[0], data_guards_bprio_r[0], data_guards_cprio_r[0], data_guards_guard_c_r[0], data_guards_guard_b_r[0], data_guards_guard_a_r[0], 5'h00};
+          mem_rdata_o = wvec_guards_s[0];
         end
         10'h00A: begin
-          mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[0], data_grddim_const_c[0], regf_grddim_num_rbus_i[0]};
+          mem_rdata_o = wvec_grddim_s[0];
         end
         10'h00B: begin
-          mem_rdata_o = {5'h00, regf_grpa_grddim_int_rbus_i[1], data_grddim_const_c[1], regf_grddim_num_rbus_i[1]};
+          mem_rdata_o = wvec_grddim_s[1];
         end
         10'h00C: begin
-          mem_rdata_o = {20'h00000, unsigned'(regf_mixint_c_int_rbus_i), data_mixint_r_uint_r, unsigned'(data_mixint_r_int_r)};
+          mem_rdata_o = wvec_mixint_s;
         end
         10'h00D: begin
-          mem_rdata_o = {data_wide_b_r, data_wide_a_r};
+          mem_rdata_o = wvec_wide0_s;
         end
         10'h00E: begin
-          mem_rdata_o = {data_wide_d_r, data_base_r};
+          mem_rdata_o = wvec_wide1_s;
         end
         default: begin
           mem_rdata_o = 32'h00000000;
