@@ -88,7 +88,8 @@ module reset (
     .regf_ctrl_clrall_wbus_o(             ), // TODO - Bus Write Value
     .regf_ctrl_clrall_wr_o  (             ), // TODO - Bus Write Strobe
     .regf_ctrl_ena_rval_o   (             ), // TODO - Core Read Value
-    .regf_ctrl_busy_rbus_i  (busy2_s      )  // Bus Read Value
+    .regf_ctrl_busy_rbus_i  (busy2_s      ), // Bus Read Value
+    .gdr_i                  (1'b0         )  // TODO
   );
 
 endmodule // reset

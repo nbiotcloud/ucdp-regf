@@ -775,7 +775,6 @@ module full_regf (
   //   regf_w2_f16_o: bus=RC core=NA in_regf=False
   input  wire  [1:0]  regf_w2_f16_rbus_i,  // Bus Read Value
   output logic        regf_w2_f16_rd_o,    // Bus Read Strobe
-  //   regf_w2_f18_o: bus=RC core=NA in_regf=True
   //   regf_w2_f20_o: bus=RC core=RC in_regf=False
   input  wire  [1:0]  regf_w2_f20_rbus_i,  // Bus Read Value
   output logic        regf_w2_f20_rd_o,    // Bus Read Strobe
@@ -882,7 +881,6 @@ module full_regf (
   //   regf_w4_f22_o: bus=RC core=WO in_regf=True
   input  wire  [1:0]  regf_w4_f22_wval_i,  // Core Write Value
   input  wire         regf_w4_f22_wr_i,    // Core Write Strobe
-  //   regf_w4_f24_o: bus=RO core=NA in_regf=True
   //   regf_w4_f26_o: bus=RO core=RC in_regf=False
   input  wire  [1:0]  regf_w4_f26_rbus_i,  // Bus Read Value
   //   regf_w4_f28_o: bus=RO core=RC in_regf=True
@@ -968,7 +966,6 @@ module full_regf (
   //   regf_w6_f24_o: bus=RO core=WO in_regf=True
   input  wire  [1:0]  regf_w6_f24_wval_i,  // Core Write Value
   input  wire         regf_w6_f24_wr_i,    // Core Write Strobe
-  //   regf_w6_f26_o: bus=RP core=NA in_regf=True
   //   regf_w6_f28_o: bus=RP core=RC in_regf=False
   input  wire  [1:0]  regf_w6_f28_rbus_i,  // Bus Read Value
   //   regf_w6_f30_o: bus=RP core=RC in_regf=True
@@ -1057,7 +1054,6 @@ module full_regf (
   //   regf_w8_f28_o: bus=RS core=NA in_regf=False
   input  wire  [1:0]  regf_w8_f28_rbus_i,  // Bus Read Value
   output logic        regf_w8_f28_rd_o,    // Bus Read Strobe
-  //   regf_w8_f30_o: bus=RS core=NA in_regf=True
   //   regf_w9_f0_o: bus=RS core=RC in_regf=False
   input  wire  [1:0]  regf_w9_f0_rbus_i,   // Bus Read Value
   output logic        regf_w9_f0_rd_o,     // Bus Read Strobe
@@ -1167,7 +1163,6 @@ module full_regf (
   //   regf_w11_f4_o: bus=RT core=NA in_regf=False
   input  wire  [1:0]  regf_w11_f4_rbus_i,  // Bus Read Value
   output logic        regf_w11_f4_rd_o,    // Bus Read Strobe
-  //   regf_w11_f6_o: bus=RT core=NA in_regf=True
   //   regf_w11_f8_o: bus=RT core=RC in_regf=False
   input  wire  [1:0]  regf_w11_f8_rbus_i,  // Bus Read Value
   output logic        regf_w11_f8_rd_o,    // Bus Read Strobe
@@ -1278,7 +1273,6 @@ module full_regf (
   input  wire  [1:0]  regf_w13_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w13_f12_wbus_o, // Bus Write Value
   output logic        regf_w13_f12_wr_o,   // Bus Write Strobe
-  //   regf_w13_f14_o: bus=RW core=NA in_regf=True
   //   regf_w13_f16_o: bus=RW core=RC in_regf=False
   input  wire  [1:0]  regf_w13_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w13_f16_wbus_o, // Bus Write Value
@@ -1406,7 +1400,6 @@ module full_regf (
   input  wire  [1:0]  regf_w15_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w15_f20_wbus_o, // Bus Write Value
   output logic        regf_w15_f20_wr_o,   // Bus Write Strobe
-  //   regf_w15_f22_o: bus=RW0C core=NA in_regf=True
   //   regf_w15_f24_o: bus=RW0C core=RC in_regf=False
   input  wire  [1:0]  regf_w15_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w15_f24_wbus_o, // Bus Write Value
@@ -1534,7 +1527,6 @@ module full_regf (
   input  wire  [1:0]  regf_w17_f28_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w17_f28_wbus_o, // Bus Write Value
   output logic        regf_w17_f28_wr_o,   // Bus Write Strobe
-  //   regf_w17_f30_o: bus=RW0S core=NA in_regf=True
   //   regf_w18_f0_o: bus=RW0S core=RC in_regf=False
   input  wire  [1:0]  regf_w18_f0_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w18_f0_wbus_o,  // Bus Write Value
@@ -1662,7 +1654,6 @@ module full_regf (
   input  wire  [1:0]  regf_w20_f4_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w20_f4_wbus_o,  // Bus Write Value
   output logic        regf_w20_f4_wr_o,    // Bus Write Strobe
-  //   regf_w20_f6_o: bus=RW1C core=NA in_regf=True
   //   regf_w20_f8_o: bus=RW1C core=RC in_regf=False
   input  wire  [1:0]  regf_w20_f8_rbus_i,  // Bus Read Value
   output logic [1:0]  regf_w20_f8_wbus_o,  // Bus Write Value
@@ -1790,7 +1781,6 @@ module full_regf (
   input  wire  [1:0]  regf_w22_f12_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w22_f12_wbus_o, // Bus Write Value
   output logic        regf_w22_f12_wr_o,   // Bus Write Strobe
-  //   regf_w22_f14_o: bus=RW1S core=NA in_regf=True
   //   regf_w22_f16_o: bus=RW1S core=RC in_regf=False
   input  wire  [1:0]  regf_w22_f16_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w22_f16_wbus_o, // Bus Write Value
@@ -1918,7 +1908,6 @@ module full_regf (
   input  wire  [1:0]  regf_w24_f20_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w24_f20_wbus_o, // Bus Write Value
   output logic        regf_w24_f20_wr_o,   // Bus Write Strobe
-  //   regf_w24_f22_o: bus=RWL core=NA in_regf=True
   //   regf_w24_f24_o: bus=RWL core=RC in_regf=False
   input  wire  [1:0]  regf_w24_f24_rbus_i, // Bus Read Value
   output logic [1:0]  regf_w24_f24_wbus_o, // Bus Write Value
@@ -2530,21 +2519,21 @@ module full_regf (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic [1:0]  data_w0_f2_r;     // Word w0
+  logic [1:0]  data_w0_f2_r;          // Word w0
   logic [1:0]  data_w0_f10_r;
   logic [1:0]  data_w0_f14_r;
   logic [1:0]  data_w0_f18_r;
   logic [1:0]  data_w0_f22_r;
   logic [1:0]  data_w0_f26_r;
   logic [1:0]  data_w0_f30_r;
-  logic [1:0]  data_w1_f2_r;     // Word w1
+  logic [1:0]  data_w1_f2_r;          // Word w1
   logic [1:0]  data_w1_f6_r;
   logic [1:0]  data_w1_f10_r;
   logic [1:0]  data_w1_f18_r;
   logic [1:0]  data_w1_f22_r;
   logic [1:0]  data_w1_f26_r;
   logic [1:0]  data_w1_f30_r;
-  logic [1:0]  data_w2_f2_r;     // Word w2
+  logic [1:0]  data_w2_f2_r;          // Word w2
   logic [1:0]  data_w2_f6_r;
   logic [1:0]  data_w2_f10_r;
   logic [1:0]  data_w2_f14_r;
@@ -2552,7 +2541,7 @@ module full_regf (
   logic [1:0]  data_w2_f22_r;
   logic [1:0]  data_w2_f26_r;
   logic [1:0]  data_w2_f30_r;
-  logic [1:0]  data_w3_f2_r;     // Word w3
+  logic [1:0]  data_w3_f2_r;          // Word w3
   logic [1:0]  data_w3_f6_r;
   logic [1:0]  data_w3_f10_r;
   logic [1:0]  data_w3_f14_r;
@@ -2560,21 +2549,21 @@ module full_regf (
   logic [1:0]  data_w3_f22_r;
   logic [1:0]  data_w3_f26_r;
   logic [1:0]  data_w3_f30_r;
-  logic [1:0]  data_w4_f2_r;     // Word w4
+  logic [1:0]  data_w4_f2_r;          // Word w4
   logic [1:0]  data_w4_f6_r;
   logic [1:0]  data_w4_f10_r;
   logic [1:0]  data_w4_f14_r;
   logic [1:0]  data_w4_f18_r;
   logic [1:0]  data_w4_f22_r;
   logic [1:0]  data_w4_f28_r;
-  logic [1:0]  data_w5_f4_r;     // Word w5
+  logic [1:0]  data_w5_f4_r;          // Word w5
   logic [1:0]  data_w5_f8_r;
   logic [1:0]  data_w5_f12_r;
   logic [1:0]  data_w5_f16_r;
   logic [1:0]  data_w5_f20_r;
   logic [1:0]  data_w5_f24_r;
   logic [1:0]  data_w5_f28_r;
-  logic [1:0]  data_w6_f0_r;     // Word w6
+  logic [1:0]  data_w6_f0_r;          // Word w6
   logic [1:0]  data_w6_f4_r;
   logic [1:0]  data_w6_f8_r;
   logic [1:0]  data_w6_f12_r;
@@ -2582,14 +2571,14 @@ module full_regf (
   logic [1:0]  data_w6_f20_r;
   logic [1:0]  data_w6_f24_r;
   logic [1:0]  data_w6_f30_r;
-  logic [1:0]  data_w7_f6_r;     // Word w7
+  logic [1:0]  data_w7_f6_r;          // Word w7
   logic [1:0]  data_w7_f10_r;
   logic [1:0]  data_w7_f14_r;
   logic [1:0]  data_w7_f18_r;
   logic [1:0]  data_w7_f22_r;
   logic [1:0]  data_w7_f26_r;
   logic [1:0]  data_w7_f30_r;
-  logic [1:0]  data_w8_f2_r;     // Word w8
+  logic [1:0]  data_w8_f2_r;          // Word w8
   logic [1:0]  data_w8_f6_r;
   logic [1:0]  data_w8_f10_r;
   logic [1:0]  data_w8_f14_r;
@@ -2597,7 +2586,7 @@ module full_regf (
   logic [1:0]  data_w8_f22_r;
   logic [1:0]  data_w8_f26_r;
   logic [1:0]  data_w8_f30_r;
-  logic [1:0]  data_w9_f2_r;     // Word w9
+  logic [1:0]  data_w9_f2_r;          // Word w9
   logic [1:0]  data_w9_f6_r;
   logic [1:0]  data_w9_f10_r;
   logic [1:0]  data_w9_f14_r;
@@ -2605,7 +2594,7 @@ module full_regf (
   logic [1:0]  data_w9_f22_r;
   logic [1:0]  data_w9_f26_r;
   logic [1:0]  data_w9_f30_r;
-  logic [1:0]  data_w10_f2_r;    // Word w10
+  logic [1:0]  data_w10_f2_r;         // Word w10
   logic [1:0]  data_w10_f6_r;
   logic [1:0]  data_w10_f10_r;
   logic [1:0]  data_w10_f14_r;
@@ -2613,7 +2602,7 @@ module full_regf (
   logic [1:0]  data_w10_f22_r;
   logic [1:0]  data_w10_f26_r;
   logic [1:0]  data_w10_f30_r;
-  logic [1:0]  data_w11_f2_r;    // Word w11
+  logic [1:0]  data_w11_f2_r;         // Word w11
   logic [1:0]  data_w11_f6_r;
   logic [1:0]  data_w11_f10_r;
   logic [1:0]  data_w11_f14_r;
@@ -2621,7 +2610,7 @@ module full_regf (
   logic [1:0]  data_w11_f22_r;
   logic [1:0]  data_w11_f26_r;
   logic [1:0]  data_w11_f30_r;
-  logic [1:0]  data_w12_f2_r;    // Word w12
+  logic [1:0]  data_w12_f2_r;         // Word w12
   logic [1:0]  data_w12_f6_r;
   logic [1:0]  data_w12_f10_r;
   logic [1:0]  data_w12_f14_r;
@@ -2629,7 +2618,7 @@ module full_regf (
   logic [1:0]  data_w12_f22_r;
   logic [1:0]  data_w12_f26_r;
   logic [1:0]  data_w12_f30_r;
-  logic [1:0]  data_w13_f2_r;    // Word w13
+  logic [1:0]  data_w13_f2_r;         // Word w13
   logic [1:0]  data_w13_f6_r;
   logic [1:0]  data_w13_f10_r;
   logic [1:0]  data_w13_f14_r;
@@ -2637,7 +2626,7 @@ module full_regf (
   logic [1:0]  data_w13_f22_r;
   logic [1:0]  data_w13_f26_r;
   logic [1:0]  data_w13_f30_r;
-  logic [1:0]  data_w14_f2_r;    // Word w14
+  logic [1:0]  data_w14_f2_r;         // Word w14
   logic [1:0]  data_w14_f6_r;
   logic [1:0]  data_w14_f10_r;
   logic [1:0]  data_w14_f14_r;
@@ -2645,7 +2634,7 @@ module full_regf (
   logic [1:0]  data_w14_f22_r;
   logic [1:0]  data_w14_f26_r;
   logic [1:0]  data_w14_f30_r;
-  logic [1:0]  data_w15_f2_r;    // Word w15
+  logic [1:0]  data_w15_f2_r;         // Word w15
   logic [1:0]  data_w15_f6_r;
   logic [1:0]  data_w15_f10_r;
   logic [1:0]  data_w15_f14_r;
@@ -2653,7 +2642,7 @@ module full_regf (
   logic [1:0]  data_w15_f22_r;
   logic [1:0]  data_w15_f26_r;
   logic [1:0]  data_w15_f30_r;
-  logic [1:0]  data_w16_f2_r;    // Word w16
+  logic [1:0]  data_w16_f2_r;         // Word w16
   logic [1:0]  data_w16_f6_r;
   logic [1:0]  data_w16_f10_r;
   logic [1:0]  data_w16_f14_r;
@@ -2661,7 +2650,7 @@ module full_regf (
   logic [1:0]  data_w16_f22_r;
   logic [1:0]  data_w16_f26_r;
   logic [1:0]  data_w16_f30_r;
-  logic [1:0]  data_w17_f2_r;    // Word w17
+  logic [1:0]  data_w17_f2_r;         // Word w17
   logic [1:0]  data_w17_f6_r;
   logic [1:0]  data_w17_f10_r;
   logic [1:0]  data_w17_f14_r;
@@ -2669,7 +2658,7 @@ module full_regf (
   logic [1:0]  data_w17_f22_r;
   logic [1:0]  data_w17_f26_r;
   logic [1:0]  data_w17_f30_r;
-  logic [1:0]  data_w18_f2_r;    // Word w18
+  logic [1:0]  data_w18_f2_r;         // Word w18
   logic [1:0]  data_w18_f6_r;
   logic [1:0]  data_w18_f10_r;
   logic [1:0]  data_w18_f14_r;
@@ -2677,7 +2666,7 @@ module full_regf (
   logic [1:0]  data_w18_f22_r;
   logic [1:0]  data_w18_f26_r;
   logic [1:0]  data_w18_f30_r;
-  logic [1:0]  data_w19_f2_r;    // Word w19
+  logic [1:0]  data_w19_f2_r;         // Word w19
   logic [1:0]  data_w19_f6_r;
   logic [1:0]  data_w19_f10_r;
   logic [1:0]  data_w19_f14_r;
@@ -2685,7 +2674,7 @@ module full_regf (
   logic [1:0]  data_w19_f22_r;
   logic [1:0]  data_w19_f26_r;
   logic [1:0]  data_w19_f30_r;
-  logic [1:0]  data_w20_f2_r;    // Word w20
+  logic [1:0]  data_w20_f2_r;         // Word w20
   logic [1:0]  data_w20_f6_r;
   logic [1:0]  data_w20_f10_r;
   logic [1:0]  data_w20_f14_r;
@@ -2693,7 +2682,7 @@ module full_regf (
   logic [1:0]  data_w20_f22_r;
   logic [1:0]  data_w20_f26_r;
   logic [1:0]  data_w20_f30_r;
-  logic [1:0]  data_w21_f2_r;    // Word w21
+  logic [1:0]  data_w21_f2_r;         // Word w21
   logic [1:0]  data_w21_f6_r;
   logic [1:0]  data_w21_f10_r;
   logic [1:0]  data_w21_f14_r;
@@ -2701,7 +2690,7 @@ module full_regf (
   logic [1:0]  data_w21_f22_r;
   logic [1:0]  data_w21_f26_r;
   logic [1:0]  data_w21_f30_r;
-  logic [1:0]  data_w22_f2_r;    // Word w22
+  logic [1:0]  data_w22_f2_r;         // Word w22
   logic [1:0]  data_w22_f6_r;
   logic [1:0]  data_w22_f10_r;
   logic [1:0]  data_w22_f14_r;
@@ -2709,7 +2698,7 @@ module full_regf (
   logic [1:0]  data_w22_f22_r;
   logic [1:0]  data_w22_f26_r;
   logic [1:0]  data_w22_f30_r;
-  logic [1:0]  data_w23_f2_r;    // Word w23
+  logic [1:0]  data_w23_f2_r;         // Word w23
   logic [1:0]  data_w23_f6_r;
   logic [1:0]  data_w23_f10_r;
   logic [1:0]  data_w23_f14_r;
@@ -2717,7 +2706,7 @@ module full_regf (
   logic [1:0]  data_w23_f22_r;
   logic [1:0]  data_w23_f26_r;
   logic [1:0]  data_w23_f30_r;
-  logic [1:0]  data_w24_f2_r;    // Word w24
+  logic [1:0]  data_w24_f2_r;         // Word w24
   logic [1:0]  data_w24_f6_r;
   logic [1:0]  data_w24_f10_r;
   logic [1:0]  data_w24_f14_r;
@@ -2725,8 +2714,8 @@ module full_regf (
   logic [1:0]  data_w24_f22_r;
   logic [1:0]  data_w24_f26_r;
   logic [1:0]  data_w24_f30_r;
-  logic        bus_w24_wronce_r;
-  logic [1:0]  data_w25_f2_r;    // Word w25
+  logic        bus_wronce_w24_flg0_r;
+  logic [1:0]  data_w25_f2_r;         // Word w25
   logic [1:0]  data_w25_f6_r;
   logic [1:0]  data_w25_f10_r;
   logic [1:0]  data_w25_f14_r;
@@ -2734,8 +2723,8 @@ module full_regf (
   logic [1:0]  data_w25_f22_r;
   logic [1:0]  data_w25_f26_r;
   logic [1:0]  data_w25_f30_r;
-  logic        bus_w25_wronce_r;
-  logic [1:0]  data_w26_f2_r;    // Word w26
+  logic        bus_wronce_w25_flg0_r;
+  logic [1:0]  data_w26_f2_r;         // Word w26
   logic [1:0]  data_w26_f6_r;
   logic [1:0]  data_w26_f10_r;
   logic [1:0]  data_w26_f14_r;
@@ -2743,8 +2732,8 @@ module full_regf (
   logic [1:0]  data_w26_f22_r;
   logic [1:0]  data_w26_f26_r;
   logic [1:0]  data_w26_f30_r;
-  logic        bus_w26_wronce_r;
-  logic [1:0]  data_w27_f2_r;    // Word w27
+  logic        bus_wronce_w26_flg0_r;
+  logic [1:0]  data_w27_f2_r;         // Word w27
   logic [1:0]  data_w27_f6_r;
   logic [1:0]  data_w27_f10_r;
   logic [1:0]  data_w27_f14_r;
@@ -2752,7 +2741,7 @@ module full_regf (
   logic [1:0]  data_w27_f22_r;
   logic [1:0]  data_w27_f26_r;
   logic [1:0]  data_w27_f30_r;
-  logic [1:0]  data_w28_f2_r;    // Word w28
+  logic [1:0]  data_w28_f2_r;         // Word w28
   logic [1:0]  data_w28_f6_r;
   logic [1:0]  data_w28_f10_r;
   logic [1:0]  data_w28_f14_r;
@@ -2760,7 +2749,7 @@ module full_regf (
   logic [1:0]  data_w28_f22_r;
   logic [1:0]  data_w28_f26_r;
   logic [1:0]  data_w28_f30_r;
-  logic [1:0]  data_w29_f2_r;    // Word w29
+  logic [1:0]  data_w29_f2_r;         // Word w29
   logic [1:0]  data_w29_f6_r;
   logic [1:0]  data_w29_f10_r;
   logic [1:0]  data_w29_f14_r;
@@ -2768,7 +2757,7 @@ module full_regf (
   logic [1:0]  data_w29_f22_r;
   logic [1:0]  data_w29_f26_r;
   logic [1:0]  data_w29_f30_r;
-  logic [1:0]  data_w30_f2_r;    // Word w30
+  logic [1:0]  data_w30_f2_r;         // Word w30
   logic [1:0]  data_w30_f6_r;
   logic [1:0]  data_w30_f10_r;
   logic [1:0]  data_w30_f14_r;
@@ -2776,7 +2765,7 @@ module full_regf (
   logic [1:0]  data_w30_f22_r;
   logic [1:0]  data_w30_f26_r;
   logic [1:0]  data_w30_f30_r;
-  logic [1:0]  data_w31_f2_r;    // Word w31
+  logic [1:0]  data_w31_f2_r;         // Word w31
   logic [1:0]  data_w31_f6_r;
   logic [1:0]  data_w31_f10_r;
   logic [1:0]  data_w31_f14_r;
@@ -2784,7 +2773,7 @@ module full_regf (
   logic [1:0]  data_w31_f22_r;
   logic [1:0]  data_w31_f26_r;
   logic [1:0]  data_w31_f30_r;
-  logic [1:0]  data_w32_f2_r;    // Word w32
+  logic [1:0]  data_w32_f2_r;         // Word w32
   logic [1:0]  data_w32_f6_r;
   logic [1:0]  data_w32_f10_r;
   logic [1:0]  data_w32_f14_r;
@@ -2792,8 +2781,8 @@ module full_regf (
   logic [1:0]  data_w32_f22_r;
   logic [1:0]  data_w32_f26_r;
   logic [1:0]  data_w32_f30_r;
-  logic        bus_w32_wronce_r;
-  logic [1:0]  data_w33_f2_r;    // Word w33
+  logic        bus_wronce_w32_flg0_r;
+  logic [1:0]  data_w33_f2_r;         // Word w33
   logic [1:0]  data_w33_f6_r;
   logic [1:0]  data_w33_f10_r;
   logic [1:0]  data_w33_f14_r;
@@ -2801,8 +2790,8 @@ module full_regf (
   logic [1:0]  data_w33_f22_r;
   logic [1:0]  data_w33_f26_r;
   logic [1:0]  data_w33_f30_r;
-  logic        bus_w33_wronce_r;
-  logic [1:0]  data_w34_f2_r;    // Word w34
+  logic        bus_wronce_w33_flg0_r;
+  logic [1:0]  data_w34_f2_r;         // Word w34
   logic [1:0]  data_w34_f6_r;
   logic [1:0]  data_w34_f10_r;
   logic [1:0]  data_w34_f14_r;
@@ -2810,8 +2799,8 @@ module full_regf (
   logic [1:0]  data_w34_f22_r;
   logic [1:0]  data_w34_f26_r;
   logic [1:0]  data_w34_f30_r;
-  logic [1:0]  data_w35_f2_r;    // Word w35
-  logic        bus_w13_wren_s;   // bus word write enables
+  logic [1:0]  data_w35_f2_r;         // Word w35
+  logic        bus_w13_wren_s;        // bus word write enables
   logic        bus_w14_wren_s;
   logic        bus_w15_wren_s;
   logic        bus_w16_wren_s;
@@ -2834,7 +2823,7 @@ module full_regf (
   logic        bus_w33_wren_s;
   logic        bus_w34_wren_s;
   logic        bus_w35_wren_s;
-  logic        bus_w2_rden_s;    // bus word read enables
+  logic        bus_w2_rden_s;         // bus word read-modify enables
   logic        bus_w3_rden_s;
   logic        bus_w4_rden_s;
   logic        bus_w8_rden_s;
@@ -2843,7 +2832,7 @@ module full_regf (
   logic        bus_w11_rden_s;
   logic        bus_w12_rden_s;
   logic        bus_w13_rden_s;
-  logic [31:0] wvec_w2_s;        // word vectors
+  logic [31:0] wvec_w2_s;             // word vectors
   logic [31:0] wvec_w3_s;
   logic [31:0] wvec_w4_s;
   logic [31:0] wvec_w5_s;
@@ -2872,7 +2861,16 @@ module full_regf (
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
+    bus_w2_rden_s  = 1'b0;
+    bus_w3_rden_s  = 1'b0;
+    bus_w4_rden_s  = 1'b0;
+    bus_w8_rden_s  = 1'b0;
+    bus_w9_rden_s  = 1'b0;
+    bus_w10_rden_s = 1'b0;
+    bus_w11_rden_s = 1'b0;
+    bus_w12_rden_s = 1'b0;
     bus_w13_wren_s = 1'b0;
+    bus_w13_rden_s = 1'b0;
     bus_w14_wren_s = 1'b0;
     bus_w15_wren_s = 1'b0;
     bus_w16_wren_s = 1'b0;
@@ -2895,61 +2893,49 @@ module full_regf (
     bus_w33_wren_s = 1'b0;
     bus_w34_wren_s = 1'b0;
     bus_w35_wren_s = 1'b0;
-    bus_w2_rden_s  = 1'b0;
-    bus_w3_rden_s  = 1'b0;
-    bus_w4_rden_s  = 1'b0;
-    bus_w8_rden_s  = 1'b0;
-    bus_w9_rden_s  = 1'b0;
-    bus_w10_rden_s = 1'b0;
-    bus_w11_rden_s = 1'b0;
-    bus_w12_rden_s = 1'b0;
-    bus_w13_rden_s = 1'b0;
 
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-        10'h001: begin
-        mem_err_o = mem_wena_i;
-        end
         10'h002: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w2_rden_s = ~mem_wena_i;
         end
         10'h003: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w3_rden_s = ~mem_wena_i;
         end
         10'h004: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w4_rden_s = ~mem_wena_i;
         end
         10'h005: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
         end
         10'h006: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
         end
         10'h007: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
         end
         10'h008: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w8_rden_s = ~mem_wena_i;
         end
         10'h009: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w9_rden_s = ~mem_wena_i;
         end
         10'h00A: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w10_rden_s = ~mem_wena_i;
         end
         10'h00B: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w11_rden_s = ~mem_wena_i;
         end
         10'h00C: begin
-        mem_err_o = mem_wena_i;
+          mem_err_o = mem_wena_i;
           bus_w12_rden_s = ~mem_wena_i;
         end
         10'h00D: begin
@@ -2996,39 +2982,39 @@ module full_regf (
           bus_w26_wren_s = mem_wena_i;
         end
         10'h01B: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w27_wren_s = mem_wena_i;
         end
         10'h01C: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w28_wren_s = mem_wena_i;
         end
         10'h01D: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w29_wren_s = mem_wena_i;
         end
         10'h01E: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w30_wren_s = mem_wena_i;
         end
         10'h01F: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w31_wren_s = mem_wena_i;
         end
         10'h020: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w32_wren_s = mem_wena_i;
         end
         10'h021: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w33_wren_s = mem_wena_i;
         end
         10'h022: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w34_wren_s = mem_wena_i;
         end
         10'h023: begin
-        mem_err_o = ~mem_wena_i;
+          mem_err_o = ~mem_wena_i;
           bus_w35_wren_s = mem_wena_i;
         end
         default: begin
@@ -3045,322 +3031,322 @@ module full_regf (
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
     if (main_rst_an_i == 1'b0) begin
       // Word: w0
-      data_w0_f2_r     <= 2'h0;
-      data_w0_f10_r    <= 2'h0;
-      data_w0_f14_r    <= 2'h0;
-      data_w0_f18_r    <= 2'h0;
-      data_w0_f22_r    <= 2'h0;
-      data_w0_f26_r    <= 2'h0;
-      data_w0_f30_r    <= 2'h0;
+      data_w0_f2_r          <= 2'h0;
+      data_w0_f10_r         <= 2'h0;
+      data_w0_f14_r         <= 2'h0;
+      data_w0_f18_r         <= 2'h0;
+      data_w0_f22_r         <= 2'h0;
+      data_w0_f26_r         <= 2'h0;
+      data_w0_f30_r         <= 2'h0;
       // Word: w1
-      data_w1_f2_r     <= 2'h0;
-      data_w1_f6_r     <= 2'h0;
-      data_w1_f10_r    <= 2'h0;
-      data_w1_f18_r    <= 2'h0;
-      data_w1_f22_r    <= 2'h0;
-      data_w1_f26_r    <= 2'h0;
-      data_w1_f30_r    <= 2'h0;
+      data_w1_f2_r          <= 2'h0;
+      data_w1_f6_r          <= 2'h0;
+      data_w1_f10_r         <= 2'h0;
+      data_w1_f18_r         <= 2'h0;
+      data_w1_f22_r         <= 2'h0;
+      data_w1_f26_r         <= 2'h0;
+      data_w1_f30_r         <= 2'h0;
       // Word: w2
-      data_w2_f2_r     <= 2'h0;
-      data_w2_f6_r     <= 2'h0;
-      data_w2_f10_r    <= 2'h0;
-      data_w2_f14_r    <= 2'h0;
-      data_w2_f18_r    <= 2'h0;
-      data_w2_f22_r    <= 2'h0;
-      data_w2_f26_r    <= 2'h0;
-      data_w2_f30_r    <= 2'h0;
+      data_w2_f2_r          <= 2'h0;
+      data_w2_f6_r          <= 2'h0;
+      data_w2_f10_r         <= 2'h0;
+      data_w2_f14_r         <= 2'h0;
+      data_w2_f18_r         <= 2'h0;
+      data_w2_f22_r         <= 2'h0;
+      data_w2_f26_r         <= 2'h0;
+      data_w2_f30_r         <= 2'h0;
       // Word: w3
-      data_w3_f2_r     <= 2'h0;
-      data_w3_f6_r     <= 2'h0;
-      data_w3_f10_r    <= 2'h0;
-      data_w3_f14_r    <= 2'h0;
-      data_w3_f18_r    <= 2'h0;
-      data_w3_f22_r    <= 2'h0;
-      data_w3_f26_r    <= 2'h0;
-      data_w3_f30_r    <= 2'h0;
+      data_w3_f2_r          <= 2'h0;
+      data_w3_f6_r          <= 2'h0;
+      data_w3_f10_r         <= 2'h0;
+      data_w3_f14_r         <= 2'h0;
+      data_w3_f18_r         <= 2'h0;
+      data_w3_f22_r         <= 2'h0;
+      data_w3_f26_r         <= 2'h0;
+      data_w3_f30_r         <= 2'h0;
       // Word: w4
-      data_w4_f2_r     <= 2'h0;
-      data_w4_f6_r     <= 2'h0;
-      data_w4_f10_r    <= 2'h0;
-      data_w4_f14_r    <= 2'h0;
-      data_w4_f18_r    <= 2'h0;
-      data_w4_f22_r    <= 2'h0;
-      data_w4_f28_r    <= 2'h0;
+      data_w4_f2_r          <= 2'h0;
+      data_w4_f6_r          <= 2'h0;
+      data_w4_f10_r         <= 2'h0;
+      data_w4_f14_r         <= 2'h0;
+      data_w4_f18_r         <= 2'h0;
+      data_w4_f22_r         <= 2'h0;
+      data_w4_f28_r         <= 2'h0;
       // Word: w5
-      data_w5_f4_r     <= 2'h0;
-      data_w5_f8_r     <= 2'h0;
-      data_w5_f12_r    <= 2'h0;
-      data_w5_f16_r    <= 2'h0;
-      data_w5_f20_r    <= 2'h0;
-      data_w5_f24_r    <= 2'h0;
-      data_w5_f28_r    <= 2'h0;
+      data_w5_f4_r          <= 2'h0;
+      data_w5_f8_r          <= 2'h0;
+      data_w5_f12_r         <= 2'h0;
+      data_w5_f16_r         <= 2'h0;
+      data_w5_f20_r         <= 2'h0;
+      data_w5_f24_r         <= 2'h0;
+      data_w5_f28_r         <= 2'h0;
       // Word: w6
-      data_w6_f0_r     <= 2'h0;
-      data_w6_f4_r     <= 2'h0;
-      data_w6_f8_r     <= 2'h0;
-      data_w6_f12_r    <= 2'h0;
-      data_w6_f16_r    <= 2'h0;
-      data_w6_f20_r    <= 2'h0;
-      data_w6_f24_r    <= 2'h0;
-      data_w6_f30_r    <= 2'h0;
+      data_w6_f0_r          <= 2'h0;
+      data_w6_f4_r          <= 2'h0;
+      data_w6_f8_r          <= 2'h0;
+      data_w6_f12_r         <= 2'h0;
+      data_w6_f16_r         <= 2'h0;
+      data_w6_f20_r         <= 2'h0;
+      data_w6_f24_r         <= 2'h0;
+      data_w6_f30_r         <= 2'h0;
       // Word: w7
-      data_w7_f6_r     <= 2'h0;
-      data_w7_f10_r    <= 2'h0;
-      data_w7_f14_r    <= 2'h0;
-      data_w7_f18_r    <= 2'h0;
-      data_w7_f22_r    <= 2'h0;
-      data_w7_f26_r    <= 2'h0;
-      data_w7_f30_r    <= 2'h0;
+      data_w7_f6_r          <= 2'h0;
+      data_w7_f10_r         <= 2'h0;
+      data_w7_f14_r         <= 2'h0;
+      data_w7_f18_r         <= 2'h0;
+      data_w7_f22_r         <= 2'h0;
+      data_w7_f26_r         <= 2'h0;
+      data_w7_f30_r         <= 2'h0;
       // Word: w8
-      data_w8_f2_r     <= 2'h0;
-      data_w8_f6_r     <= 2'h0;
-      data_w8_f10_r    <= 2'h0;
-      data_w8_f14_r    <= 2'h0;
-      data_w8_f18_r    <= 2'h0;
-      data_w8_f22_r    <= 2'h0;
-      data_w8_f26_r    <= 2'h0;
-      data_w8_f30_r    <= 2'h0;
+      data_w8_f2_r          <= 2'h0;
+      data_w8_f6_r          <= 2'h0;
+      data_w8_f10_r         <= 2'h0;
+      data_w8_f14_r         <= 2'h0;
+      data_w8_f18_r         <= 2'h0;
+      data_w8_f22_r         <= 2'h0;
+      data_w8_f26_r         <= 2'h0;
+      data_w8_f30_r         <= 2'h0;
       // Word: w9
-      data_w9_f2_r     <= 2'h0;
-      data_w9_f6_r     <= 2'h0;
-      data_w9_f10_r    <= 2'h0;
-      data_w9_f14_r    <= 2'h0;
-      data_w9_f18_r    <= 2'h0;
-      data_w9_f22_r    <= 2'h0;
-      data_w9_f26_r    <= 2'h0;
-      data_w9_f30_r    <= 2'h0;
+      data_w9_f2_r          <= 2'h0;
+      data_w9_f6_r          <= 2'h0;
+      data_w9_f10_r         <= 2'h0;
+      data_w9_f14_r         <= 2'h0;
+      data_w9_f18_r         <= 2'h0;
+      data_w9_f22_r         <= 2'h0;
+      data_w9_f26_r         <= 2'h0;
+      data_w9_f30_r         <= 2'h0;
       // Word: w10
-      data_w10_f2_r    <= 2'h0;
-      data_w10_f6_r    <= 2'h0;
-      data_w10_f10_r   <= 2'h0;
-      data_w10_f14_r   <= 2'h0;
-      data_w10_f18_r   <= 2'h0;
-      data_w10_f22_r   <= 2'h0;
-      data_w10_f26_r   <= 2'h0;
-      data_w10_f30_r   <= 2'h0;
+      data_w10_f2_r         <= 2'h0;
+      data_w10_f6_r         <= 2'h0;
+      data_w10_f10_r        <= 2'h0;
+      data_w10_f14_r        <= 2'h0;
+      data_w10_f18_r        <= 2'h0;
+      data_w10_f22_r        <= 2'h0;
+      data_w10_f26_r        <= 2'h0;
+      data_w10_f30_r        <= 2'h0;
       // Word: w11
-      data_w11_f2_r    <= 2'h0;
-      data_w11_f6_r    <= 2'h0;
-      data_w11_f10_r   <= 2'h0;
-      data_w11_f14_r   <= 2'h0;
-      data_w11_f18_r   <= 2'h0;
-      data_w11_f22_r   <= 2'h0;
-      data_w11_f26_r   <= 2'h0;
-      data_w11_f30_r   <= 2'h0;
+      data_w11_f2_r         <= 2'h0;
+      data_w11_f6_r         <= 2'h0;
+      data_w11_f10_r        <= 2'h0;
+      data_w11_f14_r        <= 2'h0;
+      data_w11_f18_r        <= 2'h0;
+      data_w11_f22_r        <= 2'h0;
+      data_w11_f26_r        <= 2'h0;
+      data_w11_f30_r        <= 2'h0;
       // Word: w12
-      data_w12_f2_r    <= 2'h0;
-      data_w12_f6_r    <= 2'h0;
-      data_w12_f10_r   <= 2'h0;
-      data_w12_f14_r   <= 2'h0;
-      data_w12_f18_r   <= 2'h0;
-      data_w12_f22_r   <= 2'h0;
-      data_w12_f26_r   <= 2'h0;
-      data_w12_f30_r   <= 2'h0;
+      data_w12_f2_r         <= 2'h0;
+      data_w12_f6_r         <= 2'h0;
+      data_w12_f10_r        <= 2'h0;
+      data_w12_f14_r        <= 2'h0;
+      data_w12_f18_r        <= 2'h0;
+      data_w12_f22_r        <= 2'h0;
+      data_w12_f26_r        <= 2'h0;
+      data_w12_f30_r        <= 2'h0;
       // Word: w13
-      data_w13_f2_r    <= 2'h0;
-      data_w13_f6_r    <= 2'h0;
-      data_w13_f10_r   <= 2'h0;
-      data_w13_f14_r   <= 2'h0;
-      data_w13_f18_r   <= 2'h0;
-      data_w13_f22_r   <= 2'h0;
-      data_w13_f26_r   <= 2'h0;
-      data_w13_f30_r   <= 2'h0;
+      data_w13_f2_r         <= 2'h0;
+      data_w13_f6_r         <= 2'h0;
+      data_w13_f10_r        <= 2'h0;
+      data_w13_f14_r        <= 2'h0;
+      data_w13_f18_r        <= 2'h0;
+      data_w13_f22_r        <= 2'h0;
+      data_w13_f26_r        <= 2'h0;
+      data_w13_f30_r        <= 2'h0;
       // Word: w14
-      data_w14_f2_r    <= 2'h0;
-      data_w14_f6_r    <= 2'h0;
-      data_w14_f10_r   <= 2'h0;
-      data_w14_f14_r   <= 2'h0;
-      data_w14_f18_r   <= 2'h0;
-      data_w14_f22_r   <= 2'h0;
-      data_w14_f26_r   <= 2'h0;
-      data_w14_f30_r   <= 2'h0;
+      data_w14_f2_r         <= 2'h0;
+      data_w14_f6_r         <= 2'h0;
+      data_w14_f10_r        <= 2'h0;
+      data_w14_f14_r        <= 2'h0;
+      data_w14_f18_r        <= 2'h0;
+      data_w14_f22_r        <= 2'h0;
+      data_w14_f26_r        <= 2'h0;
+      data_w14_f30_r        <= 2'h0;
       // Word: w15
-      data_w15_f2_r    <= 2'h0;
-      data_w15_f6_r    <= 2'h0;
-      data_w15_f10_r   <= 2'h0;
-      data_w15_f14_r   <= 2'h0;
-      data_w15_f18_r   <= 2'h0;
-      data_w15_f22_r   <= 2'h0;
-      data_w15_f26_r   <= 2'h0;
-      data_w15_f30_r   <= 2'h0;
+      data_w15_f2_r         <= 2'h0;
+      data_w15_f6_r         <= 2'h0;
+      data_w15_f10_r        <= 2'h0;
+      data_w15_f14_r        <= 2'h0;
+      data_w15_f18_r        <= 2'h0;
+      data_w15_f22_r        <= 2'h0;
+      data_w15_f26_r        <= 2'h0;
+      data_w15_f30_r        <= 2'h0;
       // Word: w16
-      data_w16_f2_r    <= 2'h0;
-      data_w16_f6_r    <= 2'h0;
-      data_w16_f10_r   <= 2'h0;
-      data_w16_f14_r   <= 2'h0;
-      data_w16_f18_r   <= 2'h0;
-      data_w16_f22_r   <= 2'h0;
-      data_w16_f26_r   <= 2'h0;
-      data_w16_f30_r   <= 2'h0;
+      data_w16_f2_r         <= 2'h0;
+      data_w16_f6_r         <= 2'h0;
+      data_w16_f10_r        <= 2'h0;
+      data_w16_f14_r        <= 2'h0;
+      data_w16_f18_r        <= 2'h0;
+      data_w16_f22_r        <= 2'h0;
+      data_w16_f26_r        <= 2'h0;
+      data_w16_f30_r        <= 2'h0;
       // Word: w17
-      data_w17_f2_r    <= 2'h0;
-      data_w17_f6_r    <= 2'h0;
-      data_w17_f10_r   <= 2'h0;
-      data_w17_f14_r   <= 2'h0;
-      data_w17_f18_r   <= 2'h0;
-      data_w17_f22_r   <= 2'h0;
-      data_w17_f26_r   <= 2'h0;
-      data_w17_f30_r   <= 2'h0;
+      data_w17_f2_r         <= 2'h0;
+      data_w17_f6_r         <= 2'h0;
+      data_w17_f10_r        <= 2'h0;
+      data_w17_f14_r        <= 2'h0;
+      data_w17_f18_r        <= 2'h0;
+      data_w17_f22_r        <= 2'h0;
+      data_w17_f26_r        <= 2'h0;
+      data_w17_f30_r        <= 2'h0;
       // Word: w18
-      data_w18_f2_r    <= 2'h0;
-      data_w18_f6_r    <= 2'h0;
-      data_w18_f10_r   <= 2'h0;
-      data_w18_f14_r   <= 2'h0;
-      data_w18_f18_r   <= 2'h0;
-      data_w18_f22_r   <= 2'h0;
-      data_w18_f26_r   <= 2'h0;
-      data_w18_f30_r   <= 2'h0;
+      data_w18_f2_r         <= 2'h0;
+      data_w18_f6_r         <= 2'h0;
+      data_w18_f10_r        <= 2'h0;
+      data_w18_f14_r        <= 2'h0;
+      data_w18_f18_r        <= 2'h0;
+      data_w18_f22_r        <= 2'h0;
+      data_w18_f26_r        <= 2'h0;
+      data_w18_f30_r        <= 2'h0;
       // Word: w19
-      data_w19_f2_r    <= 2'h0;
-      data_w19_f6_r    <= 2'h0;
-      data_w19_f10_r   <= 2'h0;
-      data_w19_f14_r   <= 2'h0;
-      data_w19_f18_r   <= 2'h0;
-      data_w19_f22_r   <= 2'h0;
-      data_w19_f26_r   <= 2'h0;
-      data_w19_f30_r   <= 2'h0;
+      data_w19_f2_r         <= 2'h0;
+      data_w19_f6_r         <= 2'h0;
+      data_w19_f10_r        <= 2'h0;
+      data_w19_f14_r        <= 2'h0;
+      data_w19_f18_r        <= 2'h0;
+      data_w19_f22_r        <= 2'h0;
+      data_w19_f26_r        <= 2'h0;
+      data_w19_f30_r        <= 2'h0;
       // Word: w20
-      data_w20_f2_r    <= 2'h0;
-      data_w20_f6_r    <= 2'h0;
-      data_w20_f10_r   <= 2'h0;
-      data_w20_f14_r   <= 2'h0;
-      data_w20_f18_r   <= 2'h0;
-      data_w20_f22_r   <= 2'h0;
-      data_w20_f26_r   <= 2'h0;
-      data_w20_f30_r   <= 2'h0;
+      data_w20_f2_r         <= 2'h0;
+      data_w20_f6_r         <= 2'h0;
+      data_w20_f10_r        <= 2'h0;
+      data_w20_f14_r        <= 2'h0;
+      data_w20_f18_r        <= 2'h0;
+      data_w20_f22_r        <= 2'h0;
+      data_w20_f26_r        <= 2'h0;
+      data_w20_f30_r        <= 2'h0;
       // Word: w21
-      data_w21_f2_r    <= 2'h0;
-      data_w21_f6_r    <= 2'h0;
-      data_w21_f10_r   <= 2'h0;
-      data_w21_f14_r   <= 2'h0;
-      data_w21_f18_r   <= 2'h0;
-      data_w21_f22_r   <= 2'h0;
-      data_w21_f26_r   <= 2'h0;
-      data_w21_f30_r   <= 2'h0;
+      data_w21_f2_r         <= 2'h0;
+      data_w21_f6_r         <= 2'h0;
+      data_w21_f10_r        <= 2'h0;
+      data_w21_f14_r        <= 2'h0;
+      data_w21_f18_r        <= 2'h0;
+      data_w21_f22_r        <= 2'h0;
+      data_w21_f26_r        <= 2'h0;
+      data_w21_f30_r        <= 2'h0;
       // Word: w22
-      data_w22_f2_r    <= 2'h0;
-      data_w22_f6_r    <= 2'h0;
-      data_w22_f10_r   <= 2'h0;
-      data_w22_f14_r   <= 2'h0;
-      data_w22_f18_r   <= 2'h0;
-      data_w22_f22_r   <= 2'h0;
-      data_w22_f26_r   <= 2'h0;
-      data_w22_f30_r   <= 2'h0;
+      data_w22_f2_r         <= 2'h0;
+      data_w22_f6_r         <= 2'h0;
+      data_w22_f10_r        <= 2'h0;
+      data_w22_f14_r        <= 2'h0;
+      data_w22_f18_r        <= 2'h0;
+      data_w22_f22_r        <= 2'h0;
+      data_w22_f26_r        <= 2'h0;
+      data_w22_f30_r        <= 2'h0;
       // Word: w23
-      data_w23_f2_r    <= 2'h0;
-      data_w23_f6_r    <= 2'h0;
-      data_w23_f10_r   <= 2'h0;
-      data_w23_f14_r   <= 2'h0;
-      data_w23_f18_r   <= 2'h0;
-      data_w23_f22_r   <= 2'h0;
-      data_w23_f26_r   <= 2'h0;
-      data_w23_f30_r   <= 2'h0;
+      data_w23_f2_r         <= 2'h0;
+      data_w23_f6_r         <= 2'h0;
+      data_w23_f10_r        <= 2'h0;
+      data_w23_f14_r        <= 2'h0;
+      data_w23_f18_r        <= 2'h0;
+      data_w23_f22_r        <= 2'h0;
+      data_w23_f26_r        <= 2'h0;
+      data_w23_f30_r        <= 2'h0;
       // Word: w24
-      data_w24_f2_r    <= 2'h0;
-      data_w24_f6_r    <= 2'h0;
-      data_w24_f10_r   <= 2'h0;
-      data_w24_f14_r   <= 2'h0;
-      data_w24_f18_r   <= 2'h0;
-      data_w24_f22_r   <= 2'h0;
-      data_w24_f26_r   <= 2'h0;
-      data_w24_f30_r   <= 2'h0;
-      bus_w24_wronce_r <= 1'b1;
+      data_w24_f2_r         <= 2'h0;
+      data_w24_f6_r         <= 2'h0;
+      data_w24_f10_r        <= 2'h0;
+      data_w24_f14_r        <= 2'h0;
+      data_w24_f18_r        <= 2'h0;
+      data_w24_f22_r        <= 2'h0;
+      data_w24_f26_r        <= 2'h0;
+      data_w24_f30_r        <= 2'h0;
+      bus_wronce_w24_flg0_r <= 1'b1;
       // Word: w25
-      data_w25_f2_r    <= 2'h0;
-      data_w25_f6_r    <= 2'h0;
-      data_w25_f10_r   <= 2'h0;
-      data_w25_f14_r   <= 2'h0;
-      data_w25_f18_r   <= 2'h0;
-      data_w25_f22_r   <= 2'h0;
-      data_w25_f26_r   <= 2'h0;
-      data_w25_f30_r   <= 2'h0;
-      bus_w25_wronce_r <= 1'b1;
+      data_w25_f2_r         <= 2'h0;
+      data_w25_f6_r         <= 2'h0;
+      data_w25_f10_r        <= 2'h0;
+      data_w25_f14_r        <= 2'h0;
+      data_w25_f18_r        <= 2'h0;
+      data_w25_f22_r        <= 2'h0;
+      data_w25_f26_r        <= 2'h0;
+      data_w25_f30_r        <= 2'h0;
+      bus_wronce_w25_flg0_r <= 1'b1;
       // Word: w26
-      data_w26_f2_r    <= 2'h0;
-      data_w26_f6_r    <= 2'h0;
-      data_w26_f10_r   <= 2'h0;
-      data_w26_f14_r   <= 2'h0;
-      data_w26_f18_r   <= 2'h0;
-      data_w26_f22_r   <= 2'h0;
-      data_w26_f26_r   <= 2'h0;
-      data_w26_f30_r   <= 2'h0;
-      bus_w26_wronce_r <= 1'b1;
+      data_w26_f2_r         <= 2'h0;
+      data_w26_f6_r         <= 2'h0;
+      data_w26_f10_r        <= 2'h0;
+      data_w26_f14_r        <= 2'h0;
+      data_w26_f18_r        <= 2'h0;
+      data_w26_f22_r        <= 2'h0;
+      data_w26_f26_r        <= 2'h0;
+      data_w26_f30_r        <= 2'h0;
+      bus_wronce_w26_flg0_r <= 1'b1;
       // Word: w27
-      data_w27_f2_r    <= 2'h0;
-      data_w27_f6_r    <= 2'h0;
-      data_w27_f10_r   <= 2'h0;
-      data_w27_f14_r   <= 2'h0;
-      data_w27_f18_r   <= 2'h0;
-      data_w27_f22_r   <= 2'h0;
-      data_w27_f26_r   <= 2'h0;
-      data_w27_f30_r   <= 2'h0;
+      data_w27_f2_r         <= 2'h0;
+      data_w27_f6_r         <= 2'h0;
+      data_w27_f10_r        <= 2'h0;
+      data_w27_f14_r        <= 2'h0;
+      data_w27_f18_r        <= 2'h0;
+      data_w27_f22_r        <= 2'h0;
+      data_w27_f26_r        <= 2'h0;
+      data_w27_f30_r        <= 2'h0;
       // Word: w28
-      data_w28_f2_r    <= 2'h0;
-      data_w28_f6_r    <= 2'h0;
-      data_w28_f10_r   <= 2'h0;
-      data_w28_f14_r   <= 2'h0;
-      data_w28_f18_r   <= 2'h0;
-      data_w28_f22_r   <= 2'h0;
-      data_w28_f26_r   <= 2'h0;
-      data_w28_f30_r   <= 2'h0;
+      data_w28_f2_r         <= 2'h0;
+      data_w28_f6_r         <= 2'h0;
+      data_w28_f10_r        <= 2'h0;
+      data_w28_f14_r        <= 2'h0;
+      data_w28_f18_r        <= 2'h0;
+      data_w28_f22_r        <= 2'h0;
+      data_w28_f26_r        <= 2'h0;
+      data_w28_f30_r        <= 2'h0;
       // Word: w29
-      data_w29_f2_r    <= 2'h0;
-      data_w29_f6_r    <= 2'h0;
-      data_w29_f10_r   <= 2'h0;
-      data_w29_f14_r   <= 2'h0;
-      data_w29_f18_r   <= 2'h0;
-      data_w29_f22_r   <= 2'h0;
-      data_w29_f26_r   <= 2'h0;
-      data_w29_f30_r   <= 2'h0;
+      data_w29_f2_r         <= 2'h0;
+      data_w29_f6_r         <= 2'h0;
+      data_w29_f10_r        <= 2'h0;
+      data_w29_f14_r        <= 2'h0;
+      data_w29_f18_r        <= 2'h0;
+      data_w29_f22_r        <= 2'h0;
+      data_w29_f26_r        <= 2'h0;
+      data_w29_f30_r        <= 2'h0;
       // Word: w30
-      data_w30_f2_r    <= 2'h0;
-      data_w30_f6_r    <= 2'h0;
-      data_w30_f10_r   <= 2'h0;
-      data_w30_f14_r   <= 2'h0;
-      data_w30_f18_r   <= 2'h0;
-      data_w30_f22_r   <= 2'h0;
-      data_w30_f26_r   <= 2'h0;
-      data_w30_f30_r   <= 2'h0;
+      data_w30_f2_r         <= 2'h0;
+      data_w30_f6_r         <= 2'h0;
+      data_w30_f10_r        <= 2'h0;
+      data_w30_f14_r        <= 2'h0;
+      data_w30_f18_r        <= 2'h0;
+      data_w30_f22_r        <= 2'h0;
+      data_w30_f26_r        <= 2'h0;
+      data_w30_f30_r        <= 2'h0;
       // Word: w31
-      data_w31_f2_r    <= 2'h0;
-      data_w31_f6_r    <= 2'h0;
-      data_w31_f10_r   <= 2'h0;
-      data_w31_f14_r   <= 2'h0;
-      data_w31_f18_r   <= 2'h0;
-      data_w31_f22_r   <= 2'h0;
-      data_w31_f26_r   <= 2'h0;
-      data_w31_f30_r   <= 2'h0;
+      data_w31_f2_r         <= 2'h0;
+      data_w31_f6_r         <= 2'h0;
+      data_w31_f10_r        <= 2'h0;
+      data_w31_f14_r        <= 2'h0;
+      data_w31_f18_r        <= 2'h0;
+      data_w31_f22_r        <= 2'h0;
+      data_w31_f26_r        <= 2'h0;
+      data_w31_f30_r        <= 2'h0;
       // Word: w32
-      data_w32_f2_r    <= 2'h0;
-      data_w32_f6_r    <= 2'h0;
-      data_w32_f10_r   <= 2'h0;
-      data_w32_f14_r   <= 2'h0;
-      data_w32_f18_r   <= 2'h0;
-      data_w32_f22_r   <= 2'h0;
-      data_w32_f26_r   <= 2'h0;
-      data_w32_f30_r   <= 2'h0;
-      bus_w32_wronce_r <= 1'b1;
+      data_w32_f2_r         <= 2'h0;
+      data_w32_f6_r         <= 2'h0;
+      data_w32_f10_r        <= 2'h0;
+      data_w32_f14_r        <= 2'h0;
+      data_w32_f18_r        <= 2'h0;
+      data_w32_f22_r        <= 2'h0;
+      data_w32_f26_r        <= 2'h0;
+      data_w32_f30_r        <= 2'h0;
+      bus_wronce_w32_flg0_r <= 1'b1;
       // Word: w33
-      data_w33_f2_r    <= 2'h0;
-      data_w33_f6_r    <= 2'h0;
-      data_w33_f10_r   <= 2'h0;
-      data_w33_f14_r   <= 2'h0;
-      data_w33_f18_r   <= 2'h0;
-      data_w33_f22_r   <= 2'h0;
-      data_w33_f26_r   <= 2'h0;
-      data_w33_f30_r   <= 2'h0;
-      bus_w33_wronce_r <= 1'b1;
+      data_w33_f2_r         <= 2'h0;
+      data_w33_f6_r         <= 2'h0;
+      data_w33_f10_r        <= 2'h0;
+      data_w33_f14_r        <= 2'h0;
+      data_w33_f18_r        <= 2'h0;
+      data_w33_f22_r        <= 2'h0;
+      data_w33_f26_r        <= 2'h0;
+      data_w33_f30_r        <= 2'h0;
+      bus_wronce_w33_flg0_r <= 1'b1;
       // Word: w34
-      data_w34_f2_r    <= 2'h0;
-      data_w34_f6_r    <= 2'h0;
-      data_w34_f10_r   <= 2'h0;
-      data_w34_f14_r   <= 2'h0;
-      data_w34_f18_r   <= 2'h0;
-      data_w34_f22_r   <= 2'h0;
-      data_w34_f26_r   <= 2'h0;
-      data_w34_f30_r   <= 2'h0;
+      data_w34_f2_r         <= 2'h0;
+      data_w34_f6_r         <= 2'h0;
+      data_w34_f10_r        <= 2'h0;
+      data_w34_f14_r        <= 2'h0;
+      data_w34_f18_r        <= 2'h0;
+      data_w34_f22_r        <= 2'h0;
+      data_w34_f26_r        <= 2'h0;
+      data_w34_f30_r        <= 2'h0;
       // Word: w35
-      data_w35_f2_r    <= 2'h0;
+      data_w35_f2_r         <= 2'h0;
     end else begin
       if (regf_w0_f2_rd_i == 1'b1) begin
         data_w0_f2_r <= 2'h0;
@@ -4178,86 +4164,86 @@ module full_regf (
       end else if (regf_w24_f18_wr_i == 1'b1) begin
         data_w24_f18_r <= regf_w24_f18_wval_i;
       end
-      if ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) begin
+      if ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) begin
         data_w24_f22_r <= mem_wdata_i[23:22];
       end
-      if ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) begin
+      if ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) begin
         data_w24_f26_r <= mem_wdata_i[27:26];
       end else if (regf_w24_f26_rd_i == 1'b1) begin
         data_w24_f26_r <= 2'h0;
       end
-      if ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) begin
+      if ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) begin
         data_w24_f30_r <= mem_wdata_i[31:30];
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f2_r <= mem_wdata_i[3:2];
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f6_r <= mem_wdata_i[7:6];
       end else if (regf_w25_f6_rd_i == 1'b1) begin
         data_w25_f6_r <= 2'h3;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f10_r <= mem_wdata_i[11:10];
       end else if (regf_w25_f10_rd_i == 1'b1) begin
         data_w25_f10_r <= ~data_w25_f10_r;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f14_r <= mem_wdata_i[15:14];
       end else if (regf_w25_f14_wr_i == 1'b1) begin
         data_w25_f14_r <= regf_w25_f14_wval_i;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f18_r <= mem_wdata_i[19:18];
       end else if (regf_w25_f18_wr_i == 1'b1) begin
         data_w25_f18_r <= data_w25_f18_r & regf_w25_f18_wval_i;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f22_r <= mem_wdata_i[23:22];
       end else if (regf_w25_f22_wr_i == 1'b1) begin
         data_w25_f22_r <= data_w25_f22_r | ~regf_w25_f22_wval_i;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f26_r <= mem_wdata_i[27:26];
       end else if (regf_w25_f26_wr_i == 1'b1) begin
         data_w25_f26_r <= data_w25_f26_r & ~regf_w25_f26_wval_i;
       end
-      if ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) begin
+      if ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) begin
         data_w25_f30_r <= mem_wdata_i[31:30];
       end else if (regf_w25_f30_wr_i == 1'b1) begin
         data_w25_f30_r <= data_w25_f30_r | regf_w25_f30_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f2_r <= mem_wdata_i[3:2];
       end else if (regf_w26_f2_wr_i == 1'b1) begin
         data_w26_f2_r <= regf_w26_f2_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f6_r <= mem_wdata_i[7:6];
       end else if (regf_w26_f6_wr_i == 1'b1) begin
         data_w26_f6_r <= data_w26_f6_r & regf_w26_f6_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f10_r <= mem_wdata_i[11:10];
       end else if (regf_w26_f10_wr_i == 1'b1) begin
         data_w26_f10_r <= data_w26_f10_r | ~regf_w26_f10_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f14_r <= mem_wdata_i[15:14];
       end else if (regf_w26_f14_wr_i == 1'b1) begin
         data_w26_f14_r <= data_w26_f14_r & ~regf_w26_f14_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f18_r <= mem_wdata_i[19:18];
       end else if (regf_w26_f18_wr_i == 1'b1) begin
         data_w26_f18_r <= data_w26_f18_r | regf_w26_f18_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f22_r <= mem_wdata_i[23:22];
       end else if (regf_w26_f22_wr_i == 1'b1) begin
         data_w26_f22_r <= regf_w26_f22_wval_i;
       end
-      if ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) begin
+      if ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) begin
         data_w26_f26_r <= mem_wdata_i[27:26];
       end else if (regf_w26_f26_wr_i == 1'b1) begin
         data_w26_f26_r <= regf_w26_f26_wval_i;
@@ -4466,53 +4452,53 @@ module full_regf (
       end else if (regf_w32_f10_wr_i == 1'b1) begin
         data_w32_f10_r <= regf_w32_f10_wval_i;
       end
-      if ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) begin
+      if ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) begin
         data_w32_f14_r <= mem_wdata_i[15:14];
       end else if (regf_w32_f14_rd_i == 1'b1) begin
         data_w32_f14_r <= 2'h0;
       end
-      if ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) begin
+      if ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) begin
         data_w32_f18_r <= mem_wdata_i[19:18];
       end
-      if ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) begin
+      if ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) begin
         data_w32_f22_r <= mem_wdata_i[23:22];
       end
-      if ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) begin
+      if ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) begin
         data_w32_f26_r <= mem_wdata_i[27:26];
       end else if (regf_w32_f26_rd_i == 1'b1) begin
         data_w32_f26_r <= 2'h3;
       end
-      if ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) begin
+      if ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) begin
         data_w32_f30_r <= mem_wdata_i[31:30];
       end else if (regf_w32_f30_rd_i == 1'b1) begin
         data_w32_f30_r <= ~data_w32_f30_r;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f2_r <= mem_wdata_i[3:2];
       end else if (regf_w33_f2_wr_i == 1'b1) begin
         data_w33_f2_r <= regf_w33_f2_wval_i;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f6_r <= mem_wdata_i[7:6];
       end else if (regf_w33_f6_wr_i == 1'b1) begin
         data_w33_f6_r <= data_w33_f6_r & regf_w33_f6_wval_i;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f10_r <= mem_wdata_i[11:10];
       end else if (regf_w33_f10_wr_i == 1'b1) begin
         data_w33_f10_r <= data_w33_f10_r | ~regf_w33_f10_wval_i;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f14_r <= mem_wdata_i[15:14];
       end else if (regf_w33_f14_wr_i == 1'b1) begin
         data_w33_f14_r <= data_w33_f14_r & ~regf_w33_f14_wval_i;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f18_r <= mem_wdata_i[19:18];
       end else if (regf_w33_f18_wr_i == 1'b1) begin
         data_w33_f18_r <= data_w33_f18_r | regf_w33_f18_wval_i;
       end
-      if ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) begin
+      if ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) begin
         data_w33_f22_r <= mem_wdata_i[23:22];
       end else if (regf_w33_f22_wr_i == 1'b1) begin
         data_w33_f22_r <= regf_w33_f22_wval_i;
@@ -4569,51 +4555,23 @@ module full_regf (
         data_w35_f2_r <= regf_w35_f2_wval_i;
       end
       if (bus_w24_wren_s == 1'b1) begin
-        bus_w24_wronce_r <= 1'b0;
+        bus_wronce_w24_flg0_r <= 1'b0;
       end
       if (bus_w25_wren_s == 1'b1) begin
-        bus_w25_wronce_r <= 1'b0;
+        bus_wronce_w25_flg0_r <= 1'b0;
       end
       if (bus_w26_wren_s == 1'b1) begin
-        bus_w26_wronce_r <= 1'b0;
+        bus_wronce_w26_flg0_r <= 1'b0;
       end
       if (bus_w32_wren_s == 1'b1) begin
-        bus_w32_wronce_r <= 1'b0;
+        bus_wronce_w32_flg0_r <= 1'b0;
       end
       if (bus_w33_wren_s == 1'b1) begin
-        bus_w33_wronce_r <= 1'b0;
+        bus_wronce_w33_flg0_r <= 1'b0;
       end
     end
   end
 
-  // ------------------------------------------------------
-  //  Collect word vectors
-  // ------------------------------------------------------
-  assign wvec_w2_s  = {data_w2_f30_r, regf_w2_f28_rbus_i, data_w2_f26_r, regf_w2_f24_rbus_i, data_w2_f22_r, regf_w2_f20_rbus_i, data_w2_f18_r, regf_w2_f16_rbus_i, 16'h0000};
-  assign wvec_w3_s  = {data_w3_f30_r, regf_w3_f28_rbus_i, data_w3_f26_r, regf_w3_f24_rbus_i, data_w3_f22_r, regf_w3_f20_rbus_i, data_w3_f18_r, regf_w3_f16_rbus_i, data_w3_f14_r, regf_w3_f12_rbus_i, data_w3_f10_r, regf_w3_f8_rbus_i, data_w3_f6_r, regf_w3_f4_rbus_i, data_w3_f2_r, regf_w3_f0_rbus_i};
-  assign wvec_w4_s  = {data_w4_f30_c, data_w4_f28_r, regf_w4_f26_rbus_i, data_w4_f24_c, data_w4_f22_r, regf_w4_f20_rbus_i, data_w4_f18_r, regf_w4_f16_rbus_i, data_w4_f14_r, regf_w4_f12_rbus_i, data_w4_f10_r, regf_w4_f8_rbus_i, data_w4_f6_r, regf_w4_f4_rbus_i, data_w4_f2_r, regf_w4_f0_rbus_i};
-  assign wvec_w5_s  = {regf_w5_f30_rbus_i, data_w5_f28_r, regf_w5_f26_rbus_i, data_w5_f24_r, regf_w5_f22_rbus_i, data_w5_f20_r, regf_w5_f18_rbus_i, data_w5_f16_r, regf_w5_f14_rbus_i, data_w5_f12_r, regf_w5_f10_rbus_i, data_w5_f8_r, regf_w5_f6_rbus_i, data_w5_f4_r, regf_w5_f2_rbus_i, data_w5_f0_c};
-  assign wvec_w6_s  = {data_w6_f30_r, regf_w6_f28_rbus_i, data_w6_f26_c, data_w6_f24_r, regf_w6_f22_rbus_i, data_w6_f20_r, regf_w6_f18_rbus_i, data_w6_f16_r, regf_w6_f14_rbus_i, data_w6_f12_r, regf_w6_f10_rbus_i, data_w6_f8_r, regf_w6_f6_rbus_i, data_w6_f4_r, regf_w6_f2_rbus_i, data_w6_f0_r};
-  assign wvec_w7_s  = {data_w7_f30_r, regf_w7_f28_rbus_i, data_w7_f26_r, regf_w7_f24_rbus_i, data_w7_f22_r, regf_w7_f20_rbus_i, data_w7_f18_r, regf_w7_f16_rbus_i, data_w7_f14_r, regf_w7_f12_rbus_i, data_w7_f10_r, regf_w7_f8_rbus_i, data_w7_f6_r, regf_w7_f4_rbus_i, data_w7_f2_c, data_w7_f0_c};
-  assign wvec_w8_s  = {data_w8_f30_r, regf_w8_f28_rbus_i, data_w8_f26_r, regf_w8_f24_rbus_i, data_w8_f22_r, regf_w8_f20_rbus_i, data_w8_f18_r, regf_w8_f16_rbus_i, data_w8_f14_r, regf_w8_f12_rbus_i, data_w8_f10_r, regf_w8_f8_rbus_i, data_w8_f6_r, regf_w8_f4_rbus_i, data_w8_f2_r, regf_w8_f0_rbus_i};
-  assign wvec_w9_s  = {data_w9_f30_r, regf_w9_f28_rbus_i, data_w9_f26_r, regf_w9_f24_rbus_i, data_w9_f22_r, regf_w9_f20_rbus_i, data_w9_f18_r, regf_w9_f16_rbus_i, data_w9_f14_r, regf_w9_f12_rbus_i, data_w9_f10_r, regf_w9_f8_rbus_i, data_w9_f6_r, regf_w9_f4_rbus_i, data_w9_f2_r, regf_w9_f0_rbus_i};
-  assign wvec_w10_s = {data_w10_f30_r, regf_w10_f28_rbus_i, data_w10_f26_r, regf_w10_f24_rbus_i, data_w10_f22_r, regf_w10_f20_rbus_i, data_w10_f18_r, regf_w10_f16_rbus_i, data_w10_f14_r, regf_w10_f12_rbus_i, data_w10_f10_r, regf_w10_f8_rbus_i, data_w10_f6_r, regf_w10_f4_rbus_i, data_w10_f2_r, regf_w10_f0_rbus_i};
-  assign wvec_w11_s = {data_w11_f30_r, regf_w11_f28_rbus_i, data_w11_f26_r, regf_w11_f24_rbus_i, data_w11_f22_r, regf_w11_f20_rbus_i, data_w11_f18_r, regf_w11_f16_rbus_i, data_w11_f14_r, regf_w11_f12_rbus_i, data_w11_f10_r, regf_w11_f8_rbus_i, data_w11_f6_r, regf_w11_f4_rbus_i, data_w11_f2_r, regf_w11_f0_rbus_i};
-  assign wvec_w12_s = {data_w12_f30_r, regf_w12_f28_rbus_i, data_w12_f26_r, regf_w12_f24_rbus_i, data_w12_f22_r, regf_w12_f20_rbus_i, data_w12_f18_r, regf_w12_f16_rbus_i, data_w12_f14_r, regf_w12_f12_rbus_i, data_w12_f10_r, regf_w12_f8_rbus_i, data_w12_f6_r, regf_w12_f4_rbus_i, data_w12_f2_r, regf_w12_f0_rbus_i};
-  assign wvec_w13_s = {data_w13_f30_r, regf_w13_f28_rbus_i, data_w13_f26_r, regf_w13_f24_rbus_i, data_w13_f22_r, regf_w13_f20_rbus_i, data_w13_f18_r, regf_w13_f16_rbus_i, data_w13_f14_r, regf_w13_f12_rbus_i, data_w13_f10_r, regf_w13_f8_rbus_i, data_w13_f6_r, regf_w13_f4_rbus_i, data_w13_f2_r, regf_w13_f0_rbus_i};
-  assign wvec_w14_s = {data_w14_f30_r, regf_w14_f28_rbus_i, data_w14_f26_r, regf_w14_f24_rbus_i, data_w14_f22_r, regf_w14_f20_rbus_i, data_w14_f18_r, regf_w14_f16_rbus_i, data_w14_f14_r, regf_w14_f12_rbus_i, data_w14_f10_r, regf_w14_f8_rbus_i, data_w14_f6_r, regf_w14_f4_rbus_i, data_w14_f2_r, regf_w14_f0_rbus_i};
-  assign wvec_w15_s = {data_w15_f30_r, regf_w15_f28_rbus_i, data_w15_f26_r, regf_w15_f24_rbus_i, data_w15_f22_r, regf_w15_f20_rbus_i, data_w15_f18_r, regf_w15_f16_rbus_i, data_w15_f14_r, regf_w15_f12_rbus_i, data_w15_f10_r, regf_w15_f8_rbus_i, data_w15_f6_r, regf_w15_f4_rbus_i, data_w15_f2_r, regf_w15_f0_rbus_i};
-  assign wvec_w16_s = {data_w16_f30_r, regf_w16_f28_rbus_i, data_w16_f26_r, regf_w16_f24_rbus_i, data_w16_f22_r, regf_w16_f20_rbus_i, data_w16_f18_r, regf_w16_f16_rbus_i, data_w16_f14_r, regf_w16_f12_rbus_i, data_w16_f10_r, regf_w16_f8_rbus_i, data_w16_f6_r, regf_w16_f4_rbus_i, data_w16_f2_r, regf_w16_f0_rbus_i};
-  assign wvec_w17_s = {data_w17_f30_r, regf_w17_f28_rbus_i, data_w17_f26_r, regf_w17_f24_rbus_i, data_w17_f22_r, regf_w17_f20_rbus_i, data_w17_f18_r, regf_w17_f16_rbus_i, data_w17_f14_r, regf_w17_f12_rbus_i, data_w17_f10_r, regf_w17_f8_rbus_i, data_w17_f6_r, regf_w17_f4_rbus_i, data_w17_f2_r, regf_w17_f0_rbus_i};
-  assign wvec_w18_s = {data_w18_f30_r, regf_w18_f28_rbus_i, data_w18_f26_r, regf_w18_f24_rbus_i, data_w18_f22_r, regf_w18_f20_rbus_i, data_w18_f18_r, regf_w18_f16_rbus_i, data_w18_f14_r, regf_w18_f12_rbus_i, data_w18_f10_r, regf_w18_f8_rbus_i, data_w18_f6_r, regf_w18_f4_rbus_i, data_w18_f2_r, regf_w18_f0_rbus_i};
-  assign wvec_w19_s = {data_w19_f30_r, regf_w19_f28_rbus_i, data_w19_f26_r, regf_w19_f24_rbus_i, data_w19_f22_r, regf_w19_f20_rbus_i, data_w19_f18_r, regf_w19_f16_rbus_i, data_w19_f14_r, regf_w19_f12_rbus_i, data_w19_f10_r, regf_w19_f8_rbus_i, data_w19_f6_r, regf_w19_f4_rbus_i, data_w19_f2_r, regf_w19_f0_rbus_i};
-  assign wvec_w20_s = {data_w20_f30_r, regf_w20_f28_rbus_i, data_w20_f26_r, regf_w20_f24_rbus_i, data_w20_f22_r, regf_w20_f20_rbus_i, data_w20_f18_r, regf_w20_f16_rbus_i, data_w20_f14_r, regf_w20_f12_rbus_i, data_w20_f10_r, regf_w20_f8_rbus_i, data_w20_f6_r, regf_w20_f4_rbus_i, data_w20_f2_r, regf_w20_f0_rbus_i};
-  assign wvec_w21_s = {data_w21_f30_r, regf_w21_f28_rbus_i, data_w21_f26_r, regf_w21_f24_rbus_i, data_w21_f22_r, regf_w21_f20_rbus_i, data_w21_f18_r, regf_w21_f16_rbus_i, data_w21_f14_r, regf_w21_f12_rbus_i, data_w21_f10_r, regf_w21_f8_rbus_i, data_w21_f6_r, regf_w21_f4_rbus_i, data_w21_f2_r, regf_w21_f0_rbus_i};
-  assign wvec_w22_s = {data_w22_f30_r, regf_w22_f28_rbus_i, data_w22_f26_r, regf_w22_f24_rbus_i, data_w22_f22_r, regf_w22_f20_rbus_i, data_w22_f18_r, regf_w22_f16_rbus_i, data_w22_f14_r, regf_w22_f12_rbus_i, data_w22_f10_r, regf_w22_f8_rbus_i, data_w22_f6_r, regf_w22_f4_rbus_i, data_w22_f2_r, regf_w22_f0_rbus_i};
-  assign wvec_w23_s = {data_w23_f30_r, regf_w23_f28_rbus_i, data_w23_f26_r, regf_w23_f24_rbus_i, data_w23_f22_r, regf_w23_f20_rbus_i, data_w23_f18_r, regf_w23_f16_rbus_i, data_w23_f14_r, regf_w23_f12_rbus_i, data_w23_f10_r, regf_w23_f8_rbus_i, data_w23_f6_r, regf_w23_f4_rbus_i, data_w23_f2_r, regf_w23_f0_rbus_i};
-  assign wvec_w24_s = {data_w24_f30_r, regf_w24_f28_rbus_i, data_w24_f26_r, regf_w24_f24_rbus_i, data_w24_f22_r, regf_w24_f20_rbus_i, data_w24_f18_r, regf_w24_f16_rbus_i, data_w24_f14_r, regf_w24_f12_rbus_i, data_w24_f10_r, regf_w24_f8_rbus_i, data_w24_f6_r, regf_w24_f4_rbus_i, data_w24_f2_r, regf_w24_f0_rbus_i};
-  assign wvec_w25_s = {data_w25_f30_r, regf_w25_f28_rbus_i, data_w25_f26_r, regf_w25_f24_rbus_i, data_w25_f22_r, regf_w25_f20_rbus_i, data_w25_f18_r, regf_w25_f16_rbus_i, data_w25_f14_r, regf_w25_f12_rbus_i, data_w25_f10_r, regf_w25_f8_rbus_i, data_w25_f6_r, regf_w25_f4_rbus_i, data_w25_f2_r, regf_w25_f0_rbus_i};
-  assign wvec_w26_s = {4'h0, data_w26_f26_r, regf_w26_f24_rbus_i, data_w26_f22_r, regf_w26_f20_rbus_i, data_w26_f18_r, regf_w26_f16_rbus_i, data_w26_f14_r, regf_w26_f12_rbus_i, data_w26_f10_r, regf_w26_f8_rbus_i, data_w26_f6_r, regf_w26_f4_rbus_i, data_w26_f2_r, regf_w26_f0_rbus_i};
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -4622,79 +4580,79 @@ module full_regf (
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h002: begin
-          mem_rdata_o = wvec_w2_s;
+          mem_rdata_o = {data_w2_f30_r, regf_w2_f28_rbus_i, data_w2_f26_r, regf_w2_f24_rbus_i, data_w2_f22_r, regf_w2_f20_rbus_i, data_w2_f18_r, regf_w2_f16_rbus_i, 16'h0000};
         end
         10'h003: begin
-          mem_rdata_o = wvec_w3_s;
+          mem_rdata_o = {data_w3_f30_r, regf_w3_f28_rbus_i, data_w3_f26_r, regf_w3_f24_rbus_i, data_w3_f22_r, regf_w3_f20_rbus_i, data_w3_f18_r, regf_w3_f16_rbus_i, data_w3_f14_r, regf_w3_f12_rbus_i, data_w3_f10_r, regf_w3_f8_rbus_i, data_w3_f6_r, regf_w3_f4_rbus_i, data_w3_f2_r, regf_w3_f0_rbus_i};
         end
         10'h004: begin
-          mem_rdata_o = wvec_w4_s;
+          mem_rdata_o = {data_w4_f30_c, data_w4_f28_r, regf_w4_f26_rbus_i, data_w4_f24_c, data_w4_f22_r, regf_w4_f20_rbus_i, data_w4_f18_r, regf_w4_f16_rbus_i, data_w4_f14_r, regf_w4_f12_rbus_i, data_w4_f10_r, regf_w4_f8_rbus_i, data_w4_f6_r, regf_w4_f4_rbus_i, data_w4_f2_r, regf_w4_f0_rbus_i};
         end
         10'h005: begin
-          mem_rdata_o = wvec_w5_s;
+          mem_rdata_o = {regf_w5_f30_rbus_i, data_w5_f28_r, regf_w5_f26_rbus_i, data_w5_f24_r, regf_w5_f22_rbus_i, data_w5_f20_r, regf_w5_f18_rbus_i, data_w5_f16_r, regf_w5_f14_rbus_i, data_w5_f12_r, regf_w5_f10_rbus_i, data_w5_f8_r, regf_w5_f6_rbus_i, data_w5_f4_r, regf_w5_f2_rbus_i, data_w5_f0_c};
         end
         10'h006: begin
-          mem_rdata_o = wvec_w6_s;
+          mem_rdata_o = {data_w6_f30_r, regf_w6_f28_rbus_i, data_w6_f26_c, data_w6_f24_r, regf_w6_f22_rbus_i, data_w6_f20_r, regf_w6_f18_rbus_i, data_w6_f16_r, regf_w6_f14_rbus_i, data_w6_f12_r, regf_w6_f10_rbus_i, data_w6_f8_r, regf_w6_f6_rbus_i, data_w6_f4_r, regf_w6_f2_rbus_i, data_w6_f0_r};
         end
         10'h007: begin
-          mem_rdata_o = wvec_w7_s;
+          mem_rdata_o = {data_w7_f30_r, regf_w7_f28_rbus_i, data_w7_f26_r, regf_w7_f24_rbus_i, data_w7_f22_r, regf_w7_f20_rbus_i, data_w7_f18_r, regf_w7_f16_rbus_i, data_w7_f14_r, regf_w7_f12_rbus_i, data_w7_f10_r, regf_w7_f8_rbus_i, data_w7_f6_r, regf_w7_f4_rbus_i, data_w7_f2_c, data_w7_f0_c};
         end
         10'h008: begin
-          mem_rdata_o = wvec_w8_s;
+          mem_rdata_o = {data_w8_f30_r, regf_w8_f28_rbus_i, data_w8_f26_r, regf_w8_f24_rbus_i, data_w8_f22_r, regf_w8_f20_rbus_i, data_w8_f18_r, regf_w8_f16_rbus_i, data_w8_f14_r, regf_w8_f12_rbus_i, data_w8_f10_r, regf_w8_f8_rbus_i, data_w8_f6_r, regf_w8_f4_rbus_i, data_w8_f2_r, regf_w8_f0_rbus_i};
         end
         10'h009: begin
-          mem_rdata_o = wvec_w9_s;
+          mem_rdata_o = {data_w9_f30_r, regf_w9_f28_rbus_i, data_w9_f26_r, regf_w9_f24_rbus_i, data_w9_f22_r, regf_w9_f20_rbus_i, data_w9_f18_r, regf_w9_f16_rbus_i, data_w9_f14_r, regf_w9_f12_rbus_i, data_w9_f10_r, regf_w9_f8_rbus_i, data_w9_f6_r, regf_w9_f4_rbus_i, data_w9_f2_r, regf_w9_f0_rbus_i};
         end
         10'h00A: begin
-          mem_rdata_o = wvec_w10_s;
+          mem_rdata_o = {data_w10_f30_r, regf_w10_f28_rbus_i, data_w10_f26_r, regf_w10_f24_rbus_i, data_w10_f22_r, regf_w10_f20_rbus_i, data_w10_f18_r, regf_w10_f16_rbus_i, data_w10_f14_r, regf_w10_f12_rbus_i, data_w10_f10_r, regf_w10_f8_rbus_i, data_w10_f6_r, regf_w10_f4_rbus_i, data_w10_f2_r, regf_w10_f0_rbus_i};
         end
         10'h00B: begin
-          mem_rdata_o = wvec_w11_s;
+          mem_rdata_o = {data_w11_f30_r, regf_w11_f28_rbus_i, data_w11_f26_r, regf_w11_f24_rbus_i, data_w11_f22_r, regf_w11_f20_rbus_i, data_w11_f18_r, regf_w11_f16_rbus_i, data_w11_f14_r, regf_w11_f12_rbus_i, data_w11_f10_r, regf_w11_f8_rbus_i, data_w11_f6_r, regf_w11_f4_rbus_i, data_w11_f2_r, regf_w11_f0_rbus_i};
         end
         10'h00C: begin
-          mem_rdata_o = wvec_w12_s;
+          mem_rdata_o = {data_w12_f30_r, regf_w12_f28_rbus_i, data_w12_f26_r, regf_w12_f24_rbus_i, data_w12_f22_r, regf_w12_f20_rbus_i, data_w12_f18_r, regf_w12_f16_rbus_i, data_w12_f14_r, regf_w12_f12_rbus_i, data_w12_f10_r, regf_w12_f8_rbus_i, data_w12_f6_r, regf_w12_f4_rbus_i, data_w12_f2_r, regf_w12_f0_rbus_i};
         end
         10'h00D: begin
-          mem_rdata_o = wvec_w13_s;
+          mem_rdata_o = {data_w13_f30_r, regf_w13_f28_rbus_i, data_w13_f26_r, regf_w13_f24_rbus_i, data_w13_f22_r, regf_w13_f20_rbus_i, data_w13_f18_r, regf_w13_f16_rbus_i, data_w13_f14_r, regf_w13_f12_rbus_i, data_w13_f10_r, regf_w13_f8_rbus_i, data_w13_f6_r, regf_w13_f4_rbus_i, data_w13_f2_r, regf_w13_f0_rbus_i};
         end
         10'h00E: begin
-          mem_rdata_o = wvec_w14_s;
+          mem_rdata_o = {data_w14_f30_r, regf_w14_f28_rbus_i, data_w14_f26_r, regf_w14_f24_rbus_i, data_w14_f22_r, regf_w14_f20_rbus_i, data_w14_f18_r, regf_w14_f16_rbus_i, data_w14_f14_r, regf_w14_f12_rbus_i, data_w14_f10_r, regf_w14_f8_rbus_i, data_w14_f6_r, regf_w14_f4_rbus_i, data_w14_f2_r, regf_w14_f0_rbus_i};
         end
         10'h00F: begin
-          mem_rdata_o = wvec_w15_s;
+          mem_rdata_o = {data_w15_f30_r, regf_w15_f28_rbus_i, data_w15_f26_r, regf_w15_f24_rbus_i, data_w15_f22_r, regf_w15_f20_rbus_i, data_w15_f18_r, regf_w15_f16_rbus_i, data_w15_f14_r, regf_w15_f12_rbus_i, data_w15_f10_r, regf_w15_f8_rbus_i, data_w15_f6_r, regf_w15_f4_rbus_i, data_w15_f2_r, regf_w15_f0_rbus_i};
         end
         10'h010: begin
-          mem_rdata_o = wvec_w16_s;
+          mem_rdata_o = {data_w16_f30_r, regf_w16_f28_rbus_i, data_w16_f26_r, regf_w16_f24_rbus_i, data_w16_f22_r, regf_w16_f20_rbus_i, data_w16_f18_r, regf_w16_f16_rbus_i, data_w16_f14_r, regf_w16_f12_rbus_i, data_w16_f10_r, regf_w16_f8_rbus_i, data_w16_f6_r, regf_w16_f4_rbus_i, data_w16_f2_r, regf_w16_f0_rbus_i};
         end
         10'h011: begin
-          mem_rdata_o = wvec_w17_s;
+          mem_rdata_o = {data_w17_f30_r, regf_w17_f28_rbus_i, data_w17_f26_r, regf_w17_f24_rbus_i, data_w17_f22_r, regf_w17_f20_rbus_i, data_w17_f18_r, regf_w17_f16_rbus_i, data_w17_f14_r, regf_w17_f12_rbus_i, data_w17_f10_r, regf_w17_f8_rbus_i, data_w17_f6_r, regf_w17_f4_rbus_i, data_w17_f2_r, regf_w17_f0_rbus_i};
         end
         10'h012: begin
-          mem_rdata_o = wvec_w18_s;
+          mem_rdata_o = {data_w18_f30_r, regf_w18_f28_rbus_i, data_w18_f26_r, regf_w18_f24_rbus_i, data_w18_f22_r, regf_w18_f20_rbus_i, data_w18_f18_r, regf_w18_f16_rbus_i, data_w18_f14_r, regf_w18_f12_rbus_i, data_w18_f10_r, regf_w18_f8_rbus_i, data_w18_f6_r, regf_w18_f4_rbus_i, data_w18_f2_r, regf_w18_f0_rbus_i};
         end
         10'h013: begin
-          mem_rdata_o = wvec_w19_s;
+          mem_rdata_o = {data_w19_f30_r, regf_w19_f28_rbus_i, data_w19_f26_r, regf_w19_f24_rbus_i, data_w19_f22_r, regf_w19_f20_rbus_i, data_w19_f18_r, regf_w19_f16_rbus_i, data_w19_f14_r, regf_w19_f12_rbus_i, data_w19_f10_r, regf_w19_f8_rbus_i, data_w19_f6_r, regf_w19_f4_rbus_i, data_w19_f2_r, regf_w19_f0_rbus_i};
         end
         10'h014: begin
-          mem_rdata_o = wvec_w20_s;
+          mem_rdata_o = {data_w20_f30_r, regf_w20_f28_rbus_i, data_w20_f26_r, regf_w20_f24_rbus_i, data_w20_f22_r, regf_w20_f20_rbus_i, data_w20_f18_r, regf_w20_f16_rbus_i, data_w20_f14_r, regf_w20_f12_rbus_i, data_w20_f10_r, regf_w20_f8_rbus_i, data_w20_f6_r, regf_w20_f4_rbus_i, data_w20_f2_r, regf_w20_f0_rbus_i};
         end
         10'h015: begin
-          mem_rdata_o = wvec_w21_s;
+          mem_rdata_o = {data_w21_f30_r, regf_w21_f28_rbus_i, data_w21_f26_r, regf_w21_f24_rbus_i, data_w21_f22_r, regf_w21_f20_rbus_i, data_w21_f18_r, regf_w21_f16_rbus_i, data_w21_f14_r, regf_w21_f12_rbus_i, data_w21_f10_r, regf_w21_f8_rbus_i, data_w21_f6_r, regf_w21_f4_rbus_i, data_w21_f2_r, regf_w21_f0_rbus_i};
         end
         10'h016: begin
-          mem_rdata_o = wvec_w22_s;
+          mem_rdata_o = {data_w22_f30_r, regf_w22_f28_rbus_i, data_w22_f26_r, regf_w22_f24_rbus_i, data_w22_f22_r, regf_w22_f20_rbus_i, data_w22_f18_r, regf_w22_f16_rbus_i, data_w22_f14_r, regf_w22_f12_rbus_i, data_w22_f10_r, regf_w22_f8_rbus_i, data_w22_f6_r, regf_w22_f4_rbus_i, data_w22_f2_r, regf_w22_f0_rbus_i};
         end
         10'h017: begin
-          mem_rdata_o = wvec_w23_s;
+          mem_rdata_o = {data_w23_f30_r, regf_w23_f28_rbus_i, data_w23_f26_r, regf_w23_f24_rbus_i, data_w23_f22_r, regf_w23_f20_rbus_i, data_w23_f18_r, regf_w23_f16_rbus_i, data_w23_f14_r, regf_w23_f12_rbus_i, data_w23_f10_r, regf_w23_f8_rbus_i, data_w23_f6_r, regf_w23_f4_rbus_i, data_w23_f2_r, regf_w23_f0_rbus_i};
         end
         10'h018: begin
-          mem_rdata_o = wvec_w24_s;
+          mem_rdata_o = {data_w24_f30_r, regf_w24_f28_rbus_i, data_w24_f26_r, regf_w24_f24_rbus_i, data_w24_f22_r, regf_w24_f20_rbus_i, data_w24_f18_r, regf_w24_f16_rbus_i, data_w24_f14_r, regf_w24_f12_rbus_i, data_w24_f10_r, regf_w24_f8_rbus_i, data_w24_f6_r, regf_w24_f4_rbus_i, data_w24_f2_r, regf_w24_f0_rbus_i};
         end
         10'h019: begin
-          mem_rdata_o = wvec_w25_s;
+          mem_rdata_o = {data_w25_f30_r, regf_w25_f28_rbus_i, data_w25_f26_r, regf_w25_f24_rbus_i, data_w25_f22_r, regf_w25_f20_rbus_i, data_w25_f18_r, regf_w25_f16_rbus_i, data_w25_f14_r, regf_w25_f12_rbus_i, data_w25_f10_r, regf_w25_f8_rbus_i, data_w25_f6_r, regf_w25_f4_rbus_i, data_w25_f2_r, regf_w25_f0_rbus_i};
         end
         10'h01A: begin
-          mem_rdata_o = wvec_w26_s;
+          mem_rdata_o = {4'h0, data_w26_f26_r, regf_w26_f24_rbus_i, data_w26_f22_r, regf_w26_f20_rbus_i, data_w26_f18_r, regf_w26_f16_rbus_i, data_w26_f14_r, regf_w26_f12_rbus_i, data_w26_f10_r, regf_w26_f8_rbus_i, data_w26_f6_r, regf_w26_f4_rbus_i, data_w26_f2_r, regf_w26_f0_rbus_i};
         end
         default: begin
           mem_rdata_o = 32'h00000000;
@@ -5074,53 +5032,53 @@ module full_regf (
   assign regf_w24_f12_wr_o   = (bus_w24_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w24_f16_wbus_o = (bus_w24_wren_s == 1'b1) ? regf_w24_f16_rbus_i | mem_wdata_i[17:16] : 2'h0;
   assign regf_w24_f16_wr_o   = (bus_w24_wren_s == 1'b1) ? 1'b1 : 1'b0;
-  assign regf_w24_f20_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
-  assign regf_w24_f20_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w24_f24_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
-  assign regf_w24_f24_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f20_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w24_f20_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f24_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w24_f24_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f26_rval_o = data_w24_f26_r;
-  assign regf_w24_f28_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
-  assign regf_w24_f28_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_w24_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w24_f28_wbus_o = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w24_f28_wr_o   = ((bus_w24_wren_s == 1'b1) && (bus_wronce_w24_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w24_f30_rval_o = data_w24_f30_r;
-  assign regf_w25_f0_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
-  assign regf_w25_f0_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f0_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w25_f0_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f2_rval_o  = data_w25_f2_r;
-  assign regf_w25_f4_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
-  assign regf_w25_f4_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f4_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w25_f4_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f6_rval_o  = data_w25_f6_r;
-  assign regf_w25_f8_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
-  assign regf_w25_f8_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f8_wbus_o  = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w25_f8_wr_o    = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f10_rval_o = data_w25_f10_r;
-  assign regf_w25_f12_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
-  assign regf_w25_f12_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f12_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w25_f12_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f14_rval_o = data_w25_f14_r;
-  assign regf_w25_f16_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
-  assign regf_w25_f16_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f16_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w25_f16_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f18_rval_o = data_w25_f18_r;
-  assign regf_w25_f20_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
-  assign regf_w25_f20_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f20_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w25_f20_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f22_rval_o = data_w25_f22_r;
-  assign regf_w25_f24_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
-  assign regf_w25_f24_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f24_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w25_f24_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f26_rval_o = data_w25_f26_r;
-  assign regf_w25_f28_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
-  assign regf_w25_f28_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_w25_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w25_f28_wbus_o = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w25_f28_wr_o   = ((bus_w25_wren_s == 1'b1) && (bus_wronce_w25_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w25_f30_rval_o = data_w25_f30_r;
-  assign regf_w26_f0_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
-  assign regf_w26_f0_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f0_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w26_f0_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w26_f2_rval_o  = data_w26_f2_r;
-  assign regf_w26_f4_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
-  assign regf_w26_f4_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w26_f8_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
-  assign regf_w26_f8_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w26_f12_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
-  assign regf_w26_f12_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w26_f16_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
-  assign regf_w26_f16_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w26_f20_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
-  assign regf_w26_f20_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_w26_f24_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
-  assign regf_w26_f24_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_w26_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f4_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w26_f4_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f8_wbus_o  = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w26_f8_wr_o    = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f12_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w26_f12_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f16_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w26_f16_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f20_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w26_f20_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w26_f24_wbus_o = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w26_f24_wr_o   = ((bus_w26_wren_s == 1'b1) && (bus_wronce_w26_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w26_f28_wbus_o = (bus_w26_wren_s == 1'b1) ? regf_w26_f28_rbus_i & mem_wdata_i[29:28] : 2'h0;
   assign regf_w26_f28_wr_o   = (bus_w26_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w26_f30_rval_o = data_w26_f30_r;
@@ -5253,38 +5211,38 @@ module full_regf (
   assign regf_w32_f8_wbus_o  = (bus_w32_wren_s == 1'b1) ? regf_w32_f8_rbus_i | mem_wdata_i[9:8] : 2'h0;
   assign regf_w32_f8_wr_o    = (bus_w32_wren_s == 1'b1) ? 1'b1 : 1'b0;
   assign regf_w32_f10_rval_o = data_w32_f10_r;
-  assign regf_w32_f12_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
-  assign regf_w32_f12_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w32_f12_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w32_f12_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w32_f14_rval_o = data_w32_f14_r;
-  assign regf_w32_f16_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
-  assign regf_w32_f16_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w32_f16_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w32_f16_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w32_f18_rval_o = data_w32_f18_r;
-  assign regf_w32_f20_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
-  assign regf_w32_f20_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w32_f20_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w32_f20_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w32_f22_rval_o = data_w32_f22_r;
-  assign regf_w32_f24_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
-  assign regf_w32_f24_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w32_f24_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? mem_wdata_i[25:24] : 2'h0;
+  assign regf_w32_f24_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w32_f26_rval_o = data_w32_f26_r;
-  assign regf_w32_f28_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
-  assign regf_w32_f28_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_w32_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w32_f28_wbus_o = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? mem_wdata_i[29:28] : 2'h0;
+  assign regf_w32_f28_wr_o   = ((bus_w32_wren_s == 1'b1) && (bus_wronce_w32_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w32_f30_rval_o = data_w32_f30_r;
-  assign regf_w33_f0_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
-  assign regf_w33_f0_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f0_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[1:0] : 2'h0;
+  assign regf_w33_f0_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f2_rval_o  = data_w33_f2_r;
-  assign regf_w33_f4_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
-  assign regf_w33_f4_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f4_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[5:4] : 2'h0;
+  assign regf_w33_f4_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f6_rval_o  = data_w33_f6_r;
-  assign regf_w33_f8_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
-  assign regf_w33_f8_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f8_wbus_o  = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[9:8] : 2'h0;
+  assign regf_w33_f8_wr_o    = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f10_rval_o = data_w33_f10_r;
-  assign regf_w33_f12_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
-  assign regf_w33_f12_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f12_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[13:12] : 2'h0;
+  assign regf_w33_f12_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f14_rval_o = data_w33_f14_r;
-  assign regf_w33_f16_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
-  assign regf_w33_f16_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f16_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[17:16] : 2'h0;
+  assign regf_w33_f16_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f18_rval_o = data_w33_f18_r;
-  assign regf_w33_f20_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
-  assign regf_w33_f20_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_w33_wronce_r == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_w33_f20_wbus_o = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? mem_wdata_i[21:20] : 2'h0;
+  assign regf_w33_f20_wr_o   = ((bus_w33_wren_s == 1'b1) && (bus_wronce_w33_flg0_r == 1'b1)) ? 1'b1 : 1'b0;
   assign regf_w33_f22_rval_o = data_w33_f22_r;
   assign regf_w33_f24_wbus_o = (bus_w33_wren_s == 1'b1) ? mem_wdata_i[25:24] : 2'h0;
   assign regf_w33_f24_wr_o   = (bus_w33_wren_s == 1'b1) ? 1'b1 : 1'b0;

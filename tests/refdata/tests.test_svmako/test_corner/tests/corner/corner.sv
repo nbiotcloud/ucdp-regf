@@ -119,6 +119,9 @@ module corner (
     .regf_wide_b_rval_o          (             ), // TODO - Core Read Value
     .regf_base_rval_o            (             ), // TODO - Core Read Value
     .regf_wide_d_rval_o          (             ), // TODO - Core Read Value
+    .regf_wonly_wo_rval_o        (             ), // TODO - Core Read Value
+    .regf_full_f0_rval_o         (             ), // TODO - Core Read Value
+    .regf_full_f0_upd_o          (             ), // TODO - Update Strobe
     .another_grd_i               (1'b0         )  // TODO
   );
 
