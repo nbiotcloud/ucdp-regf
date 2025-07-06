@@ -224,7 +224,7 @@ def get_guard_errors(  # TODO: errors on read-modify
     aligntext.set_separators(first=" " * indent)
     for word, fields in addrspace.iter(fieldfilter=filter_busgrderr):
         signame = f"bus_{word.name}_grderr_s{{idx}}"
-        flderrs = []
+        flderrlst = []
         for field in fields:
             cnd = []
             fslc = rslvr.resolve_slice(field.slice)
@@ -248,13 +248,13 @@ def get_guard_errors(  # TODO: errors on read-modify
                 flderr = f"({' & '.join(cnd)})"
             else:
                 flderr = cnd[0]
-            if flderr not in flderrs:  # avoid duplicate conditions
-                flderrs.append(flderr)
+            if flderr not in flderrlst:  # avoid duplicate conditions
+                flderrlst.append(flderr)
 
-        if len(flderrs) == 1:
-            flderrs = f"{flderrs[0]};"
+        if len(flderrlst) == 1:
+            flderrs = f"{flderrlst[0]};"
         else:
-            flderrs = " |\n  ".join(flderrs)
+            flderrs = " |\n  ".join(flderrlst)
             flderrs = f"( {flderrs} );"
 
         if word.depth:

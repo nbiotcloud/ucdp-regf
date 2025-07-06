@@ -324,8 +324,12 @@ def filter_busgrderr(field: Field) -> bool:
     """Fields with conditional Modify Access."""
     return (
         field.bus
-        and ((field.bus.write and field.bus.write.once) or (field.bus.read and field.bus.read.data) or field.wr_guard)
-        and field.guard_err
+        and (
+            (field.bus.write and field.bus.write.once)
+            or (field.bus.read and field.bus.read.data)
+            or (field.wr_guard is not None)
+        )
+        and (field.guard_err is not None)
     )
 
 
