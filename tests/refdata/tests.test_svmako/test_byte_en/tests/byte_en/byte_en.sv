@@ -72,7 +72,9 @@ module byte_en (
     .regf_w1_f2_rbus_i(13'h0000     ), // TODO - Bus Read Value
     .regf_w1_f2_wbus_o(             ), // TODO - Bus Write Value
     .regf_w1_f2_wr_o  (             ), // TODO - Bus Bit-Write Strobe
-    .regf_w2_f1_rval_o(             )  // TODO - Core Read Value
+    .regf_w2_f1_rval_o(             ), // TODO - Core Read Value
+    .regf_w3_wo_rval_o(             ), // TODO - Core Read Value
+    .grd_i            (1'b0         )  // TODO
   );
 
 endmodule // byte_en

@@ -119,19 +119,16 @@ module portgroup_regf #(
     bus_ctrl_wren_s = 1'b0;
     bus_tx_wren_s   = 1'b0;
 
-
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
         end
         10'h001: begin
           mem_err_o = mem_wena_i;
         end
         10'h002: begin
-          mem_err_o = 0;
           bus_tx_wren_s = mem_wena_i;
         end
         default: begin
@@ -162,12 +159,6 @@ module portgroup_regf #(
     end
   end
 
-  // ------------------------------------------------------
-  //  Collect word vectors
-  // ------------------------------------------------------
-  assign wvec_ctrl_s = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
-  assign wvec_rx_s   = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
-  assign wvec_tx_s   = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -176,13 +167,13 @@ module portgroup_regf #(
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = wvec_ctrl_s;
+          mem_rdata_o = {30'h00000000, regf_top_ctrl_busy_rbus_i, data_ctrl_ena_r};
         end
         10'h001: begin
-          mem_rdata_o = wvec_rx_s;
+          mem_rdata_o = {{32 - (((width_p - 1) + (3 * width_p)) + 1) {1'b0}}, regf_rx_rx_data2_rbus_i, {(3 * width_p) - (((width_p - 1) + width_p) + 1) {1'b0}}, regf_rx_rx_data1_rbus_i, regf_rx_rx_data0_rbus_i};
         end
         10'h002: begin
-          mem_rdata_o = wvec_tx_s;
+          mem_rdata_o = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
         end
         default: begin
           mem_rdata_o = 32'h00000000;

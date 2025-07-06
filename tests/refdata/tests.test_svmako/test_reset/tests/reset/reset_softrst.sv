@@ -93,12 +93,10 @@ module reset_softrst (
     mem_err_o = 1'b0;
     bus_ctrl_wren_s = 1'b0;
 
-
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_err_o = 0;
           bus_ctrl_wren_s = mem_wena_i;
         end
         default: begin
@@ -126,10 +124,6 @@ module reset_softrst (
     end
   end
 
-  // ------------------------------------------------------
-  //  Collect word vectors
-  // ------------------------------------------------------
-  assign wvec_ctrl_s = {27'h0000000, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -138,7 +132,7 @@ module reset_softrst (
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = wvec_ctrl_s;
+          mem_rdata_o = {27'h0000000, regf_ctrl_busy_rbus_i, 3'h0, data_ctrl_ena_r};
         end
         default: begin
           mem_rdata_o = 32'h00000000;

@@ -23,18 +23,19 @@
 #
 
 """
-Address Space.
+Register File.
 
 TODO: example
 """
 
 import re
 from functools import cached_property
-from typing import ClassVar, Literal, TypeAlias
+from typing import ClassVar, Literal, NamedTuple, TypeAlias
 
 import ucdp as u
 import ucdp_addr as ua
 from icdutil.num import calc_unsigned_width
+from pydantic import PositiveInt
 from tabulate import tabulate
 from ucdp_glbl.mem import MemIoType, SliceWidths, calc_slicewidths
 
@@ -45,11 +46,14 @@ WriteOp: TypeAlias = ua.WriteOp
 
 Prio = Literal["bus", "core"]
 
+# TODO: double check these defaults...
 _IN_REGF_DEFAULTS = {
     ua.access.RO: False,
     ua.access.WO: False,
     ua.access.RW: True,
 }
+
+GrdErrMode = Literal[None, "W", "C"]
 
 
 class Field(ua.Field):
@@ -65,9 +69,14 @@ class Field(ua.Field):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GrdErrMode = None
+    """Bus error on write to guarded/write-once field."""
     signame: str
     """Signal Basename to Core."""
     route: u.Routeables | None = None
+    """Optional Route."""
+    is_alias: bool = False
+    """Used as Alias for Wordio."""
 
     @property
     def bus_prio(self) -> bool:
@@ -79,6 +88,19 @@ class Field(ua.Field):
         if self.bus and (self.bus.write or (self.bus.read and self.bus.read.data is not None)):
             return True
         return False
+
+    @cached_property
+    def valname(self) -> str:
+        """Reference to Current Value."""
+        if self.in_regf:
+            if self.is_alias:
+                return f"wvec_{self.signame}_s"
+            return f"data_{self.signame}_{'c' if self.is_const else 'r'}"
+        basename = "regf"  # TODO: may change depending on 'is_alias'
+        if self.portgroups:
+            # from core: handle special naming; non-in_regf field cannot be part of more than 1 portgroup
+            return f"{basename}_{self.portgroups[0]}_{self.signame}_rbus_i"
+        return f"{basename}_{self.signame}_rbus_i"  # from core: std names
 
     @staticmethod
     def from_word(word: "Word", **kwargs) -> "Field":
@@ -104,6 +126,7 @@ class Field(ua.Field):
             # wr_guard=word.wr_guard,
             signame=word.name,
             doc=word.doc,
+            is_alias=True,
             # attrs=word.attrs,
             # **kwargs,
         )
@@ -122,6 +145,8 @@ class Word(ua.Word):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GrdErrMode = None
+    """Bus error on write to word with guarded/write-once fields."""
     wordio: bool = False
     """Create Word-Based Interface Towards Core."""
     fieldio: bool = True
@@ -138,6 +163,7 @@ class Word(ua.Word):
         upd_prio=None,
         upd_strb=None,
         wr_guard=None,
+        guard_err=None,
         **kwargs,
     ) -> Field:
         if portgroups is None:
@@ -156,6 +182,8 @@ class Word(ua.Word):
             upd_strb = self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
+        if guard_err is None:
+            guard_err = self.guard_err
         field = Field(
             name=name,
             bus=bus,
@@ -166,6 +194,7 @@ class Word(ua.Word):
             upd_prio=upd_prio,
             upd_strb=upd_strb,
             wr_guard=wr_guard,
+            guard_err=guard_err,
             **kwargs,
         )
         check_field(self.name, field)
@@ -224,9 +253,16 @@ class Addrspace(ua.Addrspace):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GrdErrMode = None
+    """Bus error on write to words with guarded/write-once fields."""
+
+    @cached_property
+    def addr_width(self) -> int:
+        """Returns derived Address Width for Addrspace."""
+        return calc_unsigned_width(self.depth - 1)
 
     def _create_word(
-        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, **kwargs
+        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, guard_err=None, **kwargs
     ) -> Word:
         if portgroups is None:
             portgroups = self.portgroups
@@ -238,32 +274,40 @@ class Addrspace(ua.Addrspace):
             upd_strb = self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
+        if guard_err is None:
+            guard_err = self.guard_err
         return Word(
-            portgroups=portgroups, in_regf=in_regf, upd_prio=upd_prio, upd_strb=upd_strb, wr_guard=wr_guard, **kwargs
+            portgroups=portgroups,
+            in_regf=in_regf,
+            upd_prio=upd_prio,
+            upd_strb=upd_strb,
+            wr_guard=wr_guard,
+            guard_err=guard_err,
+            **kwargs,
         )
 
     def _create_words(self, **kwargs) -> Words:
         return Words.create(**kwargs)
 
 
-def filter_regf_flipflops(field: Field):
+def filter_busacc(field: Field) -> bool:
+    """Bus accessible Fields."""
+    return field.bus and (field.bus.write or field.bus.read)
+
+
+def filter_regf_flipflops(field: Field) -> bool:
     """In-Regf Flop Fields."""
     return field.in_regf and not field.is_const
 
 
-def filter_buswrite(field: Field):
+def filter_buswrite(field: Field) -> bool:
     """Writable Bus Fields."""
     return field.bus and field.bus.write
 
 
-def filter_buswriteonce(field: Field):
+def filter_buswriteonce(field: Field) -> bool:
     """Write-Once Bus Fields."""
     return field.bus and field.bus.write and field.bus.write.once
-
-
-def filter_rdmod(field: Field):
-    """Fields requiring extra read-enable."""
-    return field.bus and field.bus.read and field.bus.read.data is not None
 
 
 def filter_busread(field: Field) -> bool:
@@ -271,7 +315,54 @@ def filter_busread(field: Field) -> bool:
     return field.bus and field.bus.read
 
 
-wfp_ident = re.compile(r"((?P<word>\w+)\.(?P<field>\w+))|(?P<import>\w+_i)")
+def filter_busrdmod(field: Field) -> bool:
+    """Modify-on-read Fields in Regf."""
+    return field.bus and field.bus.read and field.bus.read.data is not None
+
+
+def filter_busgrderr(field: Field) -> bool:
+    """Fields with conditional Modify Access."""
+    return (
+        field.bus
+        and (
+            (field.bus.write and field.bus.write.once)
+            or (field.bus.read and field.bus.read.data)
+            or (field.wr_guard is not None)
+        )
+        and (field.guard_err is not None)
+    )
+
+
+def filter_coreacc(field: Field) -> bool:
+    """Core-Accessible Fields."""
+    return not field.in_regf or (field.core and (field.core.write or field.core.read))
+
+
+def filter_coreread(field: Field) -> bool:
+    """Core-Readable Fields."""
+    return field.core and field.core.read
+
+
+wfp_ident = re.compile(r"((?P<word>\w+)\.(?P<field>\w+))|(?P<port>\w+_i)")
+
+
+class SigExprTuple(NamedTuple):
+    """Used for Guard Management."""
+
+    signame: str
+    sigexpr: str
+
+
+class GrdSlcTuple(NamedTuple):
+    """Used for Guard Management."""
+
+    grd: str | None
+    slc: str | None
+
+
+GuardDict: TypeAlias = dict[str, SigExprTuple]
+WrdOnceDict: TypeAlias = dict[str, dict[GrdSlcTuple, str]]
+FldOnceDict: TypeAlias = dict[str, str]
 
 
 class UcdpRegfMod(u.ATailoredMod):
@@ -281,7 +372,7 @@ class UcdpRegfMod(u.ATailoredMod):
     """Width in Bits."""
     depth: int = 1024
     """Number of words."""
-    slicing: int | SliceWidths | None = None
+    slicing: PositiveInt | SliceWidths | None = None
     """Use sliced write enables (of same or individual widths)."""
 
     # Replicated from Addrspace
@@ -295,6 +386,8 @@ class UcdpRegfMod(u.ATailoredMod):
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
+    guard_err: GrdErrMode = None
+    """Bus error on write to words with guarded/write-once fields."""
 
     filelists: ClassVar[u.ModFileLists] = (
         u.ModFileList(
@@ -304,8 +397,10 @@ class UcdpRegfMod(u.ATailoredMod):
         ),
     )
 
-    _guards: dict[str, tuple[str, str]] = u.PrivateField(default_factory=dict)
     _soft_rst: str = u.PrivateField(default=None)
+    _guards: GuardDict = u.PrivateField(default_factory=dict)
+    _wrdonce: WrdOnceDict = u.PrivateField(default_factory=dict)
+    _fldonce: FldOnceDict = u.PrivateField(default_factory=dict)
 
     @cached_property
     def addrspace(self) -> Addrspace:
@@ -319,7 +414,24 @@ class UcdpRegfMod(u.ATailoredMod):
             upd_prio=self.upd_prio,
             upd_strb=self.upd_strb,
             wr_guard=self.wr_guard,
+            guard_err=self.guard_err,
         )
+
+    @cached_property
+    def _bus_slices(self) -> list[u.Slice]:
+        """List of Slices for Bus Write Enables."""
+        slicing = self.slicing
+        if not slicing:
+            return [u.Slice(width=self.width)]
+        if isinstance(slicing, int):
+            return [u.Slice(right=(idx * slicing), width=slicing) for idx in range(self.width // slicing)]
+        right = 0
+        slices = []
+        for slc in slicing:
+            assert slc > 0, f"Illegal value smaller than 1 detected for slicing tuple for '{self.name}'!"
+            slices.append(u.Slice(right=right, width=slc))
+            right += slc
+        return slices
 
     @cached_property
     def regfiotype(self) -> u.DynamicStructType:
@@ -351,17 +463,19 @@ class UcdpRegfMod(u.ATailoredMod):
         self.add_port(self.regfwordiotype, "regfword_o")
         if self.parent:
             _create_route(self, self.addrspace)
+        self._prep_guards()
+        self._prep_wronce()
         self._add_const_decls()
         self._add_ff_decls()
         self._add_bus_word_en_decls()
-        self._prep_guards()
         self._add_wrguard_decls()
+        self._add_grderr_decls()
         self._add_word_vector_decls()
         self._handle_soft_reset()
         if self.slicing:
             self.add_signal(u.UintType(self.width), "bit_en_s")
 
-    def _handle_soft_reset(self):
+    def _handle_soft_reset(self):  # noqa: C901
         if self._soft_rst is None:
             return
         wfp = wfp_ident.match(self._soft_rst)
@@ -369,11 +483,14 @@ class UcdpRegfMod(u.ATailoredMod):
             raise ValueError(f"Illegal identifier '{self._soft_rst}' for soft reset.")
         wname = wfp.group("word")
         fname = wfp.group("field")
-        pname = wfp.group("import")
+        pname = wfp.group("port")
         if pname:
-            if pname != "soft_rst_i":
-                raise ValueError(f"Illegal name '{self._soft_rst}' for soft reset input port.")
-            self.add_port(u.RstType(), self._soft_rst)
+            p = self.ports.get(pname, None)
+            if p is None:
+                self.add_port(u.RstType(), pname)
+            elif p.type_ != u.RstType():
+                raise ValueError(f"Illegal type '{p.type_}' instead of 'RstType()' for soft reset input '{pname}'.")
+            self._soft_rst = SigExprTuple(pname, None)
         else:
             try:
                 thefield = self.addrspace.words[wname].fields[fname]
@@ -383,10 +500,16 @@ class UcdpRegfMod(u.ATailoredMod):
                 raise ValueError(f"Soft reset from {wname}/{fname} is not of type 'RstType()' but '{thefield.type_}'.")
             if self.addrspace.words[wname].depth:
                 raise ValueError(f"Soft reset from {wname}/{fname} must not have 'depth'>0 in word.")
-            if thefield.in_regf:
+            if thefield.in_regf:  # i.e. WO
                 raise ValueError(f"Soft reset from {wname}/{fname} must not have 'in_regf=True'.")
-            self._soft_rst = f"bus_{wname}_{fname}_rst_s"
-            self.add_signal(u.RstType(), self._soft_rst)
+            rstname = f"bus_{wname}_{fname}_rst_s"
+            rstexpr = f"bus_{wname}_wren_s & mem_wdata_i[{thefield.slice}]"
+            if thefield.wr_guard:
+                rstexpr += f" & {self._guards[thefield.wr_guard].signame}"
+            if (once := self._fldonce.get(thefield.signame, None)) is not None:
+                rstexpr += f" & {once}"
+            self._soft_rst = SigExprTuple(rstname, rstexpr)
+            self.add_signal(u.RstType(), rstname)
 
     def _add_const_decls(self):
         def filter_regf_consts(field: Field):
@@ -400,7 +523,7 @@ class UcdpRegfMod(u.ATailoredMod):
                 signame = f"data_{field.signame}_c"
                 self.add_const(type_, signame, comment=f"{word.name} / {field.name}")
 
-    def _add_ff_decls(self):
+    def _add_ff_decls(self):  # noqa: C901
         for word, fields in self.addrspace.iter():
             cmt = f"Word {word.name}"
             for field in fields:  # regular in-regf filed flops
@@ -413,34 +536,19 @@ class UcdpRegfMod(u.ATailoredMod):
                 self.add_signal(type_, signame, comment=cmt)
                 cmt = None
             # special purpose flops
-            self._add_special_ff_decls(word)
-
-    def _add_special_ff_decls(self, word: Word):
-        wordonce = False
-        grdonce: list[str] = []
-        signame = f"bus_{word.name}_{{os}}once_r"
-        type_ = u.BitType(default=1)
-        strbtype_ = u.BitType()
-        if word.depth:
-            type_ = u.ArrayType(type_, word.depth)
-            strbtype_ = u.ArrayType(strbtype_, word.depth)
-        if word.upd_strb:
-            self.add_signal(strbtype_, f"upd_strb_{word.name}_r")
-        for field in word.fields:
-            if field.upd_strb:
-                self.add_signal(strbtype_, f"upd_strb_{field.signame}_r")
-            if not filter_buswriteonce(field):
-                continue
-            if field.wr_guard:
-                if field.wr_guard in grdonce:
-                    continue
-                grdidx = len(grdonce)
-                grdonce.append(field.wr_guard)
-                oncespec = f"grd{grdidx}"
-                self.add_signal(type_, signame.format(os=oncespec))
-            elif not wordonce:
-                wordonce = True
-                self.add_signal(type_, signame.format(os="wr"))
+            wrotype_ = u.BitType(default=1)
+            strbtype_ = u.BitType()
+            if word.depth:
+                wrotype_ = u.ArrayType(wrotype_, word.depth)
+                strbtype_ = u.ArrayType(strbtype_, word.depth)
+            if (once := self._wrdonce.get(word.name, None)) is not None:
+                for signame in once.values():
+                    self.add_signal(wrotype_, signame)
+            if word.upd_strb:
+                self.add_signal(strbtype_, f"upd_strb_{word.name}_r")
+            for field in fields:
+                if field.upd_strb:
+                    self.add_signal(strbtype_, f"upd_strb_{field.signame}_r")
 
     def _add_bus_word_en_decls(self):
         cmt = "bus word write enables"
@@ -451,8 +559,8 @@ class UcdpRegfMod(u.ATailoredMod):
                 type_ = u.ArrayType(type_, word.depth)
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
-        cmt = "bus word read enables"
-        for word, _ in self.addrspace.iter(fieldfilter=filter_rdmod):
+        cmt = "bus word read-modify enables"
+        for word, _ in self.addrspace.iter(fieldfilter=filter_busrdmod):
             signame = f"bus_{word.name}_rden_s"
             type_ = u.BitType()
             if word.depth:
@@ -472,9 +580,19 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
 
-    def _prep_guards(self):  # noqa: C901
+    def _add_grderr_decls(self):
+        cmt = "guard errors"
+        for word, _ in self.addrspace.iter(fieldfilter=filter_busgrderr):
+            signame = f"bus_{word.name}_grderr_s"
+            type_ = u.BitType()
+            if word.depth:
+                type_ = u.ArrayType(type_, word.depth)
+            self.add_signal(type_, signame, comment=cmt)
+            cmt = None
+
+    def _prep_guards(self):
         idx = 0
-        for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
+        for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):  # TODO: busmodify?
             for field in fields:
                 if field.wr_guard:
                     if self._guards.get(field.wr_guard, None) is not None:  # already known
@@ -484,7 +602,7 @@ class UcdpRegfMod(u.ATailoredMod):
                     for wfp in wfp_ident.finditer(wrguard):
                         wname = wfp.group("word")
                         fname = wfp.group("field")
-                        pname = wfp.group("import")
+                        pname = wfp.group("port")
                         if pname:
                             # check for port already known and for correct type
                             p = self.ports.get(pname, None)
@@ -498,15 +616,31 @@ class UcdpRegfMod(u.ATailoredMod):
                             continue  # no translation necessary for port
                         # translate word/field symnames to their respective signals
                         thefield = self.addrspace.words[wname].fields[fname]
-                        if thefield.in_regf:
-                            rplc = f"data_{thefield.signame}_r"
-                        elif thefield.portgroups:
-                            rplc = f"regf_{thefield.portgroups[0]}_{thefield.signame}_rbus_i"
-                        else:
-                            rplc = f"regf_{thefield.signame}_rbus_i"
-                        sigexpr = sigexpr.replace(wfp.group(), rplc)
-                    self._guards[field.wr_guard] = (signame, sigexpr)
+                        sigexpr = sigexpr.replace(wfp.group(), thefield.valname)
+                    self._guards[field.wr_guard] = SigExprTuple(signame, sigexpr)
                     idx += 1
+
+    def _prep_wronce(self):
+        rslvr = u.ExprResolver(namespace=self.namespace)
+        fldonce = {}
+        for word, fields in self.addrspace.iter(fieldfilter=filter_buswriteonce):
+            wrdonce = {}
+            for field in fields:
+                guard = field.wr_guard and self._guards[field.wr_guard].signame
+                for slcidx, bslc in enumerate(self._bus_slices):
+                    if (field.slice.mask & bslc.mask) == field.slice.mask:
+                        # field completely covered by bus slice
+                        once = f"mem_sel_i[{slcidx}]"
+                        break
+                else:
+                    once = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
+                    if field.slice.left != field.slice.right:
+                        once = f"(|{once})"
+                fldonce[field.signame] = wrdonce.setdefault(
+                    GrdSlcTuple(guard, (self.slicing and once)), f"bus_wronce_{word.name}_flg{len(wrdonce)}_r"
+                )
+            self._wrdonce[word.name] = wrdonce
+        self._fldonce = fldonce
 
     def _add_wrguard_decls(self):
         cmt = "write guards"
@@ -527,11 +661,11 @@ class UcdpRegfMod(u.ATailoredMod):
         Add Soft Reset.
 
         Calling w/o argument results in adding input 'soft_rst_i.
+        Calling with a string will be treated as soft reset input port name and checked for name and type conformance.
         calling with a string '<word>.<field>' will use this field as soft reset.
-        Calling with any other string will be an error.
         """
         if self._soft_rst is not None:
-            raise ValueError("Soft reset has been already defined.")
+            raise ValueError(f"Soft reset has been already defined as '{self._soft_rst}'.")
         self._soft_rst = soft_reset
 
     def get_overview(self) -> str:
@@ -586,10 +720,11 @@ Portgroupmap: TypeAlias = dict[str | None, u.DynamicStructType]
 def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
     """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: Portgroupmap = {None: u.DynamicStructType()}
-    for word in addrspace.words:
+    for word, fields in addrspace.iter(fieldfilter=filter_coreacc):
         if not word.fieldio:
+            assert word.wordio, f"Word {word.name} requires core connection, either 'fieldio' or 'wordio' must be set!"
             continue
-        for field in word.fields:
+        for field in fields:
             _add_field(portgroupmap, field, sliced_en, word.depth)
     return portgroupmap[None]
 
@@ -680,34 +815,34 @@ class FieldIoType(u.AStructType):
                     self._add("wr", u.BitType(), comment="Bus Write Strobe")
 
 
-def offset2addr(offset: int, width: int, addrwidth: int) -> u.Hex:
-    """
-    Offset to Address.
+# def offset2addr(offset: int, width: int, addrwidth: int) -> u.Hex:
+#     """
+#     Offset to Address.
 
-    Example:
+#     Example:
 
-        >>> offset2addr(0, 32, 12)
-        Hex('0x000')
-        >>> offset2addr(1, 32, 12)
-        Hex('0x004')
-        >>> offset2addr(2, 32, 12)
-        Hex('0x008')
-        >>> offset2addr(4, 32, 12)
-        Hex('0x010')
-        >>> offset2addr(4, 15, 12)
-        Hex('0x007')
-    """
-    return u.Hex(offset * width / 8, width=addrwidth)
+#         >>> offset2addr(0, 32, 12)
+#         Hex('0x000')
+#         >>> offset2addr(1, 32, 12)
+#         Hex('0x004')
+#         >>> offset2addr(2, 32, 12)
+#         Hex('0x008')
+#         >>> offset2addr(4, 32, 12)
+#         Hex('0x010')
+#         >>> offset2addr(4, 15, 12)
+#         Hex('0x007')
+#     """
+#     return u.Hex(offset * width / 8, width=addrwidth)
 
 
-def offsetslice2addrslice(slice: u.Slice, width: int, addrwidth: int) -> u.Slice:
-    """
-    Offset Slice to Address Slice.
+# def offsetslice2addrslice(slice: u.Slice, width: int, addrwidth: int) -> u.Slice:
+#     """
+#     Offset Slice to Address Slice.
 
-    >>> offsetslice2addrslice(u.Slice(left=3, right=1), 32, 12)
-    Slice('0x00C:0x004')
-    """
-    return u.Slice(left=offset2addr(slice.left, width, addrwidth), right=offset2addr(slice.right, width, addrwidth))
+#     >>> offsetslice2addrslice(u.Slice(left=3, right=1), 32, 12)
+#     Slice('0x00C:0x004')
+#     """
+#     return u.Slice(left=offset2addr(slice.left, width, addrwidth), right=offset2addr(slice.right, width, addrwidth))
 
 
 # TODO:

@@ -28,7 +28,9 @@ from collections.abc import Callable
 
 import ucdp as u
 import ucdp_addr as ua
+from pydantic import PositiveInt
 from pytest import fixture, raises
+from ucdp_glbl.mem import SliceWidths
 
 from ucdp_regf.ucdp_regf import UcdpRegfMod, Word
 
@@ -113,9 +115,10 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     class ExMod(u.AMod):
         tst_cond: Callable | None = None
+        slicing: PositiveInt | SliceWidths | None = None
 
         def _build(self):
-            regf = UcdpRegfMod(self, "u_regf")
+            regf = UcdpRegfMod(self, "u_regf", slicing=self.slicing)
             if self.tst_cond is not None:
                 self.tst_cond(regf)
 
@@ -125,11 +128,14 @@ def test_regf_exc():  # noqa: C901, PLR0915
     with raises(ValueError, match=re.escape("Illegal identifier 'foo' for soft reset.")):
         ExMod(tst_cond=exc_rstname).get_inst("u_regf")
 
-    def exc_rstportnm(regf: UcdpRegfMod) -> None:
+    def exc_rstporttp(regf: UcdpRegfMod) -> None:
+        regf.add_port(u.BitType(), "foo_i")
         regf.add_soft_rst("foo_i")
 
-    with raises(ValueError, match=re.escape("Illegal name 'foo_i' for soft reset input port.")):
-        ExMod(tst_cond=exc_rstportnm).get_inst("u_regf")
+    with raises(
+        ValueError, match=re.escape("Illegal type 'BitType()' instead of 'RstType()' for soft reset input 'foo_i'.")
+    ):
+        ExMod(tst_cond=exc_rstporttp).get_inst("u_regf")
 
     def exc_rfname(regf: UcdpRegfMod) -> None:
         word = regf.add_word("w0")
@@ -169,7 +175,7 @@ def test_regf_exc():  # noqa: C901, PLR0915
         regf.add_soft_rst("ctrl.clrall")
         regf.add_soft_rst("soft_rst_i")
 
-    with raises(ValueError, match=re.escape("Soft reset has been already defined.")):
+    with raises(ValueError, match=re.escape("Soft reset has been already defined as 'ctrl.clrall'.")):
         ExMod(tst_cond=exc_rstdupl).get_inst("u_regf")
 
     def exc_wrgrd(regf: UcdpRegfMod) -> None:
@@ -186,3 +192,22 @@ def test_regf_exc():  # noqa: C901, PLR0915
 
     with raises(ValueError, match=re.escape("Field 'chk' has no core access for route.")):
         ExMod(tst_cond=exc_route).get_inst("u_regf")
+
+    with raises(ValueError, match=re.escape("Input should be greater than 0")):
+        ExMod(slicing=-3).get_inst("u_regf")
+
+    def exc_slc(regf: UcdpRegfMod) -> None:
+        word = regf.add_word("w0")
+        word.add_field("chk", u.BitType(), bus="WL", core="RO")
+
+    with raises(ValueError, match=re.escape("Illegal value smaller than 1 detected for slicing tuple for 'u_regf'!")):
+        ExMod(tst_cond=exc_slc, slicing=(16, -8, 8)).get_inst("u_regf")
+
+    def exc_coreio(regf: UcdpRegfMod) -> None:
+        word = regf.add_word("w0", bus="RW", core="RO", fieldio=False, wordio=False)
+        word.add_field("f0", u.BitType())
+
+    with raises(
+        ValueError, match=re.escape("Word w0 requires core connection, either 'fieldio' or 'wordio' must be set!")
+    ):
+        ExMod(tst_cond=exc_coreio).get_inst("u_regf")

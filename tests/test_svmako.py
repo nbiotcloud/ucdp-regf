@@ -186,10 +186,10 @@ class CornerMod(u.AMod):
             upd_prio="core",
         )
 
-        word = regf.add_word("guards", in_regf=True, depth=1)
+        word = regf.add_word("guards", in_regf=True, depth=1, guard_err="C")
         word.add_field("once", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.ena & ctrl.busy")
-        word.add_field("coreonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", in_regf=False)
-        word.add_field("busonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", in_regf=False)
+        word.add_field("coreonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", guard_err="W", in_regf=False)
+        word.add_field("busonce", u.BitType(), bus="WL", core="RO", wr_guard="ctrl.busy", guard_err="W", in_regf=False)
         word.add_field(
             "single",
             u.BitType(),
@@ -202,7 +202,7 @@ class CornerMod(u.AMod):
             bus="WL",
             core="RO",
         )
-        word.add_field("guard_a", u.UintType(4), "RW", wr_guard="ctrl.ena & ctrl.busy")
+        word.add_field("guard_a", u.UintType(4), bus="RWL", core="RO", wr_guard="ctrl.ena & ctrl.busy")
         word.add_field("guard_b", u.UintType(4), "RW", wr_guard="ctrl.busy")
         word.add_field("guard_c", u.UintType(4), "RW", wr_guard="ctrl.busy", upd_strb=True)
         word.add_field("cprio", u.BitType(), bus="RW", core="RW", upd_prio="core")
@@ -224,6 +224,17 @@ class CornerMod(u.AMod):
         word.add_field("b", u.UintType(16), "RW")
         word.add_field("c", u.UintType(16), "RW", signame="base")
         word.add_field("d", u.UintType(16), "RW")
+
+        word = regf.add_word("wonly", wr_guard="grd_i", guard_err="W")
+        word.add_field("wo", u.BitType(), "WO", in_regf=True)
+
+        word = regf.add_word("full", upd_strb=True, wr_guard="grd_i")
+        ba = ua.Access(
+            name="WCR",
+            write=ua.WriteOp(name="WC", data=None, op=0, write=None, title="WC", descr="Write-Clear"),
+            read=ua.access._R,
+        )
+        word.add_field("f0", u.UintType(32), bus=ba, core="RO")
 
 
 def test_corner(tmp_path):
@@ -298,7 +309,7 @@ class ResetMod(u.AMod):
         regf = RegfMod(self, "u_regrst")
         regf.con("main_i", "main_i")
         word = regf.add_word("ctrl")
-        word.add_field("clrall", u.RstType(), "WO")
+        word.add_field("clrall", u.RstType(), bus="WL", core="RO", wr_guard="gdr_i", in_regf=False)
         word.add_field("ena", u.EnaType(), "RW")
         word.add_field("busy", u.BusyType(), "RO", align=4, route="create(busy2_s)")
         regf.add_soft_rst("ctrl.clrall")
@@ -337,6 +348,9 @@ class ByteEnMod(u.AMod):
         word = regf.add_word("w2")
         word.add_field("f1", u.SintType(13), "RW")
 
+        word = regf.add_word("w3", wr_guard="grd_i", guard_err="C")
+        word.add_field("wo", u.BitType(), "WO", in_regf=True)
+
 
 def test_byte_en(tmp_path):
     """Byte Enables."""
@@ -360,8 +374,10 @@ class SliceEnMod(u.AMod):
         word = regf.add_word("w0")
         word.add_field("f0", u.UintType(13), "RW")
         word.add_field("f1", u.UintType(3), "RW")
-        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f2", u.UintType(2), "WO")
         word.add_field("f3", u.UintType(3), "RO")
+        word.add_field("f4", u.UintType(3), "RWL")
+        word.add_field("f5", u.UintType(3), "RWL")
 
         word = regf.add_word("w1")
         word.add_field("f0", u.UintType(7), "RW", in_regf=False)
@@ -405,6 +421,15 @@ class BitEnMod(u.AMod):
         word = regf.add_word("w2")
         word.add_field("f1", u.SintType(13), "RW")
 
+        regf = RegfMod(self, "u_bit_en2", slicing=(1,) * 32)
+        regf.con("main_i", "main_i")
+
+        word = regf.add_word("w0")
+        word.add_field("f0", u.UintType(13), "RW")
+        word.add_field("f1", u.UintType(3), "RW")
+        word.add_field("f2", u.UintType(13), "WO")
+        word.add_field("f3", u.UintType(3), "RO")
+
 
 def test_bit_en(tmp_path):
     """Bit Enables."""
@@ -415,7 +440,7 @@ def test_bit_en(tmp_path):
 
 
 class WordFieldMod(u.AMod):
-    """A Simple UART."""
+    """Register File with wordio."""
 
     filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
 
@@ -455,20 +480,24 @@ class WordFieldMod(u.AMod):
                         word.add_field(f"s{sidx}", u.BitType(), upd_strb=upd_strb)
         word = regf.add_word(
             "www",
-            bus=ua.RW,
+            bus="RW",
             wordio=True,
             portgroups=(
-                "foo",
-                "bar",
+                "agrp",
+                "bgrp",
             ),
             upd_strb=True,
         )
         word.add_field("a", u.UintType(6, default=3), upd_strb=False)
         word.add_field("b", u.BitType(), align=4, upd_strb=False)
 
+        word = regf.add_word("nofld", bus="RW", wordio=True, fieldio=False)
+        word.add_field("a", u.UintType(6, default=3))
+        word.add_field("b", u.BitType(), align=4)
+
 
 def test_word_field(tmp_path):
-    """Register File with All Combinations."""
+    """Register File with wordio."""
     mod = WordFieldMod()
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")

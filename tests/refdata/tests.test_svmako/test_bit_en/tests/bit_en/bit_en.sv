@@ -75,6 +75,27 @@ module bit_en (
     .regf_w2_f1_rval_o(             )  // TODO - Core Read Value
   );
 
+
+  // ------------------------------------------------------
+  //  tests.bit_en_bit_en2: u_bit_en2
+  // ------------------------------------------------------
+  bit_en_bit_en2 u_bit_en2 (
+    .main_clk_i       (main_clk_i   ), // Clock
+    .main_rst_an_i    (main_rst_an_i), // Async Reset (Low-Active)
+    .mem_ena_i        (1'b0         ), // TODO - Memory Access Enable
+    .mem_addr_i       (10'h000      ), // TODO - Memory Address
+    .mem_wena_i       (1'b0         ), // TODO - Memory Write Enable
+    .mem_wdata_i      (32'h00000000 ), // TODO - Memory Write Data
+    .mem_rdata_o      (             ), // TODO - Memory Read Data
+    .mem_sel_i        (32'h00000000 ), // TODO - Slice Selects
+    .mem_err_o        (             ), // TODO - Memory Access Failed.
+    .regf_w0_f0_rval_o(             ), // TODO - Core Read Value
+    .regf_w0_f1_rval_o(             ), // TODO - Core Read Value
+    .regf_w0_f2_wbus_o(             ), // TODO - Bus Write Value
+    .regf_w0_f2_wr_o  (             ), // TODO - Bus Bit-Write Strobe
+    .regf_w0_f3_rbus_i(3'h0         )  // TODO - Bus Read Value
+  );
+
 endmodule // bit_en
 
 `default_nettype wire
