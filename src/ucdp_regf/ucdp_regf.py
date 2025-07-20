@@ -54,6 +54,7 @@ _IN_REGF_DEFAULTS = {
 }
 
 GrdErrMode = Literal[None, "W", "C"]
+WordStrb = Literal[False, True, "WU"]
 
 
 class Field(ua.Field):
@@ -93,14 +94,24 @@ class Field(ua.Field):
     def valname(self) -> str:
         """Reference to Current Value."""
         if self.in_regf:
-            if self.is_alias:
-                return f"wvec_{self.signame}_s"
             return f"data_{self.signame}_{'c' if self.is_const else 'r'}"
         basename = "regf"  # TODO: may change depending on 'is_alias'
         if self.portgroups:
             # from core: handle special naming; non-in_regf field cannot be part of more than 1 portgroup
             return f"{basename}_{self.portgroups[0]}_{self.signame}_rbus_i"
         return f"{basename}_{self.signame}_rbus_i"  # from core: std names
+
+    @cached_property
+    def corewrname(self) -> str:
+        """Reference to Value towards Core."""
+        if self.in_regf:
+            if self.is_alias:
+                return f"wvec_{self.signame}_s"
+            return f"data_{self.signame}_{'c' if self.is_const else 'r'}"
+        if filter_buswrite(self):
+            return f"{self.signame}_wbus_s"
+        return f"regf_{self.signame}_rbus_i"
+        # basename = "regf"  # TODO: may change depending on 'is_alias'
 
     @staticmethod
     def from_word(word: "Word", **kwargs) -> "Field":
@@ -122,7 +133,7 @@ class Field(ua.Field):
             portgroups=word.portgroups,
             in_regf=True,  # in_regf,
             # upd_prio=word.upd_prio,
-            upd_strb=word.upd_strb,
+            upd_strb=(word.upd_strb == "WU"),
             # wr_guard=word.wr_guard,
             signame=word.name,
             doc=word.doc,
@@ -141,7 +152,7 @@ class Word(ua.Word):
     """Default Implementation within Regf."""
     upd_prio: Prio | None = None
     """Update Priority: None, 'b'us or 'c'core."""
-    upd_strb: bool = False
+    upd_strb: WordStrb = False
     """Update strobe towards core."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
@@ -179,7 +190,7 @@ class Word(ua.Word):
         if upd_prio is None:
             upd_prio = self.upd_prio
         if upd_strb is None:
-            upd_strb = self.upd_strb
+            upd_strb = False if self.upd_strb == "WU" else self.upd_strb
         if wr_guard is None:
             wr_guard = self.wr_guard
         if guard_err is None:
@@ -300,6 +311,11 @@ def filter_regf_flipflops(field: Field) -> bool:
     return field.in_regf and not field.is_const
 
 
+def filter_regf_consts(field: Field) -> bool:
+    """In-Regf Constant Fields."""
+    return field.in_regf and field.is_const
+
+
 def filter_buswrite(field: Field) -> bool:
     """Writable Bus Fields."""
     return field.bus and field.bus.write
@@ -343,6 +359,11 @@ def filter_coreread(field: Field) -> bool:
     return field.core and field.core.read
 
 
+def filter_incore_buswr(field: Field) -> bool:
+    """Bus-written in-core fields."""
+    return not field.in_regf and field.bus and field.bus.write
+
+
 wfp_ident = re.compile(r"((?P<word>\w+)\.(?P<field>\w+))|(?P<port>\w+_i)")
 
 
@@ -362,7 +383,7 @@ class GrdSlcTuple(NamedTuple):
 
 GuardDict: TypeAlias = dict[str, SigExprTuple]
 WrdOnceDict: TypeAlias = dict[str, dict[GrdSlcTuple, str]]
-FldOnceDict: TypeAlias = dict[str, str]
+NameSigDict: TypeAlias = dict[str, str]
 
 
 class UcdpRegfMod(u.ATailoredMod):
@@ -397,10 +418,11 @@ class UcdpRegfMod(u.ATailoredMod):
         ),
     )
 
-    _soft_rst: str = u.PrivateField(default=None)
+    _soft_rst: SigExprTuple = u.PrivateField(default=None)
     _guards: GuardDict = u.PrivateField(default_factory=dict)
     _wrdonce: WrdOnceDict = u.PrivateField(default_factory=dict)
-    _fldonce: FldOnceDict = u.PrivateField(default_factory=dict)
+    _fldonce: NameSigDict = u.PrivateField(default_factory=dict)
+    _buswrcond: NameSigDict = u.PrivateField(default_factory=dict)
 
     @cached_property
     def addrspace(self) -> Addrspace:
@@ -454,33 +476,39 @@ class UcdpRegfMod(u.ATailoredMod):
             datawidth=self.width, addrwidth=addrwidth, writable=True, err=True, slicewidths=slicing, addressing="data"
         )
 
-    def _build(self):
+    def _build(self) -> None:
+        """Initial Build."""
         self.add_port(u.ClkRstAnType(), "main_i")
         self.add_port(self.memiotype, "mem_i")
 
-    def _build_dep(self):
+    def _build_dep(self) -> None:
+        """Build of all derived Logic."""
         self.add_port(self.regfiotype, "regf_o")
         self.add_port(self.regfwordiotype, "regfword_o")
         if self.parent:
             _create_route(self, self.addrspace)
+        if self.slicing:
+            self.add_signal(u.UintType(self.width), "bit_en_s")
         self._prep_guards()
         self._prep_wronce()
+        self._prep_buswrcond()
         self._add_const_decls()
         self._add_ff_decls()
         self._add_bus_word_en_decls()
+        self._add_buswrcond_decls()
         self._add_wrguard_decls()
         self._add_grderr_decls()
+        self._add_incore_data_decls()
         self._add_word_vector_decls()
         self._handle_soft_reset()
-        if self.slicing:
-            self.add_signal(u.UintType(self.width), "bit_en_s")
 
-    def _handle_soft_reset(self):  # noqa: C901
+    def _handle_soft_reset(self) -> None:  # noqa: C901
+        """Handle Soft Reset Signal."""
         if self._soft_rst is None:
             return
-        wfp = wfp_ident.match(self._soft_rst)
-        if wfp is None or (wfp.group() != self._soft_rst):
-            raise ValueError(f"Illegal identifier '{self._soft_rst}' for soft reset.")
+        wfp = wfp_ident.match(self._soft_rst.sigexpr)
+        if wfp is None or (wfp.group() != self._soft_rst.sigexpr):
+            raise ValueError(f"Illegal identifier '{self._soft_rst.sigexpr}' for soft reset.")
         wname = wfp.group("word")
         fname = wfp.group("field")
         pname = wfp.group("port")
@@ -490,7 +518,7 @@ class UcdpRegfMod(u.ATailoredMod):
                 self.add_port(u.RstType(), pname)
             elif p.type_ != u.RstType():
                 raise ValueError(f"Illegal type '{p.type_}' instead of 'RstType()' for soft reset input '{pname}'.")
-            self._soft_rst = SigExprTuple(pname, None)
+            self._soft_rst = SigExprTuple(pname, "")
         else:
             try:
                 thefield = self.addrspace.words[wname].fields[fname]
@@ -511,10 +539,8 @@ class UcdpRegfMod(u.ATailoredMod):
             self._soft_rst = SigExprTuple(rstname, rstexpr)
             self.add_signal(u.RstType(), rstname)
 
-    def _add_const_decls(self):
-        def filter_regf_consts(field: Field):
-            return field.in_regf and field.is_const
-
+    def _add_const_decls(self) -> None:
+        """Add Declarations for Constants."""
         for word, fields in self.addrspace.iter(fieldfilter=filter_regf_consts):
             for field in fields:
                 type_ = field.type_
@@ -523,7 +549,9 @@ class UcdpRegfMod(u.ATailoredMod):
                 signame = f"data_{field.signame}_c"
                 self.add_const(type_, signame, comment=f"{word.name} / {field.name}")
 
-    def _add_ff_decls(self):  # noqa: C901
+    def _add_ff_decls(self) -> None:  # noqa: C901
+        """Add Signal Declarations for all FlipFlops."""
+        cmt: str | None
         for word, fields in self.addrspace.iter():
             cmt = f"Word {word.name}"
             for field in fields:  # regular in-regf filed flops
@@ -544,14 +572,15 @@ class UcdpRegfMod(u.ATailoredMod):
             if (once := self._wrdonce.get(word.name, None)) is not None:
                 for signame in once.values():
                     self.add_signal(wrotype_, signame)
-            if word.upd_strb:
+            if word.upd_strb == "WU":
                 self.add_signal(strbtype_, f"upd_strb_{word.name}_r")
             for field in fields:
                 if field.upd_strb:
                     self.add_signal(strbtype_, f"upd_strb_{field.signame}_r")
 
-    def _add_bus_word_en_decls(self):
-        cmt = "bus word write enables"
+    def _add_bus_word_en_decls(self) -> None:
+        """Add Word Write/Read Enable Signal Declarations."""
+        cmt: str | None = "bus word write enables"
         for word, _ in self.addrspace.iter(fieldfilter=filter_buswrite):
             signame = f"bus_{word.name}_wren_s"
             type_ = u.BitType()
@@ -568,10 +597,23 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
 
-    def _add_word_vector_decls(self):
-        cmt = "word vectors"
-        for word, fields in self.addrspace.iter():
-            if not (word.wordio or any(filter_busread(field) for field in fields)):
+    def _add_incore_data_decls(self) -> None:
+        """Add Declarations for in-core bus-written Signals."""
+        cmt: str | None = "intermediate signals for bus-writes to in-core fields"
+        for word, fields in self.addrspace.iter(fieldfilter=filter_incore_buswr):
+            for field in fields:
+                signame = f"{field.signame}_wbus_s"
+                type_ = field.type_
+                if word.depth:
+                    type_ = u.ArrayType(type_, word.depth)
+                self.add_signal(type_, signame, comment=cmt)
+                cmt = None
+
+    def _add_word_vector_decls(self) -> None:
+        """Add Wordio Vector Signal Declarations."""
+        cmt: str | None = "word vectors"
+        for word, _ in self.addrspace.iter():
+            if not word.wordio:
                 continue
             signame = f"wvec_{word.name}_s"
             type_ = u.UintType(self.width)
@@ -580,8 +622,9 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
 
-    def _add_grderr_decls(self):
-        cmt = "guard errors"
+    def _add_grderr_decls(self) -> None:
+        """Add Guard Error Signal Declarations."""
+        cmt: str | None = "guard errors"
         for word, _ in self.addrspace.iter(fieldfilter=filter_busgrderr):
             signame = f"bus_{word.name}_grderr_s"
             type_ = u.BitType()
@@ -590,41 +633,55 @@ class UcdpRegfMod(u.ATailoredMod):
             self.add_signal(type_, signame, comment=cmt)
             cmt = None
 
-    def _prep_guards(self):
+    def _parse_guards(self, wrguard: str) -> tuple[str, list[str]]:
+        """Parse Write-Guards and provide list of new ports."""
+        sigexpr = wrguard
+        newports = []
+        for wfp in wfp_ident.finditer(wrguard):
+            wname = wfp.group("word")
+            fname = wfp.group("field")
+            pname = wfp.group("port")
+            if pname:
+                # check for port already known and for correct type
+                p = self.ports.get(pname, None)
+                if p is None:
+                    newports.append(pname)
+                    # self.add_port(u.BitType(), pname)
+                    continue
+                assert p.type_.bits == 1, f"Illegal type '{p.type_}' for existing signal '{pname}' in wr_guard."
+                continue  # no translation necessary for port
+            # translate word/field symnames to their respective signals
+            thefield = self.addrspace.words[wname].fields[fname]
+            sigexpr = sigexpr.replace(wfp.group(), thefield.valname)
+        return sigexpr, newports
+
+    def _prep_guards(self) -> None:
+        """Prepare Write-Guard Signals."""
         idx = 0
-        for _, fields in self.addrspace.iter(fieldfilter=filter_buswrite):  # TODO: busmodify?
+        for word, fields in self.addrspace.iter(fieldfilter=filter_buswrite):  # TODO: busmodify?
+            if (word.upd_strb == "WU") and word.wr_guard and self._guards.get(word.wr_guard, None) is None:
+                sigexpr, newports = self._parse_guards(word.wr_guard)
+                self._guards[word.wr_guard] = SigExprTuple(f"bus_wrguard_{idx}_s", sigexpr)
+                for pname in newports:
+                    self.add_port(u.BitType(), pname)
+                idx += 1
             for field in fields:
                 if field.wr_guard:
                     if self._guards.get(field.wr_guard, None) is not None:  # already known
                         continue
-                    signame = f"bus_wrguard_{idx}_s"
-                    sigexpr = wrguard = field.wr_guard
-                    for wfp in wfp_ident.finditer(wrguard):
-                        wname = wfp.group("word")
-                        fname = wfp.group("field")
-                        pname = wfp.group("port")
-                        if pname:
-                            # check for port already known and for correct type
-                            p = self.ports.get(pname, None)
-                            if p is not None:
-                                if p.type_.bits != 1:
-                                    raise ValueError(
-                                        f"Illegal type '{p.type_}' for existing signal '{pname}' in wr_guard."
-                                    )
-                                continue
-                            self.add_port(u.BitType(), pname)
-                            continue  # no translation necessary for port
-                        # translate word/field symnames to their respective signals
-                        thefield = self.addrspace.words[wname].fields[fname]
-                        sigexpr = sigexpr.replace(wfp.group(), thefield.valname)
-                    self._guards[field.wr_guard] = SigExprTuple(signame, sigexpr)
+                    sigexpr, newports = self._parse_guards(field.wr_guard)
+                    self._guards[field.wr_guard] = SigExprTuple(f"bus_wrguard_{idx}_s", sigexpr)
+                    for pname in newports:
+                        self.add_port(u.BitType(), pname)
                     idx += 1
 
-    def _prep_wronce(self):
+    def _prep_wronce(self) -> None:
+        """Prepare Write-Once Signals."""
         rslvr = u.ExprResolver(namespace=self.namespace)
-        fldonce = {}
+        fldonce: NameSigDict = {}
+        once: str | None
         for word, fields in self.addrspace.iter(fieldfilter=filter_buswriteonce):
-            wrdonce = {}
+            wrdonce: dict[GrdSlcTuple, str] = {}
             for field in fields:
                 guard = field.wr_guard and self._guards[field.wr_guard].signame
                 for slcidx, bslc in enumerate(self._bus_slices):
@@ -636,27 +693,70 @@ class UcdpRegfMod(u.ATailoredMod):
                     once = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
                     if field.slice.left != field.slice.right:
                         once = f"(|{once})"
+                if self.slicing is None:
+                    once = None
                 fldonce[field.signame] = wrdonce.setdefault(
-                    GrdSlcTuple(guard, (self.slicing and once)), f"bus_wronce_{word.name}_flg{len(wrdonce)}_r"
+                    GrdSlcTuple(guard, once), f"bus_wronce_{word.name}_flg{len(wrdonce)}_r"
                 )
             self._wrdonce[word.name] = wrdonce
         self._fldonce = fldonce
 
-    def _add_wrguard_decls(self):
-        cmt = "write guards"
+    def _prep_buswrcond(self) -> None:
+        """Prepare special update conditions."""
+        buswrcond = {}
+        for word, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
+            for field in fields:
+                buswren = [f"bus_{word.name}"]
+                if field.wr_guard:
+                    grd = self._guards[field.wr_guard].signame[3:-2]  # remove "bus" and "_s"
+                    buswren.append(grd)
+                if field.bus.write.once:
+                    f_o = self._fldonce[field.signame]
+                    flgidx = f_o.rindex("_flg")
+                    buswren.append(f_o[flgidx:-2])
+                buswrensig = "".join(buswren)
+                buswrcond[field.signame] = f"{buswrensig}_wren_s"
+
+            if word.upd_strb == "WU":
+                # remove "bus" and "_s" from guard name if guarded
+                grd = self._guards[word.wr_guard].signame[3:-2] if word.wr_guard else ""
+                buswrcond[word.name] = f"bus_{word.name}{grd}_wren_s"
+        self._buswrcond = buswrcond
+
+    def _add_wrguard_decls(self) -> None:
+        cmt: str | None = "write guards"
         for signame, _ in self._guards.values():
             self.add_signal(u.BitType(), signame, comment=cmt)
             cmt = None
 
-    def add_word(self, *args, **kwargs):
+    def _add_buswrcond_decls(self) -> None:
+        cmt: str | None = "special update condition signals"
+        for word, fields in self.addrspace.iter(fieldfilter=filter_buswrite):
+            encoll = [f"bus_{word.name}_wren_s"]
+            type_ = u.BitType()
+            if word.depth:
+                type_ = u.ArrayType(type_, word.depth)
+            # guarded word update strobe
+            if (word.upd_strb == "WU") and word.wr_guard and (encond := self._buswrcond[word.name]) not in encoll:
+                self.add_signal(type_, encond, comment=cmt)
+                encoll.append(encond)
+                cmt = None
+            for field in fields:
+                if (encond := self._buswrcond[field.signame]) in encoll:
+                    continue
+                self.add_signal(type_, encond, comment=cmt)
+                encoll.append(encond)
+                cmt = None
+
+    def add_word(self, *args, **kwargs) -> Word:
         """Add Word."""
         return self.addrspace.add_word(*args, **kwargs)
 
-    def add_words(self, *args, **kwargs):
+    def add_words(self, *args, **kwargs) -> Words:
         """Add Words."""
         return self.addrspace.add_words(*args, **kwargs)
 
-    def add_soft_rst(self, soft_reset: str = "soft_rst_i"):
+    def add_soft_rst(self, soft_reset: str = "soft_rst_i") -> None:
         """
         Add Soft Reset.
 
@@ -665,8 +765,8 @@ class UcdpRegfMod(u.ATailoredMod):
         calling with a string '<word>.<field>' will use this field as soft reset.
         """
         if self._soft_rst is not None:
-            raise ValueError(f"Soft reset has been already defined as '{self._soft_rst}'.")
-        self._soft_rst = soft_reset
+            raise ValueError(f"Soft reset has been already defined as '{self._soft_rst.sigexpr}'.")
+        self._soft_rst = SigExprTuple("", soft_reset)
 
     def get_overview(self) -> str:
         """Overview."""
@@ -674,7 +774,11 @@ class UcdpRegfMod(u.ATailoredMod):
         fldaccs = set()
         rslvr = u.ExprResolver(namespace=self.namespace)
         for word in self.addrspace.words:
-            data.append((f"+{word.slice}", word.name, "", "", "", "", ""))
+            if word.slice.width > 1:
+                woffs = f"{word.slice} / {word.slice.left:0X}:{word.slice.right:0X}"
+            else:
+                woffs = f"{word.offset} / {word.offset:0X}"
+            data.append((f"{woffs}", word.name, "", "", "", "", ""))
             for field in word.fields:
                 impl = "regf" if field.in_regf else "core"
                 data.append(
@@ -692,7 +796,7 @@ class UcdpRegfMod(u.ATailoredMod):
                     fldaccs.add(fbus)
                 if fcore := field.core:
                     fldaccs.add(fcore)
-        headers: tuple[str, ...] = ("Offset", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
+        headers: tuple[str, ...] = ("Offset\ndec / hex", "Word", "Field", "Bus/Core", "Reset", "Const", "Impl")
         regovr = tabulate(data, headers=headers)
         accs = [
             (
@@ -726,6 +830,8 @@ def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicSt
             continue
         for field in fields:
             _add_field(portgroupmap, field, sliced_en, word.depth)
+        if word.upd_strb == "WU" and not word.wordio:
+            _add_word_upd(portgroupmap, word)
     return portgroupmap[None]
 
 
@@ -738,6 +844,21 @@ def get_regfwordiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.Dynam
         field = Field.from_word(word)
         _add_field(portgroupmap, field, sliced_en, word.depth)
     return portgroupmap[None]
+
+
+def _add_word_upd(portgroupmap: Portgroupmap, word: Word):
+    # raise ValueError(f"{word.portgroups}")
+    for portgroup in word.portgroups or [None]:
+        try:
+            iotype = portgroupmap[portgroup]
+        except KeyError:
+            portgroupmap[portgroup] = iotype = u.DynamicStructType()
+            portgroupmap[None].add(portgroup, iotype)
+        comment = f"{word.name} update strobe"
+        type_ = u.BitType()
+        if word.depth:
+            type_ = u.ArrayType(type_, word.depth)
+        iotype.add(f"{word.name}_upd", type_, comment=comment)
 
 
 def _add_field(portgroupmap: Portgroupmap, field: Field, sliced_en: bool, depth: int | None = None):

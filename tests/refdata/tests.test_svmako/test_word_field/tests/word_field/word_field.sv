@@ -156,20 +156,19 @@ module word_field();
     .regfword_word1_bRW_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value
     .regfword_word2_bRW_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value
-    .regfword_word2_bRW_cNone_iNone_d0_upd_o (            ), // TODO - Update Strobe
     .regfword_word1_bRW_cNone_iNone_d1_rval_o(            ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d1_rval_o(            ), // TODO - Core Read Value
-    .regfword_word2_bRW_cNone_iNone_d1_upd_o (            ), // TODO - Update Strobe
     .regfword_word2_bRW_cNone_iNone_d1_rval_o(            ), // TODO - Core Read Value
     .regfword_word1_bRW_cNone_iNone_d5_rval_o(            ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d5_rval_o(            ), // TODO - Core Read Value
-    .regfword_word2_bRW_cNone_iNone_d5_upd_o (            ), // TODO - Update Strobe
     .regfword_word2_bRW_cNone_iNone_d5_rval_o(            ), // TODO - Core Read Value
     .regfword_agrp_www_rval_o                (            ), // TODO - Core Read Value
     .regfword_agrp_www_upd_o                 (            ), // TODO - Update Strobe
     .regfword_bgrp_www_rval_o                (            ), // TODO - Core Read Value
     .regfword_bgrp_www_upd_o                 (            ), // TODO - Update Strobe
-    .regfword_nofld_rval_o                   (            )  // TODO - Core Read Value
+    .regfword_nofld_rval_o                   (            ), // TODO - Core Read Value
+    .grd_i                                   (1'b0        ), // TODO
+    .ena_i                                   (1'b0        )  // TODO
   );
 
 endmodule // word_field
