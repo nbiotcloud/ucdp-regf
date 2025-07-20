@@ -40,21 +40,22 @@
 // Size:             1024x32 (4 KB)
 //
 //
-// Offset    Word     Field    Bus/Core    Reset    Const    Impl
-// --------  -------  -------  ----------  -------  -------  ------
-// +0        w0
-//           [12:0]   .f0      RW/RO       0x0      False    regf
-//           [15:13]  .f1      RW/RO       0x0      False    regf
-//           [17:16]  .f2      WO/RO       0x0      False    core
-//           [20:18]  .f3      RO/RW       0x0      False    core
-//           [23:21]  .f4      RWL/-       0x0      False    regf
-//           [26:24]  .f5      RWL/-       0x0      False    regf
-// +1        w1
-//           [6:0]    .f0      RW/RO       0x0      False    core
-//           [9:7]    .f1      RW1C/-      0x0      False    regf
-//           [22:10]  .f2      RWL/-       0x0      False    core
-// +2        w2
-//           [12:0]   .f1      RW/RO       0x0      False    regf
+// Offset       Word     Field    Bus/Core    Reset    Const    Impl
+// dec / hex
+// -----------  -------  -------  ----------  -------  -------  ------
+// 0 / 0        w0
+//              [12:0]   .f0      RW/RO       0x0      False    regf
+//              [15:13]  .f1      RW/RO       0x0      False    regf
+//              [17:16]  .f2      WO/RO       0x0      False    core
+//              [20:18]  .f3      RO/RW       0x0      False    core
+//              [23:21]  .f4      RWL/-       0x0      False    regf
+//              [26:24]  .f5      RWL/-       0x0      False    regf
+// 1 / 1        w1
+//              [6:0]    .f0      RW/RO       0x0      False    core
+//              [9:7]    .f1      RW1C/-      0x0      False    regf
+//              [22:10]  .f2      RWL/-       0x0      False    core
+// 2 / 2        w2
+//              [12:0]   .f1      RW/RO       0x0      False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -111,6 +112,7 @@ module slice_en_slice_en (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
+  logic        [31:0] bit_en_s;
   logic        [12:0] data_w0_f0_r;         // Word w0
   logic        [2:0]  data_w0_f1_r;
   logic        [2:0]  data_w0_f4_r;
@@ -122,11 +124,15 @@ module slice_en_slice_en (
   logic               bus_w0_wren_s;        // bus word write enables
   logic               bus_w1_wren_s;
   logic               bus_w2_wren_s;
-  logic        [31:0] wvec_w0_s;            // word vectors
-  logic        [31:0] wvec_w1_s;
-  logic        [31:0] wvec_w2_s;
-  logic        [31:0] bit_en_s;
+  logic               bus_w0_flg0_wren_s;   // special update condition signals
+  logic               bus_w1_flg0_wren_s;
+  logic        [1:0]  w0_f2_wbus_s;         // intermediate signals for bus-writes to in-core fields
+  logic        [6:0]  w1_f0_wbus_s;
+  logic        [12:0] w1_f2_wbus_s;
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
@@ -156,6 +162,12 @@ module slice_en_slice_en (
   end
 
   // ------------------------------------------------------
+  // special update conditions
+  // ------------------------------------------------------
+  assign bus_w0_flg0_wren_s  = bus_w0_wren_s & bus_wronce_w0_flg0_r;
+  assign bus_w1_flg0_wren_s  = bus_w1_wren_s & bus_wronce_w1_flg0_r;
+
+  // ------------------------------------------------------
   // in-regf storage
   // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
@@ -178,10 +190,10 @@ module slice_en_slice_en (
       if (bus_w0_wren_s == 1'b1) begin
         data_w0_f1_r <= (data_w0_f1_r & ~bit_en_s[15:13]) | (mem_wdata_i[15:13] & bit_en_s[15:13]);
       end
-      if ((bus_w0_wren_s == 1'b1) && (bus_wronce_w0_flg0_r == 1'b1)) begin
+      if (bus_w0_flg0_wren_s == 1'b1) begin
         data_w0_f4_r <= (data_w0_f4_r & ~bit_en_s[23:21]) | (mem_wdata_i[23:21] & bit_en_s[23:21]);
       end
-      if ((bus_w0_wren_s == 1'b1) && (bus_wronce_w0_flg0_r == 1'b1)) begin
+      if (bus_w0_flg0_wren_s == 1'b1) begin
         data_w0_f5_r <= (data_w0_f5_r & ~bit_en_s[26:24]) | (mem_wdata_i[26:24] & bit_en_s[26:24]);
       end
       if (bus_w1_wren_s == 1'b1) begin
@@ -199,6 +211,12 @@ module slice_en_slice_en (
     end
   end
 
+  // ------------------------------------------------------
+  // intermediate signals for in-core bus-writes
+  // ------------------------------------------------------
+  assign w0_f2_wbus_s = bus_w0_wren_s ? mem_wdata_i[17:16] : 2'h0;
+  assign w1_f0_wbus_s = bus_w1_wren_s ? mem_wdata_i[6:0] : 7'h00;
+  assign w1_f2_wbus_s = bus_w1_flg0_wren_s ? mem_wdata_i[22:10] : 13'h0000;
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -229,12 +247,12 @@ module slice_en_slice_en (
   // ------------------------------------------------------
   assign regf_w0_f0_rval_o = data_w0_f0_r;
   assign regf_w0_f1_rval_o = data_w0_f1_r;
-  assign regf_w0_f2_wbus_o = (bus_w0_wren_s == 1'b1) ? mem_wdata_i[17:16] : 2'h0;
-  assign regf_w0_f2_wr_o   = bit_en_s[17:16];
-  assign regf_w1_f0_wbus_o = (bus_w1_wren_s == 1'b1) ? mem_wdata_i[6:0] : 7'h00;
-  assign regf_w1_f0_wr_o   = bit_en_s[6:0];
-  assign regf_w1_f2_wbus_o = ((bus_w1_wren_s == 1'b1) && (bus_wronce_w1_flg0_r == 1'b1)) ? mem_wdata_i[22:10] : 13'h0000;
-  assign regf_w1_f2_wr_o   = bit_en_s[22:10];
+  assign regf_w0_f2_wbus_o = w0_f2_wbus_s;
+  assign regf_w0_f2_wr_o   =  bus_w0_wren_s ? bit_en_s[17:16] : 2'h0;
+  assign regf_w1_f0_wbus_o = w1_f0_wbus_s;
+  assign regf_w1_f0_wr_o   =  bus_w1_wren_s ? bit_en_s[6:0] : 7'h00;
+  assign regf_w1_f2_wbus_o = w1_f2_wbus_s;
+  assign regf_w1_f2_wr_o   =  bus_w1_flg0_wren_s ? bit_en_s[22:10] : 13'h0000;
   assign regf_w2_f1_rval_o = data_w2_f1_r;
 
 endmodule // slice_en_slice_en

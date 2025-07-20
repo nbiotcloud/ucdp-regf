@@ -40,17 +40,18 @@
 // Size:             1024x32 (4 KB)
 //
 //
-// Offset    Word                                 Field    Bus/Core    Reset    Const    Impl
-// --------  -----------------------------------  -------  ----------  -------  -------  ------
-// +0        ctrl
-//           [0]                                  .ena     RW/RO       0        False    regf
-//           [1]                                  .busy    RO/RW       0        False    core
-// +1        rx
-//           [width_p-1:0]                        .data0   RO/RW       0x0      False    core
-//           [(width_p-1)+width_p:width_p]        .data1   RO/RW       0x0      False    core
-//           [(width_p-1)+(3*width_p):3*width_p]  .data2   RO/RW       0x0      False    core
-// +2        tx
-//           [width_p-1:0]                        .data0   RW/RO       0x0      False    regf
+// Offset       Word                                 Field    Bus/Core    Reset    Const    Impl
+// dec / hex
+// -----------  -----------------------------------  -------  ----------  -------  -------  ------
+// 0 / 0        ctrl
+//              [0]                                  .ena     RW/RO       0        False    regf
+//              [1]                                  .busy    RO/RW       0        False    core
+// 1 / 1        rx
+//              [width_p-1:0]                        .data0   RO/RW       0x0      False    core
+//              [(width_p-1)+width_p:width_p]        .data1   RO/RW       0x0      False    core
+//              [(width_p-1)+(3*width_p):3*width_p]  .data2   RO/RW       0x0      False    core
+// 2 / 2        tx
+//              [width_p-1:0]                        .data0   RW/RO       0x0      False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -109,10 +110,10 @@ module portgroup_regf #(
   logic [width_p-1:0] data_tx_data0_r; // Word tx
   logic               bus_ctrl_wren_s; // bus word write enables
   logic               bus_tx_wren_s;
-  logic [31:0]        wvec_ctrl_s;     // word vectors
-  logic [31:0]        wvec_rx_s;
-  logic [31:0]        wvec_tx_s;
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
@@ -136,7 +137,6 @@ module portgroup_regf #(
         end
       endcase
     end
-
   end
 
   // ------------------------------------------------------

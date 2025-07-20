@@ -40,52 +40,53 @@
 // Size:             1024x32 (4 KB)
 //
 //
-// Offset    Word     Field      Bus/Core    Reset    Const    Impl
-// --------  -------  ---------  ----------  -------  -------  ------
-// +0        ctrl
-//           [0]      .ena       RW/RO       0        False    regf
-//           [4]      .busy      RO/RW       0        False    core
-//           [5]      .start     RW/RO       0        False    regf
-//           [6]      .status    RO/RW       0        False    core
-//           [10:7]   .ver       RO/RO       0xC      True     regf
-//           [11]     .spec1     RC/RW       0        False    core
-// +5:1      txdata
-//           [7:0]    .bytes     RW/RO       0x0      False    regf
-// +8:6      dims
-//           [0]      .roval     RO/RW       0        False    core
-//           [1]      .wrval     RW/RO       0        False    regf
-//           [2]      .spec2     RW/RC       0        False    core
-//           [3]      .spec3     RC/RW       0        False    regf
-// +9        guards
-//           [0]      .once      WL/RO       0        False    regf
-//           [1]      .coreonce  WL/RO       0        False    core
-//           [2]      .busonce   WL/RO       0        False    core
-//           [3]      .single    WL/RO       0        False    regf
-//           [4]      .onetime   WL/RO       0        False    regf
-//           [8:5]    .guard_a   RWL/RO      0x0      False    regf
-//           [12:9]   .guard_b   RW/RO       0x0      False    regf
-//           [16:13]  .guard_c   RW/RO       0x0      False    regf
-//           [17]     .cprio     RW/RW       0        False    regf
-//           [18]     .bprio     RW/RW       0        False    regf
-//           [19]     .grdport   RW/RO       0        False    regf
-// +11:10    grddim
-//           [11:0]   .num       RW/RO       0x0      False    core
-//           [14:12]  .const     RO/RO       0x5      True     regf
-//           [26:15]  .int       RW/RO       0x0      False    core
-// +12       mixint
-//           [3:0]    .r_int     RW/RO       0x0      False    regf
-//           [7:4]    .r_uint    RW/RO       0x0      False    regf
-//           [11:8]   .c_int     RW/RO       -0x3     False    core
-// +13       wide0
-//           [15:0]   .a         RW/RO       0x0      False    regf
-//           [31:16]  .b         RW/RO       0x0      False    regf
-// +14       wide1
-//           [15:0]   .c         RW/RO       0x0      False    regf
-//           [31:16]  .d         RW/RO       0x0      False    regf
-// +15       wonly
-//           [0]      .wo        WO/RO       0        False    regf
-// +16       full
-//           [31:0]   .f0        WCR/RO      0x0      False    regf
+// Offset       Word     Field      Bus/Core    Reset    Const    Impl
+// dec / hex
+// -----------  -------  ---------  ----------  -------  -------  ------
+// 0 / 0        ctrl
+//              [0]      .ena       RW/RO       0        False    regf
+//              [4]      .busy      RO/RW       0        False    core
+//              [5]      .start     RW/RO       0        False    regf
+//              [6]      .status    RO/RW       0        False    core
+//              [10:7]   .ver       RO/RO       0xC      True     regf
+//              [11]     .spec1     RC/RW       0        False    core
+// 5:1 / 5:1    txdata
+//              [7:0]    .bytes     RW/RO       0x0      False    regf
+// 8:6 / 8:6    dims
+//              [0]      .roval     RO/RW       0        False    core
+//              [1]      .wrval     RW/RO       0        False    regf
+//              [2]      .spec2     RW/RC       0        False    core
+//              [3]      .spec3     RC/RW       0        False    regf
+// 9 / 9        guards
+//              [0]      .once      WL/RO       0        False    regf
+//              [1]      .coreonce  WL/RO       0        False    core
+//              [2]      .busonce   WL/RO       0        False    core
+//              [3]      .single    WL/RO       0        False    regf
+//              [4]      .onetime   WL/RO       0        False    regf
+//              [8:5]    .guard_a   RWL/RO      0x0      False    regf
+//              [12:9]   .guard_b   RW/RO       0x0      False    regf
+//              [16:13]  .guard_c   RW/RO       0x0      False    regf
+//              [17]     .cprio     RW/RW       0        False    regf
+//              [18]     .bprio     RW/RW       0        False    regf
+//              [19]     .grdport   RW/RO       0        False    regf
+// 11:10 / B:A  grddim
+//              [11:0]   .num       RW/RO       0x0      False    core
+//              [14:12]  .const     RO/RO       0x5      True     regf
+//              [26:15]  .int       RW/RO       0x0      False    core
+// 12 / C       mixint
+//              [3:0]    .r_int     RW/RO       0x0      False    regf
+//              [7:4]    .r_uint    RW/RO       0x0      False    regf
+//              [11:8]   .c_int     RW/RO       -0x3     False    core
+// 13 / D       wide0
+//              [15:0]   .a         RW/RO       0x0      False    regf
+//              [31:16]  .b         RW/RO       0x0      False    regf
+// 14 / E       wide1
+//              [15:0]   .c         RW/RO       0x0      False    regf
+//              [31:16]  .d         RW/RO       0x0      False    regf
+// 15 / F       wonly
+//              [0]      .wo        WO/RO       0        False    regf
+// 16 / 10      full
+//              [31:0]   .f0        WCR/RO      0x0      False    regf
 //
 //
 // Mnemonic    ReadOp      WriteOp
@@ -228,65 +229,73 @@ module corner_regf (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic               data_ctrl_ena_r;                 // Word ctrl
+  logic               data_ctrl_ena_r;                        // Word ctrl
   logic               data_ctrl_start_r;
-  logic        [7:0]  data_txdata_bytes_r       [0:4]; // Word txdata
-  logic               data_dims_wrval_r         [0:2]; // Word dims
-  logic               data_dims_spec3_r         [0:2];
-  logic               upd_strb_dims_wrval_r     [0:2];
-  logic               data_guards_once_r        [0:0]; // Word guards
-  logic               data_guards_single_r      [0:0];
-  logic               data_guards_onetime_r     [0:0];
-  logic        [3:0]  data_guards_guard_a_r     [0:0];
-  logic        [3:0]  data_guards_guard_b_r     [0:0];
-  logic        [3:0]  data_guards_guard_c_r     [0:0];
-  logic               data_guards_cprio_r       [0:0];
-  logic               data_guards_bprio_r       [0:0];
-  logic               data_guards_grdport_r     [0:0];
-  logic               bus_wronce_guards_flg0_r  [0:0];
-  logic               bus_wronce_guards_flg1_r  [0:0];
-  logic               bus_wronce_guards_flg2_r  [0:0];
-  logic               upd_strb_guards_guard_c_r [0:0];
-  logic               upd_strb_grddim_num_r     [0:1];
-  logic signed [3:0]  data_mixint_r_int_r;             // Word mixint
+  logic        [7:0]  data_txdata_bytes_r              [0:4]; // Word txdata
+  logic               data_dims_wrval_r                [0:2]; // Word dims
+  logic               data_dims_spec3_r                [0:2];
+  logic               upd_strb_dims_wrval_r            [0:2];
+  logic               data_guards_once_r               [0:0]; // Word guards
+  logic               data_guards_single_r             [0:0];
+  logic               data_guards_onetime_r            [0:0];
+  logic        [3:0]  data_guards_guard_a_r            [0:0];
+  logic        [3:0]  data_guards_guard_b_r            [0:0];
+  logic        [3:0]  data_guards_guard_c_r            [0:0];
+  logic               data_guards_cprio_r              [0:0];
+  logic               data_guards_bprio_r              [0:0];
+  logic               data_guards_grdport_r            [0:0];
+  logic               bus_wronce_guards_flg0_r         [0:0];
+  logic               bus_wronce_guards_flg1_r         [0:0];
+  logic               bus_wronce_guards_flg2_r         [0:0];
+  logic               upd_strb_guards_guard_c_r        [0:0];
+  logic               upd_strb_grddim_num_r            [0:1];
+  logic signed [3:0]  data_mixint_r_int_r;                    // Word mixint
   logic        [3:0]  data_mixint_r_uint_r;
-  logic        [15:0] data_wide_a_r;                   // Word wide0
+  logic        [15:0] data_wide_a_r;                          // Word wide0
   logic        [15:0] data_wide_b_r;
-  logic        [15:0] data_base_r;                     // Word wide1
+  logic        [15:0] data_base_r;                            // Word wide1
   logic        [15:0] data_wide_d_r;
-  logic               data_wonly_wo_r;                 // Word wonly
-  logic        [31:0] data_full_f0_r;                  // Word full
-  logic               upd_strb_full_r;
+  logic               data_wonly_wo_r;                        // Word wonly
+  logic        [31:0] data_full_f0_r;                         // Word full
   logic               upd_strb_full_f0_r;
-  logic               bus_ctrl_wren_s;                 // bus word write enables
-  logic               bus_txdata_wren_s         [0:4];
-  logic               bus_dims_wren_s           [0:2];
-  logic               bus_guards_wren_s         [0:0];
-  logic               bus_grddim_wren_s         [0:1];
+  logic               bus_ctrl_wren_s;                        // bus word write enables
+  logic               bus_txdata_wren_s                [0:4];
+  logic               bus_dims_wren_s                  [0:2];
+  logic               bus_guards_wren_s                [0:0];
+  logic               bus_grddim_wren_s                [0:1];
   logic               bus_mixint_wren_s;
   logic               bus_wide0_wren_s;
   logic               bus_wide1_wren_s;
   logic               bus_wonly_wren_s;
   logic               bus_full_wren_s;
-  logic               bus_ctrl_rden_s;                 // bus word read-modify enables
-  logic               bus_dims_rden_s           [0:2];
-  logic               bus_wrguard_0_s;                 // write guards
+  logic               bus_ctrl_rden_s;                        // bus word read-modify enables
+  logic               bus_dims_rden_s                  [0:2];
+  logic               bus_guards_wrguard_0_flg0_wren_s [0:0]; // special update condition signals
+  logic               bus_guards_wrguard_1_flg1_wren_s [0:0];
+  logic               bus_guards_flg2_wren_s           [0:0];
+  logic               bus_guards_wrguard_1_wren_s      [0:0];
+  logic               bus_guards_wrguard_2_wren_s      [0:0];
+  logic               bus_grddim_wrguard_1_wren_s      [0:1];
+  logic               bus_grddim_wrguard_3_wren_s      [0:1];
+  logic               bus_wonly_wrguard_4_wren_s;
+  logic               bus_full_wrguard_4_wren_s;
+  logic               bus_wrguard_0_s;                        // write guards
   logic               bus_wrguard_1_s;
   logic               bus_wrguard_2_s;
   logic               bus_wrguard_3_s;
   logic               bus_wrguard_4_s;
-  logic               bus_guards_grderr_s       [0:0]; // guard errors
+  logic               bus_guards_grderr_s              [0:0]; // guard errors
   logic               bus_wonly_grderr_s;
-  logic        [31:0] wvec_ctrl_s;                     // word vectors
-  logic        [31:0] wvec_txdata_s             [0:4];
-  logic        [31:0] wvec_dims_s               [0:2];
-  logic        [31:0] wvec_guards_s             [0:0];
-  logic        [31:0] wvec_grddim_s             [0:1];
-  logic        [31:0] wvec_mixint_s;
-  logic        [31:0] wvec_wide0_s;
-  logic        [31:0] wvec_wide1_s;
-  logic        [31:0] wvec_full_s;
+  logic               dims_spec2_wbus_s                [0:2]; // intermediate signals for bus-writes to in-core fields
+  logic               guards_coreonce_wbus_s           [0:0];
+  logic               guards_busonce_wbus_s            [0:0];
+  logic        [11:0] grddim_num_wbus_s                [0:1];
+  logic        [11:0] grddim_int_wbus_s                [0:1];
+  logic signed [3:0]  mixint_c_int_wbus_s;
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
@@ -368,7 +377,6 @@ module corner_regf (
         end
       endcase
     end
-
   end
 
   // ------------------------------------------------------
@@ -392,6 +400,21 @@ module corner_regf (
                                                   (~bus_wrguard_1_s & (|(data_guards_guard_c_r[0] ^ mem_wdata_i[16:13]))) |
                                                   (~bus_wrguard_2_s & (|(data_guards_grdport_r[0] ^ mem_wdata_i[19]))) );
   assign bus_wonly_grderr_s     = mem_wena_i &  ~bus_wrguard_4_s;
+
+  // ------------------------------------------------------
+  // special update conditions
+  // ------------------------------------------------------
+  assign bus_guards_wrguard_0_flg0_wren_s[0]  = bus_guards_wren_s[0] & bus_wrguard_0_s & bus_wronce_guards_flg0_r[0];
+  assign bus_guards_wrguard_1_flg1_wren_s[0]  = bus_guards_wren_s[0] & bus_wrguard_1_s & bus_wronce_guards_flg1_r[0];
+  assign bus_guards_flg2_wren_s[0]            = bus_guards_wren_s[0] & bus_wronce_guards_flg2_r[0];
+  assign bus_guards_wrguard_1_wren_s[0]       = bus_guards_wren_s[0] & bus_wrguard_1_s;
+  assign bus_guards_wrguard_2_wren_s[0]       = bus_guards_wren_s[0] & bus_wrguard_2_s;
+  assign bus_grddim_wrguard_1_wren_s[0]       = bus_grddim_wren_s[0] & bus_wrguard_1_s;
+  assign bus_grddim_wrguard_1_wren_s[1]       = bus_grddim_wren_s[1] & bus_wrguard_1_s;
+  assign bus_grddim_wrguard_3_wren_s[0]       = bus_grddim_wren_s[0] & bus_wrguard_3_s;
+  assign bus_grddim_wrguard_3_wren_s[1]       = bus_grddim_wren_s[1] & bus_wrguard_3_s;
+  assign bus_wonly_wrguard_4_wren_s           = bus_wonly_wren_s & bus_wrguard_4_s;
+  assign bus_full_wrguard_4_wren_s            = bus_full_wren_s & bus_wrguard_4_s;
 
   // ------------------------------------------------------
   // in-regf storage
@@ -436,7 +459,6 @@ module corner_regf (
       data_wonly_wo_r           <= 1'b0;
       // Word: full
       data_full_f0_r            <= 32'h00000000;
-      upd_strb_full_r           <= 1'b0;
       upd_strb_full_f0_r        <= 1'b0;
     end else begin
       if (bus_ctrl_wren_s == 1'b1) begin
@@ -463,15 +485,15 @@ module corner_regf (
       if (bus_dims_wren_s[0] == 1'b1) begin
         data_dims_wrval_r[0] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r[0] <= (bus_dims_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_dims_wrval_r[0] <= bus_dims_wren_s[0];
       if (bus_dims_wren_s[1] == 1'b1) begin
         data_dims_wrval_r[1] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r[1] <= (bus_dims_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_dims_wrval_r[1] <= bus_dims_wren_s[1];
       if (bus_dims_wren_s[2] == 1'b1) begin
         data_dims_wrval_r[2] <= mem_wdata_i[1];
       end
-      upd_strb_dims_wrval_r[2] <= (bus_dims_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_dims_wrval_r[2] <= bus_dims_wren_s[2];
       if (regf_grpc_dims_spec3_wr_i[0] == 1'b1) begin
         data_dims_spec3_r[0] <= regf_grpc_dims_spec3_wval_i[0];
       end else if (bus_dims_rden_s[0] == 1'b1) begin
@@ -487,25 +509,25 @@ module corner_regf (
       end else if (bus_dims_rden_s[2] == 1'b1) begin
         data_dims_spec3_r[2] <= 1'b0;
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_0_s == 1'b1) && (bus_wronce_guards_flg0_r[0] == 1'b1)) begin
+      if (bus_guards_wrguard_0_flg0_wren_s[0] == 1'b1) begin
         data_guards_once_r[0] <= mem_wdata_i[0];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wronce_guards_flg2_r[0] == 1'b1)) begin
+      if (bus_guards_flg2_wren_s[0] == 1'b1) begin
         data_guards_single_r[0] <= mem_wdata_i[3];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wronce_guards_flg2_r[0] == 1'b1)) begin
+      if (bus_guards_flg2_wren_s[0] == 1'b1) begin
         data_guards_onetime_r[0] <= mem_wdata_i[4];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_0_s == 1'b1) && (bus_wronce_guards_flg0_r[0] == 1'b1)) begin
+      if (bus_guards_wrguard_0_flg0_wren_s[0] == 1'b1) begin
         data_guards_guard_a_r[0] <= mem_wdata_i[8:5];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1)) begin
+      if (bus_guards_wrguard_1_wren_s[0] == 1'b1) begin
         data_guards_guard_b_r[0] <= mem_wdata_i[12:9];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1)) begin
+      if (bus_guards_wrguard_1_wren_s[0] == 1'b1) begin
         data_guards_guard_c_r[0] <= mem_wdata_i[16:13];
       end
-      upd_strb_guards_guard_c_r[0] <= ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? 1'b1 : 1'b0;
+      upd_strb_guards_guard_c_r[0] <= bus_guards_wrguard_1_wren_s[0];
       if (regf_guards_cprio_wr_i[0] == 1'b1) begin
         data_guards_cprio_r[0] <= regf_guards_cprio_wval_i[0];
       end else if (bus_guards_wren_s[0] == 1'b1) begin
@@ -516,7 +538,7 @@ module corner_regf (
       end else if (regf_guards_bprio_wr_i[0] == 1'b1) begin
         data_guards_bprio_r[0] <= regf_guards_bprio_wval_i[0];
       end
-      if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_2_s == 1'b1)) begin
+      if (bus_guards_wrguard_2_wren_s[0] == 1'b1) begin
         data_guards_grdport_r[0] <= mem_wdata_i[19];
       end
       if (bus_mixint_wren_s == 1'b1) begin
@@ -537,14 +559,13 @@ module corner_regf (
       if (bus_wide1_wren_s == 1'b1) begin
         data_wide_d_r <= mem_wdata_i[31:16];
       end
-      if ((bus_wonly_wren_s == 1'b1) && (bus_wrguard_4_s == 1'b1)) begin
+      if (bus_wonly_wrguard_4_wren_s == 1'b1) begin
         data_wonly_wo_r <= mem_wdata_i[0];
       end
-      if ((bus_full_wren_s == 1'b1) && (bus_wrguard_4_s == 1'b1)) begin
+      if (bus_full_wrguard_4_wren_s == 1'b1) begin
         data_full_f0_r <= 32'h00000000;
       end
-      upd_strb_full_f0_r <= ((bus_full_wren_s == 1'b1) && (bus_wrguard_4_s == 1'b1)) ? 1'b1 : 1'b0;
-      upd_strb_full_r <= ((bus_full_wren_s == 1'b1) && (bus_wrguard_4_s == 1'b1)) ? 1'b1 : 1'b0;
+      upd_strb_full_f0_r <= bus_full_wrguard_4_wren_s;
       if ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_0_s == 1'b1)) begin
         bus_wronce_guards_flg0_r[0] <= 1'b0;
       end
@@ -557,6 +578,19 @@ module corner_regf (
     end
   end
 
+  // ------------------------------------------------------
+  // intermediate signals for in-core bus-writes
+  // ------------------------------------------------------
+  assign dims_spec2_wbus_s[0]      = bus_dims_wren_s[0] ? mem_wdata_i[2] : 1'b0;
+  assign dims_spec2_wbus_s[1]      = bus_dims_wren_s[1] ? mem_wdata_i[2] : 1'b0;
+  assign dims_spec2_wbus_s[2]      = bus_dims_wren_s[2] ? mem_wdata_i[2] : 1'b0;
+  assign guards_coreonce_wbus_s[0] = bus_guards_wrguard_1_flg1_wren_s[0] ? mem_wdata_i[1] : 1'b0;
+  assign guards_busonce_wbus_s[0]  = bus_guards_wrguard_1_flg1_wren_s[0] ? mem_wdata_i[2] : 1'b0;
+  assign grddim_num_wbus_s[0]      = bus_grddim_wrguard_1_wren_s[0] ? mem_wdata_i[11:0] : 12'h000;
+  assign grddim_num_wbus_s[1]      = bus_grddim_wrguard_1_wren_s[1] ? mem_wdata_i[11:0] : 12'h000;
+  assign grddim_int_wbus_s[0]      = bus_grddim_wrguard_3_wren_s[0] ? mem_wdata_i[26:15] : 12'h000;
+  assign grddim_int_wbus_s[1]      = bus_grddim_wrguard_3_wren_s[1] ? mem_wdata_i[26:15] : 12'h000;
+  assign mixint_c_int_wbus_s       = bus_mixint_wren_s ? signed'(mem_wdata_i[11:8]) : 4'sh0;
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -628,22 +662,22 @@ module corner_regf (
   assign regf_grpa_ctrl_start_rval_o    = data_ctrl_start_r;
   assign regf_grpb_ctrl_start_rval_o    = data_ctrl_start_r;
   assign regf_ctrl_ver_rval_o           = data_ctrl_ver_c;
-  assign regf_grpc_ctrl_spec1_rd_o      = (bus_ctrl_rden_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_grpc_ctrl_spec1_rd_o      = bus_ctrl_rden_s;
   assign regf_txdata_bytes_rval_o       = data_txdata_bytes_r;
   assign regf_dims_wrval_rval_o         = data_dims_wrval_r;
   assign regf_dims_wrval_upd_o          = upd_strb_dims_wrval_r;
-  assign regf_grpc_dims_spec2_wbus_o[0] = (bus_dims_wren_s[0] == 1'b1) ? mem_wdata_i[2] : 1'b0;
-  assign regf_grpc_dims_spec2_wr_o[0]   = (bus_dims_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
-  assign regf_grpc_dims_spec2_wbus_o[1] = (bus_dims_wren_s[1] == 1'b1) ? mem_wdata_i[2] : 1'b0;
-  assign regf_grpc_dims_spec2_wr_o[1]   = (bus_dims_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
-  assign regf_grpc_dims_spec2_wbus_o[2] = (bus_dims_wren_s[2] == 1'b1) ? mem_wdata_i[2] : 1'b0;
-  assign regf_grpc_dims_spec2_wr_o[2]   = (bus_dims_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_grpc_dims_spec2_wbus_o[0] = dims_spec2_wbus_s[0];
+  assign regf_grpc_dims_spec2_wr_o[0]   = bus_dims_wren_s[0];
+  assign regf_grpc_dims_spec2_wbus_o[1] = dims_spec2_wbus_s[1];
+  assign regf_grpc_dims_spec2_wr_o[1]   = bus_dims_wren_s[1];
+  assign regf_grpc_dims_spec2_wbus_o[2] = dims_spec2_wbus_s[2];
+  assign regf_grpc_dims_spec2_wr_o[2]   = bus_dims_wren_s[2];
   assign regf_grpc_dims_spec3_rval_o    = data_dims_spec3_r;
   assign regf_guards_once_rval_o        = data_guards_once_r;
-  assign regf_guards_coreonce_wbus_o[0] = ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1) && (bus_wronce_guards_flg1_r[0] == 1'b1)) ? mem_wdata_i[1] : 1'b0;
-  assign regf_guards_coreonce_wr_o[0]   = ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1) && (bus_wronce_guards_flg1_r[0] == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_guards_busonce_wbus_o[0]  = ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1) && (bus_wronce_guards_flg1_r[0] == 1'b1)) ? mem_wdata_i[2] : 1'b0;
-  assign regf_guards_busonce_wr_o[0]    = ((bus_guards_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1) && (bus_wronce_guards_flg1_r[0] == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_guards_coreonce_wbus_o[0] = guards_coreonce_wbus_s[0];
+  assign regf_guards_coreonce_wr_o[0]   = bus_guards_wrguard_1_flg1_wren_s[0];
+  assign regf_guards_busonce_wbus_o[0]  = guards_busonce_wbus_s[0];
+  assign regf_guards_busonce_wr_o[0]    = bus_guards_wrguard_1_flg1_wren_s[0];
   assign regf_guards_single_rval_o      = data_guards_single_r;
   assign regf_guards_onetime_rval_o     = data_guards_onetime_r;
   assign regf_guards_guard_a_rval_o     = data_guards_guard_a_r;
@@ -653,19 +687,19 @@ module corner_regf (
   assign regf_guards_cprio_rval_o       = data_guards_cprio_r;
   assign regf_guards_bprio_rval_o       = data_guards_bprio_r;
   assign regf_guards_grdport_rval_o     = data_guards_grdport_r;
-  assign regf_grddim_num_wbus_o[0]      = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? mem_wdata_i[11:0] : 12'h000;
-  assign regf_grddim_num_wr_o[0]        = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_grddim_num_wbus_o[1]      = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? mem_wdata_i[11:0] : 12'h000;
-  assign regf_grddim_num_wr_o[1]        = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_1_s == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_grddim_num_wbus_o[0]      = grddim_num_wbus_s[0];
+  assign regf_grddim_num_wr_o[0]        = bus_grddim_wrguard_1_wren_s[0];
+  assign regf_grddim_num_wbus_o[1]      = grddim_num_wbus_s[1];
+  assign regf_grddim_num_wr_o[1]        = bus_grddim_wrguard_1_wren_s[1];
   assign regf_grddim_const_rval_o       = data_grddim_const_c;
-  assign regf_grpa_grddim_int_wbus_o[0] = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_3_s == 1'b1)) ? mem_wdata_i[26:15] : 12'h000;
-  assign regf_grpa_grddim_int_wr_o[0]   = ((bus_grddim_wren_s[0] == 1'b1) && (bus_wrguard_3_s == 1'b1)) ? 1'b1 : 1'b0;
-  assign regf_grpa_grddim_int_wbus_o[1] = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_3_s == 1'b1)) ? mem_wdata_i[26:15] : 12'h000;
-  assign regf_grpa_grddim_int_wr_o[1]   = ((bus_grddim_wren_s[1] == 1'b1) && (bus_wrguard_3_s == 1'b1)) ? 1'b1 : 1'b0;
+  assign regf_grpa_grddim_int_wbus_o[0] = grddim_int_wbus_s[0];
+  assign regf_grpa_grddim_int_wr_o[0]   = bus_grddim_wrguard_3_wren_s[0];
+  assign regf_grpa_grddim_int_wbus_o[1] = grddim_int_wbus_s[1];
+  assign regf_grpa_grddim_int_wr_o[1]   = bus_grddim_wrguard_3_wren_s[1];
   assign regf_mixint_r_int_rval_o       = data_mixint_r_int_r;
   assign regf_mixint_r_uint_rval_o      = data_mixint_r_uint_r;
-  assign regf_mixint_c_int_wbus_o       = (bus_mixint_wren_s == 1'b1) ? signed'(mem_wdata_i[11:8]) : 4'sh0;
-  assign regf_mixint_c_int_wr_o         = (bus_mixint_wren_s == 1'b1) ? 1'b1 : 1'b0;
+  assign regf_mixint_c_int_wbus_o       = mixint_c_int_wbus_s;
+  assign regf_mixint_c_int_wr_o         = bus_mixint_wren_s;
   assign regf_wide_a_rval_o             = data_wide_a_r;
   assign regf_wide_b_rval_o             = data_wide_b_r;
   assign regf_base_rval_o               = data_base_r;

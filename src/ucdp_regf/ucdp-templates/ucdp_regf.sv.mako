@@ -39,21 +39,25 @@ from ucdp_regf import util
   guards = mod._guards
   fldonce = mod._fldonce
   wrdonce = mod._wrdonce
+  buswrcond = mod._buswrcond
   soft_rst = mod._soft_rst
   slicing = mod.slicing
   sliced_en = slicing is not None
 %>
 ${parent.logic(indent=indent, skip=skip)}\
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
-${util.get_bus_decode_defaults(rslvr, addrspace).get()}
+${util.get_bus_decode_defaults(rslvr, addrspace=addrspace).get()}
 
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
-% for adec in util.iter_addr_decode(rslvr, addrspace, indent=8):
+% for adec in util.iter_addr_decode(rslvr, addrspace=addrspace, indent=8):
 ${adec}
 % endfor
         default: begin
@@ -61,8 +65,8 @@ ${adec}
         end
       endcase
     end
-
 % if sliced_en:
+
     bit_en_s = ${util.get_bit_enables(mem_data_width, slicing)};
 % endif
   end
@@ -74,18 +78,25 @@ ${adec}
   assign ${soft_rst.signame} = ${soft_rst.sigexpr};
 
 % endif
-% if len(wgasgn := util.get_wrguard_assigns(guards, indent=2)):
+% if len(wgasgn := util.get_wrguard_assigns(guards=guards, indent=2)):
   // ------------------------------------------------------
   // write guard expressions
   // ------------------------------------------------------
 ${wgasgn.get()}
 
 % endif
-% if len(grderrs := util.get_guard_errors(rslvr, addrspace, guards, fldonce, sliced_en=sliced_en, indent=2)):
+% if len(grderrs := util.get_guard_errors(rslvr, addrspace=addrspace, guards=guards, fldonce=fldonce, sliced_en=sliced_en, indent=2)):
   // ------------------------------------------------------
   // write guard errors
   // ------------------------------------------------------
 ${grderrs.get()}
+
+% endif
+% if len(buswrcondasgn := util.get_buswrcond_assigns(addrspace=addrspace, guards=guards, fldonce=fldonce, buswrcond=buswrcond, indent=2)):
+  // ------------------------------------------------------
+  // special update conditions
+  // ------------------------------------------------------
+${buswrcondasgn.get()}
 
 % endif
   // ------------------------------------------------------
@@ -93,22 +104,29 @@ ${grderrs.get()}
   // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
     if (main_rst_an_i == 1'b0) begin
-${util.get_ff_rst_values(rslvr, addrspace, wrdonce).get()}
+${util.get_ff_rst_values(rslvr, addrspace=addrspace, wrdonce=wrdonce).get()}
 % if soft_rst:
     end else if (${soft_rst.signame} == 1'b1) begin
-${util.get_ff_rst_values(rslvr, addrspace, wrdonce).get()}
+${util.get_ff_rst_values(rslvr, addrspace=addrspace, wrdonce=wrdonce).get()}
 % endif
     end else begin
-% for upd in util.iter_field_updates(rslvr, addrspace, guards, fldonce, sliced_en, indent=6):
+% for upd in util.iter_field_updates(rslvr, addrspace=addrspace, buswrcond=buswrcond, sliced_en=sliced_en, indent=6):
 ${upd}
 % endfor
-% for upd in util.iter_wronce_updates(rslvr, addrspace, wrdonce, indent=6):
+% for upd in util.iter_wronce_updates(rslvr, addrspace=addrspace, wrdonce=wrdonce, indent=6):
 ${upd}
 % endfor
     end
   end
 
-% if len(wvecs := util.get_word_vecs(rslvr, addrspace, indent=2)):
+% if len(incwr := util.get_incore_wrassigns(rslvr, addrspace=addrspace, buswrcond=buswrcond, indent=2)):
+  // ------------------------------------------------------
+  // intermediate signals for in-core bus-writes
+  // ------------------------------------------------------
+${incwr.get()}
+% endif
+% if len(wvecs := util.get_word_vecs(rslvr, addrspace=addrspace, indent=2)):
+
   // ------------------------------------------------------
   //  Collect wordio vectors
   // ------------------------------------------------------
@@ -121,7 +139,7 @@ ${wvecs.get()}
   always_comb begin: proc_bus_rd
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
-% for rdbus in util.iter_read_bus(rslvr, addrspace, indent=8):
+% for rdbus in util.iter_read_bus(rslvr, addrspace=addrspace, indent=8):
 ${rdbus}
 % endfor
         default: begin
@@ -136,5 +154,5 @@ ${rdbus}
   // ------------------------------------------------------
   //  Output Assignments
   // ------------------------------------------------------
-${util.get_outp_assigns(rslvr, addrspace, guards, fldonce, sliced_en, indent=2).get()}
+${util.get_outp_assigns(rslvr, addrspace=addrspace, buswrcond=buswrcond, sliced_en=sliced_en, indent=2).get()}
 </%def>

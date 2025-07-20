@@ -40,110 +40,112 @@
 // Size:             1024x32 (4 KB)
 //
 //
-// Offset    Word                      Field    Bus/Core    Reset    Const    Impl
-// --------  ------------------------  -------  ----------  -------  -------  ------
-// +0        word0_bRW_cNone_iNone_d0
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +1        word0_bRO_cNone_iNone_d0
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +2        word1_bRW_cNone_iNone_d0
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +3        word1_bRO_cNone_iNone_d0
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +4        word2_bRW_cNone_iNone_d0
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +5        word0_bRW_cNone_iNone_d1
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +6        word0_bRO_cNone_iNone_d1
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +7        word1_bRW_cNone_iNone_d1
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +8        word1_bRO_cNone_iNone_d1
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +9        word2_bRW_cNone_iNone_d1
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +14:10    word0_bRW_cNone_iNone_d5
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +19:15    word0_bRO_cNone_iNone_d5
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +24:20    word1_bRW_cNone_iNone_d5
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +29:25    word1_bRO_cNone_iNone_d5
-//           [5:0]                     .a       RO/RW       0x3      False    core
-//           [8]                       .b       RO/RW       0        False    core
-//           [9]                       .s0      RO/RW       0        False    core
-//           [10]                      .s1      RO/RW       0        False    core
-//           [11]                      .s2      RO/RW       0        False    core
-// +34:30    word2_bRW_cNone_iNone_d5
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-//           [9]                       .s0      RW/RO       0        False    regf
-//           [10]                      .s1      RW/RO       0        False    regf
-//           [11]                      .s2      RW/RO       0        False    regf
-// +35       www
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
-// +36       nofld
-//           [5:0]                     .a       RW/RO       0x3      False    regf
-//           [8]                       .b       RW/RO       0        False    regf
+// Offset         Word                      Field    Bus/Core    Reset    Const    Impl
+// dec / hex
+// -------------  ------------------------  -------  ----------  -------  -------  ------
+// 0 / 0          word0_bRW_cNone_iNone_d0
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 1 / 1          word0_bRO_cNone_iNone_d0
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 2 / 2          word1_bRW_cNone_iNone_d0
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 3 / 3          word1_bRO_cNone_iNone_d0
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 4 / 4          word2_bRW_cNone_iNone_d0
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 5 / 5          word0_bRW_cNone_iNone_d1
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 6 / 6          word0_bRO_cNone_iNone_d1
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 7 / 7          word1_bRW_cNone_iNone_d1
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 8 / 8          word1_bRO_cNone_iNone_d1
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 9 / 9          word2_bRW_cNone_iNone_d1
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 14:10 / E:A    word0_bRW_cNone_iNone_d5
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 19:15 / 13:F   word0_bRO_cNone_iNone_d5
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 24:20 / 18:14  word1_bRW_cNone_iNone_d5
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 29:25 / 1D:19  word1_bRO_cNone_iNone_d5
+//                [5:0]                     .a       RO/RW       0x3      False    core
+//                [8]                       .b       RO/RW       0        False    core
+//                [9]                       .s0      RO/RW       0        False    core
+//                [10]                      .s1      RO/RW       0        False    core
+//                [11]                      .s2      RO/RW       0        False    core
+// 34:30 / 22:1E  word2_bRW_cNone_iNone_d5
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+//                [9]                       .s0      RW/RO       0        False    regf
+//                [10]                      .s1      RW/RO       0        False    regf
+//                [11]                      .s2      RW/RO       0        False    regf
+// 35 / 23        www
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       RW/RO       0        False    regf
+// 36 / 24        nofld
+//                [5:0]                     .a       RW/RO       0x3      False    regf
+//                [8]                       .b       WO/RW       0        False    core
 //
 //
 // Mnemonic    ReadOp    WriteOp
 // ----------  --------  ---------
 // RO          Read
 // RW          Read      Write
+// WO                    Write
 //
 // =============================================================================
 
@@ -347,20 +349,17 @@ module word_field_regf (
   output logic [31:0] regfword_word1_bRO_cNone_iNone_d0_rval_o,        // Core Read Value
   //   regfword_word2_bRW_cNone_iNone_d0_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word2_bRW_cNone_iNone_d0_rval_o,        // Core Read Value
-  output logic        regfword_word2_bRW_cNone_iNone_d0_upd_o,         // Update Strobe
   //   regfword_word1_bRW_cNone_iNone_d1_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRW_cNone_iNone_d1_rval_o  [0:0], // Core Read Value
   //   regfword_word1_bRO_cNone_iNone_d1_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRO_cNone_iNone_d1_rval_o  [0:0], // Core Read Value
   //   regfword_word2_bRW_cNone_iNone_d1_o: bus=RW core=RO in_regf=True
-  output logic        regfword_word2_bRW_cNone_iNone_d1_upd_o   [0:0], // Update Strobe
   output logic [31:0] regfword_word2_bRW_cNone_iNone_d1_rval_o  [0:0], // Core Read Value
   //   regfword_word1_bRW_cNone_iNone_d5_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRW_cNone_iNone_d5_rval_o  [0:4], // Core Read Value
   //   regfword_word1_bRO_cNone_iNone_d5_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRO_cNone_iNone_d5_rval_o  [0:4], // Core Read Value
   //   regfword_word2_bRW_cNone_iNone_d5_o: bus=RW core=RO in_regf=True
-  output logic        regfword_word2_bRW_cNone_iNone_d5_upd_o   [0:4], // Update Strobe
   output logic [31:0] regfword_word2_bRW_cNone_iNone_d5_rval_o  [0:4], // Core Read Value
   //   regfword_agrp_o
   //     regfword_agrp_www_o: bus=RW core=RO in_regf=True
@@ -371,7 +370,10 @@ module word_field_regf (
   output logic [31:0] regfword_bgrp_www_rval_o,                        // Core Read Value
   output logic        regfword_bgrp_www_upd_o,                         // Update Strobe
   //   regfword_nofld_o: bus=RW core=RO in_regf=True
-  output logic [31:0] regfword_nofld_rval_o                            // Core Read Value
+  output logic [31:0] regfword_nofld_rval_o,                           // Core Read Value
+  //   -
+  input  wire         grd_i,
+  input  wire         ena_i
 );
 
 
@@ -399,7 +401,6 @@ module word_field_regf (
   logic        data_word2_bRW_cNone_iNone_d0_s0_r;
   logic        data_word2_bRW_cNone_iNone_d0_s1_r;
   logic        data_word2_bRW_cNone_iNone_d0_s2_r;
-  logic        upd_strb_word2_bRW_cNone_iNone_d0_r;
   logic        upd_strb_word2_bRW_cNone_iNone_d0_a_r;
   logic        upd_strb_word2_bRW_cNone_iNone_d0_b_r;
   logic        upd_strb_word2_bRW_cNone_iNone_d0_s0_r;
@@ -423,7 +424,6 @@ module word_field_regf (
   logic        data_word2_bRW_cNone_iNone_d1_s0_r      [0:0];
   logic        data_word2_bRW_cNone_iNone_d1_s1_r      [0:0];
   logic        data_word2_bRW_cNone_iNone_d1_s2_r      [0:0];
-  logic        upd_strb_word2_bRW_cNone_iNone_d1_r     [0:0];
   logic        upd_strb_word2_bRW_cNone_iNone_d1_a_r   [0:0];
   logic        upd_strb_word2_bRW_cNone_iNone_d1_b_r   [0:0];
   logic        upd_strb_word2_bRW_cNone_iNone_d1_s0_r  [0:0];
@@ -447,7 +447,6 @@ module word_field_regf (
   logic        data_word2_bRW_cNone_iNone_d5_s0_r      [0:4];
   logic        data_word2_bRW_cNone_iNone_d5_s1_r      [0:4];
   logic        data_word2_bRW_cNone_iNone_d5_s2_r      [0:4];
-  logic        upd_strb_word2_bRW_cNone_iNone_d5_r     [0:4];
   logic        upd_strb_word2_bRW_cNone_iNone_d5_a_r   [0:4];
   logic        upd_strb_word2_bRW_cNone_iNone_d5_b_r   [0:4];
   logic        upd_strb_word2_bRW_cNone_iNone_d5_s0_r  [0:4];
@@ -456,7 +455,6 @@ module word_field_regf (
   logic        data_www_b_r;
   logic        upd_strb_www_r;
   logic [5:0]  data_nofld_a_r;                                // Word nofld
-  logic        data_nofld_b_r;
   logic        bus_word0_bRW_cNone_iNone_d0_wren_s;           // bus word write enables
   logic        bus_word1_bRW_cNone_iNone_d0_wren_s;
   logic        bus_word2_bRW_cNone_iNone_d0_wren_s;
@@ -468,24 +466,28 @@ module word_field_regf (
   logic        bus_word2_bRW_cNone_iNone_d5_wren_s     [0:4];
   logic        bus_www_wren_s;
   logic        bus_nofld_wren_s;
-  logic [31:0] wvec_word0_bRW_cNone_iNone_d0_s;               // word vectors
-  logic [31:0] wvec_word0_bRO_cNone_iNone_d0_s;
-  logic [31:0] wvec_word1_bRW_cNone_iNone_d0_s;
+  logic        bus_www_wrguard_0_wren_s;                      // special update condition signals
+  logic        bus_www_wrguard_1_wren_s;
+  logic        bus_www_wrguard_2_wren_s;
+  logic        bus_wrguard_0_s;                               // write guards
+  logic        bus_wrguard_1_s;
+  logic        bus_wrguard_2_s;
+  logic        nofld_b_wbus_s;                                // intermediate signals for bus-writes to in-core fields
+  logic [31:0] wvec_word1_bRW_cNone_iNone_d0_s;               // word vectors
   logic [31:0] wvec_word1_bRO_cNone_iNone_d0_s;
   logic [31:0] wvec_word2_bRW_cNone_iNone_d0_s;
-  logic [31:0] wvec_word0_bRW_cNone_iNone_d1_s         [0:0];
-  logic [31:0] wvec_word0_bRO_cNone_iNone_d1_s         [0:0];
   logic [31:0] wvec_word1_bRW_cNone_iNone_d1_s         [0:0];
   logic [31:0] wvec_word1_bRO_cNone_iNone_d1_s         [0:0];
   logic [31:0] wvec_word2_bRW_cNone_iNone_d1_s         [0:0];
-  logic [31:0] wvec_word0_bRW_cNone_iNone_d5_s         [0:4];
-  logic [31:0] wvec_word0_bRO_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_word1_bRW_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_word1_bRO_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_word2_bRW_cNone_iNone_d5_s         [0:4];
   logic [31:0] wvec_www_s;
   logic [31:0] wvec_nofld_s;
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
@@ -620,8 +622,21 @@ module word_field_regf (
         end
       endcase
     end
-
   end
+
+  // ------------------------------------------------------
+  // write guard expressions
+  // ------------------------------------------------------
+  assign bus_wrguard_0_s = grd_i;
+  assign bus_wrguard_1_s = grd_i & ena_i;
+  assign bus_wrguard_2_s = ena_i;
+
+  // ------------------------------------------------------
+  // special update conditions
+  // ------------------------------------------------------
+  assign bus_www_wrguard_1_wren_s  = bus_www_wren_s & bus_wrguard_1_s;
+  assign bus_www_wrguard_2_wren_s  = bus_www_wren_s & bus_wrguard_2_s;
+  assign bus_www_wrguard_0_wren_s  = bus_www_wren_s & bus_wrguard_0_s;
 
   // ------------------------------------------------------
   // in-regf storage
@@ -652,7 +667,6 @@ module word_field_regf (
       data_word2_bRW_cNone_iNone_d0_s0_r     <= 1'b0;
       data_word2_bRW_cNone_iNone_d0_s1_r     <= 1'b0;
       data_word2_bRW_cNone_iNone_d0_s2_r     <= 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d0_r    <= 1'b0;
       upd_strb_word2_bRW_cNone_iNone_d0_a_r  <= 1'b0;
       upd_strb_word2_bRW_cNone_iNone_d0_b_r  <= 1'b0;
       upd_strb_word2_bRW_cNone_iNone_d0_s0_r <= 1'b0;
@@ -681,7 +695,6 @@ module word_field_regf (
       data_word2_bRW_cNone_iNone_d1_s0_r     <= '{1{1'b0}};
       data_word2_bRW_cNone_iNone_d1_s1_r     <= '{1{1'b0}};
       data_word2_bRW_cNone_iNone_d1_s2_r     <= '{1{1'b0}};
-      upd_strb_word2_bRW_cNone_iNone_d1_r    <= '{1{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d1_a_r  <= '{1{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d1_b_r  <= '{1{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d1_s0_r <= '{1{1'b0}};
@@ -710,7 +723,6 @@ module word_field_regf (
       data_word2_bRW_cNone_iNone_d5_s0_r     <= '{5{1'b0}};
       data_word2_bRW_cNone_iNone_d5_s1_r     <= '{5{1'b0}};
       data_word2_bRW_cNone_iNone_d5_s2_r     <= '{5{1'b0}};
-      upd_strb_word2_bRW_cNone_iNone_d5_r    <= '{5{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d5_a_r  <= '{5{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d5_b_r  <= '{5{1'b0}};
       upd_strb_word2_bRW_cNone_iNone_d5_s0_r <= '{5{1'b0}};
@@ -721,7 +733,6 @@ module word_field_regf (
       upd_strb_www_r                         <= 1'b0;
       // Word: nofld
       data_nofld_a_r                         <= 6'h03;
-      data_nofld_b_r                         <= 1'b0;
     end else begin
       if (bus_word0_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word0_bRW_cNone_iNone_d0_a_r <= mem_wdata_i[5:0];
@@ -738,7 +749,7 @@ module word_field_regf (
       if (bus_word0_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word0_bRW_cNone_iNone_d0_s2_r <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d0_s2_r <= (bus_word0_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d0_s2_r <= bus_word0_bRW_cNone_iNone_d0_wren_s;
       if (bus_word1_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word1_bRW_cNone_iNone_d0_a_r <= mem_wdata_i[5:0];
       end
@@ -754,27 +765,26 @@ module word_field_regf (
       if (bus_word1_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word1_bRW_cNone_iNone_d0_s2_r <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d0_s2_r <= (bus_word1_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d0_s2_r <= bus_word1_bRW_cNone_iNone_d0_wren_s;
       if (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word2_bRW_cNone_iNone_d0_a_r <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d0_a_r <= (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d0_a_r <= bus_word2_bRW_cNone_iNone_d0_wren_s;
       if (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word2_bRW_cNone_iNone_d0_b_r <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d0_b_r <= (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d0_b_r <= bus_word2_bRW_cNone_iNone_d0_wren_s;
       if (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word2_bRW_cNone_iNone_d0_s0_r <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d0_s0_r <= (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d0_s0_r <= bus_word2_bRW_cNone_iNone_d0_wren_s;
       if (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word2_bRW_cNone_iNone_d0_s1_r <= mem_wdata_i[10];
       end
       if (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) begin
         data_word2_bRW_cNone_iNone_d0_s2_r <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d0_s2_r <= (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d0_r <= (bus_word2_bRW_cNone_iNone_d0_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d0_s2_r <= bus_word2_bRW_cNone_iNone_d0_wren_s;
       if (bus_word0_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d1_a_r[0] <= mem_wdata_i[5:0];
       end
@@ -790,7 +800,7 @@ module word_field_regf (
       if (bus_word0_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d1_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d1_s2_r[0] <= (bus_word0_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d1_s2_r[0] <= bus_word0_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word1_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d1_a_r[0] <= mem_wdata_i[5:0];
       end
@@ -806,27 +816,26 @@ module word_field_regf (
       if (bus_word1_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d1_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d1_s2_r[0] <= (bus_word1_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d1_s2_r[0] <= bus_word1_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d1_a_r[0] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d1_a_r[0] <= (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d1_a_r[0] <= bus_word2_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d1_b_r[0] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d1_b_r[0] <= (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d1_b_r[0] <= bus_word2_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d1_s0_r[0] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d1_s0_r[0] <= (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d1_s0_r[0] <= bus_word2_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d1_s1_r[0] <= mem_wdata_i[10];
       end
       if (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d1_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d1_s2_r[0] <= (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d1_r[0] <= (bus_word2_bRW_cNone_iNone_d1_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d1_s2_r[0] <= bus_word2_bRW_cNone_iNone_d1_wren_s[0];
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_a_r[0] <= mem_wdata_i[5:0];
       end
@@ -890,23 +899,23 @@ module word_field_regf (
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[0] <= (bus_word0_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[0] <= bus_word0_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_s2_r[1] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[1] <= (bus_word0_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[1] <= bus_word0_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_s2_r[2] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[2] <= (bus_word0_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[2] <= bus_word0_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_s2_r[3] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[3] <= (bus_word0_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[3] <= bus_word0_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word0_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word0_bRW_cNone_iNone_d5_s2_r[4] <= mem_wdata_i[11];
       end
-      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[4] <= (bus_word0_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word0_bRW_cNone_iNone_d5_s2_r[4] <= bus_word0_bRW_cNone_iNone_d5_wren_s[4];
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_a_r[0] <= mem_wdata_i[5:0];
       end
@@ -970,83 +979,83 @@ module word_field_regf (
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[0] <= (bus_word1_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[0] <= bus_word1_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_s2_r[1] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[1] <= (bus_word1_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[1] <= bus_word1_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_s2_r[2] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[2] <= (bus_word1_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[2] <= bus_word1_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_s2_r[3] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[3] <= (bus_word1_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[3] <= bus_word1_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word1_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word1_bRW_cNone_iNone_d5_s2_r[4] <= mem_wdata_i[11];
       end
-      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[4] <= (bus_word1_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word1_bRW_cNone_iNone_d5_s2_r[4] <= bus_word1_bRW_cNone_iNone_d5_wren_s[4];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_a_r[0] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_a_r[0] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_a_r[0] <= bus_word2_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_a_r[1] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_a_r[1] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_a_r[1] <= bus_word2_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_a_r[2] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_a_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_a_r[2] <= bus_word2_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_a_r[3] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_a_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_a_r[3] <= bus_word2_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_a_r[4] <= mem_wdata_i[5:0];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_a_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_a_r[4] <= bus_word2_bRW_cNone_iNone_d5_wren_s[4];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_b_r[0] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_b_r[0] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_b_r[0] <= bus_word2_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_b_r[1] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_b_r[1] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_b_r[1] <= bus_word2_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_b_r[2] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_b_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_b_r[2] <= bus_word2_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_b_r[3] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_b_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_b_r[3] <= bus_word2_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_b_r[4] <= mem_wdata_i[8];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_b_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_b_r[4] <= bus_word2_bRW_cNone_iNone_d5_wren_s[4];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s0_r[0] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[0] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[0] <= bus_word2_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s0_r[1] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[1] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[1] <= bus_word2_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s0_r[2] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[2] <= bus_word2_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s0_r[3] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[3] <= bus_word2_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s0_r[4] <= mem_wdata_i[9];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s0_r[4] <= bus_word2_bRW_cNone_iNone_d5_wren_s[4];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s1_r[0] <= mem_wdata_i[10];
       end
@@ -1065,43 +1074,40 @@ module word_field_regf (
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s2_r[0] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[0] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[0] <= bus_word2_bRW_cNone_iNone_d5_wren_s[0];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s2_r[1] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[1] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[1] <= bus_word2_bRW_cNone_iNone_d5_wren_s[1];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s2_r[2] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[2] <= bus_word2_bRW_cNone_iNone_d5_wren_s[2];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s2_r[3] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[3] <= bus_word2_bRW_cNone_iNone_d5_wren_s[3];
       if (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) begin
         data_word2_bRW_cNone_iNone_d5_s2_r[4] <= mem_wdata_i[11];
       end
-      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d5_r[0] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[0] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d5_r[1] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[1] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d5_r[2] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[2] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d5_r[3] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[3] == 1'b1) ? 1'b1 : 1'b0;
-      upd_strb_word2_bRW_cNone_iNone_d5_r[4] <= (bus_word2_bRW_cNone_iNone_d5_wren_s[4] == 1'b1) ? 1'b1 : 1'b0;
-      if (bus_www_wren_s == 1'b1) begin
+      upd_strb_word2_bRW_cNone_iNone_d5_s2_r[4] <= bus_word2_bRW_cNone_iNone_d5_wren_s[4];
+      if (bus_www_wrguard_1_wren_s == 1'b1) begin
         data_www_a_r <= mem_wdata_i[5:0];
       end
-      if (bus_www_wren_s == 1'b1) begin
+      if (bus_www_wrguard_2_wren_s == 1'b1) begin
         data_www_b_r <= mem_wdata_i[8];
       end
-      upd_strb_www_r <= (bus_www_wren_s == 1'b1) ? 1'b1 : 1'b0;
+      upd_strb_www_r <= bus_www_wrguard_0_wren_s;
       if (bus_nofld_wren_s == 1'b1) begin
         data_nofld_a_r <= mem_wdata_i[5:0];
       end
-      if (bus_nofld_wren_s == 1'b1) begin
-        data_nofld_b_r <= mem_wdata_i[8];
-      end
     end
   end
+
+  // ------------------------------------------------------
+  // intermediate signals for in-core bus-writes
+  // ------------------------------------------------------
+  assign nofld_b_wbus_s = bus_nofld_wren_s ? mem_wdata_i[8] : 1'b0;
 
   // ------------------------------------------------------
   //  Collect wordio vectors
@@ -1128,7 +1134,7 @@ module word_field_regf (
   assign wvec_word2_bRW_cNone_iNone_d5_s[3] = {20'h00000, data_word2_bRW_cNone_iNone_d5_s2_r[3], data_word2_bRW_cNone_iNone_d5_s1_r[3], data_word2_bRW_cNone_iNone_d5_s0_r[3], data_word2_bRW_cNone_iNone_d5_b_r[3], 2'h0, data_word2_bRW_cNone_iNone_d5_a_r[3]};
   assign wvec_word2_bRW_cNone_iNone_d5_s[4] = {20'h00000, data_word2_bRW_cNone_iNone_d5_s2_r[4], data_word2_bRW_cNone_iNone_d5_s1_r[4], data_word2_bRW_cNone_iNone_d5_s0_r[4], data_word2_bRW_cNone_iNone_d5_b_r[4], 2'h0, data_word2_bRW_cNone_iNone_d5_a_r[4]};
   assign wvec_www_s                         = {23'h000000, data_www_b_r, 2'h0, data_www_a_r};
-  assign wvec_nofld_s                       = {23'h000000, data_nofld_b_r, 2'h0, data_nofld_a_r};
+  assign wvec_nofld_s                       = {23'h000000, nofld_b_wbus_s, 2'h0, data_nofld_a_r};
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -1245,7 +1251,7 @@ module word_field_regf (
           mem_rdata_o = {23'h000000, data_www_b_r, 2'h0, data_www_a_r};
         end
         10'h024: begin
-          mem_rdata_o = {23'h000000, data_nofld_b_r, 2'h0, data_nofld_a_r};
+          mem_rdata_o = {26'h0000000, data_nofld_a_r};
         end
         default: begin
           mem_rdata_o = 32'h00000000;
@@ -1283,7 +1289,6 @@ module word_field_regf (
   assign regf_word2_bRW_cNone_iNone_d0_s2_rval_o  = data_word2_bRW_cNone_iNone_d0_s2_r;
   assign regf_word2_bRW_cNone_iNone_d0_s2_upd_o   = upd_strb_word2_bRW_cNone_iNone_d0_s2_r;
   assign regfword_word2_bRW_cNone_iNone_d0_rval_o = wvec_word2_bRW_cNone_iNone_d0_s;
-  assign regfword_word2_bRW_cNone_iNone_d0_upd_o  = upd_strb_word2_bRW_cNone_iNone_d0_r;
   assign regf_word0_bRW_cNone_iNone_d1_a_rval_o   = data_word0_bRW_cNone_iNone_d1_a_r;
   assign regf_word0_bRW_cNone_iNone_d1_b_rval_o   = data_word0_bRW_cNone_iNone_d1_b_r;
   assign regf_word0_bRW_cNone_iNone_d1_s0_rval_o  = data_word0_bRW_cNone_iNone_d1_s0_r;
@@ -1308,7 +1313,6 @@ module word_field_regf (
   assign regf_word2_bRW_cNone_iNone_d1_s2_rval_o  = data_word2_bRW_cNone_iNone_d1_s2_r;
   assign regf_word2_bRW_cNone_iNone_d1_s2_upd_o   = upd_strb_word2_bRW_cNone_iNone_d1_s2_r;
   assign regfword_word2_bRW_cNone_iNone_d1_rval_o = wvec_word2_bRW_cNone_iNone_d1_s;
-  assign regfword_word2_bRW_cNone_iNone_d1_upd_o  = upd_strb_word2_bRW_cNone_iNone_d1_r;
   assign regf_word0_bRW_cNone_iNone_d5_a_rval_o   = data_word0_bRW_cNone_iNone_d5_a_r;
   assign regf_word0_bRW_cNone_iNone_d5_b_rval_o   = data_word0_bRW_cNone_iNone_d5_b_r;
   assign regf_word0_bRW_cNone_iNone_d5_s0_rval_o  = data_word0_bRW_cNone_iNone_d5_s0_r;
@@ -1333,7 +1337,6 @@ module word_field_regf (
   assign regf_word2_bRW_cNone_iNone_d5_s2_rval_o  = data_word2_bRW_cNone_iNone_d5_s2_r;
   assign regf_word2_bRW_cNone_iNone_d5_s2_upd_o   = upd_strb_word2_bRW_cNone_iNone_d5_s2_r;
   assign regfword_word2_bRW_cNone_iNone_d5_rval_o = wvec_word2_bRW_cNone_iNone_d5_s;
-  assign regfword_word2_bRW_cNone_iNone_d5_upd_o  = upd_strb_word2_bRW_cNone_iNone_d5_r;
   assign regf_agrp_www_a_rval_o                   = data_www_a_r;
   assign regf_bgrp_www_a_rval_o                   = data_www_a_r;
   assign regf_agrp_www_b_rval_o                   = data_www_b_r;

@@ -40,11 +40,12 @@
 // Size:             1024x32 (4 KB)
 //
 //
-// Offset    Word    Field    Bus/Core    Reset    Const    Impl
-// --------  ------  -------  ----------  -------  -------  ------
-// +0        ctrl
-//           [0]     .ena     RW/RO       0        False    regf
-//           [4]     .busy    RO/RW       0        False    core
+// Offset       Word    Field    Bus/Core    Reset    Const    Impl
+// dec / hex
+// -----------  ------  -------  ----------  -------  -------  ------
+// 0 / 0        ctrl
+//              [0]     .ena     RW/RO       0        False    regf
+//              [4]     .busy    RO/RW       0        False    core
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -84,10 +85,12 @@ module reset_softrst (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic        data_ctrl_ena_r; // Word ctrl
-  logic        bus_ctrl_wren_s; // bus word write enables
-  logic [31:0] wvec_ctrl_s;     // word vectors
+  logic data_ctrl_ena_r; // Word ctrl
+  logic bus_ctrl_wren_s; // bus word write enables
 
+  // ------------------------------------------------------
+  // address decoding
+  // ------------------------------------------------------
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
@@ -104,7 +107,6 @@ module reset_softrst (
         end
       endcase
     end
-
   end
 
   // ------------------------------------------------------

@@ -486,14 +486,15 @@ class WordFieldMod(u.AMod):
                 "agrp",
                 "bgrp",
             ),
-            upd_strb=True,
+            upd_strb="WU",
+            wr_guard="grd_i",
         )
-        word.add_field("a", u.UintType(6, default=3), upd_strb=False)
-        word.add_field("b", u.BitType(), align=4, upd_strb=False)
+        word.add_field("a", u.UintType(6, default=3), upd_strb=False, wr_guard="grd_i & ena_i")
+        word.add_field("b", u.BitType(), align=4, upd_strb=False, wr_guard="ena_i")
 
         word = regf.add_word("nofld", bus="RW", wordio=True, fieldio=False)
         word.add_field("a", u.UintType(6, default=3))
-        word.add_field("b", u.BitType(), align=4)
+        word.add_field("b", u.BitType(), bus="WO", core="RW", align=4)
 
 
 def test_word_field(tmp_path):
@@ -502,3 +503,35 @@ def test_word_field(tmp_path):
     with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
         u.generate(mod, "hdl")
     assert_refdata(test_word_field, tmp_path)
+
+
+class WordUpdMod(u.AMod):
+    """Register File with word-only update strobe."""
+
+    filelists: ClassVar[u.ModFileLists] = (HdlFileList(gen="full"),)
+
+    def _build(self) -> None:
+        regf = RegfMod(self, "u_regf")
+
+        word = regf.add_word("wup", upd_strb="WU")
+        word.add_field("f0", u.UintType(4), "RW")
+        word.add_field("f1", u.UintType(5), "RW")
+
+        word = regf.add_word(
+            "wupgrp",
+            depth=3,
+            upd_strb="WU",
+            portgroups=(
+                "grpa",
+                "grpb",
+            ),
+        )
+        word.add_field("f0", u.UintType(2), "RW", portgroups=("grpc",))
+
+
+def test_word_upd(tmp_path):
+    """Register File with word-only update strobe."""
+    mod = WordUpdMod()
+    with mock.patch.dict(os.environ, {"PRJROOT": str(tmp_path)}):
+        u.generate(mod, "hdl")
+    assert_refdata(test_word_upd, tmp_path)

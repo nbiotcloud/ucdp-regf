@@ -31,7 +31,7 @@
 // =============================================================================
 //
 // Library:    tests
-// Module:     reset_regrst
+// Module:     word_upd_regf
 // Data Model: RegfMod
 //             tests/test_svmako.py
 //
@@ -43,45 +43,49 @@
 // Offset       Word    Field    Bus/Core    Reset    Const    Impl
 // dec / hex
 // -----------  ------  -------  ----------  -------  -------  ------
-// 0 / 0        ctrl
-//              [0]     .clrall  WL/RO       0        False    core
-//              [1]     .ena     RW/RO       0        False    regf
-//              [4]     .busy    RO/RW       0        False    core
+// 0 / 0        wup
+//              [3:0]   .f0      RW/RO       0x0      False    regf
+//              [8:4]   .f1      RW/RO       0x0      False    regf
+// 3:1 / 3:1    wupgrp
+//              [1:0]   .f0      RW/RO       0x0      False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
-// ----------  --------  ------------
+// ----------  --------  ---------
 // RO          Read
 // RW          Read      Write
-// WL                    Write Locked
 //
 // =============================================================================
 
 `begin_keywords "1800-2009"
 `default_nettype none  // implicit wires are forbidden
 
-module reset_regrst (
+module word_upd_regf (
   // main_i: Clock and Reset
-  input  wire         main_clk_i,              // Clock
-  input  wire         main_rst_an_i,           // Async Reset (Low-Active)
+  input  wire         main_clk_i,                       // Clock
+  input  wire         main_rst_an_i,                    // Async Reset (Low-Active)
   // mem_i
-  input  wire         mem_ena_i,               // Memory Access Enable
-  input  wire  [9:0]  mem_addr_i,              // Memory Address
-  input  wire         mem_wena_i,              // Memory Write Enable
-  input  wire  [31:0] mem_wdata_i,             // Memory Write Data
-  output logic [31:0] mem_rdata_o,             // Memory Read Data
-  output logic        mem_err_o,               // Memory Access Failed.
+  input  wire         mem_ena_i,                        // Memory Access Enable
+  input  wire  [9:0]  mem_addr_i,                       // Memory Address
+  input  wire         mem_wena_i,                       // Memory Write Enable
+  input  wire  [31:0] mem_wdata_i,                      // Memory Write Data
+  output logic [31:0] mem_rdata_o,                      // Memory Read Data
+  output logic        mem_err_o,                        // Memory Access Failed.
   // regf_o
-  //   regf_ctrl_clrall_o: bus=WL core=RO in_regf=False
-  output logic        regf_ctrl_clrall_wbus_o, // Bus Write Value
-  output logic        regf_ctrl_clrall_wr_o,   // Bus Write Strobe
-  //   regf_ctrl_ena_o: bus=RW core=RO in_regf=True
-  output logic        regf_ctrl_ena_rval_o,    // Core Read Value
-  //   regf_ctrl_busy_o: bus=RO core=RW in_regf=False
-  input  wire         regf_ctrl_busy_rbus_i,   // Bus Read Value
+  //   regf_wup_f0_o: bus=RW core=RO in_regf=True
+  output logic [3:0]  regf_wup_f0_rval_o,               // Core Read Value
+  //   regf_wup_f1_o: bus=RW core=RO in_regf=True
+  output logic [4:0]  regf_wup_f1_rval_o,               // Core Read Value
+  //   -
+  output logic        regf_wup_upd_o,                   // wup update strobe
+  //   regf_grpc_o
+  //     regf_grpc_wupgrp_f0_o: bus=RW core=RO in_regf=True
+  output logic [1:0]  regf_grpc_wupgrp_f0_rval_o [0:2], // Core Read Value
+  //   regf_grpa_o
+  output logic        regf_grpa_wupgrp_upd_o     [0:2], // wupgrp update strobe
+  //   regf_grpb_o
+  output logic        regf_grpb_wupgrp_upd_o     [0:2]  // wupgrp update strobe
   // regfword_o
-  // -
-  input  wire         gdr_i
 );
 
 
@@ -90,13 +94,13 @@ module reset_regrst (
   // ------------------------------------------------------
   //  Signals
   // ------------------------------------------------------
-  logic data_ctrl_ena_r;                // Word ctrl
-  logic bus_wronce_ctrl_flg0_r;
-  logic bus_ctrl_wren_s;                // bus word write enables
-  logic bus_ctrl_wrguard_0_flg0_wren_s; // special update condition signals
-  logic bus_wrguard_0_s;                // write guards
-  logic ctrl_clrall_wbus_s;             // intermediate signals for bus-writes to in-core fields
-  logic bus_ctrl_clrall_rst_s;          // Synchronous Reset
+  logic [3:0] data_wup_f0_r;           // Word wup
+  logic [4:0] data_wup_f1_r;
+  logic       upd_strb_wup_r;
+  logic [1:0] data_wupgrp_f0_r  [0:2]; // Word wupgrp
+  logic       upd_strb_wupgrp_r [0:2];
+  logic       bus_wup_wren_s;          // bus word write enables
+  logic       bus_wupgrp_wren_s [0:2];
 
   // ------------------------------------------------------
   // address decoding
@@ -104,13 +108,23 @@ module reset_regrst (
   always_comb begin: proc_bus_addr_dec
     // defaults
     mem_err_o = 1'b0;
-    bus_ctrl_wren_s = 1'b0;
+    bus_wup_wren_s    = 1'b0;
+    bus_wupgrp_wren_s = '{3{1'b0}};
 
     // decode address
     if (mem_ena_i == 1'b1) begin
       case (mem_addr_i)
         10'h000: begin
-          bus_ctrl_wren_s = mem_wena_i;
+          bus_wup_wren_s = mem_wena_i;
+        end
+        10'h001: begin
+          bus_wupgrp_wren_s[0] = mem_wena_i;
+        end
+        10'h002: begin
+          bus_wupgrp_wren_s[1] = mem_wena_i;
+        end
+        10'h003: begin
+          bus_wupgrp_wren_s[2] = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
@@ -120,46 +134,40 @@ module reset_regrst (
   end
 
   // ------------------------------------------------------
-  // soft reset condition
-  // ------------------------------------------------------
-  assign bus_ctrl_clrall_rst_s = bus_ctrl_wren_s & mem_wdata_i[0] & bus_wrguard_0_s & bus_wronce_ctrl_flg0_r;
-
-  // ------------------------------------------------------
-  // write guard expressions
-  // ------------------------------------------------------
-  assign bus_wrguard_0_s = gdr_i;
-
-  // ------------------------------------------------------
-  // special update conditions
-  // ------------------------------------------------------
-  assign bus_ctrl_wrguard_0_flg0_wren_s  = bus_ctrl_wren_s & bus_wrguard_0_s & bus_wronce_ctrl_flg0_r;
-
-  // ------------------------------------------------------
   // in-regf storage
   // ------------------------------------------------------
   always_ff @ (posedge main_clk_i or negedge main_rst_an_i) begin: proc_regf_flops
     if (main_rst_an_i == 1'b0) begin
-      // Word: ctrl
-      data_ctrl_ena_r        <= 1'b0;
-      bus_wronce_ctrl_flg0_r <= 1'b1;
-    end else if (bus_ctrl_clrall_rst_s == 1'b1) begin
-      // Word: ctrl
-      data_ctrl_ena_r        <= 1'b0;
-      bus_wronce_ctrl_flg0_r <= 1'b1;
+      // Word: wup
+      data_wup_f0_r     <= 4'h0;
+      data_wup_f1_r     <= 5'h00;
+      upd_strb_wup_r    <= 1'b0;
+      // Word: wupgrp
+      data_wupgrp_f0_r  <= '{3{2'h0}};
+      upd_strb_wupgrp_r <= '{3{1'b0}};
     end else begin
-      if (bus_ctrl_wren_s == 1'b1) begin
-        data_ctrl_ena_r <= mem_wdata_i[1];
+      if (bus_wup_wren_s == 1'b1) begin
+        data_wup_f0_r <= mem_wdata_i[3:0];
       end
-      if ((bus_ctrl_wren_s == 1'b1) && (bus_wrguard_0_s == 1'b1)) begin
-        bus_wronce_ctrl_flg0_r <= 1'b0;
+      if (bus_wup_wren_s == 1'b1) begin
+        data_wup_f1_r <= mem_wdata_i[8:4];
       end
+      upd_strb_wup_r <= bus_wup_wren_s;
+      if (bus_wupgrp_wren_s[0] == 1'b1) begin
+        data_wupgrp_f0_r[0] <= mem_wdata_i[1:0];
+      end
+      if (bus_wupgrp_wren_s[1] == 1'b1) begin
+        data_wupgrp_f0_r[1] <= mem_wdata_i[1:0];
+      end
+      if (bus_wupgrp_wren_s[2] == 1'b1) begin
+        data_wupgrp_f0_r[2] <= mem_wdata_i[1:0];
+      end
+      upd_strb_wupgrp_r[0] <= bus_wupgrp_wren_s[0];
+      upd_strb_wupgrp_r[1] <= bus_wupgrp_wren_s[1];
+      upd_strb_wupgrp_r[2] <= bus_wupgrp_wren_s[2];
     end
   end
 
-  // ------------------------------------------------------
-  // intermediate signals for in-core bus-writes
-  // ------------------------------------------------------
-  assign ctrl_clrall_wbus_s = bus_ctrl_wrguard_0_flg0_wren_s ? mem_wdata_i[0] : 1'b0;
 
   // ------------------------------------------------------
   //  Bus Read-Mux
@@ -168,7 +176,16 @@ module reset_regrst (
     if ((mem_ena_i == 1'b1) && (mem_wena_i == 1'b0)) begin
       case (mem_addr_i)
         10'h000: begin
-          mem_rdata_o = {27'h0000000, regf_ctrl_busy_rbus_i, 2'h0, data_ctrl_ena_r, 1'h0};
+          mem_rdata_o = {23'h000000, data_wup_f1_r, data_wup_f0_r};
+        end
+        10'h001: begin
+          mem_rdata_o = {30'h00000000, data_wupgrp_f0_r[0]};
+        end
+        10'h002: begin
+          mem_rdata_o = {30'h00000000, data_wupgrp_f0_r[1]};
+        end
+        10'h003: begin
+          mem_rdata_o = {30'h00000000, data_wupgrp_f0_r[2]};
         end
         default: begin
           mem_rdata_o = 32'h00000000;
@@ -182,11 +199,14 @@ module reset_regrst (
   // ------------------------------------------------------
   //  Output Assignments
   // ------------------------------------------------------
-  assign regf_ctrl_clrall_wbus_o = ctrl_clrall_wbus_s;
-  assign regf_ctrl_clrall_wr_o   = bus_ctrl_wrguard_0_flg0_wren_s;
-  assign regf_ctrl_ena_rval_o    = data_ctrl_ena_r;
+  assign regf_wup_f0_rval_o         = data_wup_f0_r;
+  assign regf_wup_f1_rval_o         = data_wup_f1_r;
+  assign regf_wup_upd_o             = upd_strb_wup_r;
+  assign regf_grpc_wupgrp_f0_rval_o = data_wupgrp_f0_r;
+  assign regf_grpa_wupgrp_upd_o     = upd_strb_wupgrp_r;
+  assign regf_grpb_wupgrp_upd_o     = upd_strb_wupgrp_r;
 
-endmodule // reset_regrst
+endmodule // word_upd_regf
 
 `default_nettype wire
 `end_keywords
