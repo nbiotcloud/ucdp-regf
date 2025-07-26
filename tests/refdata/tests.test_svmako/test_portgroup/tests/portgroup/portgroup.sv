@@ -85,12 +85,18 @@ module portgroup #(
     .mem_err_o                (                              ), // TODO - Memory Access Failed.
     .regf_top_ctrl_ena_rval_o (                              ), // TODO - Core Read Value
     .regf_top_ctrl_busy_rbus_i(1'b0                          ), // TODO - Bus Read Value
+    .regf_top_w2_f0_rval_o    (                              ), // TODO - Core Read Value
+    .regf_top_w2_f2_rval_o    (                              ), // TODO - Core Read Value
     .regf_rx_ctrl_ena_rval_o  (regf_regf_rx_o_ctrl_ena_rval_s), // Core Read Value
     .regf_rx_rx_data0_rbus_i  (regf_regf_rx_o_rx_data0_rbus_s), // Bus Read Value
     .regf_rx_rx_data1_rbus_i  (regf_regf_rx_o_rx_data1_rbus_s), // Bus Read Value
     .regf_rx_rx_data2_rbus_i  (regf_regf_rx_o_rx_data2_rbus_s), // Bus Read Value
     .regf_tx_ctrl_ena_rval_o  (regf_regf_tx_o_ctrl_ena_rval_s), // Core Read Value
-    .regf_tx_tx_data0_rval_o  (regf_regf_tx_o_tx_data0_rval_s)  // Core Read Value
+    .regf_tx_tx_data0_rval_o  (regf_regf_tx_o_tx_data0_rval_s), // Core Read Value
+    .regf_mod_w2_f0_rval_o    (                              ), // TODO - Core Read Value
+    .regf_mod_w2_f2_rval_o    (                              ), // TODO - Core Read Value
+    .regf_grpa_w2_f1_rval_o   (                              ), // TODO - Core Read Value
+    .regf_grpb_w2_f2_rval_o   (                              )  // TODO - Core Read Value
   );
 
 

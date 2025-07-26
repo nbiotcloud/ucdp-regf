@@ -177,8 +177,7 @@ class Word(ua.Word):
         guard_err=None,
         **kwargs,
     ) -> Field:
-        if portgroups is None:
-            portgroups = self.portgroups
+        portgroups = _inherit_portgroups(portgroups, self.portgroups)
         if signame is None:
             signame = f"{self.name}_{name}"
         if in_regf is None:
@@ -275,8 +274,7 @@ class Addrspace(ua.Addrspace):
     def _create_word(
         self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, guard_err=None, **kwargs
     ) -> Word:
-        if portgroups is None:
-            portgroups = self.portgroups
+        portgroups = _inherit_portgroups(portgroups, self.portgroups)
         if in_regf is None:
             in_regf = self.in_regf
         if upd_prio is None:
@@ -431,7 +429,7 @@ class UcdpRegfMod(u.ATailoredMod):
             name=self.hiername,
             width=self.width,
             depth=self.depth,
-            portgroups=self.portgroups,
+            portgroups=_inherit_portgroups(self.portgroups),  # just sanitizing
             in_regf=self.in_regf,
             upd_prio=self.upd_prio,
             upd_strb=self.upd_strb,
@@ -821,6 +819,20 @@ class UcdpRegfMod(u.ATailoredMod):
 Portgroupmap: TypeAlias = dict[str | None, u.DynamicStructType]
 
 
+def _inherit_portgroups(
+    local_portgroups: tuple[str, ...] | None, parent_portgroups: tuple[str, ...] | None = None
+) -> tuple[str, ...] | None:
+    """Return consolidated portgroups according to inheritance with preserved order."""
+    portgroups: dict[str, None] = {}
+    for lpg in local_portgroups or ("+"):
+        if lpg == "+":
+            for ppg in parent_portgroups or ():
+                portgroups[ppg] = None
+        else:
+            portgroups[lpg] = None
+    return tuple(portgroups.keys()) if len(portgroups) > 0 else None
+
+
 def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicStructType:
     """Determine IO-Type for fields in `addrspace`."""
     portgroupmap: Portgroupmap = {None: u.DynamicStructType()}
@@ -847,7 +859,6 @@ def get_regfwordiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.Dynam
 
 
 def _add_word_upd(portgroupmap: Portgroupmap, word: Word):
-    # raise ValueError(f"{word.portgroups}")
     for portgroup in word.portgroups or [None]:
         try:
             iotype = portgroupmap[portgroup]
