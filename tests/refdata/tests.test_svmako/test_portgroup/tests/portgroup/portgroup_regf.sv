@@ -52,6 +52,10 @@
 //              [(width_p-1)+(3*width_p):3*width_p]  .data2   RO/RW       0x0      False    core
 // 2 / 2        tx
 //              [width_p-1:0]                        .data0   RW/RO       0x0      False    regf
+// 3 / 3        w2
+//              [0]                                  .f0      RW/RO       0        False    regf
+//              [1]                                  .f1      RW/RO       0        False    regf
+//              [2]                                  .f2      RW/RO       0        False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -83,6 +87,10 @@ module portgroup_regf #(
   output logic               regf_top_ctrl_ena_rval_o,  // Core Read Value
   //     regf_top_ctrl_busy_o: bus=RO core=RW in_regf=False
   input  wire                regf_top_ctrl_busy_rbus_i, // Bus Read Value
+  //     regf_top_w2_f0_o: bus=RW core=RO in_regf=True
+  output logic               regf_top_w2_f0_rval_o,     // Core Read Value
+  //     regf_top_w2_f2_o: bus=RW core=RO in_regf=True
+  output logic               regf_top_w2_f2_rval_o,     // Core Read Value
   //   regf_rx_o
   //     regf_rx_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic               regf_rx_ctrl_ena_rval_o,   // Core Read Value
@@ -96,7 +104,18 @@ module portgroup_regf #(
   //     regf_tx_ctrl_ena_o: bus=RW core=RO in_regf=True
   output logic               regf_tx_ctrl_ena_rval_o,   // Core Read Value
   //     regf_tx_tx_data0_o: bus=RW core=RO in_regf=True
-  output logic [width_p-1:0] regf_tx_tx_data0_rval_o    // Core Read Value
+  output logic [width_p-1:0] regf_tx_tx_data0_rval_o,   // Core Read Value
+  //   regf_mod_o
+  //     regf_mod_w2_f0_o: bus=RW core=RO in_regf=True
+  output logic               regf_mod_w2_f0_rval_o,     // Core Read Value
+  //     regf_mod_w2_f2_o: bus=RW core=RO in_regf=True
+  output logic               regf_mod_w2_f2_rval_o,     // Core Read Value
+  //   regf_grpa_o
+  //     regf_grpa_w2_f1_o: bus=RW core=RO in_regf=True
+  output logic               regf_grpa_w2_f1_rval_o,    // Core Read Value
+  //   regf_grpb_o
+  //     regf_grpb_w2_f2_o: bus=RW core=RO in_regf=True
+  output logic               regf_grpb_w2_f2_rval_o     // Core Read Value
   // regfword_o
 );
 
@@ -108,8 +127,12 @@ module portgroup_regf #(
   // ------------------------------------------------------
   logic               data_ctrl_ena_r; // Word ctrl
   logic [width_p-1:0] data_tx_data0_r; // Word tx
+  logic               data_w2_f0_r;    // Word w2
+  logic               data_w2_f1_r;
+  logic               data_w2_f2_r;
   logic               bus_ctrl_wren_s; // bus word write enables
   logic               bus_tx_wren_s;
+  logic               bus_w2_wren_s;
 
   // ------------------------------------------------------
   // address decoding
@@ -119,6 +142,7 @@ module portgroup_regf #(
     mem_err_o = 1'b0;
     bus_ctrl_wren_s = 1'b0;
     bus_tx_wren_s   = 1'b0;
+    bus_w2_wren_s   = 1'b0;
 
     // decode address
     if (mem_ena_i == 1'b1) begin
@@ -131,6 +155,9 @@ module portgroup_regf #(
         end
         10'h002: begin
           bus_tx_wren_s = mem_wena_i;
+        end
+        10'h003: begin
+          bus_w2_wren_s = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
@@ -149,12 +176,25 @@ module portgroup_regf #(
       // Word: rx
       // Word: tx
       data_tx_data0_r <= {width_p {1'b0}};
+      // Word: w2
+      data_w2_f0_r    <= 1'b0;
+      data_w2_f1_r    <= 1'b0;
+      data_w2_f2_r    <= 1'b0;
     end else begin
       if (bus_ctrl_wren_s == 1'b1) begin
         data_ctrl_ena_r <= mem_wdata_i[0];
       end
       if (bus_tx_wren_s == 1'b1) begin
         data_tx_data0_r <= mem_wdata_i[width_p - 1:0];
+      end
+      if (bus_w2_wren_s == 1'b1) begin
+        data_w2_f0_r <= mem_wdata_i[0];
+      end
+      if (bus_w2_wren_s == 1'b1) begin
+        data_w2_f1_r <= mem_wdata_i[1];
+      end
+      if (bus_w2_wren_s == 1'b1) begin
+        data_w2_f2_r <= mem_wdata_i[2];
       end
     end
   end
@@ -175,6 +215,9 @@ module portgroup_regf #(
         10'h002: begin
           mem_rdata_o = {{32 - ((width_p - 1) + 1) {1'b0}}, data_tx_data0_r};
         end
+        10'h003: begin
+          mem_rdata_o = {29'h00000000, data_w2_f2_r, data_w2_f1_r, data_w2_f0_r};
+        end
         default: begin
           mem_rdata_o = 32'h00000000;
         end
@@ -191,6 +234,12 @@ module portgroup_regf #(
   assign regf_rx_ctrl_ena_rval_o  = data_ctrl_ena_r;
   assign regf_tx_ctrl_ena_rval_o  = data_ctrl_ena_r;
   assign regf_tx_tx_data0_rval_o  = data_tx_data0_r;
+  assign regf_mod_w2_f0_rval_o    = data_w2_f0_r;
+  assign regf_top_w2_f0_rval_o    = data_w2_f0_r;
+  assign regf_grpa_w2_f1_rval_o   = data_w2_f1_r;
+  assign regf_mod_w2_f2_rval_o    = data_w2_f2_r;
+  assign regf_top_w2_f2_rval_o    = data_w2_f2_r;
+  assign regf_grpb_w2_f2_rval_o   = data_w2_f2_r;
 
 endmodule // portgroup_regf
 

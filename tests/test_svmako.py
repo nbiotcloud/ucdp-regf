@@ -254,14 +254,14 @@ class PortgroupMod(u.AMod):
         width_p = self.add_param(u.IntegerType(default=1), "width_p")
         self.add_port(u.ClkRstAnType(), "main_i")
 
-        regf = RegfMod(self, "u_regf", paramdict={"width_p": width_p})
+        regf = RegfMod(self, "u_regf", paramdict={"width_p": width_p}, portgroups=("mod",))
         regf.add_param(width_p)
         regf.con("main_i", "main_i")
         regf.con("regf_rx_o", "create(u_rx/regf_i)")
         regf.con("regf_tx_o", "create(u_tx/regf_i)")
 
         word = regf.add_word("ctrl", portgroups=("top", "rx", "tx"))
-        word.add_field("ena", u.EnaType(), "RW")
+        word.add_field("ena", u.EnaType(), "RW", portgroups=None)
         word.add_field("busy", u.BusyType(), "RO", portgroups=("top",))
 
         word = regf.add_word("rx", portgroups=("rx",))
@@ -271,6 +271,11 @@ class PortgroupMod(u.AMod):
 
         word = regf.add_word("tx", portgroups=("tx",))
         word.add_field("data0", u.UintType(width_p), "RW")
+
+        word = regf.add_word("w2", portgroups=("+", "top"))
+        word.add_field("f0", u.BitType(), "RW")
+        word.add_field("f1", u.BitType(), "RW", portgroups=("grpa",))
+        word.add_field("f2", u.BitType(), "RW", portgroups=("+", "grpb"))
 
         rx = CoreMod(self, "u_rx", paramdict={"width_p": width_p})
         rx.add_param(width_p)
