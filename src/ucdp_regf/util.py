@@ -81,10 +81,10 @@ from ucdp_regf.ucdp_regf import (
 )
 
 
-def iter_pgrp_names(obj: Field | Word) -> Iterator[str]:
+def iter_pgrp_names(portgroups: tuple[str, ...] | None) -> Iterator[str]:
     """Iterate over port group names."""
-    if obj.portgroups:
-        for grp in obj.portgroups:
+    if portgroups:
+        for grp in portgroups:
             yield f"{grp}_"
     else:
         yield ""
@@ -524,8 +524,8 @@ def get_outp_assigns(
         if word.wordio:
             field = Field.from_word(word)
             _add_outp_assigns(rslvr, aligntext, word, field, buswrcond, sliced_en)
-        elif word.upd_strb == "WU":
-            for gn in iter_pgrp_names(word):
+        if word.upd_strb == "WU":
+            for gn in iter_pgrp_names(word.upd_grps):
                 # TODO: bus write only, _r vs. _s
                 aligntext.add_row("assign", f"regf_{gn}{word.name}_upd_o", f"= upd_strb_{word.name}_r;")
     return aligntext
@@ -542,17 +542,17 @@ def _add_outp_assigns(
     basename = "regfword" if field.is_alias else "regf"
     if field.in_regf:
         if field.core and field.core.read:
-            for gn in iter_pgrp_names(field):
+            for gn in iter_pgrp_names(field.portgroups):
                 aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_rval_o", f"= {field.corewrname};")
         if field.upd_strb:
-            for gn in iter_pgrp_names(field):
+            for gn in iter_pgrp_names(field.upd_grps):
                 aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_upd_o", f"= upd_strb_{field.signame}_r;")
     else:  # in core
         if field.bus and field.bus.write:
             memwmask = f"bit_en_s{rslvr.resolve_slice(field.slice)}"
             zmask = f"{rslvr._resolve_value(u.UintType(field.type_.bits), value=0)}"
             buswrenexpr = f"{buswrcond[field.signame]}{{slc}}"
-            for gn in iter_pgrp_names(field):
+            for gn in iter_pgrp_names(field.portgroups):
                 for _, slc in iter_word_depth(word):
                     wrencond = buswrenexpr.format(slc=slc)
                     aligntext.add_row(
@@ -570,6 +570,6 @@ def _add_outp_assigns(
                         aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_wr_o{slc}", f"= {wrencond};")
         if filter_busrdmod(field):
             busrden = f"= bus_{word.name}_rden_s{{slc}};"
-            for gn in iter_pgrp_names(field):
+            for gn in iter_pgrp_names(field.portgroups):
                 for _, slc in iter_word_depth(word):
                     aligntext.add_row("assign", f"{basename}_{gn}{field.signame}_rd_o", busrden.format(slc=slc))

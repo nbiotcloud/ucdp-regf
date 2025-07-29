@@ -48,6 +48,8 @@
 //              [8:4]   .f1      RW/RO       0x0      False    regf
 // 3:1 / 3:1    wupgrp
 //              [1:0]   .f0      RW/RO       0x0      False    regf
+// 6:4 / 6:4    ugr
+//              [0]     .f0      RW/RO       0        False    regf
 //
 //
 // Mnemonic    ReadOp    WriteOp
@@ -84,7 +86,13 @@ module word_upd_regf (
   //   regf_grpa_o
   output logic        regf_grpa_wupgrp_upd_o     [0:2], // wupgrp update strobe
   //   regf_grpb_o
-  output logic        regf_grpb_wupgrp_upd_o     [0:2]  // wupgrp update strobe
+  output logic        regf_grpb_wupgrp_upd_o     [0:2], // wupgrp update strobe
+  //   regf_grpd_o
+  //     regf_grpd_ugr_f0_o: bus=RW core=RO in_regf=True
+  output logic        regf_grpd_ugr_f0_rval_o    [0:2], // Core Read Value
+  //   regf_grpw_o
+  //     regf_grpw_ugr_f0_o: bus=RW core=RO in_regf=True
+  output logic        regf_grpw_ugr_f0_upd_o     [0:2]  // Update Strobe
   // regfword_o
 );
 
@@ -99,8 +107,11 @@ module word_upd_regf (
   logic       upd_strb_wup_r;
   logic [1:0] data_wupgrp_f0_r  [0:2]; // Word wupgrp
   logic       upd_strb_wupgrp_r [0:2];
+  logic       data_ugr_f0_r     [0:2]; // Word ugr
+  logic       upd_strb_ugr_f0_r [0:2];
   logic       bus_wup_wren_s;          // bus word write enables
   logic       bus_wupgrp_wren_s [0:2];
+  logic       bus_ugr_wren_s    [0:2];
 
   // ------------------------------------------------------
   // address decoding
@@ -110,6 +121,7 @@ module word_upd_regf (
     mem_err_o = 1'b0;
     bus_wup_wren_s    = 1'b0;
     bus_wupgrp_wren_s = '{3{1'b0}};
+    bus_ugr_wren_s    = '{3{1'b0}};
 
     // decode address
     if (mem_ena_i == 1'b1) begin
@@ -125,6 +137,15 @@ module word_upd_regf (
         end
         10'h003: begin
           bus_wupgrp_wren_s[2] = mem_wena_i;
+        end
+        10'h004: begin
+          bus_ugr_wren_s[0] = mem_wena_i;
+        end
+        10'h005: begin
+          bus_ugr_wren_s[1] = mem_wena_i;
+        end
+        10'h006: begin
+          bus_ugr_wren_s[2] = mem_wena_i;
         end
         default: begin
           mem_err_o = 1'b1;
@@ -145,6 +166,9 @@ module word_upd_regf (
       // Word: wupgrp
       data_wupgrp_f0_r  <= '{3{2'h0}};
       upd_strb_wupgrp_r <= '{3{1'b0}};
+      // Word: ugr
+      data_ugr_f0_r     <= '{3{1'b0}};
+      upd_strb_ugr_f0_r <= '{3{1'b0}};
     end else begin
       if (bus_wup_wren_s == 1'b1) begin
         data_wup_f0_r <= mem_wdata_i[3:0];
@@ -165,6 +189,18 @@ module word_upd_regf (
       upd_strb_wupgrp_r[0] <= bus_wupgrp_wren_s[0];
       upd_strb_wupgrp_r[1] <= bus_wupgrp_wren_s[1];
       upd_strb_wupgrp_r[2] <= bus_wupgrp_wren_s[2];
+      if (bus_ugr_wren_s[0] == 1'b1) begin
+        data_ugr_f0_r[0] <= mem_wdata_i[0];
+      end
+      upd_strb_ugr_f0_r[0] <= bus_ugr_wren_s[0];
+      if (bus_ugr_wren_s[1] == 1'b1) begin
+        data_ugr_f0_r[1] <= mem_wdata_i[0];
+      end
+      upd_strb_ugr_f0_r[1] <= bus_ugr_wren_s[1];
+      if (bus_ugr_wren_s[2] == 1'b1) begin
+        data_ugr_f0_r[2] <= mem_wdata_i[0];
+      end
+      upd_strb_ugr_f0_r[2] <= bus_ugr_wren_s[2];
     end
   end
 
@@ -187,6 +223,15 @@ module word_upd_regf (
         10'h003: begin
           mem_rdata_o = {30'h00000000, data_wupgrp_f0_r[2]};
         end
+        10'h004: begin
+          mem_rdata_o = {31'h00000000, data_ugr_f0_r[0]};
+        end
+        10'h005: begin
+          mem_rdata_o = {31'h00000000, data_ugr_f0_r[1]};
+        end
+        10'h006: begin
+          mem_rdata_o = {31'h00000000, data_ugr_f0_r[2]};
+        end
         default: begin
           mem_rdata_o = 32'h00000000;
         end
@@ -205,6 +250,8 @@ module word_upd_regf (
   assign regf_grpc_wupgrp_f0_rval_o = data_wupgrp_f0_r;
   assign regf_grpa_wupgrp_upd_o     = upd_strb_wupgrp_r;
   assign regf_grpb_wupgrp_upd_o     = upd_strb_wupgrp_r;
+  assign regf_grpd_ugr_f0_rval_o    = data_ugr_f0_r;
+  assign regf_grpw_ugr_f0_upd_o     = upd_strb_ugr_f0_r;
 
 endmodule // word_upd_regf
 

@@ -61,7 +61,9 @@ module word_upd();
     .regf_wup_upd_o            (            ), // TODO - wup update strobe
     .regf_grpc_wupgrp_f0_rval_o(            ), // TODO - Core Read Value
     .regf_grpa_wupgrp_upd_o    (            ), // TODO - wupgrp update strobe
-    .regf_grpb_wupgrp_upd_o    (            )  // TODO - wupgrp update strobe
+    .regf_grpb_wupgrp_upd_o    (            ), // TODO - wupgrp update strobe
+    .regf_grpd_ugr_f0_rval_o   (            ), // TODO - Core Read Value
+    .regf_grpw_ugr_f0_upd_o    (            )  // TODO - Update Strobe
   );
 
 endmodule // word_upd

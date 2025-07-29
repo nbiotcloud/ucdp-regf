@@ -151,8 +151,10 @@ module word_field();
     .regf_word2_bRW_cNone_iNone_d5_s2_rval_o (            ), // TODO - Core Read Value
     .regf_agrp_www_a_rval_o                  (            ), // TODO - Core Read Value
     .regf_agrp_www_b_rval_o                  (            ), // TODO - Core Read Value
+    .regf_agrp_www_upd_o                     (            ), // TODO - www update strobe
     .regf_bgrp_www_a_rval_o                  (            ), // TODO - Core Read Value
     .regf_bgrp_www_b_rval_o                  (            ), // TODO - Core Read Value
+    .regf_bgrp_www_upd_o                     (            ), // TODO - www update strobe
     .regfword_word1_bRW_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value
     .regfword_word1_bRO_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value
     .regfword_word2_bRW_cNone_iNone_d0_rval_o(            ), // TODO - Core Read Value

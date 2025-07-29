@@ -68,6 +68,8 @@ class Field(ua.Field):
     """Update Priority: None, 'b'us or 'c'core."""
     upd_strb: bool = False
     """Update strobe towards core."""
+    upd_grps: tuple[str, ...] | None = None
+    """Update strobe portgroups."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
     guard_err: GrdErrMode = None
@@ -134,6 +136,7 @@ class Field(ua.Field):
             in_regf=True,  # in_regf,
             # upd_prio=word.upd_prio,
             upd_strb=(word.upd_strb == "WU"),
+            upd_grps=word.upd_grps,
             # wr_guard=word.wr_guard,
             signame=word.name,
             doc=word.doc,
@@ -154,6 +157,8 @@ class Word(ua.Word):
     """Update Priority: None, 'b'us or 'c'core."""
     upd_strb: WordStrb = False
     """Update strobe towards core."""
+    upd_grps: tuple[str, ...] | None = None
+    """Update strobe portgroups."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
     guard_err: GrdErrMode = None
@@ -163,50 +168,26 @@ class Word(ua.Word):
     fieldio: bool = True
     """Create Field-Based Interface Towards Core."""
 
-    def _create_field(
-        self,
-        name,
-        bus,
-        core,
-        portgroups=None,
-        signame=None,
-        in_regf=None,
-        upd_prio=None,
-        upd_strb=None,
-        wr_guard=None,
-        guard_err=None,
-        **kwargs,
-    ) -> Field:
-        portgroups = _inherit_portgroups(portgroups, self.portgroups)
-        if signame is None:
-            signame = f"{self.name}_{name}"
-        if in_regf is None:
-            in_regf = self.in_regf
+    def _create_field(self, name, bus, core, **kwargs) -> Field:
+        kwargs["portgroups"] = _inherit_portgroups(kwargs.get("portgroups", None), self.portgroups)
+        if kwargs.get("signame", None) is None:
+            kwargs["signame"] = f"{self.name}_{name}"
+        if kwargs.get("in_regf", None) is None:
+            kwargs["in_regf"] = self.in_regf
         if core is None:
             core = ua.get_counteraccess(bus)
-        if in_regf is None:
-            in_regf = get_in_regf(bus, core)
-        if upd_prio is None:
-            upd_prio = self.upd_prio
-        if upd_strb is None:
-            upd_strb = False if self.upd_strb == "WU" else self.upd_strb
-        if wr_guard is None:
-            wr_guard = self.wr_guard
-        if guard_err is None:
-            guard_err = self.guard_err
-        field = Field(
-            name=name,
-            bus=bus,
-            core=core,
-            portgroups=portgroups,
-            signame=signame,
-            in_regf=in_regf,
-            upd_prio=upd_prio,
-            upd_strb=upd_strb,
-            wr_guard=wr_guard,
-            guard_err=guard_err,
-            **kwargs,
-        )
+        if kwargs["in_regf"] is None:
+            kwargs["in_regf"] = get_in_regf(bus, core)
+        if kwargs.get("upd_prio", None) is None:
+            kwargs["upd_prio"] = self.upd_prio
+        if kwargs.get("upd_strb", None) is None:
+            kwargs["upd_strb"] = False if self.upd_strb == "WU" else self.upd_strb
+        kwargs["upd_grps"] = _inherit_portgroups(kwargs.get("upd_grps", None), kwargs["portgroups"])
+        if kwargs.get("wr_guard", None) is None:
+            kwargs["wr_guard"] = self.wr_guard
+        if kwargs.get("guard_err", None) is None:
+            kwargs["guard_err"] = self.guard_err
+        field = Field(name=name, bus=bus, core=core, **kwargs)
         check_field(self.name, field)
         return field
 
@@ -261,6 +242,8 @@ class Addrspace(ua.Addrspace):
     """Update Priority: None, 'bus' or 'core'."""
     upd_strb: bool = False
     """Update strobe towards core."""
+    upd_grps: tuple[str, ...] | None = None
+    """Update strobe portgroups."""
     wr_guard: str | None = None
     """Write guard name (must be unique)."""
     guard_err: GrdErrMode = None
@@ -271,29 +254,20 @@ class Addrspace(ua.Addrspace):
         """Returns derived Address Width for Addrspace."""
         return calc_unsigned_width(self.depth - 1)
 
-    def _create_word(
-        self, portgroups=None, in_regf=None, upd_prio=None, upd_strb=None, wr_guard=None, guard_err=None, **kwargs
-    ) -> Word:
-        portgroups = _inherit_portgroups(portgroups, self.portgroups)
-        if in_regf is None:
-            in_regf = self.in_regf
-        if upd_prio is None:
-            upd_prio = self.upd_prio
-        if upd_strb is None:
-            upd_strb = self.upd_strb
-        if wr_guard is None:
-            wr_guard = self.wr_guard
-        if guard_err is None:
-            guard_err = self.guard_err
-        return Word(
-            portgroups=portgroups,
-            in_regf=in_regf,
-            upd_prio=upd_prio,
-            upd_strb=upd_strb,
-            wr_guard=wr_guard,
-            guard_err=guard_err,
-            **kwargs,
-        )
+    def _create_word(self, **kwargs) -> Word:
+        kwargs["portgroups"] = _inherit_portgroups(kwargs.get("portgroups", None), self.portgroups)
+        if kwargs.get("in_regf", None) is None:
+            kwargs["in_regf"] = self.in_regf
+        if kwargs.get("upd_prio", None) is None:
+            kwargs["upd_prio"] = self.upd_prio
+        if kwargs.get("upd_strb", None) is None:
+            kwargs["upd_strb"] = self.upd_strb
+        kwargs["upd_grps"] = _inherit_portgroups(kwargs.get("upd_grps", None), kwargs["portgroups"])
+        if kwargs.get("wr_guard", None) is None:
+            kwargs["wr_guard"] = self.wr_guard
+        if kwargs.get("guard_err", None) is None:
+            kwargs["guard_err"] = self.guard_err
+        return Word(**kwargs)
 
     def _create_words(self, **kwargs) -> Words:
         return Words.create(**kwargs)
@@ -824,7 +798,9 @@ def _inherit_portgroups(
 ) -> tuple[str, ...] | None:
     """Return consolidated portgroups according to inheritance with preserved order."""
     portgroups: dict[str, None] = {}
-    for lpg in local_portgroups or ("+"):
+    if local_portgroups is None:
+        local_portgroups = ("+",)
+    for lpg in local_portgroups:
         if lpg == "+":
             for ppg in parent_portgroups or ():
                 portgroups[ppg] = None
@@ -842,7 +818,7 @@ def get_regfiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.DynamicSt
             continue
         for field in fields:
             _add_field(portgroupmap, field, sliced_en, word.depth)
-        if word.upd_strb == "WU" and not word.wordio:
+        if word.upd_strb == "WU":
             _add_word_upd(portgroupmap, word)
     return portgroupmap[None]
 
@@ -859,7 +835,7 @@ def get_regfwordiotype(addrspace: Addrspace, sliced_en: bool = False) -> u.Dynam
 
 
 def _add_word_upd(portgroupmap: Portgroupmap, word: Word):
-    for portgroup in word.portgroups or [None]:
+    for portgroup in word.upd_grps or [None]:
         try:
             iotype = portgroupmap[portgroup]
         except KeyError:
@@ -881,9 +857,37 @@ def _add_field(portgroupmap: Portgroupmap, field: Field, sliced_en: bool, depth:
             portgroupmap[None].add(portgroup, iotype)
         comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
         fieldiotype = FieldIoType(field=field, sliced_en=sliced_en)
+        if (
+            field.in_regf
+            and field.core
+            and field.upd_strb
+            and (
+                (portgroup is None and field.upd_grps is None)
+                or (portgroup is not None and field.upd_grps is not None and portgroup in field.upd_grps)
+            )
+        ):
+            fieldiotype.add("upd", u.BitType(), comment="Update Strobe")
         if depth:
             fieldiotype = u.ArrayType(fieldiotype, depth)
         iotype.add(field.signame, fieldiotype, comment=comment)
+    for ugrp in field.upd_grps or []:
+        if (
+            field.in_regf
+            and field.core
+            and field.upd_strb
+            and ((field.portgroups is None) or (ugrp not in field.portgroups))
+        ):
+            try:
+                iotype = portgroupmap[ugrp]
+            except KeyError:
+                portgroupmap[ugrp] = iotype = u.DynamicStructType()
+                portgroupmap[None].add(ugrp, iotype)
+            comment = f"bus={field.bus} core={field.core} in_regf={field.in_regf}"
+            fieldiotype = u.DynamicStructType()
+            fieldiotype.add("upd", u.BitType(), comment="Update Strobe")
+            if depth:
+                fieldiotype = u.ArrayType(fieldiotype, depth)
+            iotype.add(field.signame, fieldiotype, comment=comment)
 
 
 def _create_route(mod: u.BaseMod, addrspace: Addrspace) -> None:
@@ -909,7 +913,7 @@ def get_regfportname(field: Field, direction: u.Direction = u.OUT) -> str:
     raise ValueError(f"Field '{field.name}' has no core access for route.")
 
 
-class FieldIoType(u.AStructType):
+class FieldIoType(u.DynamicStructType):
     """Field IO Type."""
 
     field: Field
@@ -930,8 +934,8 @@ class FieldIoType(u.AStructType):
                         self._add("wval", field.type_, u.BWD, comment="Core Write Value")
                     if corewr.write is not None or corewr.op is not None:
                         self._add("wr", u.BitType(), u.BWD, comment="Core Write Strobe")
-                if field.upd_strb:
-                    self._add("upd", u.BitType(), comment="Update Strobe")
+                # if field.upd_strb:
+                #     self._add("upd", u.BitType(), comment="Update Strobe")
         elif field.bus:
             busrd = field.bus.read
             buswr = field.bus.write
