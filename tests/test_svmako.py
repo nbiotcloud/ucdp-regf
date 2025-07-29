@@ -533,6 +533,9 @@ class WordUpdMod(u.AMod):
         )
         word.add_field("f0", u.UintType(2), "RW", portgroups=("grpc",))
 
+        word = regf.add_word("ugr", upd_strb=True, portgroups=("grpd",), depth=3)
+        word.add_field("f0", u.BitType(), "RW", upd_grps=("grpw",))
+
 
 def test_word_upd(tmp_path):
     """Register File with word-only update strobe."""
