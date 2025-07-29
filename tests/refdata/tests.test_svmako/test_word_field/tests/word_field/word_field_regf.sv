@@ -337,11 +337,15 @@ module word_field_regf (
   output logic [5:0]  regf_agrp_www_a_rval_o,                          // Core Read Value
   //     regf_agrp_www_b_o: bus=RW core=RO in_regf=True
   output logic        regf_agrp_www_b_rval_o,                          // Core Read Value
+  //     -
+  output logic        regf_agrp_www_upd_o,                             // www update strobe
   //   regf_bgrp_o
   //     regf_bgrp_www_a_o: bus=RW core=RO in_regf=True
   output logic [5:0]  regf_bgrp_www_a_rval_o,                          // Core Read Value
   //     regf_bgrp_www_b_o: bus=RW core=RO in_regf=True
   output logic        regf_bgrp_www_b_rval_o,                          // Core Read Value
+  //     -
+  output logic        regf_bgrp_www_upd_o,                             // www update strobe
   // regfword_o
   //   regfword_word1_bRW_cNone_iNone_d0_o: bus=RW core=RO in_regf=True
   output logic [31:0] regfword_word1_bRW_cNone_iNone_d0_rval_o,        // Core Read Value
@@ -1345,6 +1349,8 @@ module word_field_regf (
   assign regfword_bgrp_www_rval_o                 = wvec_www_s;
   assign regfword_agrp_www_upd_o                  = upd_strb_www_r;
   assign regfword_bgrp_www_upd_o                  = upd_strb_www_r;
+  assign regf_agrp_www_upd_o                      = upd_strb_www_r;
+  assign regf_bgrp_www_upd_o                      = upd_strb_www_r;
   assign regfword_nofld_rval_o                    = wvec_nofld_s;
 
 endmodule // word_field_regf
